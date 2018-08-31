@@ -719,7 +719,7 @@
 					"$(PROJECT_DIR)/SealRTC/framework/openssl",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bridgeminds.sealrtc;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "cdf6fcc4-d01a-4cdb-b974-c650f223d239";
 				PROVISIONING_PROFILE_SPECIFIER = BailingVideo;
@@ -802,7 +802,7 @@
 					"$(PROJECT_DIR)/SealRTC/framework/openssl",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bridgeminds.sealrtc;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "46cafc16-d84a-48aa-bbc5-d36bc7689d72";
 				PROVISIONING_PROFILE_SPECIFIER = sealrtc;
@@ -935,10 +935,10 @@
 					"$(PROJECT_DIR)/SealRTC/framework/openssl",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bridgeminds.sealrtc;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4b25a072-af9e-45fe-bdeb-2b5847991d0d";
-				PROVISIONING_PROFILE_SPECIFIER = bridgeminds_dev;
+				PROVISIONING_PROFILE = "d282b94a-3e85-46d0-9744-f1a5ca319943";
+				PROVISIONING_PROFILE_SPECIFIER = "Dev Wildcard";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wno-deprecated-declarations";
 			};
@@ -971,7 +971,7 @@
 					"$(PROJECT_DIR)/SealRTC/framework/openssl",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bridgeminds.sealrtc;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "46cafc16-d84a-48aa-bbc5-d36bc7689d72";
 				PROVISIONING_PROFILE_SPECIFIER = sealrtc;
