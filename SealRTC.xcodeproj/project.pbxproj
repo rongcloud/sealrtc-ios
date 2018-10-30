@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		3907FA151E08E01E007EDC46 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3907FA141E08E01E007EDC46 /* SystemConfiguration.framework */; };
+		390B7CAD2188331500111057 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3907FA191E08E037007EDC46 /* libc++.tbd */; };
+		390B7CAE2188332000111057 /* Bailingquic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 987F6F262111676800625FB8 /* Bailingquic.framework */; };
 		390ED55D1D9E07F20046F519 /* CodeRate.plist in Resources */ = {isa = PBXBuildFile; fileRef = 390ED55C1D9E07F20046F519 /* CodeRate.plist */; };
 		39244CD31DDB1E7A00C6CC2A /* ChatBubbleMenuViewDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 39244CD21DDB1E7A00C6CC2A /* ChatBubbleMenuViewDelegateImpl.m */; };
 		39244CD61DDB2F1200C6CC2A /* ChatCollectionViewDataSourceDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 39244CD51DDB2F1200C6CC2A /* ChatCollectionViewDataSourceDelegateImpl.m */; };
 		39244CD91DDB3A9500C6CC2A /* ChatRongRTCEngineDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 39244CD81DDB3A9500C6CC2A /* ChatRongRTCEngineDelegateImpl.m */; };
 		39244CDD1DDC0E7300C6CC2A /* CommonUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 39244CDC1DDC0E7300C6CC2A /* CommonUtility.m */; };
 		39244CE21DDC34B400C6CC2A /* LoginViewBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 39244CE11DDC34B400C6CC2A /* LoginViewBuilder.m */; };
-		3933733B1E6FDB220084F6C9 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3933733A1E6FDB220084F6C9 /* libstdc++.tbd */; };
 		393373421E6FDB320084F6C9 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 393373411E6FDB320084F6C9 /* libiconv.tbd */; };
 		393373441E6FDB3C0084F6C9 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 393373431E6FDB3C0084F6C9 /* libbz2.tbd */; };
 		393373451E6FDB6E0084F6C9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 39CF6E571E08C137001A683B /* libz.tbd */; };
@@ -89,7 +90,6 @@
 		39244CDC1DDC0E7300C6CC2A /* CommonUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonUtility.m; sourceTree = "<group>"; };
 		39244CE01DDC34B400C6CC2A /* LoginViewBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewBuilder.h; sourceTree = "<group>"; };
 		39244CE11DDC34B400C6CC2A /* LoginViewBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewBuilder.m; sourceTree = "<group>"; };
-		3933733A1E6FDB220084F6C9 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		393373411E6FDB320084F6C9 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		393373431E6FDB3C0084F6C9 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		3935DF9121391BEC00983E1C /* RongRTCLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RongRTCLib.framework; path = framework/RongRTCLib.framework; sourceTree = "<group>"; };
@@ -201,10 +201,11 @@
 				393373451E6FDB6E0084F6C9 /* libz.tbd in Frameworks */,
 				393373441E6FDB3C0084F6C9 /* libbz2.tbd in Frameworks */,
 				393373421E6FDB320084F6C9 /* libiconv.tbd in Frameworks */,
-				3933733B1E6FDB220084F6C9 /* libstdc++.tbd in Frameworks */,
+				390B7CAD2188331500111057 /* libc++.tbd in Frameworks */,
 				9D7D5D571D1B8BC6000574B2 /* Foundation.framework in Frameworks */,
 				3987F2A41E84B2530024CAFC /* AudioToolbox.framework in Frameworks */,
 				3935DF9221391BEC00983E1C /* RongRTCLib.framework in Frameworks */,
+				390B7CAE2188332000111057 /* Bailingquic.framework in Frameworks */,
 				9D7D5D631D1BCFE2000574B2 /* VideoToolbox.framework in Frameworks */,
 				3987F2A51E84B26C0024CAFC /* UIKit.framework in Frameworks */,
 				9D7D5D5E1D1BCE80000574B2 /* GLKit.framework in Frameworks */,
@@ -469,7 +470,6 @@
 				393373431E6FDB3C0084F6C9 /* libbz2.tbd */,
 				393373411E6FDB320084F6C9 /* libiconv.tbd */,
 				3907FA191E08E037007EDC46 /* libc++.tbd */,
-				3933733A1E6FDB220084F6C9 /* libstdc++.tbd */,
 			);
 			name = frameworks;
 			sourceTree = "<group>";
