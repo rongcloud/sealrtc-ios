@@ -688,11 +688,9 @@ typedef enum : NSUInteger {
     self.paraDic[@"SessionType"] = @(sessionType);
     self.paraDic[@"VideoCodecType"] = @(codeType);
     self.paraDic[kCloseCamera] = @(self.closeCameraIndex);
-    self.paraDic[kGPUFilter] = @(self.isGPUFilter);
     self.paraDic[@"SRTPEncrypt"] = @(self.isSRTPEncrypt);
     self.paraDic[@"AdaptVideoProfile"] = @(adaptVideoProfile);
     self.paraDic[@"TinyStreamEnabled"] = @(self.isTinyStream);
-    
 }
 
 #pragma mark - init UserDefaults data
@@ -810,7 +808,6 @@ typedef enum : NSUInteger {
 #pragma mark - 6 click stop recording button
 - (void)didClickStopRecordingButton:(UIButton *)btn
 {
-    [self.rongRTCEngine stopRecording];
 }
 
 #pragma mark - 5 click start recording button
@@ -824,7 +821,6 @@ typedef enum : NSUInteger {
         [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
     
     NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"SealRTC/temp.wav"];
-    [self.rongRTCEngine startRecording:filePath];
 }
 
 #pragma mark - 4 click mute micphone
@@ -1065,8 +1061,6 @@ typedef enum : NSUInteger {
         [CommonUtility setButtonImage:btn imageName:@"chat_handup_on"];
 //        [self switchButtonBackgroundColor:YES button:btn];
     }
-    
-    [self.rongRTCEngine observerRequestBecomeNormalUser];
 }
 
 #pragma mark - show white board with URL
