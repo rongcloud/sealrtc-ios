@@ -274,7 +274,6 @@ static RongRTCConnectionState connectionState = -1;
         case RongRTC_ConnectionMode_TCP:
         {
             NSURLSession *session = [NSURLSession sharedSession];
-            //    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kURLConfigListPROD]];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kURLConfigListProd]
                                                                    cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                                                timeoutInterval:30.0];
