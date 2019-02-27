@@ -17,12 +17,20 @@
 #import "ChatDataInfoModel.h"
 #import "ChatLocalDataInfoModel.h"
 #import "CommonUtility.h"
+#import <GPUImage/GPUImage.h>
+#import "GPUImageBeautyFilter.h"
+#import "GPUImageOutputCamera.h"
 
 @interface ChatRongRTCEngineDelegateImpl ()
 {
     dispatch_semaphore_t sem;
 }
 @property (nonatomic, strong) ChatViewController *chatViewController;
+@property (nonatomic, strong) GPUImageBeautyFilter *beautyFilter;
+@property (nonatomic, strong) GPUImageOutputCamera *outputCamera;
+@property (nonatomic, strong) GPUImageView *imageView;
+@property (nonatomic, strong) GPUImageAlphaBlendFilter *blendFilter;
+@property (nonatomic, strong) GPUImageFilter *filter, *defaultFilter;
 
 @end
 
@@ -36,14 +44,60 @@
         self.chatViewController = (ChatViewController *) vc;
         sem = dispatch_semaphore_create(1);
         _bitrateArray = [NSMutableArray array];
+        [self initBeautyFilter];
     }
     return self;
+}
+
+- (GPUImageFilter *)defaultFilter
+{
+    if (!_defaultFilter)
+    {
+        _defaultFilter = [[GPUImageFilter alloc] init];
+    }
+    return _defaultFilter;
+}
+
+- (GPUImageBeautyFilter *)beautyFilter
+{
+    if (!_beautyFilter)
+    {
+        _beautyFilter = [[GPUImageBeautyFilter alloc] init];
+    }
+    return _beautyFilter;
+}
+
+- (GPUImageOutputCamera *)outputCamera
+{
+    if (!_outputCamera)
+    {
+        _outputCamera = [[GPUImageOutputCamera alloc] init];
+    }
+    return _outputCamera;
+}
+
+- (GPUImageAlphaBlendFilter *)blendFilter
+{
+    if (!_blendFilter)
+    {
+        _blendFilter = [[GPUImageAlphaBlendFilter alloc] init];
+        _blendFilter.mix = 1.0;
+    }
+    return _blendFilter;
+}
+
+- (GPUImageView *)imageView
+{
+    if (!_imageView)
+    {
+        _imageView = [[GPUImageView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+    }
+    return _imageView;
 }
 
 #pragma mark - rongRTCEngineDelegate
 - (void)rongRTCEngine:(RongRTCEngine *)engine onAudioAuthority:(BOOL)enableAudio onVideoAuthority:(BOOL)enableVideo
 {
-    
 }
 
 - (void)rongRTCEngine:(RongRTCEngine *)engine onConnectionStateChanged:(RongRTCConnectionState)state
@@ -500,6 +554,41 @@
     });
 }
 
+- (CMSampleBufferRef)rongRTCEngine:(RongRTCEngine *)engine onGPUFilterSource:(CMSampleBufferRef)sampleBuffer
+{
+    if (!self.chatViewController.isGPUFilter)
+        return nil;
+    
+    if (!self.filter || !sampleBuffer)
+        return nil;
+    
+    [self.filter useNextFrameForImageCapture];
+    CFRetain(sampleBuffer);
+    [self.outputCamera processVideoSampleBuffer:sampleBuffer];
+    
+    CMTime currentTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+    CFRelease(sampleBuffer);
+    
+    GPUImageFramebuffer *framebuff = [self.filter framebufferForOutput];
+    CVPixelBufferRef pixelBuff = [framebuff pixelBuffer];
+    CVPixelBufferLockBaseAddress(pixelBuff, 0);
+    
+    CMVideoFormatDescriptionRef videoInfo = NULL;
+    CMVideoFormatDescriptionCreateForImageBuffer(NULL, pixelBuff, &videoInfo);
+    
+    CMSampleTimingInfo timing = {currentTime, currentTime, kCMTimeInvalid};
+    
+    CMSampleBufferRef processedSampleBuffer = NULL;
+    CMSampleBufferCreateForImageBuffer(kCFAllocatorDefault, pixelBuff, YES, NULL, NULL, videoInfo, &timing, &processedSampleBuffer);
+    
+    if (videoInfo == NULL)
+        return nil;
+    
+    CFRelease(videoInfo);
+    CVPixelBufferUnlockBaseAddress(pixelBuff, 0);
+    return processedSampleBuffer;
+}
+
 - (void)rongRTCEngine:(RongRTCEngine *)engine onOutputAudioPortSpeaker:(BOOL)enable
 {
     [self.chatViewController selectSpeakerButtons:enable];
@@ -618,6 +707,13 @@
     }
 }
 
+- (void)initBeautyFilter
+{
+    [self.outputCamera addTarget:self.beautyFilter];
+    [self.beautyFilter addTarget:self.imageView];
+    self.filter = self.beautyFilter;
+}
+
 #pragma mark - AlertController
 - (void)alertWith:(NSString *)title withMessage:(NSString *)msg withOKAction:(UIAlertAction *)ok withCancleAction:(UIAlertAction *)cancel
 {
@@ -697,4 +793,14 @@
             break;
     }
 }
+
+- (void)dealloc
+{
+    _outputCamera = nil;
+    _beautyFilter = nil;
+    _blendFilter = nil;
+    _filter = nil;
+    _imageView = nil;
+}
+
 @end

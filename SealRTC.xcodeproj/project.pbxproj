@@ -38,6 +38,8 @@
 		3987F2A61E84B2850024CAFC /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D7D5D481D1B85D8000574B2 /* CoreFoundation.framework */; };
 		3987F2A71E84B3060024CAFC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3991BCF81DD352EA00152317 /* Security.framework */; };
 		3991BD0E1DD5AA5B00152317 /* MessageStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3991BD0D1DD5AA5B00152317 /* MessageStatusBar.m */; };
+		39A7E48222265C0700449C21 /* GPUImageOutputCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A7E48022265C0700449C21 /* GPUImageOutputCamera.m */; };
+		39A7E48322265C0700449C21 /* GPUImageBeautyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A7E48122265C0700449C21 /* GPUImageBeautyFilter.m */; };
 		39A96F2A1EFCD36900B2443E /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39A96F291EFCD36900B2443E /* GPUImage.framework */; };
 		39BDCFE11DCC43AF004820E3 /* CodingStyle.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39BDCFE01DCC43AF004820E3 /* CodingStyle.plist */; };
 		39D4A1B620DA533800F26ACA /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D4A1B420DA533700F26ACA /* Reachability.m */; };
@@ -120,6 +122,10 @@
 		3991BCF81DD352EA00152317 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3991BD0C1DD5AA5B00152317 /* MessageStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageStatusBar.h; sourceTree = "<group>"; };
 		3991BD0D1DD5AA5B00152317 /* MessageStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageStatusBar.m; sourceTree = "<group>"; };
+		39A7E47E22265C0700449C21 /* GPUImageOutputCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageOutputCamera.h; sourceTree = "<group>"; };
+		39A7E47F22265C0700449C21 /* GPUImageBeautyFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageBeautyFilter.h; sourceTree = "<group>"; };
+		39A7E48022265C0700449C21 /* GPUImageOutputCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageOutputCamera.m; sourceTree = "<group>"; };
+		39A7E48122265C0700449C21 /* GPUImageBeautyFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageBeautyFilter.m; sourceTree = "<group>"; };
 		39A96F291EFCD36900B2443E /* GPUImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GPUImage.framework; path = framework/GPUImage.framework; sourceTree = "<group>"; };
 		39BDCFE01DCC43AF004820E3 /* CodingStyle.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CodingStyle.plist; sourceTree = "<group>"; };
 		39CF6E571E08C137001A683B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -276,6 +282,17 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
+		39A7E47D22265C0700449C21 /* gpuimage */ = {
+			isa = PBXGroup;
+			children = (
+				39A7E47F22265C0700449C21 /* GPUImageBeautyFilter.h */,
+				39A7E48122265C0700449C21 /* GPUImageBeautyFilter.m */,
+				39A7E47E22265C0700449C21 /* GPUImageOutputCamera.h */,
+				39A7E48022265C0700449C21 /* GPUImageOutputCamera.m */,
+			);
+			path = gpuimage;
+			sourceTree = "<group>";
+		};
 		39D4A1B220DA533700F26ACA /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
@@ -354,6 +371,7 @@
 		9D3DD0741D59D11200DC1443 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				39A7E47D22265C0700449C21 /* gpuimage */,
 				9D3DD0771D59D11200DC1443 /* ChatViewController.h */,
 				9D3DD0781D59D11200DC1443 /* ChatViewController.m */,
 				394E15E61DDED43D0099A517 /* ChatViewBuilder.h */,
@@ -576,11 +594,13 @@
 				981C3E1B202ADDEB00494697 /* YHExcelViewIndexPath.m in Sources */,
 				9D3DD0731D59CC5700DC1443 /* SplashViewController.m in Sources */,
 				9D3DD07E1D59D14500DC1443 /* LoginViewController.m in Sources */,
+				39A7E48322265C0700449C21 /* GPUImageBeautyFilter.m in Sources */,
 				394D15961DF00A9D001CE166 /* SettingViewBuilder.m in Sources */,
 				394D158F1DF003BE001CE166 /* SettingTableViewDelegateSourceImpl.m in Sources */,
 				98EEB1C02041554400E77E7E /* NSString+length.m in Sources */,
 				3991BD0E1DD5AA5B00152317 /* MessageStatusBar.m in Sources */,
 				9877519D202C56C900A3AA0C /* ChatDataInfoModel.m in Sources */,
+				39A7E48222265C0700449C21 /* GPUImageOutputCamera.m in Sources */,
 				397719911E2CA24700EB45C1 /* RongRTCTalkAppDelegate.m in Sources */,
 				394D15991DF00F72001CE166 /* SettingPickViewDelegateImpl.m in Sources */,
 				9865D6E5204820D700A1C740 /* ChatAvatarView.m in Sources */,
