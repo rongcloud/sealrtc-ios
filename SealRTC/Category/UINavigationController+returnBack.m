@@ -2,7 +2,7 @@
 //  UINavigationController+returnBack.m
 //  RongCloud
 //
-//  Created by Vicky on 2018/1/30.
+//  Created by Rongcloud on 2018/1/30.
 //  Copyright © 2018年 Beijing Rongcloud Network Technology Co. , Ltd. All rights reserved.
 //
 
@@ -13,12 +13,12 @@
 
 @end
 
+
 @interface UINavigationController() <UINavigationBarDelegate>
 
 @end
 
 @implementation UINavigationController (returnBack)
-
 
 - (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item
 {

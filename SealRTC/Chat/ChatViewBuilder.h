@@ -16,12 +16,13 @@
 
 @interface ChatViewBuilder : NSObject
 
-@property (nonatomic, strong) ChatViewController *chatViewController;
-@property (nonatomic, strong) UIButton *hungUpButton, *openCameraButton, *speakerOnOffButton, *microphoneOnOffButton, *whiteBoardButton, *startRecordingButton, *stopRecordingButton, *playRecordButton, *raiseHandButton, *switchCameraButton, *rotateButton, *videoProfileUpButton, *videoProfileDownButton, *playbackModeButton;
-@property (nonatomic, assign) CGPoint originCenter;
+@property (nonatomic, weak) ChatViewController *chatViewController;
+@property (nonatomic, strong) UILabel *infoLabel, *snifferLabel;
+@property (nonatomic, strong) BlinkExcelView *excelView;
+@property (nonatomic, strong) UIButton *hungUpButton, *openCameraButton, *speakerOnOffButton, *microphoneOnOffButton, *switchCameraButton;
 @property (nonatomic, strong) DWBubbleMenuButton *upMenuView;
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer, *rightSwipeGestureRecognizer;
+
 - (instancetype)initWithViewController:(UIViewController *)vc;
-- (void)reloadChatView;
 
 @end

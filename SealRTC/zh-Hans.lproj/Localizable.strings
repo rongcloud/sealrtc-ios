@@ -10,8 +10,8 @@
 "RongCloud_Meeting" = "SealRTC";
 
 
-"chat_room" = "房间";
-"chat_wait_attendees" = "等待好友加入中...";
+"chat_room" = "会议室ID";
+"chat_wait_attendees" = "等待好友加入...";
 "chat_exiting" = "正在退出...";
 "chat_total_time" = "通话时间";
 "chat_total_traffic" = "使用流量";
@@ -46,11 +46,11 @@
 "chat_fluent" = "流畅";
 "chat_watchmode" = "观看模式";
 
-"login_input_meeting_welcome" = "欢迎体验实时高质量的音视频会议";
-"login_input_meeting_room_name" = "请输入会议室名称";
+"login_input_meeting_welcome" = "欢迎体验高清晰低延迟的实时音视频会议";
+"login_input_meeting_room_name" = "输入以下信息开始会议";
 "login_input_meeting_user_name" = "请输入姓名";
 "login_input_tip_content" = "如果会议室名称不存在,你将创建并自动加入会议室;如果该会议室存在,你将自动加入该进行中的。";
-"login_input_meeting_room_NO" = "会议室房间号";
+"login_input_meeting_room_NO" = "请输入会议室ID";
 "login_input_encryption_key" = "加密秘匙";
 "login_input_enter_meeting_room" = "开始会议";
 "login_input_login_meeting_room" = "登录中...";
@@ -61,18 +61,24 @@
 "login_input_error_illegal" = "仅支持中英文";
 "login_input_error_nil" = "请输入姓名";
 "login_input_radio_default" = "默认";
-"login_input_radio_close_camera" = "加入时不开启视频";
-"login_input_radio_observer" = "以旁听者身份加入";
+"login_input_radio_close_camera" = "加入时关闭摄像头";
+"login_input_radio_observer" = "只接收音视频流,不发布流模式";
 "login_input_need_room_username" = "仅支持中文和英文字母";
 "login_input_notice_error" = "输入的用户名不合法";
 "login_input_alert_description" = "请选择需要连接的服务器!";
 "login_input_alert_title" = "网络";
+"login_input_phone_logon" = "请输入手机号验证登录";
+"login_input_phone_number" = "请输入手机号";
+"login_input_phone_smsvalidate" = "手机验证码";
+"login_input_phone_send_sms" = "发送验证码";
+"login_input_phone_validate_logon" = "验证登录";
+"login_input_count_down_sec" = "秒";
 
 
 "setting_title" = "设置";
-"setting_resolution_ratio" = "分辨率(仅部分手机支持1080p)";
+"setting_resolution_ratio" = "分辨率";
 "setting_frame_rate" = "帧率";
-"setting_code_rate" = "码率";
+"setting_code_rate" = "最大码率";
 "setting_code_rate_min" = "最小码率";
 "setting_OK" = "确定";
 "setting_Cancel" = "取消";
@@ -95,3 +101,4 @@
 "setting_urlschema_token_error" = "请输入正确token地址";
 "setting_media_connectiontype" = "连接方式";
 "setting_build_info" = "编译信息";
+"setting_auto_test" = "自动化测试";

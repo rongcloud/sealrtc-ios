@@ -12,7 +12,7 @@
 @interface SettingViewBuilder : NSObject
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) ZHPickView *resolutionRatioPickview, *frameRatePickview, *codeRatePickview, *codingStylePickview, *minCodeRatePickview;
+@property (nonatomic, strong) ZHPickView *resolutionRatioPickview;
 
 - (instancetype)initWithViewController:(UIViewController *)vc;
 

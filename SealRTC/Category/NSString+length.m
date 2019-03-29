@@ -2,7 +2,7 @@
 //  NSString+length.m
 //  RongCloud
 //
-//  Created by Vicky on 2018/2/24.
+//  Created by Rongcloud on 2018/2/24.
 //  Copyright © 2018年 Beijing Rongcloud Network Technology Co. , Ltd. All rights reserved.
 //
 

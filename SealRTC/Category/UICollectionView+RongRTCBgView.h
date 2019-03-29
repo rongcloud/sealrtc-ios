@@ -2,7 +2,7 @@
 //  UICollectionView+RongRTCBgView.h
 //  RongCloud
 //
-//  Created by Vicky on 2018/1/24.
+//  Created by Rongcloud on 2018/1/24.
 //  Copyright © 2018年 Beijing Rongcloud Network Technology Co. , Ltd. All rights reserved.
 //
 
@@ -15,9 +15,9 @@
 
 @end
 
+
 @interface UICollectionView (RongRTCBgView)
 
-//@property (nonatomic, weak) id<CollectionViewTouchesDelegate> touchDelegate;
 @property (nonatomic, strong) ChatViewController  *chatVC;
 
 @end

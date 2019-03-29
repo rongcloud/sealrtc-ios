@@ -11,7 +11,7 @@
 
 @interface SettingTableViewDelegateSourceImpl ()
 
-@property (nonatomic, strong) SettingViewController *settingViewController;
+@property (nonatomic, weak) SettingViewController *settingViewController;
 
 @end
 
@@ -39,10 +39,6 @@
     self.settingViewController.indexPath = indexPath;
     NSInteger section = [indexPath section];
     [self.settingViewController.settingViewBuilder.resolutionRatioPickview remove];
-    [self.settingViewController.settingViewBuilder.frameRatePickview remove];
-    [self.settingViewController.settingViewBuilder.codeRatePickview remove];
-    [self.settingViewController.settingViewBuilder.codingStylePickview remove];
-    [self.settingViewController.settingViewBuilder.minCodeRatePickview remove];
     ZHPickView *pickView;
     switch (section)
     {
@@ -71,23 +67,23 @@
 {
     NSInteger section = [indexPath section];
     NSInteger row = [indexPath row];
- 
-        NSString *identifer = [NSString stringWithFormat:@"Cell%zd%zd", section, row];
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifer];
-        if (!cell)
-        {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifer];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.textLabel.font = [UIFont systemFontOfSize:18];
-            cell.textLabel.textColor = [UIColor blackColor];
-        }
-        
-        switch (section)
+    
+    NSString *identifer = [NSString stringWithFormat:@"Cell%zd%zd", section, row];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifer];
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifer];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textLabel.font = [UIFont systemFontOfSize:18];
+        cell.textLabel.textColor = [UIColor blackColor];
+    }
+    
+    switch (section)
     {
         case 0:
         {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.textLabel.text = [NSString stringWithFormat:@"%@", self.settingViewController.resolutionRatioArray[self.settingViewController.resolutionRatioIndex]];
+            cell.textLabel.text = [NSString stringWithFormat:@"%@", self.settingViewController.resolutionRatioArray[kLoginManager.resolutionRatioIndex]];
         }
             break;
         case 1:
@@ -104,11 +100,10 @@
             break;
         case 3:
         {
-            [cell.contentView addSubview:self.settingViewController.srtpSwitch];
-            cell.textLabel.text = @"SRTP";
+            [cell.contentView addSubview:self.settingViewController.autoTestSwitch];
+            cell.textLabel.text = NSLocalizedString(@"setting_auto_test", nil);
         }
             break;
-        
         default:
             break;
     }
@@ -126,8 +121,6 @@
             return NSLocalizedString(@"setting_local_video", nil);
         case 2:
             return  NSLocalizedString(@"setting_tiny_stream", nil);
-        case 3:
-            return NSLocalizedString(@"setting_media_encrypt", nil);
         default:
             break;
     }
@@ -143,7 +136,5 @@
 {
     return 0.0f;
 }
-
- 
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "SplashViewController.h"
-#import "RongRTCTalkAppDelegate.h"
+#import "SealRTCAppDelegate.h"
 
 @interface SplashViewController ()
 
@@ -31,7 +31,7 @@
 {
     [super viewDidAppear:animated];
     
-    RongRTCTalkAppDelegate *appDelegate = (RongRTCTalkAppDelegate *)[UIApplication sharedApplication].delegate;
+    SealRTCAppDelegate *appDelegate = (SealRTCAppDelegate *)[UIApplication sharedApplication].delegate;
     appDelegate.isForcePortrait = YES;
     [appDelegate application:[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
     

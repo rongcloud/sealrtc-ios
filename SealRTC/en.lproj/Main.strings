@@ -26,8 +26,8 @@
 /* Class = "UILabel"; text = "NAME"; ObjectID = "hrJ-ZE-JmI"; */
 "hrJ-ZE-JmI.text" = "NAME";
 
-/* Class = "UILabel"; text = "SealRTC—会议室"; ObjectID = "inb-7M-90L"; */
-"inb-7M-90L.text" = "SealRTC—会议室";
+/* Class = "UILabel"; text = "百灵—会议室"; ObjectID = "inb-7M-90L"; */
+"inb-7M-90L.text" = "百灵—会议室";
 
 /* Class = "UIButton"; normalTitle = "会议室"; ObjectID = "jOt-YT-T9U"; */
 "jOt-YT-T9U.normalTitle" = "会议室";
@@ -53,5 +53,5 @@
 /* Class = "UILabel"; text = "扬声器"; ObjectID = "y5S-5u-Ki0"; */
 "y5S-5u-Ki0.text" = "扬声器";
 
-/* Class = "UILabel"; text = "SealRTC"; ObjectID = "za2-jT-LZl"; */
-"za2-jT-LZl.text" = "SealRTC";
+/* Class = "UILabel"; text = "RongCloudVideo"; ObjectID = "za2-jT-LZl"; */
+"za2-jT-LZl.text" = "RongCloudVideo";

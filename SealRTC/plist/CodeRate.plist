@@ -8,16 +8,6 @@
 		<key>max</key>
 		<real>2000</real>
 		<key>default</key>
-		<integer>320</integer>
-		<key>step</key>
-		<integer>10</integer>
-	</dict>
-	<dict>
-		<key>min</key>
-		<integer>100</integer>
-		<key>max</key>
-		<real>2000</real>
-		<key>default</key>
 		<integer>500</integer>
 		<key>step</key>
 		<integer>10</integer>
@@ -28,7 +18,17 @@
 		<key>max</key>
 		<real>2000</real>
 		<key>default</key>
-		<real>1500</real>
+		<integer>1000</integer>
+		<key>step</key>
+		<integer>10</integer>
+	</dict>
+	<dict>
+		<key>min</key>
+		<integer>100</integer>
+		<key>max</key>
+		<real>3000</real>
+		<key>default</key>
+		<real>2500</real>
 		<key>step</key>
 		<integer>50</integer>
 	</dict>
@@ -36,9 +36,9 @@
 		<key>min</key>
 		<integer>100</integer>
 		<key>max</key>
-		<real>2500</real>
+		<integer>5000</integer>
 		<key>default</key>
-		<integer>2500</integer>
+		<real>4500</real>
 		<key>step</key>
 		<integer>50</integer>
 	</dict>

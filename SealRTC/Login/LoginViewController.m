@@ -1,67 +1,55 @@
 //
 //  LoginViewController.m
-//  RongRTCTalk
+//  SealRTC
 //
 //  Created by LiuLinhong on 2016/11/16.
 //  Copyright © 2016年 Beijing Rongcloud Network Technology Co. , Ltd. All rights reserved.
 //
 
 #import "LoginViewController.h"
-#import "RongRTCTalkAppDelegate.h"
+#import "SealRTCAppDelegate.h"
 #import "ChatViewController.h"
 #import "CommonUtility.h"
 #import <AVFoundation/AVFoundation.h>
 #import "NSString+length.h"
+#import "RTHttpNetworkWorker.h"
 
-#define kEverLaunched @"everLaunched"
-#define kDefaultRoomNumber @"defaultRoomNumber"
-#define kCustomUserName @"kCustomUserName"
-#define kRoomNumberMin 100000
-#define kRoomNumberMax 999999
-#define kTempCache [NSTemporaryDirectory() stringByAppendingPathComponent:@"Cache"]
 
-#define kNAME @"name"
-#define kCMP @"cmp"
-#define kCMPTLS @"cmptls"
-#define kSNIFFER @"sniffer"
-#define kSNIFFERTLS @"sniffertls"
-#define kTOKEN @"token"
-#define kDER @"der"
-#define kTCP @"tcp"
-#define kQUIC @"quic"
-
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSInteger, TextFieldInputError)
+{
     TextFieldInputErrorNil,
     TextFieldInputErrorLength,
     TextFieldInputErrorIllegal,
-    TextFieldInputErrorNone,
-} TextFieldInputError;
+    TextFieldInputErrorNone
+};
 
+typedef NS_ENUM(NSInteger, JoinRoomState)
+{
+    JoinRoom_Token,
+    JoinRoom_Connecting,
+    JoinRoom_Disconnected,
+};
 
 static NSString * const SegueIdentifierChat = @"Chat";
-static NSString *staticKeyToken;
 static NSDictionary *selectedServer;
-static RongRTCConnectionState connectionState = -1;
 
-@interface LoginViewController ()
+@interface LoginViewController ()<UIAlertViewDelegate>
 {
     NSUserDefaults *settingUserDefaults;
-    NSInteger pressedRadioTag;
     TextFieldInputError inputError;
+    JoinRoomState joinRoomState;
+    NSTimer *countdownTimer;
+    NSUInteger countdown;
 }
-
-@property (nonatomic, assign) RongRTCConnectionMode connectionType;
-
 @end
 
+
 @implementation LoginViewController
-@synthesize isRoomNumberInput = isRoomNumberInput;
-@synthesize connectionType = connectionType;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    isRoomNumberInput = NO;
+    self.isRoomNumberInput = YES;
     __weak typeof(self) weakSelf = self;
     
     self.networkReachability = [Reachability reachabilityForInternetConnection];
@@ -69,14 +57,12 @@ static RongRTCConnectionState connectionState = -1;
     self.currentNetworkStatus = [self.networkReachability currentReachabilityStatus];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginReachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     
-    [self initUserDefaults];
-    self.loginRongRTCEngineDelegateImpl = [[LoginRongRTCEngineDelegateImpl alloc] initWithViewController:self];
+    kLoginManager;
+    
     self.loginTextFieldDelegateImpl = [[LoginTextFieldDelegateImpl alloc] initWithViewController:self];
-
     self.settingViewController = [[SettingViewController alloc] init];
     self.settingViewController.loginVC = self;
     self.loginViewBuilder = [[LoginViewBuilder alloc] initWithViewController:self];
-    inputError = TextFieldInputErrorNone;
     
     [UIView animateWithDuration:0.4 animations:^{
         weakSelf.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
@@ -85,35 +71,21 @@ static RongRTCConnectionState connectionState = -1;
     } completion:^(BOOL finished) {
     }];
     
-    //create random room number, save to userDefaults for later on
-    NSString *enterRoomNumber,*customUserName;
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    BOOL everLaunched = [userDefaults boolForKey:kEverLaunched];
-    if (everLaunched)
-    {
-        enterRoomNumber = [userDefaults valueForKey:kDefaultRoomNumber];
-        customUserName = [userDefaults valueForKey:kCustomUserName];
-    }
-    else
-    {
-        [userDefaults setBool:YES forKey:kEverLaunched];
-        NSInteger randomRoomNumber = [CommonUtility getRandomNumber:kRoomNumberMin to:kRoomNumberMax];
-        enterRoomNumber = [NSString stringWithFormat:@"%zd", randomRoomNumber];
-        [userDefaults setObject:enterRoomNumber forKey:kDefaultRoomNumber];
-        [userDefaults synchronize];
-    }
-
-    self.loginViewBuilder.roomNumberTextField.text = enterRoomNumber;
-    self.loginViewBuilder.roomPasswordTextField.text = @"123456";
-    if (customUserName) {
-        self.loginViewBuilder.userNameTextField.text = customUserName;
-    }
+    self.loginViewBuilder.roomNumberTextField.text = kLoginManager.roomNumber;
+    self.loginViewBuilder.phoneNumTextField.text = kLoginManager.phoneNumber;
+    self.loginViewBuilder.phoneNumLoginTextField.text = kLoginManager.phoneNumber;
+    joinRoomState = JoinRoom_Token;
     
-    connectionState = RongRTC_ConnectionState_Disconnected;
-
-    [self userNameTextFieldDidChange:self.loginViewBuilder.userNameTextField];
-    isRoomNumberInput = YES;
-    [self updateJoinRoomButtonSocket:NO textFieldInput:isRoomNumberInput];
+    [self updateSendSMSButtonEnable:[CommonUtility validateContactNumber:kLoginManager.phoneNumber]];
+    
+    if ([self.loginViewBuilder.roomNumberTextField.text isEqualToString:@""])
+        self.isRoomNumberInput = NO;
+    [self updateJoinRoomButtonEnable:NO textFieldInput:self.isRoomNumberInput];
+    
+    [[RCIMClient sharedRCIMClient] initWithAppKey:RCIMAPPKey];
+    [[RCIMClient sharedRCIMClient] setServerInfo:RCIMNavURL fileServer:RCIMFileURL];
+    [[RCIMClient sharedRCIMClient] setRCConnectionStatusChangeDelegate:self];
+    [[RCIMClient sharedRCIMClient] setLogLevel:RC_Log_Level_Info];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -122,62 +94,12 @@ static RongRTCConnectionState connectionState = -1;
     [UIApplication sharedApplication].idleTimerDisabled = NO;
     self.navigationController.navigationBarHidden = YES;
     
-    RongRTCTalkAppDelegate *appDelegate = (RongRTCTalkAppDelegate *)[UIApplication sharedApplication].delegate;
+    SealRTCAppDelegate *appDelegate = (SealRTCAppDelegate *)[UIApplication sharedApplication].delegate;
     appDelegate.isForcePortrait = YES;
     [appDelegate application:[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
     
-    self.userDefinedToken = [settingUserDefaults objectForKey:KeyUserDefinedToken];
-    self.userDefinedCMP = [settingUserDefaults objectForKey:KeyUserDefinedCMP];
-    self.userDefinedAppKey =  [settingUserDefaults objectForKey:KeyUserDefinedAppKey];
-    
-    if (self.userDefinedCMP && self.userDefinedToken && self.userDefinedAppKey) {
-        connectionType =  [[settingUserDefaults valueForKey:Key_ConnectionMode] integerValue];
-        if ([self.userDefinedCMP containsString:@"quic://"] && connectionType != RongRTC_ConnectionMode_QUIC) {
-            connectionType = RongRTC_ConnectionMode_QUIC;
-            [settingUserDefaults setInteger: connectionType forKey:Key_ConnectionMode];
-            [settingUserDefaults synchronize];
-        }else if (![self.userDefinedCMP containsString:@"quic://"] && connectionType == RongRTC_ConnectionMode_QUIC) {
-            connectionType = RongRTC_ConnectionMode_TCP;
-            [settingUserDefaults setInteger: connectionType forKey:Key_ConnectionMode];
-            [settingUserDefaults synchronize];
-        }
-        
-        [self updateJoinRoomButtonSocket:NO textFieldInput:self.isRoomNumberInput];
-        _isUserDefinedTokenAndCMP = YES;
-        self.tokenURL = [NSURL URLWithString:self.userDefinedToken];
-        [self getKeyTokenFromServer:@""];
-    }
-    else
-    {
-        _isUserDefinedTokenAndCMP = NO;
-        RongRTCConnectionMode currentMode =  [[settingUserDefaults valueForKey:Key_ConnectionMode] integerValue];
-        
-        if (kIsCustomVersion)
-        {
-            DLog(@"LLH...... kIsCustomVersion YES");
-            self.tokenURL = [NSURL URLWithString:kURLTokenCustom];
-            [self getKeyTokenFromServer:@""];
-        }
-        else
-        {
-            if (currentMode != connectionType && self.tokenURL)
-            {
-                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                [userDefaults setObject:nil forKey:@"RongRTCServerConfigList"];
-                [userDefaults synchronize];
-                connectionType = currentMode;
-                [self getKeyTokenFromServer:@""];
-            }
-            connectionType = currentMode;
-            if (!self.tokenURL || (currentMode != connectionType)){
-                [self requestPRODConfigList];
-            }
-        }
-    }
-    
-    [self userNameTextFieldDidChange:self.loginViewBuilder.userNameTextField];
-    if (self.rongRTCEngine.delegate && self.rongRTCEngine.delegate != self.loginRongRTCEngineDelegateImpl)
-        self.rongRTCEngine.delegate = self.loginRongRTCEngineDelegateImpl;
+    DLog(@"Cache keyToken: %@", kLoginManager.keyToken);
+    [self updateJoinRoomButtonEnable:YES textFieldInput:self.isRoomNumberInput];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -193,68 +115,18 @@ static RongRTCConnectionState connectionState = -1;
     Reachability *reachability = [noti object];
     self.currentNetworkStatus = [reachability currentReachabilityStatus];
     BOOL success = (self.currentNetworkStatus == NotReachable) ? NO : YES;
-    [self updateJoinRoomButtonSocket:success textFieldInput:isRoomNumberInput];
-}
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
+    if ((self.currentNetworkStatus == NotReachable))
+        joinRoomState = JoinRoom_Disconnected;
+    else
+        joinRoomState = JoinRoom_Connecting;
+    
+    [self updateJoinRoomButtonEnable:success textFieldInput:self.isRoomNumberInput];
 }
 
 - (BOOL)canBecomeFirstResponder
 {
     return YES;
 }
-
-#pragma mark - validate for username
-- (BOOL)validateUserName:(NSString *)userName withRegex:(NSString *)regex
-{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [predicate evaluateWithObject:userName];
-}
-
-- (BOOL)isContainedIllegalChar:(NSString *)userName
-{
-    for (NSUInteger i = 0 ; i < userName.length; i++) {
-        NSString *c = [NSString stringWithFormat:@"%C",[userName characterAtIndex:i]];
-        if ([IllegelCharSet containsString:c]) {
-            return YES;
-        }
-    }
-    return NO;
-}
-
-- (NSString *)strimCharacter:(NSString *)userName
-{
-    NSString *nickName = userName;
-    if ([self validateUserName:userName withRegex:RegexIsChinese]) {
-        if (userName.length > 4) {
-            nickName = [userName substringWithRange:NSMakeRange(userName.length-4, 4)];
-        }
-    }else{
-        //
-        NSArray *subNames = [userName componentsSeparatedByString:@" "];
-        if (subNames.count > 1) {
-            nickName = subNames.lastObject;
-        }else{
-            if (userName.length > 5) {
-                nickName = [userName substringWithRange:NSMakeRange(userName.length-5, 5)];
-            }else
-               nickName = userName;
-        }
-    }
-    return nickName;
-}
-
-#pragma mark - orientation
-//- (BOOL)shouldAutorotate
-//{
-//    return YES;
-//}
-//
-//- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-//{
-//    return UIInterfaceOrientationMaskAll;
-//}
 
 - (BOOL)prefersStatusBarHidden
 {
@@ -267,362 +139,47 @@ static RongRTCConnectionState connectionState = -1;
     return selectedServer;
 }
 
-- (void)requestPRODConfigList
-{
-    __weak typeof(self) weakSelf = self;
-    switch (connectionType) {
-        case RongRTC_ConnectionMode_TCP:
-        {
-            NSURLSession *session = [NSURLSession sharedSession];
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kURLConfigListProd]
-                                                                   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                                                               timeoutInterval:30.0];
-            request.HTTPMethod = @"Get";
-            
-            NSURLSessionTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                DLog(@"LLH...... PROD ConfigList response");
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    if (!data)
-                    {
-                        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                        weakSelf.configListArray = [userDefaults valueForKey:@"RongRTCServerPRODConfigList"];
-                        DLog(@"LLH...... PROD ConfigList response data is nil, use cache data! PROD configList: %@", weakSelf.configListArray);
-                        if (weakSelf.configListArray && [weakSelf.configListArray count] > 0)
-                        {
-                            NSDictionary *configDic = (NSDictionary *)weakSelf.configListArray[0];
-                            NSArray *configDicKeys = [configDic allKeys];
-                            if ([configDicKeys containsObject:kTOKEN])
-                            {
-                                weakSelf.tokenURL = [NSURL URLWithString:configDic[kTOKEN]];
-                                [weakSelf getKeyTokenFromServer:@""];
-                            }else if ([configDicKeys containsObject:kTCP])
-                            {
-                                NSDictionary *tcp = configDic[kTCP];
-                                weakSelf.tokenURL = [NSURL URLWithString:tcp[kTOKEN]];
-                                [weakSelf getKeyTokenFromServer:@""];
-                            }
-                            else
-                                [weakSelf requestPRODConfigList];
-                        }
-                        return;
-                    }
-                    
-                    NSError *err;
-                    weakSelf.configListArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&err];
-                    DLog(@"LLH...... queried PROD configList: %@", weakSelf.configListArray);
-                    if (weakSelf.configListArray && [weakSelf.configListArray count] > 0)
-                    {
-                        NSDictionary *configDic = (NSDictionary *)weakSelf.configListArray[0];
-                        NSArray *configDicKeys = [configDic allKeys];
-                        if ([configDicKeys containsObject:kTOKEN])
-                        {
-                            weakSelf.tokenURL = [NSURL URLWithString:configDic[kTOKEN]];
-                            
-                            [weakSelf getKeyTokenFromServer:@""];
-                        }else if ([configDicKeys containsObject:kTCP])
-                        {
-                            NSDictionary *tcp = configDic[kTCP];
-                            weakSelf.tokenURL = [NSURL URLWithString:tcp[kTOKEN]];
-                            [weakSelf getKeyTokenFromServer:@""];
-                        }
-                        else
-                            [weakSelf requestPRODConfigList];
-                    }
-                    
-                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                    [userDefaults setObject:weakSelf.configListArray forKey:@"RongRTCServerPRODConfigList"];
-                    [userDefaults synchronize];
-
-                });
-            }];
-            
-            [task resume];
-            DLog(@"LLH...... request ConfigList");
-        }
-            break;
-            
-        default:
-        {
-        }
-            break;
-    }
-}
-
-- (void)getKeyTokenFromServer:(NSString *)selectedServer
-{
-    __weak typeof(self) weakSelf = self;
-    NSString *postBody = [NSString stringWithFormat:@"uid=%@&appid=%@", kDeviceUUID, kAPPKey];
-    if (_isUserDefinedTokenAndCMP) {
-        postBody = [NSString stringWithFormat:@"uid=%@&appid=%@", kDeviceUUID, self.userDefinedAppKey];
-    }
-    
-    switch (connectionType) {
-        case RongRTC_ConnectionMode_TCP:
-        {
-            NSURLSession *session = [NSURLSession sharedSession];
-            //    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.tokenURL];
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.tokenURL
-                                                                   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                                                               timeoutInterval:30.0];
-            
-            request.HTTPMethod = @"POST";
-            request.HTTPBody = [postBody dataUsingEncoding:NSUTF8StringEncoding];
-            
-            NSURLSessionTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                DLog(@"LLH...... token response");
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    
-                    if (!data)
-                    {
-                        DLog(@"LLH...... Token Response data is nil, ERROR!");
-                        dispatch_async(dispatch_get_main_queue(), ^(void) {
-                            [weakSelf updateJoinRoomButtonSocket:NO textFieldInput:weakSelf.isRoomNumberInput];
-                        });
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 5), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                            [weakSelf getKeyTokenFromServer:selectedServer];
-                        });
-                        
-                        return;
-                    }
-                    
-                    weakSelf.keyToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                    staticKeyToken = weakSelf.keyToken;
-                    DLog(@"LLH...... keyToken: %@", weakSelf.keyToken);
-                    
-                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                    NSArray *configListArray = [userDefaults valueForKey:@"RongRTCServerConfigList"];
-                    NSDictionary *configDic = (NSDictionary *)configListArray[0];
-
-                    NSString *cmpD = configDic[kCMP];
-                    NSString *tokenD = configDic[kTOKEN];
-                    if (!tokenD){
-                        if (weakSelf.connectionType == RongRTC_ConnectionMode_TCP) {
-                            NSDictionary *tcp = configDic[kTCP];
-                            tokenD = tcp[kTOKEN];
-                            cmpD = tcp[kCMP];
-                        }else
-                        {
-                            NSDictionary *quic = configDic[kQUIC];
-                            tokenD = quic[kTOKEN];
-                            cmpD = quic[kCMP];
-                        }
-                    }
-                    
-                    weakSelf.rongRTCEngine = nil;
-                    if (weakSelf.isUserDefinedTokenAndCMP && ![weakSelf.userDefinedCMP isEqualToString:cmpD]&& ![weakSelf.userDefinedToken isEqualToString:tokenD]) {
-                            weakSelf.rongRTCEngine = [[RongRTCEngine alloc] initEngine:weakSelf.userDefinedCMP];
-                            weakSelf.rongRTCEngine.engineTLSCertificateData = nil;
-//                            [weakSelf.RongRTCEngine setVideoParameters:[weakSelf configParameter]];
-                            [weakSelf.rongRTCEngine setDelegate:weakSelf.loginRongRTCEngineDelegateImpl];
-                            return;
-                        }
-                    
-                        if (kIsCustomVersion)
-                        {
-                            DLog(@"LLH...... kIsCustomVersion 1234 YES");
-                            weakSelf.rongRTCEngine = [[RongRTCEngine alloc] initEngine:kURLCMPCustom];
-                            weakSelf.rongRTCEngine.engineTLSCertificateData = nil;
-                        }
-                        else
-                        {
-                            DLog(@"LLH...... kIsCustomVersion 1234 NO");
-                            NSDictionary *configDic = (NSDictionary *)self.configListArray[0];
-                            NSString *cmp = configDic[kCMP];
-                            NSString *certURL = configDic[kDER];
-                            NSDictionary *quic = configDic[kQUIC];
-                            if (quic){
-                                switch (weakSelf.connectionType) {
-                                    case RongRTC_ConnectionMode_TCP:
-                                    {
-                                        NSDictionary *tcp = configDic[kTCP];
-                                        cmp = tcp[kCMP];
-                                        certURL = tcp[kDER];
-                                    }
-                                        break;
-                                        
-                                    default:
-                                    {
-                                        cmp = quic[kCMP];
-                                        certURL = quic[kDER];
-                                    }
-                                        break;
-                                }
-                            }
-                            
-                            if (certURL)
-                            {
-                                NSString *fileName = [NSString stringWithFormat:@"PROD%@", [certURL lastPathComponent]];
-                                NSString *certFilePath = [kTempCache stringByAppendingPathComponent:fileName];
-                                
-                                BOOL fileExist = [CommonUtility isDownloadFileExists:fileName atPath:kTempCache];
-                                if (!fileExist)
-                                {
-                                    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:certURL]];
-                                    [data writeToFile:certFilePath atomically:NO];
-                                }
-                                
-                                NSData *certData = [NSData dataWithContentsOfFile:certFilePath];
-                                weakSelf.rongRTCEngine = [[RongRTCEngine alloc] initEngine:cmp];
-                                weakSelf.rongRTCEngine.engineTLSCertificateData = certData;
-                            }
-                            else
-                            {
-                                weakSelf.rongRTCEngine = [[RongRTCEngine alloc] initEngine:cmp];
-                                weakSelf.rongRTCEngine.engineTLSCertificateData = nil;
-                            }
-                        }
-//                        [weakSelf.RongRTCEngine setVideoParameters:[weakSelf configParameter]];
-                        [weakSelf.rongRTCEngine setDelegate:weakSelf.loginRongRTCEngineDelegateImpl];
-                        
-                        dispatch_async(dispatch_get_main_queue(), ^(void) {
-                            [weakSelf userNameTextFieldDidChange:weakSelf.loginViewBuilder.userNameTextField];
-                        });
-                    });
-                }];
-                               
-                   [task resume];
-                   DLog(@"LLH...... token send request");
-        }
-            break;
-            
-        default:
-        {
-        }
-            break;
-    }
-}
-
-#pragma mark - init UserDefaults
-- (void)initUserDefaults
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Preferences"];
-    NSString *settingUserDefaultPath = [docDir stringByAppendingPathComponent:File_SettingUserDefaults_Plist];
-    BOOL isPlistExist = [CommonUtility isFileExistsAtPath:settingUserDefaultPath];
-    settingUserDefaults = [SettingViewController shareSettingUserDefaults];
-    
-    if (!isPlistExist)
-    {
-        [settingUserDefaults setObject:@(Value_Default_ResolutionRatio) forKey:Key_ResolutionRatio];
-        [settingUserDefaults setObject:@(Value_Default_FrameRate) forKey:Key_FrameRate];
-        [settingUserDefaults setObject:@(Value_Default_CodeRate) forKey:Key_CodeRate];
-        [settingUserDefaults setObject:@(Value_Default_Connection_Style) forKey:Key_ConnectionStyle];
-        [settingUserDefaults setObject:@(Value_Default_Coding_Style) forKey:Key_CodingStyle];
-        [settingUserDefaults setObject:@(Value_Default_MinCodeRate) forKey:Key_CodeRateMin];
-        [settingUserDefaults setObject:@(Value_Default_Observer) forKey:Key_Observer];
-        [settingUserDefaults setObject:@(Value_Default_GPUFilter) forKey:Key_GPUFilter];
-        [settingUserDefaults setObject:@(Value_Default_SRTPEncrypt) forKey:Key_SRTPEncrypt];
-        [settingUserDefaults setObject:@(Value_Default_ConnectionMode) forKey:Key_ConnectionMode];
-    }
-    
-    connectionType = [[settingUserDefaults valueForKey:Key_ConnectionMode] integerValue];
-    [settingUserDefaults setObject:@(Value_Default_CloseVideo) forKey:Key_CloseVideo];
-    [settingUserDefaults synchronize];
-}
-
 #pragma mark - room number text change
 - (void)roomNumberTextFieldDidChange:(UITextField *)textField
 {
-    if ([self.loginViewBuilder.userNameTextField.text isEqualToString:@""] || ([self.loginViewBuilder.roomNumberTextField.text isEqualToString:@""] || [self.loginViewBuilder.roomPasswordTextField.text isEqualToString:@""])) {
-        isRoomNumberInput = NO;
-    }else
-    {
-        if ([self validateUserName:self.loginViewBuilder.userNameTextField.text withRegex:RegexUserName]) {
-            isRoomNumberInput = YES;
-        }else{
-            isRoomNumberInput = NO;
-    }
+    if ([self.loginViewBuilder.roomNumberTextField.text isEqualToString:@""])
+        self.isRoomNumberInput = NO;
+    else
+        self.isRoomNumberInput = YES;
     
-    }
-    
-    NSString *userName = self.loginViewBuilder.userNameTextField.text ;
-    userName = [userName stringByReplacingOccurrencesOfString:@" " withString:@""];
-    if (userName.length == 0){
-        isRoomNumberInput = NO;
-    }
-    
-    self.currentNetworkStatus = [self.networkReachability currentReachabilityStatus];
-    BOOL success = (self.currentNetworkStatus == NotReachable) ? NO : YES;
-    if (!staticKeyToken){
-        isRoomNumberInput = NO;
-    }
-    [self updateJoinRoomButtonSocket:success textFieldInput:isRoomNumberInput];
+    [self updateJoinRoomButtonEnable:YES textFieldInput:self.isRoomNumberInput];
 }
 
-- (void)userNameTextFieldDidChange:(UITextField *)textField
+- (void)phoneNumTextFieldDidChange:(UITextField *)textField
 {
-    isRoomNumberInput = YES;
-    if ([self.loginViewBuilder.userNameTextField.text isEqualToString:@""] || ([self.loginViewBuilder.roomNumberTextField.text isEqualToString:@""] || [self.loginViewBuilder.roomPasswordTextField.text isEqualToString:@""])) {
-        isRoomNumberInput = NO;
+    if (countdown == 0) {
+        [self updateSendSMSButtonEnable:[CommonUtility validateContactNumber:textField.text]];
     }
-    
-    NSString *userName = self.loginViewBuilder.userNameTextField.text ;
-    userName = [userName stringByReplacingOccurrencesOfString:@" " withString:@""];
-    if (userName.length == 0){
-        isRoomNumberInput = NO;
-        inputError = TextFieldInputErrorNil;
-    }
-    
-    if ([self validateUserName:userName withRegex:RegexUserName] && ![self isContainedIllegalChar:userName]){
-        NSString *lang = [[textField textInputMode] primaryLanguage];
-        if ([lang isEqualToString:@"zh-Hans"]) {
-            UITextRange *selectedRange = [textField markedTextRange];
-            UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
-            if (!position) {
-                if ([userName getStringLengthOfBytes] > KMaxInpuNumber) {
-//                    textField.text = [userName subBytesOfstringToIndex:12];
-                    inputError = TextFieldInputErrorLength;
-                    isRoomNumberInput = NO;
-                }else
-                    inputError = TextFieldInputErrorNone;
-            }else
-                inputError = TextFieldInputErrorNone;
-        }else{
-            if ([userName getStringLengthOfBytes] > KMaxInpuNumber) {
-//                textField.text = [userName subBytesOfstringToIndex:12];
-                inputError = TextFieldInputErrorLength;
-                isRoomNumberInput = NO;
-            }else
-                inputError = TextFieldInputErrorNone;
+    else
+    {
+        if (![self.loginViewBuilder.validateSMSTextField.text isEqualToString:@""]
+            && [CommonUtility validateContactNumber:self.loginViewBuilder.phoneNumTextField.text])
+        {
+            [self updateValidateLogonButtonEnable:YES];
+        } else {
+            [self updateValidateLogonButtonEnable:NO];
         }
     }
-    else if ([userName getStringLengthOfBytes] > KMaxInpuNumber)
-    {
-        isRoomNumberInput = NO;
-        inputError = TextFieldInputErrorLength;
-    }
-    else{
-        isRoomNumberInput = NO;
-        inputError = TextFieldInputErrorIllegal;
-    }
-    
-    if (!staticKeyToken){
-        isRoomNumberInput = NO;
-    }
-    self.currentNetworkStatus = [self.networkReachability currentReachabilityStatus];
-    BOOL success = (self.currentNetworkStatus == NotReachable) ? NO : YES;
-    [self updateJoinRoomButtonSocket:success textFieldInput:isRoomNumberInput];
 }
 
-- (void)updateJoinRoomButtonSocket:(RongRTCConnectionState)state
+- (void)validateSMSTextFieldDidChange:(UITextField *)textField
 {
-    connectionState = state;
-    switch (state)
+    if (![self.loginViewBuilder.validateSMSTextField.text isEqualToString:@""]
+        && [CommonUtility validateContactNumber:self.loginViewBuilder.phoneNumTextField.text])
     {
-        case RongRTC_ConnectionState_Connected:
-            [self updateJoinRoomButtonSocket:YES textFieldInput:isRoomNumberInput];
-            break;
-        case RongRTC_ConnectionState_Disconnected:
-            [self updateJoinRoomButtonSocket:NO textFieldInput:isRoomNumberInput];
-            break;
-        default:
-            break;
+        [self updateValidateLogonButtonEnable:YES];
+    } else {
+        [self updateValidateLogonButtonEnable:NO];
     }
 }
 
 #pragma mark - change join button enable/unenable
-- (void)updateJoinRoomButtonSocket:(BOOL)success textFieldInput:(BOOL)input
+- (void)updateJoinRoomButtonEnable:(BOOL)success textFieldInput:(BOOL)input
 {
     dispatch_async(dispatch_get_main_queue(), ^{
     if (success && input)
@@ -639,74 +196,34 @@ static RongRTCConnectionState connectionState = -1;
         
         if (input)
         {
-            switch (inputError){
-                case TextFieldInputErrorIllegal:
+            switch (self->joinRoomState)
+            {
+//                case JoinRoom_Token:
+//                {
+//                    [self.loginViewBuilder.joinRoomButton setTitle:@"查询Token中" forState:UIControlStateNormal];
+//                    [self.loginViewBuilder.joinRoomButton setTitle:@"查询Token中" forState:UIControlStateHighlighted];
+//                }
+//                    break;
+                case JoinRoom_Connecting:
                 {
-                    [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_error_illegal", nil) forState:UIControlStateNormal];
-                    [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_error_illegal", nil) forState:UIControlStateHighlighted];
+                    [self.loginViewBuilder.joinRoomButton setTitle:@"连接中" forState:UIControlStateNormal];
+                    [self.loginViewBuilder.joinRoomButton setTitle:@"连接中" forState:UIControlStateHighlighted];
                 }
                     break;
-                case TextFieldInputErrorNil:
+                case JoinRoom_Disconnected:
                 {
-                    [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_error_nil", nil) forState:UIControlStateNormal];
-                    [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_error_nil", nil) forState:UIControlStateHighlighted];
-                }
-                    break;
-                case TextFieldInputErrorLength:
-                {
-                    [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_error_length", nil) forState:UIControlStateNormal];
-                    [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_error_length", nil) forState:UIControlStateHighlighted];
+                    [self.loginViewBuilder.joinRoomButton setTitle:@"当前网络不可用，请检查网络设置" forState:UIControlStateNormal];
+                    [self.loginViewBuilder.joinRoomButton setTitle:@"当前网络不可用，请检查网络设置" forState:UIControlStateHighlighted];
                 }
                     break;
                 default:
-                {
-                    [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_login_meeting_room", nil) forState:UIControlStateNormal];
-                    [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_login_meeting_room", nil) forState:UIControlStateHighlighted];
-
-                }
                     break;
             }
         }
         else
         {
-            if ([self.loginViewBuilder.userNameTextField.text isEqualToString:@""] && [self.loginViewBuilder.roomNumberTextField.text isEqualToString:@""]){
-                [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_need_input", nil) forState:UIControlStateNormal];
-                [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_need_input", nil) forState:UIControlStateHighlighted];
-            }else if ([self.loginViewBuilder.userNameTextField.text isEqualToString:@""]){
-                [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_need_user_name", nil) forState:UIControlStateNormal];
-                [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_need_user_name", nil) forState:UIControlStateHighlighted];
-            }else if ([self.loginViewBuilder.roomNumberTextField.text isEqualToString:@""]){
-                [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_need_room_number", nil) forState:UIControlStateNormal];
-                [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_need_room_number", nil) forState:UIControlStateHighlighted];
-            }else{
-                switch (inputError){
-                    case TextFieldInputErrorIllegal:
-                    {
-                        [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_error_illegal", nil) forState:UIControlStateNormal];
-                        [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_error_illegal", nil) forState:UIControlStateHighlighted];
-                    }
-                        break;
-                    case TextFieldInputErrorNil:
-                    {
-                        [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_error_nil", nil) forState:UIControlStateNormal];
-                        [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_error_nil", nil) forState:UIControlStateHighlighted];
-                    }
-                        break;
-                    case TextFieldInputErrorLength:
-                    {
-                        [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_error_length", nil) forState:UIControlStateNormal];
-                        [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_error_length", nil) forState:UIControlStateHighlighted];
-                    }
-                        break;
-                    default:
-                    {
-                        [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_login_meeting_room", nil) forState:UIControlStateNormal];
-                        [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_login_meeting_room", nil) forState:UIControlStateHighlighted];
-                        
-                    }
-                        break;
-                }
-            }
+            [self.loginViewBuilder.joinRoomButton setTitle:@"请输入房间号" forState:UIControlStateNormal];
+            [self.loginViewBuilder.joinRoomButton setTitle:@"请输入房间号" forState:UIControlStateHighlighted];
         }
     }
     });
@@ -717,34 +234,91 @@ static RongRTCConnectionState connectionState = -1;
 {
     if (![segue.identifier isEqualToString:SegueIdentifierChat])
         return;
-    
-    ChatViewController *chatViewController = segue.destinationViewController;
-    chatViewController.roomName = self.loginViewBuilder.roomNumberTextField.text;
-    chatViewController.chatType = ChatTypeVideo;
-    chatViewController.userName = self.loginViewBuilder.userNameTextField.text;
+}
+
+- (void)navToChatViewController
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.loginViewBuilder.roomNumberTextField resignFirstResponder];
+        if (![self.navigationController.topViewController isKindOfClass:[ChatViewController class]]){
+            [self performSegueWithIdentifier:SegueIdentifierChat sender:self.loginViewBuilder.joinRoomButton];
+        }
+    });
 }
 
 #pragma mark - click join Button
 - (void)joinRoomButtonPressed:(id)sender
 {
-    if ([self.loginViewBuilder.roomNumberTextField.text isEqualToString:@""] || self.currentNetworkStatus == NotReachable)
-        return;
-    
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:self.loginViewBuilder.roomNumberTextField.text forKey:kDefaultRoomNumber];
-    [userDefaults setObject:self.loginViewBuilder.userNameTextField.text forKey:kCustomUserName];
-    [userDefaults synchronize];
-    [self.loginViewBuilder.roomNumberTextField resignFirstResponder];
-    [self.loginViewBuilder.roomPasswordTextField resignFirstResponder];
-    [self.loginViewBuilder.userNameTextField resignFirstResponder];
+    kLoginManager.roomNumber = self.loginViewBuilder.roomNumberTextField.text;
+    kLoginManager.phoneNumber = self.loginViewBuilder.phoneNumLoginTextField.text;
+    DLog(@"Cache keyToken: %@", kLoginManager.keyToken);
+    if (!kLoginManager.keyToken || kLoginManager.keyToken.length == 0) {
+        self.loginViewBuilder.phoneNumTextField.text = kLoginManager.phoneNumber;
+        [self.loginViewBuilder showValidateView:YES];
+        [self updateSendSMSButtonEnable:[CommonUtility validateContactNumber:kLoginManager.phoneNumber]];
+    }
+    else if (kLoginManager.isIMConnectionSucc) {
+        [self navToChatViewController];
+    }
+    else {
+        [[RCIMClient sharedRCIMClient] connectWithToken:kLoginManager.keyToken
+                                                success:^(NSString *userId) {
+                                                    DLog(@"MClient connectWithToken Success userId: %@", userId);
+                                                    [self navToChatViewController];
+                                                }
+                                                  error:^(RCConnectErrorCode status) {
+                                                      DLog(@"MClient connectWithToken Error: %zd", status);
+                                                      if (status == RC_CONN_TOKEN_INCORRECT) {
+                                                          [self.loginViewBuilder showValidateView:YES];
+                                                      }
+                                                  }
+                                         tokenIncorrect:^{
+                                             DLog(@"MClient connectWithToken tokenIncorrect: ");
+                                             [self.loginViewBuilder showValidateView:YES];
+                                         }];
+    }
+}
 
-    if (![self.navigationController.topViewController isKindOfClass:[ChatViewController class]])
-        [self performSegueWithIdentifier:SegueIdentifierChat sender:sender];
+#pragma mark - click send SMS button
+- (void)sendSMSButtonPressed:(id)sender
+{
+    [self startSendSMSTimer];
+    [[RTHttpNetworkWorker shareInstance] fetchSMSValidateCode:self.loginViewBuilder.phoneNumTextField.text success:^(NSString * _Nonnull code) {
+        DLog(@"send SMS respond code: %@", code);
+    } error:^(NSError * _Nonnull error) {
+        DLog(@"send SMS request Error: %@", error);
+    }];
+}
+
+#pragma mark - click validate logon button
+- (void)validateLogonButtonPressed:(id)sender
+{
+    [[RTHttpNetworkWorker shareInstance] validateSMSPhoneNum:self.loginViewBuilder.phoneNumTextField.text code:self.loginViewBuilder.validateSMSTextField.text response:^(NSDictionary * _Nonnull respDict) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSInteger code = [respDict[@"code"] integerValue];
+            if (code == 200) {
+                [self.loginViewBuilder showValidateView:NO];
+                kLoginManager.phoneNumber = self.loginViewBuilder.phoneNumTextField.text;
+                self.loginViewBuilder.phoneNumLoginTextField.text = kLoginManager.phoneNumber;
+                
+                kLoginManager.keyToken = respDict[@"result"][@"token"];
+                kLoginManager.isLoginTokenSucc = YES;
+                self->joinRoomState = JoinRoom_Connecting;
+                [self updateJoinRoomButtonEnable:YES textFieldInput:self.isRoomNumberInput];
+            }
+            else {
+                self.loginViewBuilder.alertLabel.text = @"验证码错误, 请重新获取";
+            }
+        });
+    } error:^(NSError * _Nonnull error) {
+        self.loginViewBuilder.alertLabel.text = @"验证码错误, 请重新获取";
+    }];
 }
 
 #pragma mark - click setting button
 - (void)loginSettingButtonPressed
 {
+    kLoginManager.isCloseCamera = NO;
     if (![self.navigationController.topViewController isKindOfClass:[SettingViewController class]])
         [self.navigationController pushViewController:self.settingViewController animated:YES];
 }
@@ -752,23 +326,29 @@ static RongRTCConnectionState connectionState = -1;
 #pragma mark - click redio button
 - (void)onRadioButtonValueChanged:(RadioButton *)radioButton
 {
-    //0:default  1:close video  2:observer
-    settingUserDefaults = [SettingViewController shareSettingUserDefaults];
-    if (radioButton.selected)
+    if (radioButton.tag == 0)
     {
-        pressedRadioTag = radioButton.tag+1;
-        [settingUserDefaults setObject:@(pressedRadioTag) forKey:Key_CloseVideo];
-        DLog(@"LLH...... RadioButton Selected: %@", radioButton.titleLabel.text);
+        if (radioButton.selected)
+        {
+            kLoginManager.isCloseCamera = YES;
+            kLoginManager.isObserver = NO;
+        }
+        else
+            kLoginManager.isCloseCamera = NO;
     }
-    else if (pressedRadioTag == radioButton.tag+1)
+    else if (radioButton.tag == 1)
     {
-        [settingUserDefaults setObject:@(Value_Default_CloseVideo) forKey:Key_CloseVideo];
-        DLog(@"LLH...... RadioButton Selected: 音频 + 视频");
+        if (radioButton.selected)
+        {
+            kLoginManager.isCloseCamera = NO;
+            kLoginManager.isObserver = YES;
+        }
+        else
+            kLoginManager.isObserver = NO;
     }
     
-    [settingUserDefaults synchronize];
     [self.loginViewBuilder.roomNumberTextField resignFirstResponder];
-    [self.loginViewBuilder.roomPasswordTextField resignFirstResponder];
+    [self.loginViewBuilder.phoneNumLoginTextField resignFirstResponder];
 }
 
 #pragma mark - gesture selector method
@@ -777,24 +357,71 @@ static RongRTCConnectionState connectionState = -1;
     [self.view endEditing:YES];
 }
 
-+ (NSString *)getKeyToken
+#pragma mark - Private
+- (void)startSendSMSTimer
 {
-    return staticKeyToken;
+    if (countdown == 0 && !countdownTimer)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self updateSendSMSButtonEnable:NO];
+            NSString *cTime = [NSString stringWithFormat:@"60%@", NSLocalizedString(@"login_input_count_down_sec", nil)];
+            [self.loginViewBuilder.sendSMSButton setTitle:cTime forState:UIControlStateNormal];
+            [self.loginViewBuilder.sendSMSButton setTitle:cTime forState:UIControlStateHighlighted];
+            
+            self->countdownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateCountDownLabel) userInfo:nil repeats:YES];
+        });
+    }
 }
 
-+ (void)setConnectionState:(RongRTCConnectionState)state
+- (void)updateCountDownLabel
 {
-    connectionState = state;
+    countdown++;
+    if (countdown < 60) {
+        NSInteger cdSec = 60 - countdown;
+        NSString *cTime = [NSString stringWithFormat:@"%zd%@", cdSec, NSLocalizedString(@"login_input_count_down_sec", nil)];
+        [self.loginViewBuilder.sendSMSButton setTitle:cTime forState:UIControlStateNormal];
+        [self.loginViewBuilder.sendSMSButton setTitle:cTime forState:UIControlStateHighlighted];
+    }
+    else {
+        countdown = 0;
+        [countdownTimer invalidate];
+        countdownTimer = nil;
+        [self updateSendSMSButtonEnable:[CommonUtility validateContactNumber:self.loginViewBuilder.phoneNumTextField.text]];
+        [self.loginViewBuilder.sendSMSButton setTitle:NSLocalizedString(@"login_input_phone_send_sms", nil) forState:UIControlStateNormal];
+        [self.loginViewBuilder.sendSMSButton setTitle:NSLocalizedString(@"login_input_phone_send_sms", nil) forState:UIControlStateHighlighted];
+    }
 }
 
-- (void)onLoginDeviceOrientationChange
+- (void)updateSendSMSButtonEnable:(BOOL)isEnable
 {
-    [self.loginViewBuilder reloadLoginView];
+    self.loginViewBuilder.sendSMSButton.enabled = isEnable;
+    self.loginViewBuilder.sendSMSButton.backgroundColor = isEnable ? JoinButtonEnableBackgroundColor : JoinButtonUnableBackgroundColor;
 }
 
-- (void)didReceiveMemoryWarning
+- (void)updateValidateLogonButtonEnable:(BOOL)isEnable
 {
-    [super didReceiveMemoryWarning];
+    self.loginViewBuilder.validateLogonButton.enabled = isEnable;
+    self.loginViewBuilder.validateLogonButton.backgroundColor = isEnable ? JoinButtonEnableBackgroundColor : JoinButtonUnableBackgroundColor;
+}
+
+#pragma mark - RCConnectionStatusChangeDelegate
+- (void)onConnectionStatusChanged:(RCConnectionStatus)status
+{
+    switch (status) {
+        case ConnectionStatus_Connected:
+        {
+            kLoginManager.isIMConnectionSucc = YES;
+            [self updateJoinRoomButtonEnable:kLoginManager.isIMConnectionSucc textFieldInput:self.isRoomNumberInput];
+        }
+            break;
+        case ConnectionStatus_Unconnected:
+        {
+            kLoginManager.isIMConnectionSucc = NO;
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 @end

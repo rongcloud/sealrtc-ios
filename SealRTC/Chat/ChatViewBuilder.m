@@ -10,18 +10,18 @@
 #import "ChatViewController.h"
 #import "CommonUtility.h"
 
+#define MenuButtonCount 2
+
 @interface ChatViewBuilder ()
 {
-    UIView *infoView;
     ChatBubbleMenuViewDelegateImpl *chatBubbleMenuViewDelegateImpl;
     BOOL isLeftDisplay, isRightDisplay;
 }
 
 @end
 
-@implementation ChatViewBuilder
-@synthesize upMenuView = upMenuView;
 
+@implementation ChatViewBuilder
 
 - (instancetype)initWithViewController:(UIViewController *)vc
 {
@@ -29,51 +29,39 @@
     if (self)
     {
         self.chatViewController = (ChatViewController *) vc;
+        
+        [self initInfoLabel];
+        [self initSwipeGesture];
+        isLeftDisplay = NO;
+        isRightDisplay = NO;
+        
         [self initView];
-        [self initTapGesture];
     }
     return self;
 }
 
 - (void)initView
 {
+    // 挂断按钮
     self.hungUpButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.hungUpButton.frame = CGRectMake(0, 0, 44, 44);
-    
     NSString *deviceModel = [UIDevice currentDevice].model;
     if ([deviceModel containsString:@"iPad"])
         self.hungUpButton.center = CGPointMake(ScreenWidth/2, ScreenHeight - 44);
     else
-        self.hungUpButton.center = CGPointMake(ScreenWidth/2, (ScreenHeight - (TitleHeight + self.chatViewController.videoHeight))/2 + (TitleHeight + self.chatViewController.videoHeight));
+        self.hungUpButton.center = CGPointMake(ScreenWidth/2, ScreenHeight-44);
     
-    [CommonUtility setButtonImage:self.hungUpButton imageName:@"chat_hung_up"];
     [self.hungUpButton addTarget:self.chatViewController action:@selector(didClickHungUpButton) forControlEvents:UIControlEventTouchUpInside];
     self.hungUpButton.backgroundColor = redButtonBackgroundColor;
     self.hungUpButton.layer.masksToBounds = YES;
     self.hungUpButton.layer.cornerRadius = 22.f;
-//    [self.hungUpButton setEnabled:NO];
     [self.chatViewController.view addSubview:self.hungUpButton];
+    [CommonUtility setButtonImage:self.hungUpButton imageName:@"chat_hung_up"];
     
-    
-    self.rotateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.rotateButton.frame = CGRectMake(0, 0, 36, 36);
-    if ([deviceModel containsString:@"iPad"])
-        self.rotateButton.center = CGPointMake(16.f+18.f, ScreenHeight - 44);
-    else
-        self.rotateButton.center = CGPointMake(16.f+18.f, (ScreenHeight - (TitleHeight + self.chatViewController.videoHeight))/2 + (TitleHeight + self.chatViewController.videoHeight));
-    
-    self.rotateButton.hidden = YES;
-    [self.rotateButton addTarget:self.chatViewController action:@selector(didcClickRotateButton:) forControlEvents:UIControlEventTouchUpInside];
-    self.rotateButton.backgroundColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
-    self.rotateButton.tintColor = [UIColor blackColor];
-    
-    [CommonUtility setButtonImage:self.rotateButton imageName:@"chat_rotate_off"];
-    self.rotateButton.layer.masksToBounds = YES;
-    self.rotateButton.layer.cornerRadius = 18.f;
-    [self.chatViewController.view addSubview:self.rotateButton];
-    
+    // 开/关摄像头按钮
     self.openCameraButton = [UIButton buttonWithType:UIButtonTypeSystem];
     self.openCameraButton.frame = CGRectMake(ScreenWidth/2 - 120.f - 44.f, self.hungUpButton.frame.origin.y, 44.f, 44.f);
+    self.openCameraButton.center = CGPointMake(ScreenWidth/2 - ButtonDistance - 44/2, ScreenHeight-44);
     self.openCameraButton.layer.cornerRadius = 44.f / 2.f;
     self.openCameraButton.backgroundColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
     self.openCameraButton.clipsToBounds = YES;
@@ -82,8 +70,10 @@
     [self.chatViewController.view addSubview:self.openCameraButton];
     [CommonUtility setButtonImage:self.openCameraButton imageName:@"chat_open_camera"];
     
+    // 开/关麦克风按钮
     self.microphoneOnOffButton = [UIButton buttonWithType:UIButtonTypeSystem];
     self.microphoneOnOffButton.frame = CGRectMake(ScreenWidth/2 + 120.f, self.hungUpButton.frame.origin.y, 44.f, 44.f);
+    self.microphoneOnOffButton.center = CGPointMake(ScreenWidth/2 + ButtonDistance+44/2, ScreenHeight-44);
     self.microphoneOnOffButton.layer.cornerRadius = 44.f / 2.f;
     self.microphoneOnOffButton.backgroundColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
     self.microphoneOnOffButton.clipsToBounds = YES;
@@ -91,32 +81,9 @@
     [self.microphoneOnOffButton setTintColor:[UIColor blackColor]];
     [self.chatViewController.view addSubview:self.microphoneOnOffButton];
     [CommonUtility setButtonImage:self.microphoneOnOffButton imageName:@"chat_microphone_on"];
-
+    
     [self initMenuButton];
-    
-    self.playbackModeButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.playbackModeButton.frame = CGRectMake(self.chatViewController.view.frame.size.width - self.chatViewController.homeImageView.frame.size.width - 16.f, self.upMenuView.frame.origin.y - 56.0, 36.f, 36.f);
-    
-    self.playbackModeButton.layer.cornerRadius = 36.f / 2.f;
-    self.playbackModeButton.backgroundColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
-    self.playbackModeButton.clipsToBounds = YES;
-    [self.playbackModeButton addTarget:self.chatViewController action:@selector(didClickPlaybackModeButton:) forControlEvents:UIControlEventTouchUpInside];
-    [self.playbackModeButton setTintColor:[UIColor blackColor]];
-    [self.chatViewController.view addSubview:self.playbackModeButton];
-    [CommonUtility setButtonImage:self.playbackModeButton imageName:@"chat_hd"];
-    [self.chatViewController.view addSubview:self.playbackModeButton];
-    self.playbackModeButton.center = CGPointMake(self.upMenuView.center.x, self.upMenuView.frame.origin.y - 30.0);
-    
-    self.hungUpButton.center = CGPointMake(ScreenWidth/2, ScreenHeight-ButtonWidth);
-    self.openCameraButton.center = CGPointMake(ScreenWidth/2 - ButtonDistance - ButtonWidth/2, ScreenHeight-ButtonWidth);
-    self.microphoneOnOffButton.center = CGPointMake(ScreenWidth/2 + ButtonDistance+ButtonWidth/2, ScreenHeight-ButtonWidth);
 }
-
-- (void)reloadChatView
-{
-    self.hungUpButton.center = CGPointMake(ScreenHeight/2, ScreenWidth - 44);
-    upMenuView.frame = CGRectMake(self.chatViewController.view.frame.size.height - self.chatViewController.homeImageView.frame.size.height - 16.f, ScreenWidth - 60, self.chatViewController.homeImageView.frame.size.height, self.chatViewController.homeImageView.frame.size.width);
- }
 
 #pragma mark - init menu button
 - (void)initMenuButton
@@ -140,87 +107,47 @@
     {
         BubbleMenuButtonRect = CGRectMake(self.chatViewController.view.frame.size.width - self.chatViewController.homeImageView.frame.size.width - 16.f, (ScreenHeight - (TitleHeight + self.chatViewController.videoHeight) - 36)/2 + (TitleHeight + self.chatViewController.videoHeight), self.chatViewController.homeImageView.frame.size.width, self.chatViewController.homeImageView.frame.size.height);
     }
-    upMenuView = [[DWBubbleMenuButton alloc] initWithFrame:BubbleMenuButtonRect expansionDirection:DirectionUp];
-//    upMenuView.center = CGPointMake(self.chatViewController.view.frame.size.width - self.chatViewController.homeImageView.frame.size.width/2 - 16.f, ScreenHeight/2+(6*36+5*10)/2);
-    CGFloat centerY = MAX(ScreenHeight/2+(8*36+7*10)/2, self.chatViewController.dataTrafficLabel.frame.origin.y+self.chatViewController.dataTrafficLabel.frame.size.height + 130.0 + (8*36+7*10));
-    centerY = MAX(ScreenHeight/2+(6*36+5*10)/2,self.chatViewController.dataTrafficLabel.frame.origin.y+self.chatViewController.dataTrafficLabel.frame.size.height + 130.0 + (6*36+5*10));
-
-    upMenuView.center = CGPointMake(self.chatViewController.view.frame.size.width - self.chatViewController.homeImageView.frame.size.width/2 - 16.f, centerY);
-    _originCenter = CGPointMake(self.chatViewController.view.frame.size.width - self.chatViewController.homeImageView.frame.size.width/2 - 16.f, centerY);
     
-    upMenuView.homeButtonView = self.chatViewController.homeImageView;
-    upMenuView.delegate = chatBubbleMenuViewDelegateImpl;
-    [upMenuView addButtons:[self createDemoButtonArray]];
-    [self.chatViewController.view addSubview:upMenuView];
-    [upMenuView showButtons];
-    upMenuView.homeButtonView.hidden = YES;
+    self.upMenuView = [[DWBubbleMenuButton alloc] initWithFrame:BubbleMenuButtonRect expansionDirection:DirectionUp];
+    CGFloat centerY = MAX(ScreenHeight/2+(MenuButtonCount*36+(MenuButtonCount-1)*10)/2,self.chatViewController.dataTrafficLabel.frame.origin.y+self.chatViewController.dataTrafficLabel.frame.size.height + 130.0 + (MenuButtonCount*36+(MenuButtonCount-1)*10));
+    
+    self.upMenuView.center = CGPointMake(self.chatViewController.view.frame.size.width - self.chatViewController.homeImageView.frame.size.width/2 - 16.f, centerY);
+    self.upMenuView.homeButtonView = self.chatViewController.homeImageView;
+    self.upMenuView.delegate = chatBubbleMenuViewDelegateImpl;
+    [self.upMenuView addButtons:[self createDemoButtonArray]];
+    [self.chatViewController.view addSubview:self.upMenuView];
+    [self.upMenuView showButtons];
+    self.upMenuView.homeButtonView.hidden = YES;
 }
 
 - (NSArray *)createDemoButtonArray
 {
     NSMutableArray *buttonsMutable = [[NSMutableArray alloc] init];
-    
-    for (NSInteger i = 0; i < 4; i++)
+    for (NSInteger i = 0; i < MenuButtonCount; i++)
     {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
         button.frame = CGRectMake(0.f, 0.f, 36.f, 36.f);
         button.layer.cornerRadius = button.frame.size.height / 2.f;
         button.backgroundColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
+        button.tintColor = [UIColor blackColor];
         button.clipsToBounds = YES;
         button.tag = i;
         [button addTarget:self.chatViewController action:@selector(menuItemButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [buttonsMutable addObject:button];
-        [button setTintColor:[UIColor blackColor]];
         
         switch (button.tag)
         {
-            case 0:
+            case 0: //切换前/后摄像头
             {
-                self.raiseHandButton = button;
-                [CommonUtility setButtonImage:button imageName:@"chat_handup_off"];
-            }
-                break;
-            case 1:
-            {
-                self.whiteBoardButton = button;
-                [CommonUtility setButtonImage:button imageName:@"chat_white_board_off"];
-            }
-                break;
-            case 2:
                 self.switchCameraButton = button;
                 [CommonUtility setButtonImage:button imageName:@"chat_switch_camera"];
+            }
                 break;
-            case 3:
+            case 1: //切换扬声器/听筒
             {
                 self.speakerOnOffButton = button;
                 [CommonUtility setButtonImage:button imageName:@"chat_speaker_on"];
             }
-                break;
-            case 4:
-            {
-                self.videoProfileUpButton = button;
-                [CommonUtility setButtonImage:button imageName:@"chat_preview_up_enable"];
-            }
-                break;
-
-            case 5:
-            {
-                self.videoProfileDownButton = button;
-                [CommonUtility setButtonImage:button imageName:@"chat_preview_down_enable"];
-            }
-                break;
-            case 8:
-            {
-                self.stopRecordingButton = button;
-                [CommonUtility setButtonImage:button imageName:@"chat_microphone_on"];
-            }
-                break;
-            case 9:
-            {
-                self.playRecordButton = button;
-                [CommonUtility setButtonImage:button imageName:@"chat_microphone_on"];
-            }
-
                 break;
             default:
                 break;
@@ -230,23 +157,62 @@
     return [buttonsMutable copy];
 }
 
-- (void)initTapGesture
+#pragma mark - bitrate display label
+- (void)initInfoLabel
 {
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizerAction)];
-    [self.chatViewController.videoMainView addGestureRecognizer:tapGestureRecognizer];
+    self.excelView = [[BlinkExcelView alloc] initWithFrame:CGRectMake(-ScreenWidth, 0, ScreenWidth, ScreenHeight)];
+    self.excelView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.35];
+    self.excelView.hidden = YES;
+    [self.chatViewController.view addSubview:self.excelView];
 }
 
-- (void)tapGestureRecognizerAction
+- (void)initSwipeGesture
 {
-    if (!upMenuView.isCollapsed)
+    _leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognizerAction:)];
+    _leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.chatViewController.view addGestureRecognizer:_leftSwipeGestureRecognizer];
+    
+    _rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognizerAction:)];
+    _rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.chatViewController.view addGestureRecognizer:_rightSwipeGestureRecognizer];
+}
+
+- (void)swipeGestureRecognizerAction:(UISwipeGestureRecognizer *)recognize
+{
+    switch (recognize.direction)
     {
-//        [upMenuView dismissButtons];
+        case UISwipeGestureRecognizerDirectionRight:
+        {
+            if (!isLeftDisplay)
+            {
+                self.excelView.hidden = NO;
+                [self.chatViewController showButtons:YES];
+                [UIView animateWithDuration:0.3 animations:^{
+                    self.excelView.frame =  CGRectMake(0, self.excelView.frame.origin.y, self.excelView.frame.size.width, self.excelView.frame.size.height);
+                } completion:^(BOOL finished) {
+                }];
+                isLeftDisplay = YES;
+            }
+        }
+            break;
+            
+        case UISwipeGestureRecognizerDirectionLeft:
+        {
+            if (isLeftDisplay)
+            {
+                [UIView animateWithDuration:0.3 animations:^{
+                    [self.chatViewController showButtons:NO];
+                    self.excelView.frame =  CGRectMake(-ScreenWidth, self.excelView.frame.origin.y, self.excelView.frame.size.width, self.excelView.frame.size.height);
+                } completion:^(BOOL finished) {
+                    self.excelView.hidden = YES;
+                }];
+                isLeftDisplay = NO;
+            }
+        }
+            break;
+        default:
+            break;
     }
-}
-
-- (void)tapGesturAction:(UITapGestureRecognizer *)recognize
-{
-//    [self.chatViewController showButtonsWithTap];
 }
 
 @end

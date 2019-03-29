@@ -40,6 +40,8 @@
 
 + (NSString *)strimCharacter:(NSString *)userName withRegex:(NSString *)regex;
 
++ (BOOL)validateContactNumber:(NSString *)mobileNum;
+
 + (NSString *)getdeviceName;
 
 @end

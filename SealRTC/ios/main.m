@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "RongRTCTalkAppDelegate.h"
+#import "SealRTCAppDelegate.h"
 
 int main(int argc, char* argv[]) {
   @autoreleasepool {
     return UIApplicationMain(
-        argc, argv, nil, NSStringFromClass([RongRTCTalkAppDelegate class]));
+        argc, argv, nil, NSStringFromClass([SealRTCAppDelegate class]));
   }
 }
