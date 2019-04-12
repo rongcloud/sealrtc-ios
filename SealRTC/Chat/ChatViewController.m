@@ -16,13 +16,17 @@
 #import "SealRTCAppDelegate.h"
 #import "UICollectionView+RongRTCBgView.h"
 #import <RongIMLib/RongIMLib.h>
-
+#import "STParticipantsTableViewController.h"
+#import "STPresentationViewController.h"
+#import "STParticipantsInfo.h"
+#import "STSetRoomInfoMessage.h"
+#import "STDeleteRoomInfoMessage.h"
 
 @interface ChatViewController () <UINavigationControllerDelegate,UIAlertViewDelegate>
 {
     CGFloat localVideoWidth, localVideoHeight;
     UIButton *silienceButton;
-    BOOL isShowButton;
+    BOOL isShowButton, isChatCloseCamera;
     NSTimeInterval showButtonSconds;
     NSTimeInterval defaultButtonShowTime;
     CADisplayLink *displayLink;
@@ -37,7 +41,7 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *collectionViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet UIView *statuView;
 @property (nonatomic, strong) IBOutlet UICollectionViewLayout *collectionViewLayout;
-
+@property (nonatomic, strong) NSMutableArray<STParticipantsInfo*>* dataSource;
 @end
 
 @implementation ChatViewController
@@ -54,6 +58,7 @@
     self.isFinishLeave = YES;
     self.isLandscapeLeft = NO;
     self.isNotLeaveMeAlone = NO;
+    isChatCloseCamera = kLoginManager.isCloseCamera;
     isShowButton = YES;
     showButtonSconds = 0;
     defaultButtonShowTime = 6;
@@ -76,17 +81,13 @@
     
     [self.speakerControlButton setEnabled:NO];
     [self selectSpeakerButtons:NO];
-    if (kLoginManager.isCloseCamera) {
-        [self switchButtonBackgroundColor:kLoginManager.isCloseCamera button:self.chatViewBuilder.openCameraButton];
-        [CommonUtility setButtonImage:self.chatViewBuilder.openCameraButton imageName:@"chat_close_camera"];
-        self.chatViewBuilder.switchCameraButton.enabled = NO;
-    }
 
     [self addObserver];
     
     self.localView = [[RongRTCLocalVideoView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
     self.localView.fillMode = RCVideoFillModeAspect;
     [self.videoMainView addSubview:self.localView];
+    
     [[RongRTCAVCapturer sharedInstance] setVideoRender:self.localView];
     [kChatManager configParameter];
     if (kLoginManager.isGPUFilter) {
@@ -108,7 +109,21 @@
     kChatManager.localUserDataModel = nil;
     kChatManager.localUserDataModel = [[ChatCellVideoViewModel alloc] initWithView:self.localView];
     kChatManager.localUserDataModel.streamID = kLoginManager.userID;
+    kChatManager.localUserDataModel.userID = kLoginManager.userID;
+    kChatManager.localUserDataModel.isShowVideo = !isChatCloseCamera;
+    kChatManager.localUserDataModel.userName = NSLocalizedString(@"me", nil);
     kChatManager.localUserDataModel.originalSize = CGSizeMake(localVideoWidth, localVideoHeight);
+    [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.infoLabel];
+    
+    if (isChatCloseCamera)
+    {
+        [self switchButtonBackgroundColor:isChatCloseCamera button:self.chatViewBuilder.openCameraButton];
+        [CommonUtility setButtonImage:self.chatViewBuilder.openCameraButton imageName:@"chat_close_camera"];
+        self.chatViewBuilder.switchCameraButton.enabled = NO;
+        
+        kChatManager.localUserDataModel.avatarView.frame = self.localView.frame;
+        [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.avatarView];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -336,7 +351,10 @@
 
 
 -(void)joinChannel{
+    [[RCIMClient sharedRCIMClient] registerMessageType:STSetRoomInfoMessage.class];
+    [[RCIMClient sharedRCIMClient] registerMessageType:STDeleteRoomInfoMessage.class];
     [[RongRTCEngine sharedEngine] joinRoom:kLoginManager.roomNumber completion:^(RongRTCRoom * _Nullable room, RongRTCCode code) {
+ 
         dispatch_async(dispatch_get_main_queue(), ^{
             [self showAlertLabelWithString:NSLocalizedString(@"chat_wait_attendees", nil)];
             self.room = room;
@@ -359,6 +377,9 @@
             }
             else{
                 self.chatMode = AVChatModeNormal;
+                if (kLoginManager.isCloseCamera) {
+                    self.chatMode = AVChatModeAudio;
+                }
                 [self joinChannelImpl];
             }
         });
@@ -385,6 +406,30 @@
 #pragma mark - join channel
 - (void)joinChannelImpl
 {
+    self.chatRongRTCRoomDelegateImpl.infos = self.dataSource;
+    self.room.delegate = self.chatRongRTCRoomDelegateImpl;
+    long long timestamp = [[NSDate date] timeIntervalSince1970] * 1000;
+    STParticipantsInfo* info  = [[STParticipantsInfo alloc] initWithDictionary:@{@"userId":kLoginManager.userID,
+                                                                                 @"userName":kLoginManager.username,
+                                                                                 @"joinMode":@(self.chatMode),
+                                                                                 @"joinTime":@(timestamp)
+                                                                                 }];
+    STSetRoomInfoMessage* message = [[STSetRoomInfoMessage alloc] initWithInfo:info forKey:kLoginManager.userID];
+    [self.room setRoomAttributeValue:[info toJsonString] forKey:kLoginManager.userID message:message completion:^(BOOL isSuccess, RongRTCCode desc) {
+        [self.room getRoomAttributes:nil completion:^(BOOL isSuccess, RongRTCCode desc, NSDictionary * _Nullable attr) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [attr enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, NSString*  _Nonnull obj, BOOL * _Nonnull stop) {
+                    NSDictionary* dicInfo = [NSJSONSerialization JSONObjectWithData:[obj dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+                    STParticipantsInfo* info = [[STParticipantsInfo alloc] initWithDictionary:dicInfo];
+                    [self.dataSource addObject:info];
+                    ChatCellVideoViewModel* model = [kChatManager getRemoteUserDataModelSimilarUserID:info.userId];
+                    model.userName = info.userName;
+                }];
+            });
+            
+        }];
+        
+    }];
     [[RongRTCAVCapturer sharedInstance] setCaptureParam:kChatManager.captureParam];
     FwLogI(RC_Type_RTC,@"A-joinChannelImpl-T",@"joinChannelImpl chatMode %@",@(self.chatMode));
     if (self.chatMode == AVChatModeObserver || self.chatMode == AVChatModeAudio) {
@@ -392,19 +437,17 @@
         if (self.chatMode == AVChatModeAudio) {
             [[RongRTCAVCapturer sharedInstance] setCameraDisable:YES];
         }
-        self.chatViewBuilder.openCameraButton.enabled = NO;
         self.chatViewBuilder.switchCameraButton.enabled = NO;
-        self.localView.hidden = YES;
         if (self.chatMode == AVChatModeObserver) {
             self.chatViewBuilder.microphoneOnOffButton.enabled = NO;
+            self.chatViewBuilder.openCameraButton.enabled = NO;
+            self.localView.hidden = YES;
         }
         [[RongRTCAVCapturer sharedInstance] useSpeaker:YES];
     }
-    else{
-        [[RongRTCAVCapturer sharedInstance] startCapture];
-    }
     
-    self.room.delegate = self.chatRongRTCRoomDelegateImpl;
+    [[RongRTCAVCapturer sharedInstance] startCapture];
+
     RongRTCCode code = self.joinRoomCode;
     FwLogI(RC_Type_RTC,@"A-appReceiveUserJoin-T",@"joinRoom  %@",@(code));
     if (code == RongRTCCodeSuccess ) {
@@ -537,20 +580,36 @@
         [subscribes addObject:stream];
         DLog(@"Subscribe streamID: %@   mediaType: %zd", stream.streamId, stream.streamType);
 
-        ChatCellVideoViewModel *model = [kChatManager getRemoteUserDataModelFromUserID:streamID];
+        ChatCellVideoViewModel *model = [kChatManager getRemoteUserDataModelFromStreamID:streamID];
         if (stream.streamType == RTCMediaTypeVideo) {
-            if (![kChatManager isContainRemoteUserFromUserID:streamID] || model.cellVideoView == nil) {
+            if (![kChatManager isContainRemoteUserFromStreamID:streamID] || model.cellVideoView == nil) {
                 RongRTCRemoteVideoView *view = [[RongRTCRemoteVideoView alloc] initWithFrame:CGRectMake(0, 0, 90, 120)];
                 view.fillMode = RCVideoFillModeAspectFill;
                 [stream setVideoRender:view];
                 
                 ChatCellVideoViewModel *chatCellVideoViewModel = [[ChatCellVideoViewModel alloc] initWithView:view];
                 chatCellVideoViewModel.streamID = streamID;
+                chatCellVideoViewModel.userID = stream.userId;
                 chatCellVideoViewModel.everOnLocalView = 0;
-                chatCellVideoViewModel.isShowVideo = NO;
                 chatCellVideoViewModel.inputStream = stream;
+                switch (stream.state) {
+                    case RongRTCInputStreamStateForbidden:
+                        chatCellVideoViewModel.isShowVideo = NO;
+                        break;
+                    case RongRTCInputStreamStateNormal:
+                        chatCellVideoViewModel.isShowVideo = YES;
+                        break;
+                    default:
+                        break;
+                }
                 [kChatManager addRemoteUserDataModel:chatCellVideoViewModel];
                 DLog(@"Subscribe remote user count: %zd", [kChatManager countOfRemoteUserDataArray]);
+                [chatCellVideoViewModel.cellVideoView addSubview:chatCellVideoViewModel.infoLabel];
+                
+                if (!chatCellVideoViewModel.isShowVideo) {
+                    chatCellVideoViewModel.avatarView.frame = view.frame;
+                    [chatCellVideoViewModel.cellVideoView addSubview:chatCellVideoViewModel.avatarView];
+                }
                 
                 NSInteger row = [kChatManager countOfRemoteUserDataArray]-1;
                 NSIndexPath *tempPath = [NSIndexPath indexPathForRow:row inSection:0];
@@ -559,17 +618,18 @@
             }
             else {
                 FwLogI(RC_Type_RTC,@"A-appSetRender-T",@"%@appSetRender and contain render",@"sealRTCApp:");
-                ChatCellVideoViewModel *model = [kChatManager getRemoteUserDataModelFromUserID:streamID];
+                ChatCellVideoViewModel *model = [kChatManager getRemoteUserDataModelFromStreamID:streamID];
                 [stream setVideoRender:(RongRTCRemoteVideoView *)model.cellVideoView];
             }
         }
     }
     
     for (RongRTCAVInputStream *stream in streams) {
-        if (![kChatManager isContainRemoteUserFromUserID:stream.streamId] &&
+        if (![kChatManager isContainRemoteUserFromStreamID:stream.streamId] &&
             stream.streamType == RTCMediaTypeAudio) {
             ChatCellVideoViewModel *chatCellVideoViewModel = [[ChatCellVideoViewModel alloc] initWithView:nil];
             chatCellVideoViewModel.streamID = stream.streamId;
+            chatCellVideoViewModel.userID = stream.userId;
             chatCellVideoViewModel.everOnLocalView = 0;
             chatCellVideoViewModel.isShowVideo = NO;
             chatCellVideoViewModel.inputStream = stream;
@@ -579,9 +639,12 @@
             NSIndexPath *tempPath = [NSIndexPath indexPathForRow:row inSection:0];
             [self.collectionView insertItemsAtIndexPaths:@[tempPath]];
         }
-
     }
 
+    for (STParticipantsInfo* info in self.dataSource) {
+        ChatCellVideoViewModel* model = [kChatManager getRemoteUserDataModelSimilarUserID:info.userId];
+        model.userName = info.userName;
+    }
     
     DLog(@"start subscribeRemoteResource");
     FwLogI(RC_Type_RTC,@"A-appSubscribeStream-T",@"%@app to  subscribe streams count : %ld",@"sealRTCApp:",subscribes.count);
@@ -600,7 +663,7 @@
                     if (kLoginManager.isAutoTest) {
                         // 自动化使用
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            ChatCellVideoViewModel *chatCellVideoViewModel = [kChatManager getRemoteUserDataModelFromUserID:sid];
+                            ChatCellVideoViewModel *chatCellVideoViewModel = [kChatManager getRemoteUserDataModelFromStreamID:sid];
                             chatCellVideoViewModel.isSubscribeSuccess = YES;
                             chatCellVideoViewModel.subscribeLog = @"订阅成功了";
                             NSInteger index = [kChatManager indexOfRemoteUserDataArray:sid];
@@ -616,7 +679,7 @@
                     if (kLoginManager.isAutoTest) {
                         // 自动化使用
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            ChatCellVideoViewModel *chatCellVideoViewModel = [kChatManager getRemoteUserDataModelFromUserID:sid];
+                            ChatCellVideoViewModel *chatCellVideoViewModel = [kChatManager getRemoteUserDataModelFromStreamID:sid];
                             chatCellVideoViewModel.isSubscribeSuccess = NO;
                             chatCellVideoViewModel.subscribeLog = [@"" stringByAppendingFormat:@"%ld",desc];
                             NSInteger index =[kChatManager indexOfRemoteUserDataArray:sid];
@@ -636,7 +699,7 @@
     if (kLoginManager.isAutoTest) {
         // 自动化使用
         dispatch_async(dispatch_get_main_queue(), ^{
-            ChatCellVideoViewModel *chatCellVideoViewModel = [kChatManager getRemoteUserDataModelFromUserID:userId];
+            ChatCellVideoViewModel *chatCellVideoViewModel = [kChatManager getRemoteUserDataModelFromStreamID:userId];
             chatCellVideoViewModel.isConnectSuccess = YES;
             chatCellVideoViewModel.connectLog = @"流通了";
             NSInteger index =[kChatManager indexOfRemoteUserDataArray:userId];
@@ -723,6 +786,9 @@
         case 1: //mute speaker
             [self didClickSpeakerButton:button];
             break;
+        case 2:
+            [self didClickMemeberBtn];
+            break;
         default:
             break;
     }
@@ -740,6 +806,7 @@
     } else {
         [CommonUtility setButtonImage:btn imageName:@"chat_microphone_on"];
     }
+    kChatManager.localUserDataModel.audioLevelView.hidden = kLoginManager.isMuteMicrophone;
 }
 
 #pragma mark - click mute speaker
@@ -747,7 +814,10 @@
 {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         kLoginManager.isSpeaker = !kLoginManager.isSpeaker;
-        [[RongRTCAVCapturer sharedInstance] useSpeaker:kLoginManager.isSpeaker];
+        if(![[RongRTCAVCapturer sharedInstance] useSpeaker:kLoginManager.isSpeaker]) {
+            kLoginManager.isSpeaker = !kLoginManager.isSpeaker;
+            return ;
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             [self switchButtonBackgroundColor:!kLoginManager.isSpeaker button:btn];
             
@@ -760,19 +830,30 @@
     });
 }
 
+- (void)didClickMemeberBtn {
+    STParticipantsTableViewController* spt = [[STParticipantsTableViewController alloc] initWithRoom:self.room participantsInfos:self.dataSource];
+    STPresentationViewController* pvc = [[STPresentationViewController alloc] initWithPresentedViewController:spt presentingViewController:self];
+    spt.transitioningDelegate = pvc;
+    [self presentViewController:spt animated:YES completion:nil];
+}
+
 #pragma mark - click local video
 - (void)didClickVideoMuteButton:(UIButton *)btn
 {
-    kLoginManager.isCloseCamera = !kLoginManager.isCloseCamera;
-    [[RongRTCAVCapturer sharedInstance] setCameraDisable:kLoginManager.isCloseCamera];
-    [self switchButtonBackgroundColor:kLoginManager.isCloseCamera button:btn];
+    isChatCloseCamera = !isChatCloseCamera;
+    [[RongRTCAVCapturer sharedInstance] setCameraDisable:isChatCloseCamera];
+    [self switchButtonBackgroundColor:isChatCloseCamera button:btn];
     
-    if (kLoginManager.isCloseCamera) {
+    kChatManager.localUserDataModel.isShowVideo = !isChatCloseCamera;
+    kChatManager.localUserDataModel.avatarView.frame = self.localView.frame;
+    if (isChatCloseCamera) {
         [CommonUtility setButtonImage:btn imageName:@"chat_close_camera"];
         self.chatViewBuilder.switchCameraButton.enabled = NO;
+        [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.avatarView];
     } else {
         [CommonUtility setButtonImage:btn imageName:@"chat_open_camera"];
         self.chatViewBuilder.switchCameraButton.enabled = YES;
+        [kChatManager.localUserDataModel.avatarView removeFromSuperview];
     }
 }
 
@@ -791,6 +872,11 @@
 #pragma mark - click hungup button
 - (void)didClickHungUpButton
 {
+
+    STDeleteRoomInfoMessage* deleteMessage = [[STDeleteRoomInfoMessage alloc] initWithInfoKey:kLoginManager.userID];
+    [self.room deleteRoomAttributes:@[kLoginManager.userID] message:deleteMessage completion:^(BOOL isSuccess, RongRTCCode desc) {
+        
+    }];
     dispatch_async(dispatch_get_main_queue(), ^{
         [[RongRTCAVCapturer sharedInstance] stopCapture];
         [[RongRTCEngine sharedEngine] leaveRoom:kLoginManager.roomNumber completion:^(BOOL isSuccess, NSInteger code) {
@@ -818,7 +904,6 @@
         
         [kChatManager.localUserDataModel.cellVideoView removeFromSuperview];
         kChatManager.localUserDataModel = nil;
-        kLoginManager.isCloseCamera = NO;
         kLoginManager.isMuteMicrophone = NO;
         kLoginManager.isSwitchCamera = NO;
         kLoginManager.isBackCamera = NO;
@@ -878,4 +963,11 @@
     [self presentViewController:self.alertController animated:YES completion:^{}];
 }
 
+#pragma mark - Getters
+- (NSMutableArray<STParticipantsInfo*>*)dataSource {
+    if (!_dataSource) {
+        _dataSource = [[NSMutableArray alloc] initWithCapacity:100];
+    }
+    return _dataSource;
+}
 @end

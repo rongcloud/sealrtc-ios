@@ -10,7 +10,7 @@
 #import "ChatViewController.h"
 #import "CommonUtility.h"
 
-#define MenuButtonCount 2
+#define MenuButtonCount 3
 
 @interface ChatViewBuilder ()
 {
@@ -147,6 +147,11 @@
             {
                 self.speakerOnOffButton = button;
                 [CommonUtility setButtonImage:button imageName:@"chat_speaker_on"];
+            }
+                break;
+            case 2:
+            {
+                [CommonUtility setButtonImage:button imageName:@"participants"];
             }
                 break;
             default:

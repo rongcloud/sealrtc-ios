@@ -20,10 +20,12 @@ NS_ASSUME_NONNULL_BEGIN
                        error:(void (^)(NSError* error))errorBlock;
 
 - (void)fetchSMSValidateCode:(NSString *)phoneNum
+                  regionCode:(NSString*)code
                      success:(void (^)(NSString* code))sucess
                        error:(void (^)(NSError* error))errorBlock;
 
 - (void)validateSMSPhoneNum:(NSString *)phoneNum
+                 regionCode:(NSString*)regionCode
                        code:(NSString *)code
                    response:(void (^)(NSDictionary *respDict))resp
                       error:(void (^)(NSError* error))errorBlock;

@@ -54,15 +54,17 @@
 "login_input_encryption_key" = "加密秘匙";
 "login_input_enter_meeting_room" = "开始会议";
 "login_input_login_meeting_room" = "登录中...";
-"login_input_need_room_number" = "请输入房间号";
+"login_input_login_connecting" = "连接中";
+"login_input_login_network_disable" = "当前网络不可用，请检查网络设置";
+"login_input_need_room_number" = "请输入房间号 ID";
 "login_input_need_input" = "请输入信息";
-"login_input_need_user_name" = "请输入姓名";
+"login_input_need_user_name" = "请输入用户名称";
 "login_input_error_length" = "字符长度超出范围";
 "login_input_error_illegal" = "仅支持中英文";
-"login_input_error_nil" = "请输入姓名";
+"login_input_error_nil" = "请输入用户名称";
 "login_input_radio_default" = "默认";
 "login_input_radio_close_camera" = "加入时关闭摄像头";
-"login_input_radio_observer" = "只接收音视频流,不发布流模式";
+"login_input_radio_observer" = "旁听者模式";
 "login_input_need_room_username" = "仅支持中文和英文字母";
 "login_input_notice_error" = "输入的用户名不合法";
 "login_input_alert_description" = "请选择需要连接的服务器!";
@@ -70,9 +72,11 @@
 "login_input_phone_logon" = "请输入手机号验证登录";
 "login_input_phone_number" = "请输入手机号";
 "login_input_phone_smsvalidate" = "手机验证码";
-"login_input_phone_send_sms" = "发送验证码";
+"login_input_phone_send_sms" = "获取验证码";
 "login_input_phone_validate_logon" = "验证登录";
 "login_input_count_down_sec" = "秒";
+"login_input_verify_error" = "验证码错误, 请重新获取";
+"login_input_user_name"="请输入用户名称";
 
 
 "setting_title" = "设置";
@@ -102,3 +106,17 @@
 "setting_media_connectiontype" = "连接方式";
 "setting_build_info" = "编译信息";
 "setting_auto_test" = "自动化测试";
+
+
+"select_country"="选择国家和地区";
+"select_country_fmt"="选择国家和地区 %@";
+
+"me"="自己";
+
+"video_mode"="视频模式加入";
+"audio_mode"="音频模式加入";
+"receive_only_mode"="旁观者模式加入";
+
+"close"="关闭";
+"online_user_cout_fmt"="在线人数 %@ 人";
+

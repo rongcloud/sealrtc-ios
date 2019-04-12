@@ -35,7 +35,20 @@
 {
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.3 animations:^{
-        weakSelf.loginViewController.loginViewBuilder.inputNumPasswordView.frame = CGRectMake(weakSelf.loginViewController.loginViewBuilder.inputNumPasswordView.frame.origin.x, 0, weakSelf.loginViewController.loginViewBuilder.inputNumPasswordView.frame.size.width, weakSelf.loginViewController.loginViewBuilder.inputNumPasswordView.frame.size.height);
+        CGSize size = [UIScreen mainScreen].bounds.size;
+        CGFloat y = 0;
+        if (size.height <= 568) {
+            y = -120;
+            if (weakSelf.loginViewController.view.frame.size.width == 320) {
+                y += 10;
+            }
+        }
+        if (weakSelf.loginViewController.loginViewBuilder.validateView.superview) {
+            y += 84;
+        } else {
+            y -= 44;
+        }
+        weakSelf.loginViewController.loginViewBuilder.inputNumPasswordView.frame = CGRectMake(weakSelf.loginViewController.loginViewBuilder.inputNumPasswordView.frame.origin.x, y, weakSelf.loginViewController.loginViewBuilder.inputNumPasswordView.frame.size.width, weakSelf.loginViewController.loginViewBuilder.inputNumPasswordView.frame.size.height);
     } completion:^(BOOL finished) {
     }];
 }
@@ -44,7 +57,11 @@
 {
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.3 animations:^{
-        weakSelf.loginViewController.loginViewBuilder.inputNumPasswordView.frame = CGRectMake(0, 186, weakSelf.loginViewController.loginViewBuilder.inputNumPasswordView.frame.size.width, weakSelf.loginViewController.loginViewBuilder.inputNumPasswordView.frame.size.height);
+        CGFloat originY = 130;
+        if (weakSelf.loginViewController.view.frame.size.width == 320) {
+            originY = originY - 44;
+        }
+        weakSelf.loginViewController.loginViewBuilder.inputNumPasswordView.frame = CGRectMake(0, originY, weakSelf.loginViewController.loginViewBuilder.inputNumPasswordView.frame.size.width, weakSelf.loginViewController.loginViewBuilder.inputNumPasswordView.frame.size.height);
     } completion:^(BOOL finished) {
     }];
 }
@@ -53,7 +70,7 @@
 {
     if (self.loginViewController.isRoomNumberInput && kLoginManager.isLoginTokenSucc)
         [self.loginViewController joinRoomButtonPressed:self.loginViewController.loginViewBuilder.joinRoomButton];
-    
+    [textfield resignFirstResponder];
     return YES;
 }
 
@@ -70,6 +87,9 @@
     }
     else if (textField == self.loginViewController.loginViewBuilder.validateSMSTextField) {
         return ([tobeString getStringLengthOfBytes] < 7);
+    }
+    else if (textField == self.loginViewController.loginViewBuilder.usernameTextField){
+        return tobeString.length < 32;
     }
 
     return NO;

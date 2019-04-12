@@ -24,6 +24,7 @@
     {
         self.cellVideoView = view;
         self.streamID = @"";
+        self.userID = @"";
         self.originalSize = CGSizeZero;
         self.frameRateRecv = 0;
         self.frameWidthRecv = 0;
@@ -32,8 +33,10 @@
         self.videoType = 1;
         self.isCloseMicphone = NO;
         self.isCloseCamera = NO;
+        self.registerObserverFlag = YES;
+        self.avatarView = [[ChatAvatarView alloc] init];
         
-//        [self initLableView];
+        [self initLableView];
     }
     
     return self;
@@ -45,6 +48,7 @@
     if (self)
     {
         self.streamID = @"";
+        self.userID = @"";
         self.originalSize = CGSizeZero;
         self.frameRateRecv = 0;
         self.frameWidthRecv = 0;
@@ -53,13 +57,14 @@
         self.videoType = 1;
         self.isCloseMicphone = NO;
         self.isCloseCamera = NO;
+        self.registerObserverFlag = YES;
+        self.avatarView = [[ChatAvatarView alloc] init];
         
-//        [self initLableView];
+        [self initLableView];
     }
     
     return self;
 }
-
 
 - (void)dealloc
 {
@@ -71,35 +76,38 @@
 - (UIWebView *)audioLevelView
 {
     if (!_audioLevelView) {
-        _audioLevelView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+        _audioLevelView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
         NSString *path = [[NSBundle mainBundle] pathForResource:@"sound" ofType:@"gif"];
         NSURL *url = [NSURL URLWithString:path];
         [_audioLevelView loadRequest:[NSURLRequest requestWithURL:url]];
         _audioLevelView.backgroundColor = [UIColor clearColor];
         _audioLevelView.opaque = NO;
         _audioLevelView.scalesPageToFit = YES;
-     }
-    return _audioLevelView;
-}
-
-- (ChatAvatarView *)avatarView
-{
-    if (!_avatarView)
-    {
-        _avatarView = [[ChatAvatarView alloc] init];
-        _avatarView.backgroundColor = [UIColor randomColorForAvatarRBG];
+        [self.infoLabel addSubview:_audioLevelView];
     }
-    return _avatarView;
+    return _audioLevelView;
 }
 
 - (void)initLableView
 {
-    self.infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.cellVideoView.frame.size.height-16, self.cellVideoView.frame.size.width, 16)];
+    CGFloat offset = 16;
+    if ([UIApplication sharedApplication].statusBarFrame.size.height == 44 &&
+        self.cellVideoView.frame.size.height == ScreenHeight) {
+        offset += 78;
+    }
+    self.infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.cellVideoView.frame.size.height-offset, self.cellVideoView.frame.size.width, 16)];
     self.infoLabel.textAlignment = NSTextAlignmentLeft;
     self.infoLabel.font = [UIFont systemFontOfSize:12];
-    self.infoLabel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.15];
-    self.infoLabel.textColor = [UIColor greenColor];
-   
+    self.infoLabel.backgroundColor = [UIColor clearColor]; //[UIColor colorWithRed:0 green:0 blue:0 alpha:0.15];
+    self.infoLabel.textColor = [UIColor whiteColor];
+    self.infoLabel.text = self.userName;
+    
+    self.infoLabelGradLayer = [CAGradientLayer layer];
+    self.infoLabelGradLayer.frame = self.infoLabel.frame;
+    [self.infoLabelGradLayer setColors:@[(id)[UIColor colorWithRed:0 green:0 blue:0 alpha:0.35].CGColor, (id)[UIColor clearColor].CGColor]];
+    [self.cellVideoView.layer addSublayer:self.infoLabelGradLayer];
+    [self.infoLabelGradLayer setStartPoint:CGPointMake(0, 1)];
+    [self.infoLabelGradLayer setEndPoint:CGPointMake(0, 0)];
     
  #ifdef DEBUG
 //    if (self.cellVideoView.frame.size.width < ScreenWidth)
@@ -107,10 +115,7 @@
 #endif
     if (self.registerObserverFlag)
     {
-        [self addObserver:self forKeyPath:@"frameRateRecv" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
-        [self addObserver:self forKeyPath:@"frameWidthRecv" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
-        [self addObserver:self forKeyPath:@"frameHeightRecv" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
-        [self addObserver:self forKeyPath:@"frameRate" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+        [self addObserver:self forKeyPath:@"audioLevel" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
         self.registerObserverFlag = YES;
     }
 }
@@ -119,14 +124,24 @@
 {
     if (self.registerObserverFlag)
     {
-        [self removeObserver:self forKeyPath:@"frameRateRecv"];
-        [self removeObserver:self forKeyPath:@"frameWidthRecv"];
-        [self removeObserver:self forKeyPath:@"frameHeightRecv"];
-        [self removeObserver:self forKeyPath:@"frameRate"];
+        [self removeObserver:self forKeyPath:@"audioLevel"];
         self.registerObserverFlag = NO;
     }
 }
 
+
+- (void)setUserName:(NSString *)userName {
+    _userName = [userName copy];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (userName.length >= 4) {
+            self.infoLabel.text = [userName substringToIndex:4];
+        } else {
+            self.infoLabel.text = userName;
+        }
+  
+    });
+
+}
 
 - (void)setCellVideoView:(UIView *)cellVideoView
 {
@@ -140,12 +155,17 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
-//    if (self.frameRateRecv == 0)
-//        return;
+    if (self.audioLevel == 0)
+    {
+        self.audioLevelView.hidden = YES;
+        return;
+    }
+    else {
+        self.audioLevelView.hidden = NO;
+    }
     
-    self.infoLabel.text = [NSString stringWithFormat:@"  %zd    %@", self.frameRateRecv, self.frameRate];
-    self.infoLabel.frame = CGRectMake(0, self.cellVideoView.frame.size.height-16, self.cellVideoView.frame.size.width, 16);
-    [self.cellVideoView bringSubviewToFront:self.infoLabel];
+    self.audioLevelView.frame = CGRectMake(self.infoLabel.frame.size.width-16, 0, self.infoLabel.frame.size.height, self.infoLabel.frame.size.height);
+    [self.infoLabel bringSubviewToFront:self.audioLevelView];
 }
 
 @end

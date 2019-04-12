@@ -18,11 +18,15 @@
 @property (nonatomic, strong) UIView *inputNumPasswordView, *validateView;
 @property (nonatomic, strong) UILabel *welcomeLabel, *titleLabel, *contentLabel, *versionLabel, *copyrightLabel, *userNameTitleLabel;
 @property (nonatomic, strong) UILabel *phoneNumLabel, *alertLabel;
-@property (nonatomic, strong) UITextField *roomNumberTextField, *phoneNumTextField, *validateSMSTextField, *phoneNumLoginTextField;
+@property (nonatomic, strong) UITextField *roomNumberTextField, *phoneNumTextField, *validateSMSTextField, *phoneNumLoginTextField, *usernameTextField;
 @property (nonatomic, strong) UIButton *joinRoomButton, *sendSMSButton, *validateLogonButton;
 @property (nonatomic, strong) UIButton *loginSettingButton;
 @property (nonatomic, strong) NSMutableArray *radioButtons;
 @property (nonatomic, strong) CALayer *lineLayer;
+@property (nonatomic, strong) UILabel* countryCodeLabel;
+@property (nonatomic, strong) UILabel* loginCountryCodeLabel;
+@property (nonatomic, strong) UITextField* countryTxtField;
+@property (nonatomic, strong) UITextField*  loginCountryTxtField;
 
 - (instancetype)initWithViewController:(UIViewController *)vc;
 - (void)showValidateView:(BOOL)isShow;

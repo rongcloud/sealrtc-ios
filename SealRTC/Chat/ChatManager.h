@@ -31,16 +31,18 @@
 - (void)clearAllDataArray;
 
 - (ChatCellVideoViewModel *)getRemoteUserDataModelFromIndex:(NSInteger)index;
+- (ChatCellVideoViewModel *)getRemoteUserDataModelFromStreamID:(NSString *)streamID;
 - (ChatCellVideoViewModel *)getRemoteUserDataModelFromUserID:(NSString *)userID;
+- (ChatCellVideoViewModel *)getRemoteUserDataModelSimilarUserID:(NSString *)userID;
 - (NSString *)getUserIDOfRemoteUserDataModelFromIndex:(NSInteger)index;
 - (NSArray *)getAllRemoteUserIDArray;
 - (void)addRemoteUserDataModel:(ChatCellVideoViewModel *)model;
 - (void)setRemoteUserDataModel:(ChatCellVideoViewModel *)model atIndex:(NSInteger)index;
-- (void)removeRemoteUserDataModelFromUserID:(NSString *)userID;
+- (void)removeRemoteUserDataModelFromStreamID:(NSString *)streamID;
 - (void)removeRemoteUserDataModelFromIndex:(NSInteger)index;
-- (NSInteger)indexOfRemoteUserDataArray:(NSString *)userID;
+- (NSInteger)indexOfRemoteUserDataArray:(NSString *)streamID;
 - (NSInteger)countOfRemoteUserDataArray;
-- (BOOL)isContainRemoteUserFromUserID:(NSString *)userID;
+- (BOOL)isContainRemoteUserFromStreamID:(NSString *)streamID;
 
 - (ChatCellVideoViewModel *)getRecentUserDataModelFromIndex:(NSInteger)index;
 - (ChatCellVideoViewModel *)getRecentUserDataModelFromUserID:(NSString *)userID;

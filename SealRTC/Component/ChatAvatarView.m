@@ -41,24 +41,18 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
+    self.backgroundColor = [UIColor clearColor];
     [self configUI];
 }
 
-- (UILabel *)nickNameLabel
+- (UIImageView *)closeCameraImageView
 {
-    if (!_nickNameLabel) {
-        _nickNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, (self.frame.size.height - 20)/2, self.frame.size.width, 20.0)];
+    if (!_closeCameraImageView) {
+        _closeCameraImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 90, 83)];
+        _closeCameraImageView.contentMode = UIViewContentModeScaleToFill;
+        _closeCameraImageView.image = [UIImage imageNamed:@"chat_audio_only"];
     }
-    return _nickNameLabel;
-}
-
-- (UIImageView *)voiceImgView
-{
-    if (!_voiceImgView) {
-        _voiceImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.frame.size.height-20.0, self.frame.size.width, 20.0)];
-        _voiceImgView.contentMode = UIViewContentModeScaleToFill;
-    }
-    return _voiceImgView;
+    return _closeCameraImageView;
 }
 
 - (UIActivityIndicatorView *)indicatorView
@@ -74,33 +68,30 @@
 
 - (void)configUI
 {
-    self.nickNameLabel.frame = CGRectMake(0, (self.frame.size.height - 20)/2, self.frame.size.width, 20.0);
-    _nickNameLabel.textAlignment = NSTextAlignmentCenter;
-    _nickNameLabel.textColor = [UIColor whiteColor];
-    [self addSubview:_nickNameLabel];
+    self.closeCameraImageView.center = self.center;
+    [self addSubview:self.closeCameraImageView];
     
-    self.voiceImgView.frame = CGRectMake(0, self.frame.size.height-20.0, self.frame.size.width, 20.0);
-    [self addSubview:_voiceImgView];
-    
-    self.indicatorView.frame = CGRectMake((self.frame.size.width-90)/2,  (self.frame.size.height-90)/2, 90, 90);
-    [self addSubview:_indicatorView];
-    _indicatorView.hidesWhenStopped = YES;
-    [_indicatorView stopAnimating];
+//    self.indicatorView.frame = CGRectMake((self.frame.size.width-90)/2,  (self.frame.size.height-90)/2, 90, 90);
+//    [self addSubview:_indicatorView];
+//    _indicatorView.hidesWhenStopped = YES;
+//    [_indicatorView stopAnimating];
 }
 
 - (void)setModel:(ChatAvatarModel *)model
 {
     _model = model;
-    _voiceImgView.hidden = !model.isShowVoice;
+    _closeCameraImageView.hidden = !model.isShowVoice;
     _indicatorView.hidden = !model.isShowIndicator;
 
-    if (model.isShowIndicator) {
+    if (model.isShowIndicator)
         [_indicatorView startAnimating];
-    }else
+    else
         [_indicatorView stopAnimating];
-    
-    _nickNameLabel.text = [CommonUtility strimCharacter:model.userName withRegex:RegexIsChinese];
 }
 
+- (void)hideCloseCameraImage
+{
+    [self.closeCameraImageView removeFromSuperview];
+}
 
 @end

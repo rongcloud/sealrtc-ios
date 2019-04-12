@@ -13,8 +13,10 @@
 @interface ChatCellVideoViewModel : UIView
 
 @property (nonatomic, strong) NSString *streamID;
+@property (nonatomic, strong) NSString *userID;
 @property (nonatomic, assign) CGSize originalSize;
 @property (nonatomic, strong) UIView *itemCoverView;
+@property (nonatomic, copy) NSString* userName;
 
 @property (nonatomic, assign) NSString *frameRate;
 @property (nonatomic, assign) NSInteger frameRateRecv;
@@ -32,6 +34,7 @@
 @property (nonatomic, assign) NSInteger avType, everOnLocalView;
 @property (nonatomic, strong) UIImageView *micImageView;
 @property (nonatomic, strong) UILabel *infoLabel, *nameLabel;
+@property (nonatomic, strong) CAGradientLayer *infoLabelGradLayer;
 @property (nonatomic, assign) BOOL isShowVideo;
 @property (nonatomic, assign) BOOL isSubscribeSuccess;
 @property (nonatomic, assign) BOOL isConnectSuccess;

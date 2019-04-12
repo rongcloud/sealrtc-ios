@@ -110,6 +110,28 @@
     self.chatViewController.chatViewBuilder.excelView.array = self.bitrateArray;
 }
 
+- (void)onUserAudioLevel:(NSArray *)levelArray
+{
+    for (NSDictionary *dict in levelArray)
+    {
+        NSInteger audioleval = [dict[@"audioleval"] integerValue];
+        NSString *userid = dict[@"userid"];
+        
+        if ([userid isEqualToString:kChatManager.localUserDataModel.userID]) {
+            if (!kLoginManager.isMuteMicrophone) {
+                kChatManager.localUserDataModel.audioLevel = audioleval;
+            }
+            else {
+                kChatManager.localUserDataModel.audioLevel = 0;
+            }
+        }
+        else {
+            ChatCellVideoViewModel *remoteModel = [kChatManager getRemoteUserDataModelFromUserID:userid];
+            remoteModel.audioLevel = audioleval;
+        }
+    }
+}
+
 #pragma mark - Private
 - (NSString *)trafficString:(NSString *)recvBitrate sendBitrate:(NSString *)sendBitrate
 {

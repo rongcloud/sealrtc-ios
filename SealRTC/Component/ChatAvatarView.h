@@ -17,12 +17,13 @@
 
 @end
 
-@interface ChatAvatarView : UIImageView
+@interface ChatAvatarView : UIView
 
 @property (nonatomic, strong) ChatAvatarModel *model;
 
-@property (nonatomic,strong) UILabel *nickNameLabel;
 @property (nonatomic,strong) UIActivityIndicatorView *indicatorView;
-@property (nonatomic,strong) UIImageView *voiceImgView;
+@property (nonatomic,strong) UIImageView *closeCameraImageView;
+
+- (void)hideCloseCameraImage;
 
 @end

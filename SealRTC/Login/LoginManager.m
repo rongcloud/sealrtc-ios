@@ -57,6 +57,7 @@ static LoginManager *sharedLoginManager = nil;
     if (everLaunched)
     {
         self.roomNumber = [userDefaults valueForKey:kDefaultRoomNumber];
+        self.username = [userDefaults valueForKey:kDefaultUserName];
     } else {
         [userDefaults setBool:YES forKey:kEverLaunched];
     }
@@ -80,6 +81,8 @@ static LoginManager *sharedLoginManager = nil;
         _isWarterMark = [[settingUserDefaults valueForKey:Key_WaterMark] integerValue];
         _isAutoTest = [[settingUserDefaults valueForKey:Key_AutoTest] boolValue];
         _phoneNumber = [settingUserDefaults valueForKey:Key_PhoneNumber];
+        _countryCode = [settingUserDefaults valueForKey:Key_CountryCode];
+        _regionName = [settingUserDefaults valueForKey:Key_RegionName];
     }
     else
     {
@@ -171,6 +174,14 @@ static LoginManager *sharedLoginManager = nil;
     [settingUserDefaults synchronize];
 }
 
+-(void)setUsername:(NSString *)username{
+    if (!username) {
+        username = @"";
+    }
+    _username = username;
+    [userDefaults setObject:username forKey:kDefaultUserName];
+}
+
 - (void)setRoomNumber:(NSString *)roomNumber
 {
     _roomNumber = roomNumber;
@@ -185,6 +196,18 @@ static LoginManager *sharedLoginManager = nil;
     [settingUserDefaults synchronize];
     
     _userID = [NSString stringWithFormat:@"%@%@", phoneNumber, kDeviceUUID];
+}
+
+- (void)setCountryCode:(NSString *)countryCode {
+    _countryCode = countryCode;
+    [settingUserDefaults setObject:countryCode forKey:Key_CountryCode];
+    [settingUserDefaults synchronize];
+}
+
+- (void)setRegionName:(NSString *)regionName {
+    _regionName = regionName;
+    [settingUserDefaults setObject:regionName forKey:Key_RegionName];
+    [settingUserDefaults synchronize];
 }
 
 - (void)setKeyToken:(NSString *)keyToken

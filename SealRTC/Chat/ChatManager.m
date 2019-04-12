@@ -54,12 +54,41 @@ static ChatManager *sharedMeetingManager = nil;
     return model;
 }
 
+- (ChatCellVideoViewModel *)getRemoteUserDataModelFromStreamID:(NSString *)streamID
+{
+    for (ChatCellVideoViewModel *model in self.allRemoteUserDataArray)
+    {
+        if ([model.streamID isEqualToString:streamID])
+            return model;
+    }
+    
+    return nil;
+}
+
 - (ChatCellVideoViewModel *)getRemoteUserDataModelFromUserID:(NSString *)userID
 {
     for (ChatCellVideoViewModel *model in self.allRemoteUserDataArray)
     {
-        if ([model.streamID isEqualToString:userID])
+        if ([model.userID isEqualToString:userID])
             return model;
+    }
+    return nil;
+}
+
+- (ChatCellVideoViewModel *)getRemoteUserDataModelSimilarUserID:(NSString *)userID
+{
+    if (userID.length <= 0) {
+        return nil;
+    }
+    for (ChatCellVideoViewModel *model in self.allRemoteUserDataArray)
+    {
+        NSRange range =  [model.streamID rangeOfString:@"_" options:NSLiteralSearch];
+        if (range.location != NSNotFound) {
+            NSString* uid = [model.streamID substringToIndex:range.location];
+            if ([uid isEqualToString:userID]) {
+                return model;
+            }
+        }
     }
     return nil;
 }
@@ -75,7 +104,7 @@ static ChatManager *sharedMeetingManager = nil;
     NSMutableArray *userIDArray = [NSMutableArray array];
     for (ChatCellVideoViewModel *model in self.allRemoteUserDataArray)
     {
-        [userIDArray addObject:model.streamID];
+        [userIDArray addObject:model.userID];
     }
     return userIDArray;
 }
@@ -90,11 +119,11 @@ static ChatManager *sharedMeetingManager = nil;
     [_allRemoteUserDataArray insertObject:model atIndex:index];
 }
 
-- (void)removeRemoteUserDataModelFromUserID:(NSString *)userID
+- (void)removeRemoteUserDataModelFromStreamID:(NSString *)streamID
 {
     for (ChatCellVideoViewModel *model in _allRemoteUserDataArray)
     {
-        if ([model.streamID isEqualToString:userID])
+        if ([model.streamID isEqualToString:streamID])
         {
             [self.allRemoteUserDataArray removeObject:model];
             break;
@@ -107,12 +136,12 @@ static ChatManager *sharedMeetingManager = nil;
     [_allRemoteUserDataArray removeObjectAtIndex:index];
 }
 
-- (NSInteger)indexOfRemoteUserDataArray:(NSString *)userID
+- (NSInteger)indexOfRemoteUserDataArray:(NSString *)streamID
 {
     for (NSInteger i = 0; i < [self.allRemoteUserDataArray count]; i++)
     {
         ChatCellVideoViewModel *model = self.allRemoteUserDataArray[i];
-        if ([model.streamID isEqualToString:userID])
+        if ([model.streamID isEqualToString:streamID])
             return i;
     }
     return -1;
@@ -123,11 +152,11 @@ static ChatManager *sharedMeetingManager = nil;
     return [self.allRemoteUserDataArray count];
 }
 
-- (BOOL)isContainRemoteUserFromUserID:(NSString *)userID
+- (BOOL)isContainRemoteUserFromStreamID:(NSString *)streamID
 {
     for (ChatCellVideoViewModel *model in self.allRemoteUserDataArray)
     {
-        if ([model.streamID isEqualToString:userID])
+        if ([model.streamID isEqualToString:streamID])
             return YES;
     }
     return NO;
@@ -236,8 +265,8 @@ static ChatManager *sharedMeetingManager = nil;
     self.captureParam.tinyStreamEnable = kLoginManager.isTinyStream;
     
     switch (kLoginManager.resolutionRatioIndex) {
-        case 0: //352*288
-            self.captureParam.videoSizePreset = RongRTCVideoSizePreset352x288;
+        case 0: //320*240
+            self.captureParam.videoSizePreset = RongRTCVideoSizePreset320x240;
             break;
         case 1: //640*480
             self.captureParam.videoSizePreset = RongRTCVideoSizePreset640x480;

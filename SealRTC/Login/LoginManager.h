@@ -17,7 +17,7 @@
 @property (nonatomic, strong) NSURL *tokenURL;
 @property (nonatomic, assign) BOOL isGPUFilter, isSRTPEncrypt, isTinyStream, isWarterMark;
 @property (nonatomic, assign) NSInteger resolutionRatioIndex, frameRateIndex, maxCodeRateIndex, minCodeRateIndex, codingStyleIndex;
-@property (nonatomic, strong) NSString *roomNumber, *keyToken, *appKey, *phoneNumber, *userID;
+@property (nonatomic, strong) NSString *roomNumber, *keyToken, *appKey, *phoneNumber, *userID,*username,*countryCode,*regionName;
 @property (nonatomic, strong) NSString *selectedServer;
 @property (nonatomic, strong,readonly) RongRTCEngine *rongRTCEngine;
 @property (nonatomic, assign) BOOL isLoginTokenSucc, isIMConnectionSucc, isAutoTest;

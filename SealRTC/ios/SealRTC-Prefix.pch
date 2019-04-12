@@ -25,6 +25,7 @@
 
 #define kEverLaunched @"everLaunched"
 #define kDefaultRoomNumber @"DefaultRoomNumber"
+#define kDefaultUserName @"kDefaultUserName"
 #define RegexRoomID @"^[A-Za-z0-9+=\\-_]+$"
 #define RegexIsChinese @"^[\u4e00-\u9fa5]+$"
 
@@ -49,6 +50,8 @@
 #define Key_AutoTest @"AutoTest"
 #define Key_KeyToken @"KeyToken"
 #define Key_TinyStreamMode @"TinyStream"
+#define Key_CountryCode @"countryCode"
+#define Key_RegionName @"regionName"
 
 
 #define Value_Default_ResolutionRatio 1

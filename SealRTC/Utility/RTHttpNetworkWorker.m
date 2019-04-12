@@ -71,15 +71,15 @@ static RTHttpNetworkWorker* defaultWorker = nil;
 }
 
 - (void)fetchSMSValidateCode:(NSString *)phoneNum
+                  regionCode:(NSString*)code
                      success:(void (^)(NSString* code))sucess
-                       error:(void (^)(NSError* error))errorBlock
-{
+                       error:(void (^)(NSError* error))errorBlock {
     NSURL* urlPost = [NSURL URLWithString:RCSendCodeURL];
     NSMutableURLRequest *request  = [NSMutableURLRequest requestWithURL:urlPost];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
-    NSDictionary *dic = @{@"phone":phoneNum, @"region":@"86"};
+    NSDictionary *dic = @{@"phone":phoneNum, @"region":code};
     NSData* data = [NSJSONSerialization dataWithJSONObject:dic options:kNilOptions error:nil];
     request.HTTPBody = data;
     
@@ -99,16 +99,17 @@ static RTHttpNetworkWorker* defaultWorker = nil;
 }
 
 - (void)validateSMSPhoneNum:(NSString *)phoneNum
+                 regionCode:(NSString*)regionCode
                        code:(NSString *)code
-                response:(void (^)(NSDictionary *respDict))resp
-                  error:(void (^)(NSError* error))errorBlock
+                   response:(void (^)(NSDictionary *respDict))resp
+                      error:(void (^)(NSError* error))errorBlock;
 {
     NSURL* urlPost = [NSURL URLWithString:RCValidateCodeURL];
     NSMutableURLRequest *request  = [NSMutableURLRequest requestWithURL:urlPost];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
-    NSDictionary *dic = @{@"phone":phoneNum, @"region":@"86", @"code":code, @"key":[NSString stringWithFormat:@"%@%@", phoneNum, kDeviceUUID]};
+    NSDictionary *dic = @{@"phone":phoneNum, @"region":regionCode, @"code":code, @"key":[NSString stringWithFormat:@"%@%@", phoneNum, kDeviceUUID]};
     NSData* data = [NSJSONSerialization dataWithJSONObject:dic options:kNilOptions error:nil];
     request.HTTPBody = data;
     

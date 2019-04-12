@@ -13,7 +13,16 @@
 @end
 
 @implementation ChatCell
- 
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        self.contentView.layer.borderWidth = 1.0f;
+        self.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
+    }
+    return self;
+}
+
+
 - (void)setType:(ChatType)type
 {
     _type = type;

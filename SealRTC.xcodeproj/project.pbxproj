@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1773DD90224D145D007213AF /* RongRTCLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1773DD8F224D145D007213AF /* RongRTCLib.framework */; };
 		3907FA151E08E01E007EDC46 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3907FA141E08E01E007EDC46 /* SystemConfiguration.framework */; };
 		390ED55D1D9E07F20046F519 /* CodeRate.plist in Resources */ = {isa = PBXBuildFile; fileRef = 390ED55C1D9E07F20046F519 /* CodeRate.plist */; };
 		3917C2AA21B8F5EB00456EDA /* LoginTextFieldDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3917C2A721B8F5EB00456EDA /* LoginTextFieldDelegateImpl.m */; };
@@ -31,13 +30,14 @@
 		393373421E6FDB320084F6C9 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 393373411E6FDB320084F6C9 /* libiconv.tbd */; };
 		393373441E6FDB3C0084F6C9 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 393373431E6FDB3C0084F6C9 /* libbz2.tbd */; };
 		393373451E6FDB6E0084F6C9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 39CF6E571E08C137001A683B /* libz.tbd */; };
-		393E09D52223903900A44BAB /* RongCrashReport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 393E09D42223903900A44BAB /* RongCrashReport.framework */; };
 		394D158F1DF003BE001CE166 /* SettingTableViewDelegateSourceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 394D158E1DF003BE001CE166 /* SettingTableViewDelegateSourceImpl.m */; };
 		394D15961DF00A9D001CE166 /* SettingViewBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 394D15951DF00A9D001CE166 /* SettingViewBuilder.m */; };
 		394D15991DF00F72001CE166 /* SettingPickViewDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 394D15981DF00F72001CE166 /* SettingPickViewDelegateImpl.m */; };
 		394DEFAC22143AEB009E090A /* RTHttpNetworkWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 394DEFAB22143AEB009E090A /* RTHttpNetworkWorker.m */; };
 		394DEFB022143D46009E090A /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 394DEFAF22143D46009E090A /* libsqlite3.0.tbd */; };
 		3951BEEB2175E1D200F5F34F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D7D5D501D1B8671000574B2 /* GLKit.framework */; };
+		395A694122602B8F00EC6884 /* RongCrashReport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 394DEF952213F3F1009E090A /* RongCrashReport.framework */; };
+		397184B322602BF900EBEA34 /* RongRTCLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B258B6221650DC00821CB9 /* RongRTCLib.framework */; };
 		3973203E1D9BEF470016DFC6 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3973203D1D9BEF470016DFC6 /* SettingViewController.m */; };
 		397320411D9CD82B0016DFC6 /* ZHPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 397320401D9CD82B0016DFC6 /* ZHPickView.m */; };
 		397320451D9CED2F0016DFC6 /* ResolutionRatio.plist in Resources */ = {isa = PBXBuildFile; fileRef = 397320441D9CED2F0016DFC6 /* ResolutionRatio.plist */; };
@@ -87,6 +87,16 @@
 		9D7D5D571D1B8BC6000574B2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D7D5D561D1B8BC6000574B2 /* Foundation.framework */; };
 		9D7D5D5D1D1B9DF5000574B2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D7D5D5C1D1B9DF5000574B2 /* Images.xcassets */; };
 		9D7D5D631D1BCFE2000574B2 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D7D5D4E1D1B8605000574B2 /* VideoToolbox.framework */; };
+		B21B1D5B22533E9A001C4489 /* STJSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B21B1D5A22533E9A001C4489 /* STJSONModel.m */; };
+		B21B1D5E225340DE001C4489 /* STSetRoomInfoMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B21B1D5D225340DE001C4489 /* STSetRoomInfoMessage.m */; };
+		B21B1D612253439B001C4489 /* STDeleteRoomInfoMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B21B1D602253439B001C4489 /* STDeleteRoomInfoMessage.m */; };
+		B220963C22530A0E005948E1 /* STCountryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B220963A22530A0E005948E1 /* STCountryTableViewController.m */; };
+		B220963F22530A35005948E1 /* RCDCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = B220963D22530A34005948E1 /* RCDCountry.m */; };
+		B220964222530A61005948E1 /* RCCCpinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = B220964022530A60005948E1 /* RCCCpinyin.m */; };
+		B220964622531117005948E1 /* STParticipantsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B220964522531117005948E1 /* STParticipantsTableViewController.m */; };
+		B2209649225319EC005948E1 /* STPresentationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2209648225319EC005948E1 /* STPresentationViewController.m */; };
+		B220964C22533389005948E1 /* STParticipantsTableViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = B220964B22533389005948E1 /* STParticipantsTableViewHeader.m */; };
+		B220964F22533A14005948E1 /* STParticipantsInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B220964E22533A14005948E1 /* STParticipantsInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -145,7 +155,6 @@
 		392A63DD22375F35000A6ED5 /* ChatRongRTCNetworkMonitorDelegateImpl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatRongRTCNetworkMonitorDelegateImpl.m; sourceTree = "<group>"; };
 		393373411E6FDB320084F6C9 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		393373431E6FDB3C0084F6C9 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
-		393E09D42223903900A44BAB /* RongCrashReport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RongCrashReport.framework; sourceTree = "<group>"; };
 		394D158D1DF003BE001CE166 /* SettingTableViewDelegateSourceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTableViewDelegateSourceImpl.h; sourceTree = "<group>"; };
 		394D158E1DF003BE001CE166 /* SettingTableViewDelegateSourceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTableViewDelegateSourceImpl.m; sourceTree = "<group>"; };
 		394D15941DF00A9D001CE166 /* SettingViewBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewBuilder.h; sourceTree = "<group>"; };
@@ -239,6 +248,26 @@
 		9D7D5D541D1B8BBC000574B2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9D7D5D561D1B8BC6000574B2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9D7D5D5C1D1B9DF5000574B2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B21B1D5922533E9A001C4489 /* STJSONModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STJSONModel.h; sourceTree = "<group>"; };
+		B21B1D5A22533E9A001C4489 /* STJSONModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STJSONModel.m; sourceTree = "<group>"; };
+		B21B1D5C225340DE001C4489 /* STSetRoomInfoMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STSetRoomInfoMessage.h; sourceTree = "<group>"; };
+		B21B1D5D225340DE001C4489 /* STSetRoomInfoMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STSetRoomInfoMessage.m; sourceTree = "<group>"; };
+		B21B1D5F2253439B001C4489 /* STDeleteRoomInfoMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STDeleteRoomInfoMessage.h; sourceTree = "<group>"; };
+		B21B1D602253439B001C4489 /* STDeleteRoomInfoMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STDeleteRoomInfoMessage.m; sourceTree = "<group>"; };
+		B220963A22530A0E005948E1 /* STCountryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STCountryTableViewController.m; sourceTree = "<group>"; };
+		B220963B22530A0E005948E1 /* STCountryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STCountryTableViewController.h; sourceTree = "<group>"; };
+		B220963D22530A34005948E1 /* RCDCountry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCDCountry.m; sourceTree = "<group>"; };
+		B220963E22530A35005948E1 /* RCDCountry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCDCountry.h; sourceTree = "<group>"; };
+		B220964022530A60005948E1 /* RCCCpinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCCpinyin.m; sourceTree = "<group>"; };
+		B220964122530A61005948E1 /* RCCCpinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCCpinyin.h; sourceTree = "<group>"; };
+		B220964422531117005948E1 /* STParticipantsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STParticipantsTableViewController.h; sourceTree = "<group>"; };
+		B220964522531117005948E1 /* STParticipantsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STParticipantsTableViewController.m; sourceTree = "<group>"; };
+		B2209647225319EC005948E1 /* STPresentationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STPresentationViewController.h; sourceTree = "<group>"; };
+		B2209648225319EC005948E1 /* STPresentationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STPresentationViewController.m; sourceTree = "<group>"; };
+		B220964A22533389005948E1 /* STParticipantsTableViewHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STParticipantsTableViewHeader.h; sourceTree = "<group>"; };
+		B220964B22533389005948E1 /* STParticipantsTableViewHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STParticipantsTableViewHeader.m; sourceTree = "<group>"; };
+		B220964D22533A14005948E1 /* STParticipantsInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STParticipantsInfo.h; sourceTree = "<group>"; };
+		B220964E22533A14005948E1 /* STParticipantsInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STParticipantsInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,7 +275,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1773DD90224D145D007213AF /* RongRTCLib.framework in Frameworks */,
+				397184B322602BF900EBEA34 /* RongRTCLib.framework in Frameworks */,
 				393373451E6FDB6E0084F6C9 /* libz.tbd in Frameworks */,
 				393373441E6FDB3C0084F6C9 /* libbz2.tbd in Frameworks */,
 				393373421E6FDB320084F6C9 /* libiconv.tbd in Frameworks */,
@@ -268,7 +297,7 @@
 				3987F2A71E84B3060024CAFC /* Security.framework in Frameworks */,
 				3991BCF41DD352B100152317 /* Bugly.framework in Frameworks */,
 				46BCF21D224D2D96009E2617 /* libvo-amrwbenc.a in Frameworks */,
-				393E09D52223903900A44BAB /* RongCrashReport.framework in Frameworks */,
+				395A694122602B8F00EC6884 /* RongCrashReport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,7 +461,6 @@
 		39D4A1B220DA533700F26ACA /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
-				393E09D42223903900A44BAB /* RongCrashReport.framework */,
 				39D4A1B320DA533700F26ACA /* Reachability */,
 			);
 			path = 3rd;
@@ -526,6 +554,8 @@
 		9D54AC331D06CFA00054A72F /* SealRTC */ = {
 			isa = PBXGroup;
 			children = (
+				B22096432253107D005948E1 /* participants */,
+				B220962A2252FE4C005948E1 /* countryList */,
 				9D3DD0701D59CC5700DC1443 /* Splash */,
 				3973203A1D9BEF1A0016DFC6 /* Setting */,
 				39A2958C217DA70C0091B6BB /* Login */,
@@ -590,6 +620,40 @@
 			name = frameworks;
 			sourceTree = "<group>";
 		};
+		B220962A2252FE4C005948E1 /* countryList */ = {
+			isa = PBXGroup;
+			children = (
+				B220964022530A60005948E1 /* RCCCpinyin.m */,
+				B220964122530A61005948E1 /* RCCCpinyin.h */,
+				B220963E22530A35005948E1 /* RCDCountry.h */,
+				B220963D22530A34005948E1 /* RCDCountry.m */,
+				B220963B22530A0E005948E1 /* STCountryTableViewController.h */,
+				B220963A22530A0E005948E1 /* STCountryTableViewController.m */,
+			);
+			path = countryList;
+			sourceTree = "<group>";
+		};
+		B22096432253107D005948E1 /* participants */ = {
+			isa = PBXGroup;
+			children = (
+				B2209647225319EC005948E1 /* STPresentationViewController.h */,
+				B2209648225319EC005948E1 /* STPresentationViewController.m */,
+				B220964422531117005948E1 /* STParticipantsTableViewController.h */,
+				B220964522531117005948E1 /* STParticipantsTableViewController.m */,
+				B220964A22533389005948E1 /* STParticipantsTableViewHeader.h */,
+				B220964B22533389005948E1 /* STParticipantsTableViewHeader.m */,
+				B21B1D5922533E9A001C4489 /* STJSONModel.h */,
+				B21B1D5A22533E9A001C4489 /* STJSONModel.m */,
+				B220964D22533A14005948E1 /* STParticipantsInfo.h */,
+				B220964E22533A14005948E1 /* STParticipantsInfo.m */,
+				B21B1D5C225340DE001C4489 /* STSetRoomInfoMessage.h */,
+				B21B1D5D225340DE001C4489 /* STSetRoomInfoMessage.m */,
+				B21B1D5F2253439B001C4489 /* STDeleteRoomInfoMessage.h */,
+				B21B1D602253439B001C4489 /* STDeleteRoomInfoMessage.m */,
+			);
+			path = participants;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -624,8 +688,8 @@
 				TargetAttributes = {
 					9D54AC301D06CFA00054A72F = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 4U944J922M;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = 9CVMN4UZK4;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -708,6 +772,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B220964F22533A14005948E1 /* STParticipantsInfo.m in Sources */,
 				3917C2AD21B8F6F300456EDA /* LoginManager.m in Sources */,
 				3917C2AA21B8F5EB00456EDA /* LoginTextFieldDelegateImpl.m in Sources */,
 				988FEE7320206D8200FFF09A /* UINavigationController+returnBack.m in Sources */,
@@ -728,8 +793,11 @@
 				39B258A72215111300821CB9 /* ChatRongRTCRoomDelegateImpl.m in Sources */,
 				3917C2D521BA10B600456EDA /* ChatCollectionViewDataSourceDelegateImpl.m in Sources */,
 				394D15961DF00A9D001CE166 /* SettingViewBuilder.m in Sources */,
+				B220964222530A61005948E1 /* RCCCpinyin.m in Sources */,
+				B220963F22530A35005948E1 /* RCDCountry.m in Sources */,
 				394D158F1DF003BE001CE166 /* SettingTableViewDelegateSourceImpl.m in Sources */,
 				98EEB1C02041554400E77E7E /* NSString+length.m in Sources */,
+				B21B1D5E225340DE001C4489 /* STSetRoomInfoMessage.m in Sources */,
 				3917C2D221BA10B600456EDA /* ChatManager.m in Sources */,
 				3917C2E521BA10D200456EDA /* GPUImageBeautyFilter.m in Sources */,
 				392A63DE22375F35000A6ED5 /* ChatRongRTCNetworkMonitorDelegateImpl.m in Sources */,
@@ -737,6 +805,7 @@
 				397719911E2CA24700EB45C1 /* SealRTCAppDelegate.m in Sources */,
 				3917C2E321BA10D200456EDA /* GPUImageOutputCamera.m in Sources */,
 				394D15991DF00F72001CE166 /* SettingPickViewDelegateImpl.m in Sources */,
+				B21B1D5B22533E9A001C4489 /* STJSONModel.m in Sources */,
 				3917C2D621BA10B600456EDA /* ChatBubbleMenuViewDelegateImpl.m in Sources */,
 				9D7D5C441D1AB294000574B2 /* main.m in Sources */,
 				3917C2F221BA13D200456EDA /* WhiteBoardWebView.m in Sources */,
@@ -746,14 +815,19 @@
 				3973203E1D9BEF470016DFC6 /* SettingViewController.m in Sources */,
 				39923085221EB79200752AC5 /* ChatGPUImageHandler.m in Sources */,
 				3917C2DB21BA10B600456EDA /* ChatDataInfoModel.m in Sources */,
+				B21B1D612253439B001C4489 /* STDeleteRoomInfoMessage.m in Sources */,
 				3917C2DA21BA10B600456EDA /* ChatLocalDataInfoModel.m in Sources */,
 				397320411D9CD82B0016DFC6 /* ZHPickView.m in Sources */,
 				981C3E21202ADEBB00494697 /* BlinkExcelView.m in Sources */,
+				B220964622531117005948E1 /* STParticipantsTableViewController.m in Sources */,
 				39A29596217DA70C0091B6BB /* LoginViewBuilder.m in Sources */,
+				B220964C22533389005948E1 /* STParticipantsTableViewHeader.m in Sources */,
+				B220963C22530A0E005948E1 /* STCountryTableViewController.m in Sources */,
 				394DEFAC22143AEB009E090A /* RTHttpNetworkWorker.m in Sources */,
 				3917C2D921BA10B600456EDA /* ChatCellVideoViewModel.m in Sources */,
 				3917C2EA21BA118A00456EDA /* ChatAvatarView.m in Sources */,
 				981C3E1E202ADDEB00494697 /* UIView+YHCategory.m in Sources */,
+				B2209649225319EC005948E1 /* STPresentationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -863,8 +937,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -958,8 +1032,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1108,10 +1182,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 4U944J922M;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1140,7 +1214,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "Dev Wildcard";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wno-deprecated-declarations";
 			};
@@ -1152,8 +1226,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

@@ -52,27 +52,31 @@
 "login_input_tip_content" = "For non-existing room, you will create and join it; for existing room, you will join it.";
 "login_input_meeting_room_NO" = "Room ID";
 "login_input_encryption_key" = "Encryption Key";
-"login_input_enter_meeting_room" = "Enter Room";
+"login_input_enter_meeting_room" = "Join Room";
 "login_input_login_meeting_room" = "Logining...";
-"login_input_need_room_number" = "Input Room Number";
+"login_input_login_connecting" = "Connecting";
+"login_input_login_network_disable" = "Network Disable";
+"login_input_need_room_number" = "Input Room ID";
 "login_input_need_input" = "Input Message";
 "login_input_need_user_name" = "Input Username";
 "login_input_error_length" = "Incorrect character length";
 "login_input_error_illegal" = "Username illegal";
 "login_input_error_nil" = "Input Username";
 "login_input_radio_default" = "Default";
-"login_input_radio_close_camera" = "Join Channel Without Video";
-"login_input_radio_observer" = "Receive Only Mode";
+"login_input_radio_close_camera" = "Audio mode to join";
+"login_input_radio_observer" = "Observer mode to join";
 "login_input_need_room_username" = "Only Chinese and English letters are supported";
 "login_input_notice_error" = "Inputted username character illegality";
 "login_input_alert_description" = "Please select the Server you want to CONNECT!";
 "login_input_alert_title" = "Network";
 "login_input_phone_logon" = "Input Phone Number";
 "login_input_phone_number" = "Phone Number";
-"login_input_phone_smsvalidate" = "SMS Verification Code";
-"login_input_phone_send_sms" = "Send Verify Code";
-"login_input_phone_validate_logon" = "Logon";
+"login_input_phone_smsvalidate" = "Code";
+"login_input_phone_send_sms" = "Get Code";
+"login_input_phone_validate_logon" = "Verify Login";
 "login_input_count_down_sec" = "Sec";
+"login_input_verify_error" = "Verification Code Error";
+"login_input_user_name"="User Name";
 
 
 "setting_title" = "Setting";
@@ -89,7 +93,7 @@
 "setting_sniffer_testing" = "Sniffer Testing";
 "setting_local_video" = "Local Video";
 "setting_gpu_filter" = "Beauty";
-"setting_tiny_stream" = "TinyStream";
+"setting_tiny_stream" = "Tiny Stream";
 "setting_media_encrypt" = "Media Data Encrypt";
 "setting_urlschema" = "Server Config";
 "setting_urlschema_token" = "Token";
@@ -102,3 +106,16 @@
 "setting_media_connectiontype" = "Connection Type";
 "setting_build_info" = "Build Info";
 "setting_auto_test" = "Auto Test";
+
+
+"select_country"="Countries/Regions";
+"select_country_fmt"="Countries/Regions %@";
+
+"me"="Me";
+
+"video_mode"="Video Mode";
+"audio_mode"="Audio Mode";
+"receive_only_mode"="Receive Only Mode";
+
+"close"="Close";
+"online_user_cout_fmt"="Online number %@";

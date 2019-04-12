@@ -9,10 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <RongRTCLib/RongRTCLib.h>
 
+
+@class STParticipantsInfo;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ChatRongRTCRoomDelegateImpl : NSObject <RongRTCRoomDelegate>
 
+@property (nonatomic, weak) NSMutableArray<STParticipantsInfo*>* infos;
 - (instancetype)initWithViewController:(UIViewController *)vc;
 
 @end

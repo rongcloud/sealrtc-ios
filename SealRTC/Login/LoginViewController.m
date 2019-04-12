@@ -13,7 +13,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import "NSString+length.h"
 #import "RTHttpNetworkWorker.h"
-
+#import "STCountryTableViewController.h"
+#import "RCDCountry.h"
 
 typedef NS_ENUM(NSInteger, TextFieldInputError)
 {
@@ -33,7 +34,7 @@ typedef NS_ENUM(NSInteger, JoinRoomState)
 static NSString * const SegueIdentifierChat = @"Chat";
 static NSDictionary *selectedServer;
 
-@interface LoginViewController ()<UIAlertViewDelegate>
+@interface LoginViewController ()<UIAlertViewDelegate,UITextFieldDelegate,STCountryTableViewControllerDelegate>
 {
     NSUserDefaults *settingUserDefaults;
     TextFieldInputError inputError;
@@ -67,19 +68,37 @@ static NSDictionary *selectedServer;
     [UIView animateWithDuration:0.4 animations:^{
         weakSelf.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
         weakSelf.loginViewBuilder.loginIconImageView.frame = CGRectMake(weakSelf.loginViewBuilder.loginIconImageView.frame.origin.x, 50, weakSelf.loginViewBuilder.loginIconImageView.frame.size.width, weakSelf.loginViewBuilder.loginIconImageView.frame.size.height);
-        weakSelf.loginViewBuilder.inputNumPasswordView.frame = CGRectMake(weakSelf.loginViewBuilder.inputNumPasswordView.frame.origin.x, 186, weakSelf.loginViewBuilder.inputNumPasswordView.frame.size.width, weakSelf.loginViewBuilder.inputNumPasswordView.frame.size.height);
+        CGFloat originY = 130;
+        if (weakSelf.view.frame.size.width == 320) {
+            originY = originY - 44;
+        }
+        weakSelf.loginViewBuilder.inputNumPasswordView.frame = CGRectMake(weakSelf.loginViewBuilder.inputNumPasswordView.frame.origin.x, originY, weakSelf.loginViewBuilder.inputNumPasswordView.frame.size.width, weakSelf.loginViewBuilder.inputNumPasswordView.frame.size.height);
+        
     } completion:^(BOOL finished) {
     }];
     
     self.loginViewBuilder.roomNumberTextField.text = kLoginManager.roomNumber;
     self.loginViewBuilder.phoneNumTextField.text = kLoginManager.phoneNumber;
     self.loginViewBuilder.phoneNumLoginTextField.text = kLoginManager.phoneNumber;
+    self.loginViewBuilder.usernameTextField.text = kLoginManager.username;
+    if (kLoginManager.countryCode.length > 0 && kLoginManager.regionName.length > 0) {
+        self.loginViewBuilder.countryCodeLabel.text = [NSString stringWithFormat:@"+%@",kLoginManager.countryCode];
+        self.loginViewBuilder.loginCountryCodeLabel.text = [NSString stringWithFormat:@"+%@",kLoginManager.countryCode];
+        NSString* select_fmt = NSLocalizedString(@"select_country_fmt", nil);
+        self.loginViewBuilder.countryTxtField.text = [NSString stringWithFormat:select_fmt,kLoginManager.regionName];
+        self.loginViewBuilder.loginCountryTxtField.text = [NSString stringWithFormat:select_fmt,kLoginManager.regionName];
+    }
+    
+
     joinRoomState = JoinRoom_Token;
     
     [self updateSendSMSButtonEnable:[CommonUtility validateContactNumber:kLoginManager.phoneNumber]];
     
     if ([self.loginViewBuilder.roomNumberTextField.text isEqualToString:@""])
         self.isRoomNumberInput = NO;
+    if (self.loginViewBuilder.usernameTextField.text.length <= 0) {
+        self.isRoomNumberInput = NO;
+    }
     [self updateJoinRoomButtonEnable:NO textFieldInput:self.isRoomNumberInput];
     
     [[RCIMClient sharedRCIMClient] initWithAppKey:RCIMAPPKey];
@@ -142,7 +161,9 @@ static NSDictionary *selectedServer;
 #pragma mark - room number text change
 - (void)roomNumberTextFieldDidChange:(UITextField *)textField
 {
-    if ([self.loginViewBuilder.roomNumberTextField.text isEqualToString:@""])
+    if (self.loginViewBuilder.roomNumberTextField.text.length <= 0 ||
+        self.loginViewBuilder.usernameTextField.text.length <= 0 ||
+        self.loginViewBuilder.phoneNumLoginTextField.text.length <= 0)
         self.isRoomNumberInput = NO;
     else
         self.isRoomNumberInput = YES;
@@ -150,21 +171,28 @@ static NSDictionary *selectedServer;
     [self updateJoinRoomButtonEnable:YES textFieldInput:self.isRoomNumberInput];
 }
 
-- (void)phoneNumTextFieldDidChange:(UITextField *)textField
+- (void)userNameTextfieldDidChange:(UITextField*)textField {
+    if (self.loginViewBuilder.roomNumberTextField.text.length <= 0 ||
+        self.loginViewBuilder.usernameTextField.text.length <= 0 ||
+        self.loginViewBuilder.phoneNumLoginTextField.text.length <= 0) {
+        self.isRoomNumberInput = NO;
+    } else {
+        self.isRoomNumberInput = YES;
+    }
+    [self updateJoinRoomButtonEnable:YES textFieldInput:self.isRoomNumberInput];
+}
+
+- (void)phoneNumLoginTextFieldDidChange:(UITextField *)textField
 {
-    if (countdown == 0) {
-        [self updateSendSMSButtonEnable:[CommonUtility validateContactNumber:textField.text]];
+    if (self.loginViewBuilder.roomNumberTextField.text.length <= 0 ||
+        self.loginViewBuilder.usernameTextField.text.length <= 0 ||
+        self.loginViewBuilder.phoneNumLoginTextField.text.length <= 0) {
+        self.isRoomNumberInput = NO;
+    } else  if ([CommonUtility validateContactNumber:self.loginViewBuilder.phoneNumLoginTextField.text]) {
+        self.isRoomNumberInput = YES;
     }
-    else
-    {
-        if (![self.loginViewBuilder.validateSMSTextField.text isEqualToString:@""]
-            && [CommonUtility validateContactNumber:self.loginViewBuilder.phoneNumTextField.text])
-        {
-            [self updateValidateLogonButtonEnable:YES];
-        } else {
-            [self updateValidateLogonButtonEnable:NO];
-        }
-    }
+
+    [self updateJoinRoomButtonEnable:YES textFieldInput:self.isRoomNumberInput];
 }
 
 - (void)validateSMSTextFieldDidChange:(UITextField *)textField
@@ -206,14 +234,14 @@ static NSDictionary *selectedServer;
 //                    break;
                 case JoinRoom_Connecting:
                 {
-                    [self.loginViewBuilder.joinRoomButton setTitle:@"连接中" forState:UIControlStateNormal];
-                    [self.loginViewBuilder.joinRoomButton setTitle:@"连接中" forState:UIControlStateHighlighted];
+                    [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_login_connecting", nil) forState:UIControlStateNormal];
+                    [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_login_connecting", nil) forState:UIControlStateHighlighted];
                 }
                     break;
                 case JoinRoom_Disconnected:
                 {
-                    [self.loginViewBuilder.joinRoomButton setTitle:@"当前网络不可用，请检查网络设置" forState:UIControlStateNormal];
-                    [self.loginViewBuilder.joinRoomButton setTitle:@"当前网络不可用，请检查网络设置" forState:UIControlStateHighlighted];
+                    [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_login_network_disable", nil) forState:UIControlStateNormal];
+                    [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_login_network_disable", nil) forState:UIControlStateHighlighted];
                 }
                     break;
                 default:
@@ -222,8 +250,8 @@ static NSDictionary *selectedServer;
         }
         else
         {
-            [self.loginViewBuilder.joinRoomButton setTitle:@"请输入房间号" forState:UIControlStateNormal];
-            [self.loginViewBuilder.joinRoomButton setTitle:@"请输入房间号" forState:UIControlStateHighlighted];
+            [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_need_room_number", nil) forState:UIControlStateNormal];
+            [self.loginViewBuilder.joinRoomButton setTitle:NSLocalizedString(@"login_input_need_room_number", nil) forState:UIControlStateHighlighted];
         }
     }
     });
@@ -251,11 +279,19 @@ static NSDictionary *selectedServer;
 {
     kLoginManager.roomNumber = self.loginViewBuilder.roomNumberTextField.text;
     kLoginManager.phoneNumber = self.loginViewBuilder.phoneNumLoginTextField.text;
+    kLoginManager.username = self.loginViewBuilder.usernameTextField.text;
+    
     DLog(@"Cache keyToken: %@", kLoginManager.keyToken);
     if (!kLoginManager.keyToken || kLoginManager.keyToken.length == 0) {
         self.loginViewBuilder.phoneNumTextField.text = kLoginManager.phoneNumber;
         [self.loginViewBuilder showValidateView:YES];
+        self.loginViewBuilder.countryTxtField.delegate = self;
         [self updateSendSMSButtonEnable:[CommonUtility validateContactNumber:kLoginManager.phoneNumber]];
+        CGFloat  originY = 186;
+        if (self.view.frame.size.width == 320) {
+            originY = originY - 44;
+        }
+        self.loginViewBuilder.inputNumPasswordView.frame = CGRectMake(0, originY,self.loginViewBuilder.inputNumPasswordView.frame.size.width, self.loginViewBuilder.inputNumPasswordView.frame.size.height);
     }
     else if (kLoginManager.isIMConnectionSucc) {
         [self navToChatViewController];
@@ -283,42 +319,48 @@ static NSDictionary *selectedServer;
 - (void)sendSMSButtonPressed:(id)sender
 {
     [self startSendSMSTimer];
-    [[RTHttpNetworkWorker shareInstance] fetchSMSValidateCode:self.loginViewBuilder.phoneNumTextField.text success:^(NSString * _Nonnull code) {
-        DLog(@"send SMS respond code: %@", code);
-    } error:^(NSError * _Nonnull error) {
-        DLog(@"send SMS request Error: %@", error);
-    }];
+    NSString* code = [self.loginViewBuilder.countryCodeLabel.text substringFromIndex:1];
+    [[RTHttpNetworkWorker shareInstance] fetchSMSValidateCode:self.loginViewBuilder.phoneNumTextField.text regionCode:code
+                                                      success:^(NSString * _Nonnull code) {
+                                                          DLog(@"send SMS respond code: %@", code);
+                                                      } error:^(NSError * _Nonnull error) {
+                                                          DLog(@"send SMS request Error: %@", error);
+                                                      }];
 }
 
 #pragma mark - click validate logon button
 - (void)validateLogonButtonPressed:(id)sender
 {
-    [[RTHttpNetworkWorker shareInstance] validateSMSPhoneNum:self.loginViewBuilder.phoneNumTextField.text code:self.loginViewBuilder.validateSMSTextField.text response:^(NSDictionary * _Nonnull respDict) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSInteger code = [respDict[@"code"] integerValue];
-            if (code == 200) {
-                [self.loginViewBuilder showValidateView:NO];
-                kLoginManager.phoneNumber = self.loginViewBuilder.phoneNumTextField.text;
-                self.loginViewBuilder.phoneNumLoginTextField.text = kLoginManager.phoneNumber;
-                
-                kLoginManager.keyToken = respDict[@"result"][@"token"];
-                kLoginManager.isLoginTokenSucc = YES;
-                self->joinRoomState = JoinRoom_Connecting;
-                [self updateJoinRoomButtonEnable:YES textFieldInput:self.isRoomNumberInput];
-            }
-            else {
-                self.loginViewBuilder.alertLabel.text = @"验证码错误, 请重新获取";
-            }
-        });
+    NSString* regionCode = [self.loginViewBuilder.countryCodeLabel.text substringFromIndex:1];
+    [[RTHttpNetworkWorker shareInstance]
+        validateSMSPhoneNum:self.loginViewBuilder.phoneNumTextField.text
+                 regionCode:regionCode
+                       code:self.loginViewBuilder.validateSMSTextField.text
+                   response:^(NSDictionary * _Nonnull respDict) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            NSInteger code = [respDict[@"code"] integerValue];
+                            if (code == 200) {
+                                [self.loginViewBuilder showValidateView:NO];
+                                kLoginManager.phoneNumber = self.loginViewBuilder.phoneNumTextField.text;
+                                self.loginViewBuilder.phoneNumLoginTextField.text = kLoginManager.phoneNumber;
+                                
+                                kLoginManager.keyToken = respDict[@"result"][@"token"];
+                                kLoginManager.isLoginTokenSucc = YES;
+                                self->joinRoomState = JoinRoom_Connecting;
+                                [self updateJoinRoomButtonEnable:YES textFieldInput:self.isRoomNumberInput];
+                            }
+                            else {
+                                self.loginViewBuilder.alertLabel.text = NSLocalizedString(@"login_input_verify_error", nil);
+                            }
+                        });
     } error:^(NSError * _Nonnull error) {
-        self.loginViewBuilder.alertLabel.text = @"验证码错误, 请重新获取";
+        self.loginViewBuilder.alertLabel.text = NSLocalizedString(@"login_input_verify_error", nil);
     }];
 }
 
 #pragma mark - click setting button
 - (void)loginSettingButtonPressed
 {
-    kLoginManager.isCloseCamera = NO;
     if (![self.navigationController.topViewController isKindOfClass:[SettingViewController class]])
         [self.navigationController pushViewController:self.settingViewController animated:YES];
 }
@@ -422,6 +464,29 @@ static NSDictionary *selectedServer;
         default:
             break;
     }
+}
+
+- (void)fetchCountryPhoneCode:(RCDCountry*)info {
+    self.loginViewBuilder.countryCodeLabel.text = [NSString stringWithFormat:@"+%@",info.phoneCode];
+    self.loginViewBuilder.loginCountryCodeLabel.text = [NSString stringWithFormat:@"+%@",info.phoneCode];
+    NSString* select_fmt = NSLocalizedString(@"select_country_fmt", nil);
+    self.loginViewBuilder.countryTxtField.text = [NSString stringWithFormat:select_fmt,info.countryName];
+    self.loginViewBuilder.loginCountryTxtField.text = [NSString stringWithFormat:select_fmt,info.countryName];
+    kLoginManager.countryCode = info.phoneCode;
+    kLoginManager.regionName = info.countryName;
+}
+
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (textField == self.loginViewBuilder.countryTxtField ||
+        textField == self.loginViewBuilder.loginCountryTxtField ) {
+        STCountryTableViewController* stc = [[STCountryTableViewController alloc] init];
+        stc.delegate = self;
+////        UIViewController* vc = [[UIViewController alloc] init];
+        [self.navigationController pushViewController:stc animated:YES];
+        return NO;
+    }
+    return  YES;
 }
 
 @end

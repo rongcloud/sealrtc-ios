@@ -94,12 +94,36 @@
                 localVideoView.frame = self.chatViewController.videoMainView.frame;
                 [self.chatViewController.videoMainView addSubview:kChatManager.localUserDataModel.cellVideoView];
                 
+                CGFloat offset = 16;
+                if (@available(iOS 11.0, *)) {
+                    if (!UIEdgeInsetsEqualToEdgeInsets([UIApplication sharedApplication].delegate.window.safeAreaInsets, UIEdgeInsetsZero)) {
+                        offset += 78;
+                    }
+                }
+                kChatManager.localUserDataModel.infoLabel.frame = CGRectMake(0, localVideoView.frame.size.height - offset, localVideoView.frame.size.width, kChatManager.localUserDataModel.infoLabel.frame.size.height);
+                kChatManager.localUserDataModel.infoLabelGradLayer.frame = kChatManager.localUserDataModel.infoLabel.frame;
+                [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.infoLabel];
+                
+                if (!kChatManager.localUserDataModel.isShowVideo) {
+                    kChatManager.localUserDataModel.avatarView.frame = localVideoView.frame;
+                    [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.avatarView];
+                }
+                
                 //远端: 恢复显示在collection cell中
                 RongRTCRemoteVideoView *remoteVideoView = (RongRTCRemoteVideoView *)selectedViewModel.cellVideoView;
                 remoteVideoView.fillMode = RCVideoFillModeAspectFill;
                 remoteVideoView.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
                 [cell.videoView addSubview:selectedViewModel.cellVideoView];
                 [cell.videoView addSubview:selectedViewModel.infoLabel];
+                
+                selectedViewModel.infoLabel.frame = CGRectMake(0, remoteVideoView.frame.size.height - 16, remoteVideoView.frame.size.width, selectedViewModel.infoLabel.frame.size.height);
+                selectedViewModel.infoLabelGradLayer.frame = selectedViewModel.infoLabel.frame;
+                [selectedViewModel.cellVideoView addSubview:selectedViewModel.infoLabel];
+                
+                if (!selectedViewModel.isShowVideo) {
+                    selectedViewModel.avatarView.frame = remoteVideoView.frame;
+                    [selectedViewModel.cellVideoView addSubview:selectedViewModel.avatarView];
+                }
                 
                 [self.chatViewController.room subscribeAVStream:nil tinyStreams:@[selectedViewModel.inputStream] completion:^(BOOL isSuccess, RongRTCCode desc) {
                 }];
@@ -114,6 +138,15 @@
                 originalRemoteVideoView.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
                 [self.chatViewController.selectedChatCell.videoView addSubview:self.originalSelectedViewModel.cellVideoView];
                 
+                self.originalSelectedViewModel.infoLabel.frame = CGRectMake(0, originalRemoteVideoView.frame.size.height - 16, originalRemoteVideoView.frame.size.width, self.originalSelectedViewModel.infoLabel.frame.size.height);
+                self.originalSelectedViewModel.infoLabelGradLayer.frame = self.originalSelectedViewModel.infoLabel.frame;
+                [self.originalSelectedViewModel.cellVideoView addSubview:self.originalSelectedViewModel.infoLabel];
+                
+                if (!self.originalSelectedViewModel.isShowVideo) {
+                    self.originalSelectedViewModel.avatarView.frame = originalRemoteVideoView.frame;
+                    [self.originalSelectedViewModel.cellVideoView addSubview:self.originalSelectedViewModel.avatarView];
+                }
+                
                 //远端: 当前点击的远端,切换到大屏
                 self.originalSelectedViewModel = selectedViewModel;
                 originalRemoteUserID = selectedViewModel.streamID;
@@ -123,14 +156,38 @@
                 remoteVideoView.frame = self.chatViewController.videoMainView.frame;
                 [self.chatViewController.videoMainView addSubview:selectedViewModel.cellVideoView];
                 
-                [self.chatViewController.room subscribeAVStream:@[selectedViewModel.inputStream] tinyStreams:@[self.originalSelectedViewModel.inputStream] completion:^(BOOL isSuccess, RongRTCCode desc) {
-                }];
+                CGFloat offset = 16;
+                if (@available(iOS 11.0, *)) {
+                    if (!UIEdgeInsetsEqualToEdgeInsets([UIApplication sharedApplication].delegate.window.safeAreaInsets, UIEdgeInsetsZero)) {
+                        offset += 78;
+                    }
+                }
+                selectedViewModel.infoLabel.frame = CGRectMake(0, remoteVideoView.frame.size.height - offset, remoteVideoView.frame.size.width, selectedViewModel.infoLabel.frame.size.height);
+                selectedViewModel.infoLabelGradLayer.frame = selectedViewModel.infoLabel.frame;
+                [selectedViewModel.cellVideoView addSubview:selectedViewModel.infoLabel];
+                
+                if (!selectedViewModel.isShowVideo) {
+                    selectedViewModel.avatarView.frame = remoteVideoView.frame;
+                    [selectedViewModel.cellVideoView addSubview:selectedViewModel.avatarView];
+                }
                 
                 //本地: 为在cell上铺满屏,根据所选本地分辨率判断宽高比例,切换到collection cell上
                 RongRTCLocalVideoView *localVideoView = (RongRTCLocalVideoView *)kChatManager.localUserDataModel.cellVideoView;
                 localVideoView.fillMode = RCVideoFillModeAspectFill;
                 localVideoView.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
                 [cell.videoView addSubview:kChatManager.localUserDataModel.cellVideoView];
+                
+                kChatManager.localUserDataModel.infoLabel.frame = CGRectMake(0, localVideoView.frame.size.height - 16, localVideoView.frame.size.width, kChatManager.localUserDataModel.infoLabel.frame.size.height);
+                kChatManager.localUserDataModel.infoLabelGradLayer.frame = kChatManager.localUserDataModel.infoLabel.frame;
+                [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.infoLabel];
+                
+                if (!kChatManager.localUserDataModel.isShowVideo) {
+                    kChatManager.localUserDataModel.avatarView.frame = localVideoView.frame;
+                    [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.avatarView];
+                }
+                
+                [self.chatViewController.room subscribeAVStream:@[selectedViewModel.inputStream] tinyStreams:@[self.originalSelectedViewModel.inputStream] completion:^(BOOL isSuccess, RongRTCCode desc) {
+                }];
             }
         }
         else
@@ -144,15 +201,39 @@
             remoteVideoView.frame = self.chatViewController.videoMainView.frame;
             [self.chatViewController.videoMainView addSubview:selectedViewModel.cellVideoView];
             
-            [self.chatViewController.room subscribeAVStream:@[selectedViewModel.inputStream] tinyStreams:nil completion:^(BOOL isSuccess,RongRTCCode desc) {
-            }];
+            CGFloat offset = 16;
+            if (@available(iOS 11.0, *)) {
+                if (!UIEdgeInsetsEqualToEdgeInsets([UIApplication sharedApplication].delegate.window.safeAreaInsets, UIEdgeInsetsZero)) {
+                    offset += 78;
+                }
+            }
+            selectedViewModel.infoLabel.frame = CGRectMake(0, remoteVideoView.frame.size.height - offset, remoteVideoView.frame.size.width, selectedViewModel.infoLabel.frame.size.height);
+            selectedViewModel.infoLabelGradLayer.frame = selectedViewModel.infoLabel.frame;
+            [selectedViewModel.cellVideoView addSubview:selectedViewModel.infoLabel];
+            
+            if (!selectedViewModel.isShowVideo) {
+                selectedViewModel.avatarView.frame = remoteVideoView.frame;
+                [selectedViewModel.cellVideoView addSubview:selectedViewModel.avatarView];
+            }
             
             //本地: 为了在cell上铺满屏,根据所选本地分辨率判断宽高比例,切换到collection cell上
             RongRTCLocalVideoView *localVideoView = (RongRTCLocalVideoView *)kChatManager.localUserDataModel.cellVideoView;
             localVideoView.fillMode = RCVideoFillModeAspectFill;
             localVideoView.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
-            
             [cell.videoView addSubview:kChatManager.localUserDataModel.cellVideoView];
+            
+
+            kChatManager.localUserDataModel.infoLabel.frame = CGRectMake(0, localVideoView.frame.size.height - 16, localVideoView.frame.size.width, kChatManager.localUserDataModel.infoLabel.frame.size.height);
+            kChatManager.localUserDataModel.infoLabelGradLayer.frame = kChatManager.localUserDataModel.infoLabel.frame;
+            [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.infoLabel];
+            
+            if (!kChatManager.localUserDataModel.isShowVideo) {
+                kChatManager.localUserDataModel.avatarView.frame = localVideoView.frame;
+                [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.avatarView];
+            }
+            
+            [self.chatViewController.room subscribeAVStream:@[selectedViewModel.inputStream] tinyStreams:nil completion:^(BOOL isSuccess,RongRTCCode desc) {
+            }];
             
             kLoginManager.isSwitchCamera = !kLoginManager.isSwitchCamera;
         }
