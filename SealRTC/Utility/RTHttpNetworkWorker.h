@@ -14,11 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shareInstance;
 
-- (void)fetchTokenWithUserId:(NSString*)usrId
-                        name:(NSString*)usrName
-                     success:(void (^)(NSString* token))sucess
-                       error:(void (^)(NSError* error))errorBlock;
-
 - (void)fetchSMSValidateCode:(NSString *)phoneNum
                   regionCode:(NSString*)code
                      success:(void (^)(NSString* code))sucess

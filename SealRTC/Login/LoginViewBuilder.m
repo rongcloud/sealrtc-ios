@@ -50,7 +50,7 @@
     
     NSInteger passwordViewHeight = ScreenHeight - 186 + 54;
     if (self.loginViewController.view.frame.size.width == 320) {
-        passwordViewHeight = passwordViewHeight - 20;
+        passwordViewHeight = passwordViewHeight - 20 + 64;
     }
     self.inputNumPasswordView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, passwordViewHeight)];
     self.inputNumPasswordView.backgroundColor = [UIColor whiteColor];
@@ -205,6 +205,11 @@
 
     //短信验证********************************************************************
     self.validateView = [[UIView alloc] initWithFrame:CGRectMake(0, self.versionLabel.frame.origin.y + self.versionLabel.frame.size.height + 10, ScreenWidth, self.inputNumPasswordView.frame.size.height -  (self.versionLabel.frame.origin.y + self.versionLabel.frame.size.height + 10))];
+    if(self.loginViewController.view.frame.size.width == 320){
+        CGRect frame =  self.validateView.frame;
+        frame.size.height += 54;
+        self.validateView.frame = frame;
+    }
     self.validateView.backgroundColor = [UIColor whiteColor];
     
     //请输入手机号验证登录

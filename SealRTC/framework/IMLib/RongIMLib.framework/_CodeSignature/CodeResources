@@ -8,6 +8,10 @@
 		<data>
 		b5sbadDsMXzdlkJq8eY2ovY+1po=
 		</data>
+		<key>Headers/RCBurnMessageService.h</key>
+		<data>
+		WB0n5qLj37R4ZjMBN1EZP+OpVEg=
+		</data>
 		<key>Headers/RCCSLeaveMessage.h</key>
 		<data>
 		3vZ5DCdJEP9J0joHITW+VSz9h/o=
@@ -82,7 +86,7 @@
 		</data>
 		<key>Headers/RCFwLog.h</key>
 		<data>
-		6SC2DlzoMdaxTYgvJsI0j4li/Sw=
+		q8/w1tI+PTRhzXjFttTSUrJ4tJw=
 		</data>
 		<key>Headers/RCGroup.h</key>
 		<data>
@@ -94,7 +98,7 @@
 		</data>
 		<key>Headers/RCIMClient.h</key>
 		<data>
-		0PJI+LesCwGE7P188N4Ajh6s4us=
+		j3zbt4Xy1EyoGGuowc0xRRjWlxc=
 		</data>
 		<key>Headers/RCImageMessage.h</key>
 		<data>
@@ -266,7 +270,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		ue26h7P7j9f07h3vJbi/sU2mvA4=
+		ceuGwpsQtA84ynBUg2Eu37QCtGI=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -284,6 +288,17 @@
 			<key>hash2</key>
 			<data>
 			OGNZAKVzSM79PVKRRc+gfZqs7zAZnwRnCf8aZ/49w5k=
+			</data>
+		</dict>
+		<key>Headers/RCBurnMessageService.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			WB0n5qLj37R4ZjMBN1EZP+OpVEg=
+			</data>
+			<key>hash2</key>
+			<data>
+			7oeMA9XFcCCsnoXlTWfO4nMMoNi0TsmeDNsDL3r8sG4=
 			</data>
 		</dict>
 		<key>Headers/RCCSLeaveMessage.h</key>
@@ -488,11 +503,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			6SC2DlzoMdaxTYgvJsI0j4li/Sw=
+			q8/w1tI+PTRhzXjFttTSUrJ4tJw=
 			</data>
 			<key>hash2</key>
 			<data>
-			j/G1nU0lW3hJqy68kIINy2T7Gk3uSQ7PLZKyC4YcaH8=
+			jLIKQSr89SqWSYHCOBUNjABsRcJTJDdHaGkRM3qvvy0=
 			</data>
 		</dict>
 		<key>Headers/RCGroup.h</key>
@@ -521,11 +536,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			0PJI+LesCwGE7P188N4Ajh6s4us=
+			j3zbt4Xy1EyoGGuowc0xRRjWlxc=
 			</data>
 			<key>hash2</key>
 			<data>
-			7l22TW0a071EPaIug8GHnSvIAx2nueoMKCAmshxuKFE=
+			wuvyjxhl/PcMeU1aWeSsjYeEtrwKzHfMUTZDPhr6M4g=
 			</data>
 		</dict>
 		<key>Headers/RCImageMessage.h</key>

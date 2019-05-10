@@ -31,10 +31,6 @@
 {
     [super viewDidAppear:animated];
     
-    SealRTCAppDelegate *appDelegate = (SealRTCAppDelegate *)[UIApplication sharedApplication].delegate;
-    appDelegate.isForcePortrait = YES;
-    [appDelegate application:[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
-    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self performSegueWithIdentifier:@"Splash" sender:self];
     });
@@ -44,6 +40,14 @@
 {
     return YES;
 }
- 
+
+
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (UIInterfaceOrientationMask) supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+}
  
 @end

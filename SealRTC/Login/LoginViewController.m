@@ -102,7 +102,18 @@ static NSDictionary *selectedServer;
     [self updateJoinRoomButtonEnable:NO textFieldInput:self.isRoomNumberInput];
     
     [[RCIMClient sharedRCIMClient] initWithAppKey:RCIMAPPKey];
-    [[RCIMClient sharedRCIMClient] setServerInfo:RCIMNavURL fileServer:RCIMFileURL];
+    
+    NSString *naviHost = RCIMNavURL;
+    if (![naviHost hasPrefix:@"http"]) {
+        naviHost = [@"https://" stringByAppendingString:RCIMNavURL];
+    }
+    
+    NSString *fileHost = RCIMFileURL;
+    if (![fileHost hasPrefix:@"http"]) {
+        fileHost = [@"https://" stringByAppendingString:RCIMFileURL];
+    }
+    
+    [[RCIMClient sharedRCIMClient] setServerInfo:naviHost fileServer:fileHost];
     [[RCIMClient sharedRCIMClient] setRCConnectionStatusChangeDelegate:self];
     [[RCIMClient sharedRCIMClient] setLogLevel:RC_Log_Level_Info];
 }
@@ -112,10 +123,6 @@ static NSDictionary *selectedServer;
     [super viewWillAppear:animated];
     [UIApplication sharedApplication].idleTimerDisabled = NO;
     self.navigationController.navigationBarHidden = YES;
-    
-    SealRTCAppDelegate *appDelegate = (SealRTCAppDelegate *)[UIApplication sharedApplication].delegate;
-    appDelegate.isForcePortrait = YES;
-    [appDelegate application:[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
     
     DLog(@"Cache keyToken: %@", kLoginManager.keyToken);
     [self updateJoinRoomButtonEnable:YES textFieldInput:self.isRoomNumberInput];
@@ -300,6 +307,7 @@ static NSDictionary *selectedServer;
         [[RCIMClient sharedRCIMClient] connectWithToken:kLoginManager.keyToken
                                                 success:^(NSString *userId) {
                                                     DLog(@"MClient connectWithToken Success userId: %@", userId);
+                                                    kLoginManager.userID = userId;
                                                     [self navToChatViewController];
                                                 }
                                                   error:^(RCConnectErrorCode status) {
@@ -487,6 +495,16 @@ static NSDictionary *selectedServer;
         return NO;
     }
     return  YES;
+}
+
+
+
+- (BOOL)shouldAutorotate {
+    return NO;
+}
+
+- (UIInterfaceOrientationMask) supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait ;
 }
 
 @end

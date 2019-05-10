@@ -95,7 +95,12 @@
         self.cellVideoView.frame.size.height == ScreenHeight) {
         offset += 78;
     }
-    self.infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.cellVideoView.frame.size.height-offset, self.cellVideoView.frame.size.width, 16)];
+    
+    CGRect frame = CGRectMake(13, self.cellVideoView.frame.size.height-offset, self.cellVideoView.frame.size.width - 26, 16);
+    if ([self.cellVideoView isKindOfClass:[RongRTCRemoteVideoView class]]) {
+        frame = CGRectMake(0, self.cellVideoView.frame.size.height - offset, self.cellVideoView.frame.size.width, 16);
+    }
+    self.infoLabel = [[UILabel alloc] initWithFrame:frame];
     self.infoLabel.textAlignment = NSTextAlignmentLeft;
     self.infoLabel.font = [UIFont systemFontOfSize:12];
     self.infoLabel.backgroundColor = [UIColor clearColor]; //[UIColor colorWithRed:0 green:0 blue:0 alpha:0.15];
@@ -104,6 +109,7 @@
     
     self.infoLabelGradLayer = [CAGradientLayer layer];
     self.infoLabelGradLayer.frame = self.infoLabel.frame;
+    self.infoLabelGradLayer.hidden = YES;
     [self.infoLabelGradLayer setColors:@[(id)[UIColor colorWithRed:0 green:0 blue:0 alpha:0.35].CGColor, (id)[UIColor clearColor].CGColor]];
     [self.cellVideoView.layer addSublayer:self.infoLabelGradLayer];
     [self.infoLabelGradLayer setStartPoint:CGPointMake(0, 1)];
@@ -130,15 +136,38 @@
 }
 
 
+-(void)setInputStream:(RongRTCAVInputStream *)inputStream{
+    _inputStream = inputStream;
+    if ([_inputStream.tag hasPrefix:@"RongRTCFileVideo"]) {
+        NSArray *tags = [_inputStream.tag componentsSeparatedByString:@"-"];
+        NSString *userName = tags[1];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *name = userName;
+            if (name.length >= 4) {
+                name = [name substringToIndex:4];
+            }
+            NSString *fileName = [name stringByAppendingString:tags.lastObject];
+            self.infoLabel.text = fileName;
+            self.infoLabel.textAlignment = NSTextAlignmentCenter;
+        });
+    }
+}
+
 - (void)setUserName:(NSString *)userName {
     _userName = [userName copy];
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (userName.length >= 4) {
-            self.infoLabel.text = [userName substringToIndex:4];
-        } else {
-            self.infoLabel.text = userName;
+        NSString *name = userName;
+        if (name.length >= 4) {
+            name = [name substringToIndex:4];
         }
-  
+        if ([self.inputStream.tag hasPrefix:@"RongRTCFileVideo"]) {
+            NSArray *tags = [self.inputStream.tag componentsSeparatedByString:@"-"];
+            NSString *fileName = [name stringByAppendingString:tags.lastObject];
+            self.infoLabel.text = fileName;
+        }
+        else{
+            self.infoLabel.text = name;
+        }
     });
 
 }

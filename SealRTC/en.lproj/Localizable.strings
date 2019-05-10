@@ -106,6 +106,7 @@
 "setting_media_connectiontype" = "Connection Type";
 "setting_build_info" = "Build Info";
 "setting_auto_test" = "Auto Test";
+"setting_water_mark" = "Watermark";
 
 
 "select_country"="Countries/Regions";

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4wI-Nu-2F8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4wI-Nu-2F8">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -112,12 +111,10 @@
                                     <constraint firstAttribute="trailing" secondItem="2Fn-KB-3Ee" secondAttribute="trailing" constant="4" id="yAR-pE-n3X"/>
                                 </constraints>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cr4-wc-d00">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cr4-wc-d00">
                                 <rect key="frame" x="0.0" y="60" width="375" height="120"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="120" id="2bs-cs-PQU"/>
-                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="RaN-Pd-44O">
                                     <size key="itemSize" width="90" height="120"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -174,10 +171,7 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Nfq-Ok-ILF" secondAttribute="trailing" id="9zm-fd-Go3"/>
                             <constraint firstAttribute="centerX" secondItem="m7w-DI-rcT" secondAttribute="centerX" id="FMn-gf-mnZ"/>
-                            <constraint firstAttribute="trailing" secondItem="cr4-wc-d00" secondAttribute="trailing" id="KaK-bA-hXW"/>
-                            <constraint firstItem="cr4-wc-d00" firstAttribute="top" secondItem="m7w-DI-rcT" secondAttribute="bottom" constant="10" id="LUS-Ig-L6C"/>
                             <constraint firstItem="RjE-0Y-5I1" firstAttribute="leading" secondItem="rUR-dT-Fik" secondAttribute="leadingMargin" id="Plp-Nz-3We"/>
-                            <constraint firstItem="cr4-wc-d00" firstAttribute="leading" secondItem="rUR-dT-Fik" secondAttribute="leading" id="Qq4-gf-xWz"/>
                             <constraint firstItem="m7w-DI-rcT" firstAttribute="top" secondItem="RjE-0Y-5I1" secondAttribute="bottom" constant="2" id="asT-YM-QAF"/>
                             <constraint firstAttribute="bottom" secondItem="Nfq-Ok-ILF" secondAttribute="bottom" id="bPi-dh-DNQ"/>
                             <constraint firstItem="RjE-0Y-5I1" firstAttribute="top" secondItem="PNC-Ft-gZf" secondAttribute="bottom" id="i1B-HV-ckP"/>
@@ -190,10 +184,6 @@
                     <connections>
                         <outlet property="alertLabel" destination="Klj-df-MEQ" id="CXJ-to-ncd"/>
                         <outlet property="collectionView" destination="cr4-wc-d00" id="1Gc-Rw-hV2"/>
-                        <outlet property="collectionViewHeightConstraint" destination="2bs-cs-PQU" id="VDZ-te-bEV"/>
-                        <outlet property="collectionViewLeadingMargin" destination="Qq4-gf-xWz" id="Q4m-xn-kn8"/>
-                        <outlet property="collectionViewTopMargin" destination="LUS-Ig-L6C" id="csE-4t-LTS"/>
-                        <outlet property="collectionViewTrailingMargin" destination="KaK-bA-hXW" id="MOd-NY-xAO"/>
                         <outlet property="dataTrafficLabel" destination="Haq-ut-UHf" id="FUV-yp-uGe"/>
                         <outlet property="statuView" destination="m7w-DI-rcT" id="KmB-98-BJx"/>
                         <outlet property="statusView" destination="m7w-DI-rcT" id="SCj-Ma-z7r"/>
@@ -253,10 +243,10 @@
             </objects>
             <point key="canvasLocation" x="-258.39999999999998" y="-170.46476761619192"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Navigatio View Controller-->
         <scene sceneID="Gws-Zb-Cm5">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="cMa-sG-daY" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="cMa-sG-daY" customClass="STNavigatioViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="6es-yd-WPQ">
                         <autoresizingMask key="autoresizingMask"/>

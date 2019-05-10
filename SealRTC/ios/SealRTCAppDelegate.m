@@ -51,16 +51,6 @@
     freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stderr);
 }
 
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(nullable UIWindow *)window
-{
-//    if (self.isForceLandscape) {
-//        return UIInterfaceOrientationMaskAllButUpsideDown;
-//    }else if (self.isForcePortrait){
-//        return UIInterfaceOrientationMaskPortrait;
-//    }
-    return UIInterfaceOrientationMaskPortrait;
-}
-
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     __block UIBackgroundTaskIdentifier task = [application beginBackgroundTaskWithExpirationHandler:^{

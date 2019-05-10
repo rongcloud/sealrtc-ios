@@ -30,17 +30,21 @@
 
 - (void)initView
 {
-    self.settingViewController.gpuSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth -6-60, 6, 60, 28)];
-    [self.settingViewController.gpuSwitch addTarget:self.settingViewController action:@selector(gpuSwitchAction) forControlEvents:UIControlEventValueChanged];
-    [self.settingViewController.gpuSwitch setOn:kLoginManager.isGPUFilter];
+    self.gpuSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth -6-60, 6, 60, 28)];
+    [self.gpuSwitch addTarget:self.settingViewController action:@selector(gpuSwitchAction) forControlEvents:UIControlEventValueChanged];
+    [self.gpuSwitch setOn:kLoginManager.isGPUFilter];
     
-    self.settingViewController.tinyStreamSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth -6-60, 6, 60, 28)];
-    [self.settingViewController.tinyStreamSwitch addTarget:self.settingViewController action:@selector(tinyStreamSwitchAction) forControlEvents:UIControlEventValueChanged];
-    [self.settingViewController.tinyStreamSwitch setOn:kLoginManager.isTinyStream];
+    self.tinyStreamSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth -6-60, 6, 60, 28)];
+    [self.tinyStreamSwitch addTarget:self.settingViewController action:@selector(tinyStreamSwitchAction) forControlEvents:UIControlEventValueChanged];
+    [self.tinyStreamSwitch setOn:kLoginManager.isTinyStream];
     
-    self.settingViewController.autoTestSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth -6-60, 6, 60, 28)];
-    [self.settingViewController.autoTestSwitch addTarget:self.settingViewController action:@selector(autoTestAction) forControlEvents:UIControlEventValueChanged];
-    [self.settingViewController.autoTestSwitch setOn:kLoginManager.isAutoTest];
+    self.autoTestSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth -6-60, 6, 60, 28)];
+    [self.autoTestSwitch addTarget:self.settingViewController action:@selector(autoTestAction) forControlEvents:UIControlEventValueChanged];
+    [self.autoTestSwitch setOn:kLoginManager.isAutoTest];
+    
+    self.waterMarkSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth -6-60, 6, 60, 28)];
+    [self.waterMarkSwitch addTarget:self.settingViewController action:@selector(waterMarkAction) forControlEvents:UIControlEventValueChanged];
+    [self.waterMarkSwitch setOn:kLoginManager.isWaterMark];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:UITableViewStyleGrouped];
     self.tableView.dataSource = self.settingViewController.settingTableViewDelegateSourceImpl;

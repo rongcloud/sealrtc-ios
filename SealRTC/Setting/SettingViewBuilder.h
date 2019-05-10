@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) ZHPickView *resolutionRatioPickview;
+@property (nonatomic, strong) UISwitch *gpuSwitch, *tinyStreamSwitch, *autoTestSwitch, *waterMarkSwitch;
 
 - (instancetype)initWithViewController:(UIViewController *)vc;
 

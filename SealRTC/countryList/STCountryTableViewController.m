@@ -39,7 +39,7 @@
     self.definesPresentationContext = YES;
     //self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.tableView setTableFooterView:[UIView new]];
-    self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
+    //self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
 }
 
 - (void)configCountryData {

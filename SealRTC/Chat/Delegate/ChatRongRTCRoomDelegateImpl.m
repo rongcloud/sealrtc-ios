@@ -40,7 +40,7 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
  */
 - (void)didJoinUser:(RongRTCRemoteUser*)user
 {
-    FwLogI(RC_Type_RTC,@"A-appReceiveUserJoin-T",@"%@appReceiveUserJoin",@"sealRTCApp:");
+    FwLogV(RC_Type_RTC,@"A-appReceiveUserJoin-T",@"%@appReceiveUserJoin",@"sealRTCApp:");
     NSString *userId = user.userId;
     DLog(@"didJoinUser userID: %@", userId);
     [self.chatViewController hideAlertLabel:YES];
@@ -54,7 +54,7 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
  */
 - (void)didLeaveUser:(RongRTCRemoteUser*)user
 {
-    FwLogI(RC_Type_RTC,@"A-appReceiveUserLeave-T",@"%@appReceiveUserLeave",@"sealRTCApp:");
+    FwLogV(RC_Type_RTC,@"A-appReceiveUserLeave-T",@"%@appReceiveUserLeave",@"sealRTCApp:");
     __weak ChatViewController *weakChatVC = self.chatViewController;
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *userId = user.userId;
@@ -78,14 +78,14 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
                 }
                 
                 [kChatManager removeRemoteUserDataModelFromStreamID:streamID];
-                FwLogI(RC_Type_RTC,@"A-appReceiveUserLeave-T",@"%@appReceiveUserLeave and remove user",@"sealRTCApp:");
+                FwLogV(RC_Type_RTC,@"A-appReceiveUserLeave-T",@"%@appReceiveUserLeave and remove user",@"sealRTCApp:");
                 [weakChatVC.collectionView deleteItemsAtIndexPaths:@[indexPath]];
                 
                 if (weakChatVC.orignalRow > 0)
                     weakChatVC.orignalRow--;
             }
         }
-        FwLogI(RC_Type_RTC,@"A-appReceiveUserJoin-T",@"usercount: %@",@([kChatManager countOfRemoteUserDataArray]));
+        FwLogV(RC_Type_RTC,@"A-appReceiveUserJoin-T",@"usercount: %@",@([kChatManager countOfRemoteUserDataArray]));
         if ([kChatManager countOfRemoteUserDataArray] == 0)
         {
             if (weakChatVC.durationTimer)
@@ -97,7 +97,7 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
             
             weakChatVC.dataTrafficLabel.hidden = YES;
             weakChatVC.talkTimeLabel.text = @"";//NSLocalizedString(@"chat_total_time", nil);
-            FwLogI(RC_Type_RTC,@"A-appReceiveUserJoin-T",@"hideAlertLabel NO");
+            FwLogV(RC_Type_RTC,@"A-appReceiveUserJoin-T",@"hideAlertLabel NO");
             [weakChatVC hideAlertLabel:NO];
         }
     });
@@ -113,7 +113,7 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
                 break;
             }
         }
-        
+        int count = self.chatViewController.room.remoteUsers.count;
         if (index != NSNotFound) {
             [self.infos removeObjectAtIndex:index];
             [[NSNotificationCenter defaultCenter]
@@ -134,7 +134,7 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
 }
 
 -(void)didConnectToStream:(RongRTCAVInputStream *)stream{
-    FwLogI(RC_Type_RTC,@"A-appConnectToStream-T",@"%@appConnectTostream",@"sealRTCApp:");
+    FwLogV(RC_Type_RTC,@"A-appConnectToStream-T",@"%@appConnectTostream",@"sealRTCApp:");
     if (stream.streamId) {
         [self.chatViewController didConnectToUser:stream.streamId];
     } else {
@@ -144,7 +144,7 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
 
 - (void)didPublishStreams:(NSArray <RongRTCAVInputStream *>*)streams
 {
-    FwLogI(RC_Type_RTC,@"A-appPublishStreaam-T",@"%@appPublishStream",@"sealRTCApp:");
+    FwLogV(RC_Type_RTC,@"A-appPublishStreaam-T",@"%@appPublishStream",@"sealRTCApp:");
     [self.chatViewController receivePublishMessage];
     [self.chatViewController subscribeRemoteResource:streams];
 }
@@ -155,7 +155,7 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
  */
 - (void)didUnpublishStreams:(NSArray<RongRTCAVInputStream *>*)streams
 {
-    FwLogI(RC_Type_RTC,@"A-appReceiveUnpublishStream-T",@"%@app receive unpublishstreams",@"sealRTCApp:");
+    FwLogV(RC_Type_RTC,@"A-appReceiveUnpublishStream-T",@"%@app receive unpublishstreams",@"sealRTCApp:");
 //    [self.chatViewController unsubscribeRemoteResource:streams];
     
     __weak ChatViewController *weakChatVC = self.chatViewController;
@@ -178,7 +178,7 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
                 }
                 
                 [kChatManager removeRemoteUserDataModelFromStreamID:streamID];
-                FwLogI(RC_Type_RTC,@"A-appReceiveUserLeave-T",@"%@appReceiveUserLeave and remove user",@"sealRTCApp:");
+                FwLogV(RC_Type_RTC,@"A-appReceiveUserLeave-T",@"%@appReceiveUserLeave and remove user",@"sealRTCApp:");
                 [weakChatVC.collectionView deleteItemsAtIndexPaths:@[indexPath]];
                 
                 if (weakChatVC.orignalRow > 0)
@@ -190,7 +190,7 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
 
 - (void)didKickedOutOfTheRoom:(RongRTCRoom *)room
 {
-    FwLogI(RC_Type_RTC,@"A-appreceiveLeaveRoom-T",@"%@all reveive leave room",@"sealRTCApp:");
+    FwLogV(RC_Type_RTC,@"A-appreceiveLeaveRoom-T",@"%@all reveive leave room",@"sealRTCApp:");
     [self.chatViewController didLeaveRoom];
 }
 

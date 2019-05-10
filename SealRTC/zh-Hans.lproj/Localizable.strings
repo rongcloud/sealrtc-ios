@@ -63,7 +63,7 @@
 "login_input_error_illegal" = "仅支持中英文";
 "login_input_error_nil" = "请输入用户名称";
 "login_input_radio_default" = "默认";
-"login_input_radio_close_camera" = "加入时关闭摄像头";
+"login_input_radio_close_camera" = "音频模式";
 "login_input_radio_observer" = "旁听者模式";
 "login_input_need_room_username" = "仅支持中文和英文字母";
 "login_input_notice_error" = "输入的用户名不合法";
@@ -106,7 +106,7 @@
 "setting_media_connectiontype" = "连接方式";
 "setting_build_info" = "编译信息";
 "setting_auto_test" = "自动化测试";
-
+"setting_water_mark" = "水印";
 
 "select_country"="选择国家和地区";
 "select_country_fmt"="选择国家和地区 %@";

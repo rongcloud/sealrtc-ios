@@ -7,9 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		173A2C3122718EF900291E0A /* video_demo1_low.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 173A2C3022718EC100291E0A /* video_demo1_low.mp4 */; };
+		173A2C3322718F6800291E0A /* video_demo2_low.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 173A2C3222718F6800291E0A /* video_demo2_low.mp4 */; };
+		1773DD90224D145D007213AF /* RongRTCLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1773DD8F224D145D007213AF /* RongRTCLib.framework */; };
+		1782D887226EACB900AA9A74 /* ChatMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1782D886226EACB900AA9A74 /* ChatMembersViewController.m */; };
+		1782D88C226EB3C300AA9A74 /* ChatMemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1782D88A226EB3C300AA9A74 /* ChatMemberCell.m */; };
+		1782D88D226EB3C300AA9A74 /* ChatMemberCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1782D88B226EB3C300AA9A74 /* ChatMemberCell.xib */; };
+		17A4296A22714B5500293F78 /* RTActiveWheel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A4296822714B5400293F78 /* RTActiveWheel.m */; };
+		17A4296B22714B5500293F78 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A4296922714B5500293F78 /* MBProgressHUD.m */; };
 		3907FA151E08E01E007EDC46 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3907FA141E08E01E007EDC46 /* SystemConfiguration.framework */; };
 		390ED55D1D9E07F20046F519 /* CodeRate.plist in Resources */ = {isa = PBXBuildFile; fileRef = 390ED55C1D9E07F20046F519 /* CodeRate.plist */; };
-		3917C2AA21B8F5EB00456EDA /* LoginTextFieldDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3917C2A721B8F5EB00456EDA /* LoginTextFieldDelegateImpl.m */; };
 		3917C2AD21B8F6F300456EDA /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3917C2AB21B8F6F200456EDA /* LoginManager.m */; };
 		3917C2D221BA10B600456EDA /* ChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3917C2BC21BA10B600456EDA /* ChatManager.m */; };
 		3917C2D421BA10B600456EDA /* ChatViewBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3917C2C021BA10B600456EDA /* ChatViewBuilder.m */; };
@@ -27,17 +34,16 @@
 		3917C2F421BA1F5F00456EDA /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3917C2F321BA1F5E00456EDA /* GPUImage.framework */; };
 		39244CDD1DDC0E7300C6CC2A /* CommonUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 39244CDC1DDC0E7300C6CC2A /* CommonUtility.m */; };
 		392A63DE22375F35000A6ED5 /* ChatRongRTCNetworkMonitorDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 392A63DD22375F35000A6ED5 /* ChatRongRTCNetworkMonitorDelegateImpl.m */; };
+		392AEA37227FE36700EC3CA3 /* LoginTextFieldDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 392AEA36227FE36700EC3CA3 /* LoginTextFieldDelegateImpl.m */; };
+		392AEA3D227FE39200EC3CA3 /* SettingPickViewDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 392AEA3B227FE39200EC3CA3 /* SettingPickViewDelegateImpl.m */; };
+		392AEA3E227FE39200EC3CA3 /* SettingTableViewDelegateSourceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 392AEA3C227FE39200EC3CA3 /* SettingTableViewDelegateSourceImpl.m */; };
 		393373421E6FDB320084F6C9 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 393373411E6FDB320084F6C9 /* libiconv.tbd */; };
 		393373441E6FDB3C0084F6C9 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 393373431E6FDB3C0084F6C9 /* libbz2.tbd */; };
 		393373451E6FDB6E0084F6C9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 39CF6E571E08C137001A683B /* libz.tbd */; };
-		394D158F1DF003BE001CE166 /* SettingTableViewDelegateSourceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 394D158E1DF003BE001CE166 /* SettingTableViewDelegateSourceImpl.m */; };
 		394D15961DF00A9D001CE166 /* SettingViewBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 394D15951DF00A9D001CE166 /* SettingViewBuilder.m */; };
-		394D15991DF00F72001CE166 /* SettingPickViewDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 394D15981DF00F72001CE166 /* SettingPickViewDelegateImpl.m */; };
 		394DEFAC22143AEB009E090A /* RTHttpNetworkWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 394DEFAB22143AEB009E090A /* RTHttpNetworkWorker.m */; };
 		394DEFB022143D46009E090A /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 394DEFAF22143D46009E090A /* libsqlite3.0.tbd */; };
 		3951BEEB2175E1D200F5F34F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D7D5D501D1B8671000574B2 /* GLKit.framework */; };
-		395A694122602B8F00EC6884 /* RongCrashReport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 394DEF952213F3F1009E090A /* RongCrashReport.framework */; };
-		397184B322602BF900EBEA34 /* RongRTCLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B258B6221650DC00821CB9 /* RongRTCLib.framework */; };
 		3973203E1D9BEF470016DFC6 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3973203D1D9BEF470016DFC6 /* SettingViewController.m */; };
 		397320411D9CD82B0016DFC6 /* ZHPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 397320401D9CD82B0016DFC6 /* ZHPickView.m */; };
 		397320451D9CED2F0016DFC6 /* ResolutionRatio.plist in Resources */ = {isa = PBXBuildFile; fileRef = 397320441D9CED2F0016DFC6 /* ResolutionRatio.plist */; };
@@ -97,6 +103,7 @@
 		B2209649225319EC005948E1 /* STPresentationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2209648225319EC005948E1 /* STPresentationViewController.m */; };
 		B220964C22533389005948E1 /* STParticipantsTableViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = B220964B22533389005948E1 /* STParticipantsTableViewHeader.m */; };
 		B220964F22533A14005948E1 /* STParticipantsInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B220964E22533A14005948E1 /* STParticipantsInfo.m */; };
+		B221359B22696C330033B545 /* STNavigatioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B221359A22696C330033B545 /* STNavigatioViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -113,13 +120,22 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		173A2C3022718EC100291E0A /* video_demo1_low.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_demo1_low.mp4; sourceTree = "<group>"; };
+		173A2C3222718F6800291E0A /* video_demo2_low.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_demo2_low.mp4; sourceTree = "<group>"; };
 		1773DD8F224D145D007213AF /* RongRTCLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RongRTCLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1782D885226EACB900AA9A74 /* ChatMembersViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatMembersViewController.h; sourceTree = "<group>"; };
+		1782D886226EACB900AA9A74 /* ChatMembersViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatMembersViewController.m; sourceTree = "<group>"; };
+		1782D889226EB3C300AA9A74 /* ChatMemberCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatMemberCell.h; sourceTree = "<group>"; };
+		1782D88A226EB3C300AA9A74 /* ChatMemberCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatMemberCell.m; sourceTree = "<group>"; };
+		1782D88B226EB3C300AA9A74 /* ChatMemberCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatMemberCell.xib; sourceTree = "<group>"; };
+		17A4296622714B5400293F78 /* RTActiveWheel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTActiveWheel.h; sourceTree = "<group>"; };
+		17A4296722714B5400293F78 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		17A4296822714B5400293F78 /* RTActiveWheel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTActiveWheel.m; sourceTree = "<group>"; };
+		17A4296922714B5500293F78 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		17A93B12224CEE8200FC1705 /* RongIMLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RongIMLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3907FA141E08E01E007EDC46 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3907FA191E08E037007EDC46 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		390ED55C1D9E07F20046F519 /* CodeRate.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CodeRate.plist; sourceTree = "<group>"; };
-		3917C2A521B8F5EB00456EDA /* LoginTextFieldDelegateImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTextFieldDelegateImpl.h; sourceTree = "<group>"; };
-		3917C2A721B8F5EB00456EDA /* LoginTextFieldDelegateImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTextFieldDelegateImpl.m; sourceTree = "<group>"; };
 		3917C2AB21B8F6F200456EDA /* LoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginManager.m; sourceTree = "<group>"; };
 		3917C2AC21B8F6F200456EDA /* LoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginManager.h; sourceTree = "<group>"; };
 		3917C2B921BA10B500456EDA /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
@@ -153,14 +169,16 @@
 		39244CDC1DDC0E7300C6CC2A /* CommonUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonUtility.m; sourceTree = "<group>"; };
 		392A63DC22375F35000A6ED5 /* ChatRongRTCNetworkMonitorDelegateImpl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatRongRTCNetworkMonitorDelegateImpl.h; sourceTree = "<group>"; };
 		392A63DD22375F35000A6ED5 /* ChatRongRTCNetworkMonitorDelegateImpl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatRongRTCNetworkMonitorDelegateImpl.m; sourceTree = "<group>"; };
+		392AEA35227FE36700EC3CA3 /* LoginTextFieldDelegateImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTextFieldDelegateImpl.h; sourceTree = "<group>"; };
+		392AEA36227FE36700EC3CA3 /* LoginTextFieldDelegateImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTextFieldDelegateImpl.m; sourceTree = "<group>"; };
+		392AEA39227FE39200EC3CA3 /* SettingTableViewDelegateSourceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTableViewDelegateSourceImpl.h; sourceTree = "<group>"; };
+		392AEA3A227FE39200EC3CA3 /* SettingPickViewDelegateImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingPickViewDelegateImpl.h; sourceTree = "<group>"; };
+		392AEA3B227FE39200EC3CA3 /* SettingPickViewDelegateImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingPickViewDelegateImpl.m; sourceTree = "<group>"; };
+		392AEA3C227FE39200EC3CA3 /* SettingTableViewDelegateSourceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTableViewDelegateSourceImpl.m; sourceTree = "<group>"; };
 		393373411E6FDB320084F6C9 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		393373431E6FDB3C0084F6C9 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
-		394D158D1DF003BE001CE166 /* SettingTableViewDelegateSourceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTableViewDelegateSourceImpl.h; sourceTree = "<group>"; };
-		394D158E1DF003BE001CE166 /* SettingTableViewDelegateSourceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTableViewDelegateSourceImpl.m; sourceTree = "<group>"; };
 		394D15941DF00A9D001CE166 /* SettingViewBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewBuilder.h; sourceTree = "<group>"; };
 		394D15951DF00A9D001CE166 /* SettingViewBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewBuilder.m; sourceTree = "<group>"; };
-		394D15971DF00F72001CE166 /* SettingPickViewDelegateImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingPickViewDelegateImpl.h; sourceTree = "<group>"; };
-		394D15981DF00F72001CE166 /* SettingPickViewDelegateImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingPickViewDelegateImpl.m; sourceTree = "<group>"; };
 		394DEF952213F3F1009E090A /* RongCrashReport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RongCrashReport.framework; path = framework/RongCrashReport.framework; sourceTree = "<group>"; };
 		394DEFAA22143AEB009E090A /* RTHttpNetworkWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTHttpNetworkWorker.h; sourceTree = "<group>"; };
 		394DEFAB22143AEB009E090A /* RTHttpNetworkWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTHttpNetworkWorker.m; sourceTree = "<group>"; };
@@ -268,6 +286,8 @@
 		B220964B22533389005948E1 /* STParticipantsTableViewHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STParticipantsTableViewHeader.m; sourceTree = "<group>"; };
 		B220964D22533A14005948E1 /* STParticipantsInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STParticipantsInfo.h; sourceTree = "<group>"; };
 		B220964E22533A14005948E1 /* STParticipantsInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STParticipantsInfo.m; sourceTree = "<group>"; };
+		B221359922696C330033B545 /* STNavigatioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STNavigatioViewController.h; sourceTree = "<group>"; };
+		B221359A22696C330033B545 /* STNavigatioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STNavigatioViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,7 +295,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				397184B322602BF900EBEA34 /* RongRTCLib.framework in Frameworks */,
+				1773DD90224D145D007213AF /* RongRTCLib.framework in Frameworks */,
 				393373451E6FDB6E0084F6C9 /* libz.tbd in Frameworks */,
 				393373441E6FDB3C0084F6C9 /* libbz2.tbd in Frameworks */,
 				393373421E6FDB320084F6C9 /* libiconv.tbd in Frameworks */,
@@ -297,7 +317,6 @@
 				3987F2A71E84B3060024CAFC /* Security.framework in Frameworks */,
 				3991BCF41DD352B100152317 /* Bugly.framework in Frameworks */,
 				46BCF21D224D2D96009E2617 /* libvo-amrwbenc.a in Frameworks */,
-				395A694122602B8F00EC6884 /* RongCrashReport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,13 +332,27 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3917C2A421B8F5EB00456EDA /* DelegateImpl */ = {
+		1782D888226EB39800AA9A74 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				3917C2A521B8F5EB00456EDA /* LoginTextFieldDelegateImpl.h */,
-				3917C2A721B8F5EB00456EDA /* LoginTextFieldDelegateImpl.m */,
+				1782D889226EB3C300AA9A74 /* ChatMemberCell.h */,
+				1782D88A226EB3C300AA9A74 /* ChatMemberCell.m */,
+				1782D88B226EB3C300AA9A74 /* ChatMemberCell.xib */,
 			);
-			path = DelegateImpl;
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		1782D88E226EC16000AA9A74 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				17A4296722714B5400293F78 /* MBProgressHUD.h */,
+				17A4296922714B5500293F78 /* MBProgressHUD.m */,
+				17A4296622714B5400293F78 /* RTActiveWheel.h */,
+				17A4296822714B5400293F78 /* RTActiveWheel.m */,
+				173A2C3022718EC100291E0A /* video_demo1_low.mp4 */,
+				173A2C3222718F6800291E0A /* video_demo2_low.mp4 */,
+			);
+			path = Custom;
 			sourceTree = "<group>";
 		};
 		3917C2C121BA10B600456EDA /* Delegate */ = {
@@ -372,18 +405,35 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		392AEA34227FE36700EC3CA3 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				392AEA35227FE36700EC3CA3 /* LoginTextFieldDelegateImpl.h */,
+				392AEA36227FE36700EC3CA3 /* LoginTextFieldDelegateImpl.m */,
+			);
+			path = Delegate;
+			sourceTree = "<group>";
+		};
+		392AEA38227FE39200EC3CA3 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				392AEA3A227FE39200EC3CA3 /* SettingPickViewDelegateImpl.h */,
+				392AEA3B227FE39200EC3CA3 /* SettingPickViewDelegateImpl.m */,
+				392AEA39227FE39200EC3CA3 /* SettingTableViewDelegateSourceImpl.h */,
+				392AEA3C227FE39200EC3CA3 /* SettingTableViewDelegateSourceImpl.m */,
+			);
+			path = Delegate;
+			sourceTree = "<group>";
+		};
 		3973203A1D9BEF1A0016DFC6 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
 				3977518222433D6D00835DCE /* DebugSetting */,
+				392AEA38227FE39200EC3CA3 /* Delegate */,
 				3973203C1D9BEF470016DFC6 /* SettingViewController.h */,
 				3973203D1D9BEF470016DFC6 /* SettingViewController.m */,
 				394D15941DF00A9D001CE166 /* SettingViewBuilder.h */,
 				394D15951DF00A9D001CE166 /* SettingViewBuilder.m */,
-				394D158D1DF003BE001CE166 /* SettingTableViewDelegateSourceImpl.h */,
-				394D158E1DF003BE001CE166 /* SettingTableViewDelegateSourceImpl.m */,
-				394D15971DF00F72001CE166 /* SettingPickViewDelegateImpl.h */,
-				394D15981DF00F72001CE166 /* SettingPickViewDelegateImpl.m */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -437,7 +487,7 @@
 		39A2958C217DA70C0091B6BB /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				3917C2A421B8F5EB00456EDA /* DelegateImpl */,
+				392AEA34227FE36700EC3CA3 /* Delegate */,
 				39A29593217DA70C0091B6BB /* LoginViewController.h */,
 				39A29590217DA70C0091B6BB /* LoginViewController.m */,
 				39A29594217DA70C0091B6BB /* LoginViewBuilder.h */,
@@ -513,6 +563,8 @@
 			children = (
 				9D3DD0711D59CC5700DC1443 /* SplashViewController.h */,
 				9D3DD0721D59CC5700DC1443 /* SplashViewController.m */,
+				B221359922696C330033B545 /* STNavigatioViewController.h */,
+				B221359A22696C330033B545 /* STNavigatioViewController.m */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -520,6 +572,8 @@
 		9D3DD0741D59D11200DC1443 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				1782D88E226EC16000AA9A74 /* Custom */,
+				1782D888226EB39800AA9A74 /* Cell */,
 				3917C2C921BA10B600456EDA /* Model */,
 				3917C2C121BA10B600456EDA /* Delegate */,
 				3917C2BE21BA10B600456EDA /* ChatViewBuilder.h */,
@@ -530,6 +584,8 @@
 				3917C2BC21BA10B600456EDA /* ChatManager.m */,
 				39923084221EB79100752AC5 /* ChatGPUImageHandler.h */,
 				39923083221EB79100752AC5 /* ChatGPUImageHandler.m */,
+				1782D885226EACB900AA9A74 /* ChatMembersViewController.h */,
+				1782D886226EACB900AA9A74 /* ChatMembersViewController.m */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -719,6 +775,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				39BDCFE11DCC43AF004820E3 /* CodingStyle.plist in Resources */,
+				173A2C3122718EF900291E0A /* video_demo1_low.mp4 in Resources */,
+				173A2C3322718F6800291E0A /* video_demo2_low.mp4 in Resources */,
 				9D7D5D5D1D1B9DF5000574B2 /* Images.xcassets in Resources */,
 				390ED55D1D9E07F20046F519 /* CodeRate.plist in Resources */,
 				9D3DD0641D58BDBD00DC1443 /* Main.storyboard in Resources */,
@@ -729,6 +787,7 @@
 				397320491D9D35A00016DFC6 /* FrameRate.plist in Resources */,
 				98406B182073701E00EF3004 /* sound.gif in Resources */,
 				39F0543D1DBDEE440072E918 /* Launch Screen.storyboard in Resources */,
+				1782D88D226EB3C300AA9A74 /* ChatMemberCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -774,12 +833,12 @@
 			files = (
 				B220964F22533A14005948E1 /* STParticipantsInfo.m in Sources */,
 				3917C2AD21B8F6F300456EDA /* LoginManager.m in Sources */,
-				3917C2AA21B8F5EB00456EDA /* LoginTextFieldDelegateImpl.m in Sources */,
 				988FEE7320206D8200FFF09A /* UINavigationController+returnBack.m in Sources */,
 				39D785E61E77BC5B004BAAFC /* RadioButton.m in Sources */,
 				3917C2D421BA10B600456EDA /* ChatViewBuilder.m in Sources */,
 				39244CDD1DDC0E7300C6CC2A /* CommonUtility.m in Sources */,
 				98775188202BE55200A3AA0C /* UIColor+ColorChange.m in Sources */,
+				17A4296B22714B5500293F78 /* MBProgressHUD.m in Sources */,
 				3977518522433D6D00835DCE /* SettingDebugModeViewController.m in Sources */,
 				39D4A1B620DA533800F26ACA /* Reachability.m in Sources */,
 				984A4AE92023223500FC2B08 /* SXAlertView.m in Sources */,
@@ -791,11 +850,12 @@
 				9D3DD0731D59CC5700DC1443 /* SplashViewController.m in Sources */,
 				39A29597217DA70C0091B6BB /* LoginViewController.m in Sources */,
 				39B258A72215111300821CB9 /* ChatRongRTCRoomDelegateImpl.m in Sources */,
+				392AEA37227FE36700EC3CA3 /* LoginTextFieldDelegateImpl.m in Sources */,
 				3917C2D521BA10B600456EDA /* ChatCollectionViewDataSourceDelegateImpl.m in Sources */,
 				394D15961DF00A9D001CE166 /* SettingViewBuilder.m in Sources */,
 				B220964222530A61005948E1 /* RCCCpinyin.m in Sources */,
+				1782D887226EACB900AA9A74 /* ChatMembersViewController.m in Sources */,
 				B220963F22530A35005948E1 /* RCDCountry.m in Sources */,
-				394D158F1DF003BE001CE166 /* SettingTableViewDelegateSourceImpl.m in Sources */,
 				98EEB1C02041554400E77E7E /* NSString+length.m in Sources */,
 				B21B1D5E225340DE001C4489 /* STSetRoomInfoMessage.m in Sources */,
 				3917C2D221BA10B600456EDA /* ChatManager.m in Sources */,
@@ -804,16 +864,20 @@
 				3991BD0E1DD5AA5B00152317 /* MessageStatusBar.m in Sources */,
 				397719911E2CA24700EB45C1 /* SealRTCAppDelegate.m in Sources */,
 				3917C2E321BA10D200456EDA /* GPUImageOutputCamera.m in Sources */,
-				394D15991DF00F72001CE166 /* SettingPickViewDelegateImpl.m in Sources */,
 				B21B1D5B22533E9A001C4489 /* STJSONModel.m in Sources */,
+				1782D88C226EB3C300AA9A74 /* ChatMemberCell.m in Sources */,
 				3917C2D621BA10B600456EDA /* ChatBubbleMenuViewDelegateImpl.m in Sources */,
 				9D7D5C441D1AB294000574B2 /* main.m in Sources */,
+				B221359B22696C330033B545 /* STNavigatioViewController.m in Sources */,
 				3917C2F221BA13D200456EDA /* WhiteBoardWebView.m in Sources */,
+				392AEA3E227FE39200EC3CA3 /* SettingTableViewDelegateSourceImpl.m in Sources */,
 				3979F1A41D9622DF006CF067 /* DWBubbleMenuButton.m in Sources */,
 				3917C2EB21BA118A00456EDA /* ChatCell.m in Sources */,
+				392AEA3D227FE39200EC3CA3 /* SettingPickViewDelegateImpl.m in Sources */,
 				981C3E1C202ADDEB00494697 /* YHExcelTitleView.m in Sources */,
 				3973203E1D9BEF470016DFC6 /* SettingViewController.m in Sources */,
 				39923085221EB79200752AC5 /* ChatGPUImageHandler.m in Sources */,
+				17A4296A22714B5500293F78 /* RTActiveWheel.m in Sources */,
 				3917C2DB21BA10B600456EDA /* ChatDataInfoModel.m in Sources */,
 				B21B1D612253439B001C4489 /* STDeleteRoomInfoMessage.m in Sources */,
 				3917C2DA21BA10B600456EDA /* ChatLocalDataInfoModel.m in Sources */,
@@ -969,7 +1033,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "cdf6fcc4-d01a-4cdb-b974-c650f223d239";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				WARNING_CFLAGS = "-Wno-deprecated-declarations";
 			};
 			name = DebugQuic;
@@ -1063,7 +1127,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1f1ec5b1-adbb-4f73-8081-2b9f57a025e8";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				WARNING_CFLAGS = "-Wno-deprecated-declarations";
 			};
 			name = ReleaseQuic;
@@ -1215,7 +1279,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				WARNING_CFLAGS = "-Wno-deprecated-declarations";
 			};
 			name = Debug;
@@ -1254,7 +1318,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				WARNING_CFLAGS = "-Wno-deprecated-declarations";
 			};
 			name = Release;

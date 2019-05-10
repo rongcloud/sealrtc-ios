@@ -15,9 +15,7 @@
 #define RCIMAPPKey @""
 #define RCIMNavURL @"nav.cn.ronghub.com"
 #define RCIMFileURL @"img.cn.ronghub.com"
-#define RCSendCodeURL @"https://sealrtc.rongcloud.cn/user/send_code"
-#define RCValidateCodeURL @"https://sealrtc.rongcloud.cn/user/verify_code"
-
+#define RCDEMOServerURL @"sealrtc.rongcloud.cn"
 
 #define MAX_NORMAL_PERSONS 9
 #define MAX_AUDIO_PERSONS 30
@@ -26,6 +24,7 @@
 #define kEverLaunched @"everLaunched"
 #define kDefaultRoomNumber @"DefaultRoomNumber"
 #define kDefaultUserName @"kDefaultUserName"
+#define kDefaultUserID @"kDefaultUserID"
 #define RegexRoomID @"^[A-Za-z0-9+=\\-_]+$"
 #define RegexIsChinese @"^[\u4e00-\u9fa5]+$"
 

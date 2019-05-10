@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger, ExpansionDirection) {
 
 @interface DWBubbleMenuButton : UIView <UIGestureRecognizerDelegate>
 
-@property (nonatomic, weak, readonly) NSArray *buttons;
+@property (nonatomic, weak, readonly) NSArray <UIButton *>*buttons;
 @property (nonatomic, strong) UIView *homeButtonView;
 @property (nonatomic, readonly) BOOL isCollapsed;
 @property (nonatomic, weak) id <DWBubbleMenuViewDelegate> delegate;

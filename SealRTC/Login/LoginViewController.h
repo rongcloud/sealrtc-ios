@@ -30,7 +30,6 @@
 
 + (NSDictionary *)selectedConfigData;
 - (void)roomNumberTextFieldDidChange:(UITextField *)textField;
-- (void)phoneNumTextFieldDidChange:(UITextField *)textField;
 - (void)validateSMSTextFieldDidChange:(UITextField *)textField;
 - (void)joinRoomButtonPressed:(id)sender;
 - (void)sendSMSButtonPressed:(id)sender;

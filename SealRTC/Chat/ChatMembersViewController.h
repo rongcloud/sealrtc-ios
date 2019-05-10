@@ -1,0 +1,18 @@
+//
+//  ChatMembersViewController.h
+//  SealRTC
+//
+//  Created by jfdreamyang on 2019/4/23.
+//  Copyright © 2019 BridgeMind. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import <RongRTCLib/RongRTCLib.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface ChatMembersViewController : UIViewController
+@property (nonatomic,strong)RongRTCRoom *currentRoom;
+@end
+
+NS_ASSUME_NONNULL_END

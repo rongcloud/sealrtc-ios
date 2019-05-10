@@ -29,7 +29,7 @@ static NSUserDefaults *settingUserDefaults = nil;
     
     self.title = NSLocalizedString(@"setting_title", nil);
     self.view.backgroundColor = [UIColor whiteColor];
-    self.sectionNumber = 4;
+    self.sectionNumber = 5;
 
     [self loadPlistData];
     
@@ -42,7 +42,7 @@ static NSUserDefaults *settingUserDefaults = nil;
 {
     [super viewWillAppear:animated];
     [self loadPlistData];
-    self.sectionNumber = 4;
+    self.sectionNumber = 5;
 
     [self.settingViewBuilder.tableView reloadData];
     
@@ -79,23 +79,28 @@ static NSUserDefaults *settingUserDefaults = nil;
     self.codeRateArray = [CommonUtility getPlistArrayByplistName:Key_CodeRate];
     self.codingStyleArray = [CommonUtility getPlistArrayByplistName:Key_CodingStyle];
     
-    [self.tinyStreamSwitch setOn:kLoginManager.isTinyStream];
+    [self.settingViewBuilder.tinyStreamSwitch setOn:kLoginManager.isTinyStream];
 }
 
 #pragma mark - connect style witch action
 - (void)gpuSwitchAction
 {
-    [kLoginManager setIsGPUFilter:self.gpuSwitch.on];
+    [kLoginManager setIsGPUFilter:self.settingViewBuilder.gpuSwitch.on];
 }
 
 - (void)tinyStreamSwitchAction
 {
-    [kLoginManager setIsTinyStream:self.tinyStreamSwitch.on];
+    [kLoginManager setIsTinyStream:self.settingViewBuilder.tinyStreamSwitch.on];
 }
 
 - (void)autoTestAction
 {
-    [kLoginManager setIsAutoTest:self.autoTestSwitch.on];
+    [kLoginManager setIsAutoTest:self.settingViewBuilder.autoTestSwitch.on];
+}
+
+- (void)waterMarkAction
+{
+    [kLoginManager setIsWaterMark:self.settingViewBuilder.waterMarkSwitch.on];
 }
 
 #pragma mark - tap gesture action
@@ -114,6 +119,14 @@ static NSUserDefaults *settingUserDefaults = nil;
         settingUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"settingUserDefaults"];
     });
     return settingUserDefaults;
+}
+
+- (BOOL)shouldAutorotate {
+    return NO;
+}
+
+- (UIInterfaceOrientationMask) supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait ;
 }
 
 @end

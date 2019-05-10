@@ -75,6 +75,7 @@
     {
         NSInteger selectedRow = indexPath.row;
         ChatCellVideoViewModel *selectedViewModel = [kChatManager getRemoteUserDataModelFromIndex:selectedRow];
+
         ChatCell *cell = (ChatCell *)[collectionView cellForItemAtIndexPath:indexPath];
         
         NSString *bigStreamUseID = selectedViewModel.streamID;
@@ -83,7 +84,7 @@
                 bigStreamUseID = kChatManager.localUserDataModel.streamID;
             }
         }
-        
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         if (kLoginManager.isSwitchCamera)
         {
             if (selectedRow == self.chatViewController.orignalRow)
@@ -96,11 +97,11 @@
                 
                 CGFloat offset = 16;
                 if (@available(iOS 11.0, *)) {
-                    if (!UIEdgeInsetsEqualToEdgeInsets([UIApplication sharedApplication].delegate.window.safeAreaInsets, UIEdgeInsetsZero)) {
-                        offset += 78;
+                    if (UIApplication.sharedApplication.keyWindow.safeAreaInsets.bottom > 0.0) {
+                        offset += UIInterfaceOrientationIsLandscape(orientation) ? 34 : 78;
                     }
                 }
-                kChatManager.localUserDataModel.infoLabel.frame = CGRectMake(0, localVideoView.frame.size.height - offset, localVideoView.frame.size.width, kChatManager.localUserDataModel.infoLabel.frame.size.height);
+                kChatManager.localUserDataModel.infoLabel.frame = CGRectMake(13, localVideoView.frame.size.height - offset, localVideoView.frame.size.width - 26, kChatManager.localUserDataModel.infoLabel.frame.size.height);
                 kChatManager.localUserDataModel.infoLabelGradLayer.frame = kChatManager.localUserDataModel.infoLabel.frame;
                 [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.infoLabel];
                 
@@ -108,7 +109,7 @@
                     kChatManager.localUserDataModel.avatarView.frame = localVideoView.frame;
                     [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.avatarView];
                 }
-                
+                self.chatViewController.selectionModel = kChatManager.localUserDataModel;
                 //远端: 恢复显示在collection cell中
                 RongRTCRemoteVideoView *remoteVideoView = (RongRTCRemoteVideoView *)selectedViewModel.cellVideoView;
                 remoteVideoView.fillMode = RCVideoFillModeAspectFill;
@@ -158,14 +159,14 @@
                 
                 CGFloat offset = 16;
                 if (@available(iOS 11.0, *)) {
-                    if (!UIEdgeInsetsEqualToEdgeInsets([UIApplication sharedApplication].delegate.window.safeAreaInsets, UIEdgeInsetsZero)) {
-                        offset += 78;
+                    if (UIApplication.sharedApplication.keyWindow.safeAreaInsets.bottom > 0.0) {
+                        offset += UIInterfaceOrientationIsLandscape(orientation) ? 34 : 78;
                     }
                 }
                 selectedViewModel.infoLabel.frame = CGRectMake(0, remoteVideoView.frame.size.height - offset, remoteVideoView.frame.size.width, selectedViewModel.infoLabel.frame.size.height);
                 selectedViewModel.infoLabelGradLayer.frame = selectedViewModel.infoLabel.frame;
                 [selectedViewModel.cellVideoView addSubview:selectedViewModel.infoLabel];
-                
+                self.chatViewController.selectionModel = selectedViewModel;
                 if (!selectedViewModel.isShowVideo) {
                     selectedViewModel.avatarView.frame = remoteVideoView.frame;
                     [selectedViewModel.cellVideoView addSubview:selectedViewModel.avatarView];
@@ -203,14 +204,14 @@
             
             CGFloat offset = 16;
             if (@available(iOS 11.0, *)) {
-                if (!UIEdgeInsetsEqualToEdgeInsets([UIApplication sharedApplication].delegate.window.safeAreaInsets, UIEdgeInsetsZero)) {
-                    offset += 78;
+                if (UIApplication.sharedApplication.keyWindow.safeAreaInsets.bottom > 0.0) {
+                    offset += UIInterfaceOrientationIsLandscape(orientation) ? 34 : 78;
                 }
             }
-            selectedViewModel.infoLabel.frame = CGRectMake(0, remoteVideoView.frame.size.height - offset, remoteVideoView.frame.size.width, selectedViewModel.infoLabel.frame.size.height);
+            selectedViewModel.infoLabel.frame = CGRectMake(13, remoteVideoView.frame.size.height - offset, remoteVideoView.frame.size.width - 26, selectedViewModel.infoLabel.frame.size.height);
             selectedViewModel.infoLabelGradLayer.frame = selectedViewModel.infoLabel.frame;
             [selectedViewModel.cellVideoView addSubview:selectedViewModel.infoLabel];
-            
+            self.chatViewController.selectionModel = selectedViewModel;
             if (!selectedViewModel.isShowVideo) {
                 selectedViewModel.avatarView.frame = remoteVideoView.frame;
                 [selectedViewModel.cellVideoView addSubview:selectedViewModel.avatarView];

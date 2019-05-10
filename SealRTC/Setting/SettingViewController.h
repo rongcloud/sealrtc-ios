@@ -26,7 +26,6 @@
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @property (nonatomic, assign) NSUInteger sectionNumber;
 @property (nonatomic, strong) NSArray *resolutionRatioArray, *frameRateArray, *codeRateArray, *codingStyleArray;
-@property (nonatomic, strong) UISwitch *gpuSwitch, *tinyStreamSwitch, *autoTestSwitch;
 @property (nonatomic, strong) SettingTableViewDelegateSourceImpl *settingTableViewDelegateSourceImpl;
 @property (nonatomic, strong) SettingPickViewDelegateImpl *settingPickViewDelegateImpl;
 @property (nonatomic, strong) UIAlertController *alertController;
@@ -36,5 +35,6 @@
 - (void)gpuSwitchAction;
 - (void)tinyStreamSwitchAction;
 - (void)autoTestAction;
+- (void)waterMarkAction;
 
 @end

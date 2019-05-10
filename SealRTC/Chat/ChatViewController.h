@@ -64,6 +64,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, weak) RongRTCRoom *room;
 @property (nonatomic)RongRTCCode joinRoomCode;
 @property (nonatomic)AVChatMode chatMode;
+@property (nonatomic, weak) ChatCellVideoViewModel* selectionModel;
 
 - (void)hideAlertLabel:(BOOL)isHidden;
 - (void)selectSpeakerButtons:(BOOL)selected;

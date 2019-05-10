@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ChatGPUImageHandler : NSObject
 
 - (CMSampleBufferRef)onGPUFilterSource:(CMSampleBufferRef)sampleBuffer;
+- (void)rotateWaterMark:(BOOL)isBack;
+- (void)transformWaterMark:(BOOL)isTrans;
 
 @end
 

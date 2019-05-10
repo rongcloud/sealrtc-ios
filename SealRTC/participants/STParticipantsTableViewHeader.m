@@ -39,9 +39,19 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.tipsLabel.frame = (CGRect){16,0,200,44};
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if (orientation == UIInterfaceOrientationLandscapeRight) {
+        self.tipsLabel.frame = (CGRect){16 + 44,0,200,44};
+    } else {
+        self.tipsLabel.frame = (CGRect){16,0,200,44};
+    }
     CGSize size = self.bounds.size;
-    self.closeBtn.frame = (CGRect){size.width-44-8,0,44,44};
+    
+    if (orientation == UIInterfaceOrientationLandscapeLeft) {
+        self.closeBtn.frame = (CGRect){size.width-44-8 - 44,0,44,44};
+    } else {
+        self.closeBtn.frame = (CGRect){size.width-44-8,0,44,44};
+    }
 }
 
 #pragma mark  - Getters

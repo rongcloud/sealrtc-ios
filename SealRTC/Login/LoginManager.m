@@ -58,6 +58,7 @@ static LoginManager *sharedLoginManager = nil;
     {
         self.roomNumber = [userDefaults valueForKey:kDefaultRoomNumber];
         self.username = [userDefaults valueForKey:kDefaultUserName];
+        self.userID = [userDefaults valueForKey:kDefaultUserID];
     } else {
         [userDefaults setBool:YES forKey:kEverLaunched];
     }
@@ -69,17 +70,17 @@ static LoginManager *sharedLoginManager = nil;
     
     BOOL isPlistExist = [CommonUtility isFileExistsAtPath:settingUserDefaultPath];
     if (isPlistExist)
-    {
-        _isGPUFilter = [[settingUserDefaults valueForKey:Key_GPUFilter] boolValue];
-        _isSRTPEncrypt = [[settingUserDefaults valueForKey:Key_SRTPEncrypt] boolValue];
-        _isTinyStream = [[settingUserDefaults valueForKey:Key_TinyStreamMode] integerValue];
-        _resolutionRatioIndex = [[settingUserDefaults valueForKey:Key_ResolutionRatio] integerValue];
-        _frameRateIndex = [[settingUserDefaults valueForKey:Key_FrameRate] integerValue];
-        _maxCodeRateIndex = [[settingUserDefaults valueForKey:Key_MaxCodeRate] integerValue];
-        _minCodeRateIndex = [[settingUserDefaults valueForKey:Key_MinCodeRate] integerValue];
-        _codingStyleIndex = [[settingUserDefaults valueForKey:Key_CodingStyle] integerValue];
-        _isWarterMark = [[settingUserDefaults valueForKey:Key_WaterMark] integerValue];
-        _isAutoTest = [[settingUserDefaults valueForKey:Key_AutoTest] boolValue];
+    {   
+        _isGPUFilter = [settingUserDefaults boolForKey:Key_GPUFilter];
+        _isSRTPEncrypt = [settingUserDefaults boolForKey:Key_SRTPEncrypt];
+        _isTinyStream = [settingUserDefaults boolForKey:Key_TinyStreamMode];
+        _resolutionRatioIndex = [settingUserDefaults integerForKey:Key_ResolutionRatio];
+        _frameRateIndex = [settingUserDefaults integerForKey:Key_FrameRate];
+        _maxCodeRateIndex = [settingUserDefaults integerForKey:Key_MaxCodeRate];
+        _minCodeRateIndex = [settingUserDefaults integerForKey:Key_MinCodeRate];
+        _codingStyleIndex = [settingUserDefaults integerForKey:Key_CodingStyle];
+        _isWaterMark = [settingUserDefaults boolForKey:Key_WaterMark];
+        _isAutoTest = [settingUserDefaults boolForKey:Key_AutoTest];
         _phoneNumber = [settingUserDefaults valueForKey:Key_PhoneNumber];
         _countryCode = [settingUserDefaults valueForKey:Key_CountryCode];
         _regionName = [settingUserDefaults valueForKey:Key_RegionName];
@@ -94,7 +95,7 @@ static LoginManager *sharedLoginManager = nil;
         self.maxCodeRateIndex = Value_Default_MaxCodeRate;
         self.minCodeRateIndex = Value_Default_MinCodeRate;
         self.codingStyleIndex = Value_Default_Coding_Style;
-        self.isWarterMark = Value_Default_WaterMark;
+        self.isWaterMark = Value_Default_WaterMark;
         self.isAutoTest = Valie_Default_AutoTest;
         self.phoneNumber = @"";
     }
@@ -107,79 +108,88 @@ static LoginManager *sharedLoginManager = nil;
 - (void)setIsGPUFilter:(BOOL)isGPUFilter
 {
     _isGPUFilter = isGPUFilter;
-    [settingUserDefaults setObject:@(isGPUFilter) forKey:Key_GPUFilter];
+    [settingUserDefaults setBool:isGPUFilter forKey:Key_GPUFilter];
     [settingUserDefaults synchronize];
 }
 
-- (void)setIsWarterMark:(BOOL)isWarterMark
+- (void)setIsWaterMark:(BOOL)isWaterMark
 {
-    _isWarterMark = isWarterMark;
-    [settingUserDefaults setObject:@(isWarterMark) forKey:Key_WaterMark];
+    _isWaterMark = isWaterMark;
+    [settingUserDefaults setBool:isWaterMark forKey:Key_WaterMark];
     [settingUserDefaults synchronize];
 }
 
 - (void)setIsSRTPEncrypt:(BOOL)isSRTPEncrypt
 {
     _isSRTPEncrypt = isSRTPEncrypt;
-    [settingUserDefaults setObject:@(isSRTPEncrypt) forKey:Key_SRTPEncrypt];
+    [settingUserDefaults setBool:isSRTPEncrypt forKey:Key_SRTPEncrypt];
     [settingUserDefaults synchronize];
 }
 
 - (void)setIsTinyStream:(BOOL)isTinyStream
 {
     _isTinyStream = isTinyStream;
-    [settingUserDefaults setObject:@(isTinyStream) forKey:Key_TinyStreamMode];
+    [settingUserDefaults setBool:isTinyStream forKey:Key_TinyStreamMode];
     [settingUserDefaults synchronize];
 }
 
 - (void)setResolutionRatioIndex:(NSInteger)resolutionRatioIndex
 {
     _resolutionRatioIndex = resolutionRatioIndex;
-    [settingUserDefaults setObject:@(resolutionRatioIndex) forKey:Key_ResolutionRatio];
+    [settingUserDefaults setInteger:resolutionRatioIndex forKey:Key_ResolutionRatio];
     [settingUserDefaults synchronize];
 }
 
 - (void)setFrameRateIndex:(NSInteger)frameRateIndex
 {
     _frameRateIndex = frameRateIndex;
-    [settingUserDefaults setObject:@(frameRateIndex) forKey:Key_FrameRate];
+    [settingUserDefaults setInteger:frameRateIndex forKey:Key_FrameRate];
     [settingUserDefaults synchronize];
 }
 
 - (void)setMaxCodeRateIndex:(NSInteger)maxCodeRateIndex
 {
     _maxCodeRateIndex = maxCodeRateIndex;
-    [settingUserDefaults setObject:@(maxCodeRateIndex) forKey:Key_MaxCodeRate];
+    [settingUserDefaults setInteger:maxCodeRateIndex forKey:Key_MaxCodeRate];
     [settingUserDefaults synchronize];
 }
 
 - (void)setMinCodeRateIndex:(NSInteger)minCodeRateIndex
 {
     _minCodeRateIndex = minCodeRateIndex;
-    [settingUserDefaults setObject:@(minCodeRateIndex) forKey:Key_MinCodeRate];
+    [settingUserDefaults setInteger:minCodeRateIndex forKey:Key_MinCodeRate];
     [settingUserDefaults synchronize];
 }
 
 - (void)setCodingStyleIndex:(NSInteger)codingStyleIndex
 {
     _codingStyleIndex = codingStyleIndex;
-    [settingUserDefaults setObject:@(codingStyleIndex) forKey:Key_CodingStyle];
+    [settingUserDefaults setInteger:codingStyleIndex forKey:Key_CodingStyle];
     [settingUserDefaults synchronize];
 }
 
 - (void)setIsAutoTest:(BOOL)isAutoTest
 {
     _isAutoTest = isAutoTest;
-    [settingUserDefaults setObject:@(isAutoTest) forKey:Key_AutoTest];
+    [settingUserDefaults setBool:isAutoTest forKey:Key_AutoTest];
     [settingUserDefaults synchronize];
 }
 
--(void)setUsername:(NSString *)username{
+- (void)setUsername:(NSString *)username
+{
     if (!username) {
         username = @"";
     }
     _username = username;
     [userDefaults setObject:username forKey:kDefaultUserName];
+    [userDefaults synchronize];
+}
+
+- (void)setUserID:(NSString *)userID
+{
+    _userID = userID;
+    [userDefaults setObject:userID forKey:kDefaultUserID];
+    [userDefaults synchronize];
 }
 
 - (void)setRoomNumber:(NSString *)roomNumber
@@ -194,8 +204,6 @@ static LoginManager *sharedLoginManager = nil;
     _phoneNumber = phoneNumber;
     [settingUserDefaults setObject:phoneNumber forKey:Key_PhoneNumber];
     [settingUserDefaults synchronize];
-    
-    _userID = [NSString stringWithFormat:@"%@%@", phoneNumber, kDeviceUUID];
 }
 
 - (void)setCountryCode:(NSString *)countryCode {
