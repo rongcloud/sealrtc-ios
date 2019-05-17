@@ -21,7 +21,7 @@
 @property (nonatomic, strong) NSString *selectedServer;
 @property (nonatomic, strong,readonly) RongRTCEngine *rongRTCEngine;
 @property (nonatomic, assign) BOOL isLoginTokenSucc, isIMConnectionSucc, isAutoTest;
-@property (nonatomic, assign) BOOL isObserver, isBackCamera, isCloseCamera, isSpeaker, isMuteMicrophone, isSwitchCamera;
+@property (nonatomic, assign) BOOL isObserver, isBackCamera, isCloseCamera, isSpeaker, isMuteMicrophone, isSwitchCamera, isWhiteBoardOpen;
 
 + (LoginManager *)sharedInstance;
 - (NSString *)keyTokenFrom:(NSString *)num;

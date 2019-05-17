@@ -14,7 +14,7 @@ static NSString *strKey = @"touchDelegate";
 @implementation UICollectionView (RongRTC)
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    CGPoint point1 = [self convertPoint:point toView:self.chatVC.whiteBoardWebView];
+    CGPoint point1 = [self convertPoint:point toView:self.chatVC.chatWhiteBoardHandler.whiteBoardView];
     __weak ChatViewController *weakChatVC = self.chatVC;
     
     if (!weakChatVC && self.tag != 202) {

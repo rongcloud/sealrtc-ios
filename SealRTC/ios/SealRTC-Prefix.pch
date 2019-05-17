@@ -65,6 +65,8 @@
 #define Value_Default_WaterMark NO
 #define Valie_Default_AutoTest NO
 
+#define Key_Force_Close_Log NO
+
 
 #ifndef DLog
     #define DLog(fmt, ...) NSLog((@"%s [Line %d] LLH...... " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);

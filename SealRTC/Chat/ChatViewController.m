@@ -10,7 +10,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SettingViewController.h"
 #import "CommonUtility.h"
-#import "WhiteBoardWebView.h"
 #import "LoginViewController.h"
 #import <JavaScriptCore/JavaScriptCore.h>
 #import "SealRTCAppDelegate.h"
@@ -100,6 +99,7 @@
     [[RongRTCAVCapturer sharedInstance] setVideoRender:self.localView];
     [kChatManager configParameter];
     self.chatGPUImageHandler = [[ChatGPUImageHandler alloc] init];
+    
     if (kLoginManager.isGPUFilter || kLoginManager.isWaterMark) {
 //        [RongRTCAVCapturer sharedInstance].videoDisplayBufferCallback = ^CMSampleBufferRef _Nullable(BOOL valid, CMSampleBufferRef  _Nullable sampleBuffer) {
 //            CMSampleBufferRef processedSampleBuffer = [self.chatGPUImageHandler onGPUFilterSource:sampleBuffer];
@@ -131,7 +131,6 @@
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
-    self.chatViewBuilder.chatViewController = self;
 
     _deviceOrientaionBefore = UIDeviceOrientationPortrait;
     
@@ -187,8 +186,8 @@
 
 - (void)dealloc
 {
-    NSLog(@"xxxx dealloc %@",self);
     self.collectionView = nil;
+    _chatWhiteBoardHandler = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -289,6 +288,10 @@
             layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
             self.collectionView.alwaysBounceHorizontal = YES;
             self.collectionView.alwaysBounceVertical = NO;
+        }
+        
+        if (self->_chatWhiteBoardHandler) {
+            [self->_chatWhiteBoardHandler rotateWhiteBoardView];
         }
     } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         if (kLoginManager.isWaterMark) {
@@ -400,10 +403,11 @@
     block();
 }
 
-
--(void)joinChannel{
+#pragma mark - join channel
+- (void)joinChannel {
     [[RCIMClient sharedRCIMClient] registerMessageType:STSetRoomInfoMessage.class];
     [[RCIMClient sharedRCIMClient] registerMessageType:STDeleteRoomInfoMessage.class];
+    [[RCIMClient sharedRCIMClient] registerMessageType:RongWhiteBoardMessage.class];
     [[RongRTCEngine sharedEngine] joinRoom:kLoginManager.roomNumber completion:^(RongRTCRoom * _Nullable room, RongRTCCode code) {
  
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -437,35 +441,6 @@
     }];
 }
 
-#pragma mark - alertView delegate
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag == 9999) {
-        if (buttonIndex > 0) {
-            self.chatViewBuilder.upMenuView.buttons[0].enabled = NO;
-            [self realStartPublishVideoFile:buttonIndex];
-        }
-        else{
-            self.chatViewBuilder.upMenuView.buttons[0].enabled = YES;
-        }
-    }
-    else{
-        if (buttonIndex == 1) {
-            // 用户点击确定
-            AVChatMode mode = AVChatModeAudio;
-            if (alertView.tag == 1111) {
-                mode = AVChatModeObserver;
-            }
-            self.chatMode = mode;
-            [self joinChannelImpl];
-        }
-        else{
-            [[RongRTCEngine sharedEngine] leaveRoom:kLoginManager.roomNumber completion:^(BOOL isSuccess, RongRTCCode code) {}];
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-    }
-}
-
-#pragma mark - join channel
 - (void)joinChannelImpl
 {
     self.chatRongRTCRoomDelegateImpl.infos = self.dataSource;
@@ -480,12 +455,27 @@
     [self.room setRoomAttributeValue:[info toJsonString] forKey:[RCIMClient sharedRCIMClient].currentUserInfo.userId message:message completion:^(BOOL isSuccess, RongRTCCode desc) {
         [self.room getRoomAttributes:nil completion:^(BOOL isSuccess, RongRTCCode desc, NSDictionary * _Nullable attr) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [attr enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, NSString*  _Nonnull obj, BOOL * _Nonnull stop) {
-                    NSDictionary* dicInfo = [NSJSONSerialization JSONObjectWithData:[obj dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
-                    STParticipantsInfo* info = [[STParticipantsInfo alloc] initWithDictionary:dicInfo];
-                    [self.dataSource addObject:info];
-                    ChatCellVideoViewModel* model = [kChatManager getRemoteUserDataModelSimilarUserID:info.userId];
-                    model.userName = info.userName;
+                [attr enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                    if ([key isEqualToString:kWhiteBoardMessageKey]) {
+                        NSString *whiteboardJson = attr[kWhiteBoardMessageKey];
+                        if (whiteboardJson) {
+                            NSDictionary* dicInfo = [NSJSONSerialization JSONObjectWithData:[whiteboardJson dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+                            NSArray *keys = [dicInfo allKeys];
+                            if ([keys containsObject:kWhiteBoardUUID]) {
+                                self.chatWhiteBoardHandler.roomUuid = dicInfo[kWhiteBoardUUID];
+                            }
+                            if ([keys containsObject:kWhiteBoardRoomToken]) {
+                                self.chatWhiteBoardHandler.roomToken = dicInfo[kWhiteBoardRoomToken];
+                            }
+                        }
+                    }
+                    else{
+                        NSDictionary* dicInfo = [NSJSONSerialization JSONObjectWithData:[obj dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+                        STParticipantsInfo* info = [[STParticipantsInfo alloc] initWithDictionary:dicInfo];
+                        [self.dataSource addObject:info];
+                        ChatCellVideoViewModel* model = [kChatManager getRemoteUserDataModelSimilarUserID:info.userId];
+                        model.userName = info.userName;
+                    }
                 }];
             });
         }];
@@ -795,6 +785,34 @@
     }];
 }
 
+#pragma mark - alertView delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 9999) {
+        if (buttonIndex > 0) {
+            self.chatViewBuilder.upMenuView.buttons[0].enabled = NO;
+            [self realStartPublishVideoFile:buttonIndex];
+        }
+        else{
+            self.chatViewBuilder.upMenuView.buttons[0].enabled = YES;
+        }
+    }
+    else{
+        if (buttonIndex == 1) {
+            // 用户点击确定
+            AVChatMode mode = AVChatModeAudio;
+            if (alertView.tag == 1111) {
+                mode = AVChatModeObserver;
+            }
+            self.chatMode = mode;
+            [self joinChannelImpl];
+        }
+        else{
+            [[RongRTCEngine sharedEngine] leaveRoom:kLoginManager.roomNumber completion:^(BOOL isSuccess, RongRTCCode code) {}];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+}
+
 #pragma mark - show alert label
 - (void)showAlertLabelWithString:(NSString *)text;
 {
@@ -896,6 +914,9 @@
         case 2:
             [self didClickMemeberBtn];
             break;
+        case 3: //white board
+            [self didClickWhiteboardButton];
+            break;
         default:
             break;
     }
@@ -960,11 +981,41 @@
     });
 }
 
+#pragma mark - click member
 - (void)didClickMemeberBtn {
     STParticipantsTableViewController* spt = [[STParticipantsTableViewController alloc] initWithRoom:self.room participantsInfos:self.dataSource];
     STPresentationViewController* pvc = [[STPresentationViewController alloc] initWithPresentedViewController:spt presentingViewController:self];
     spt.transitioningDelegate = pvc;
     [self presentViewController:spt animated:YES completion:nil];
+}
+
+#pragma mark - click white board
+- (void)didClickWhiteboardButton
+{
+    if (self.chatMode == AVChatModeObserver) {
+        if (!self.chatWhiteBoardHandler.roomUuid || self.chatWhiteBoardHandler.roomUuid.length == 0 || !self.chatWhiteBoardHandler.roomToken || self.chatWhiteBoardHandler.roomToken.length == 0) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"chat_white_open_failed", nil) message:@"" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            }];
+            [alert addAction:action];
+            [self presentViewController:alert animated:YES completion:^{
+            }];
+            return;
+        }
+        else {
+            [self.chatWhiteBoardHandler setOperationEnable:NO];
+        }
+    }
+    
+    kLoginManager.isWhiteBoardOpen = !kLoginManager.isWhiteBoardOpen;
+    
+    if (kLoginManager.isWhiteBoardOpen) {
+        [self.chatWhiteBoardHandler openWhiteBoardRoom];
+        [self showButtons:isShowButton];
+    }
+    else {
+        [self.chatWhiteBoardHandler closeWhiteBoardRoom];
+    }
 }
 
 #pragma mark - click local video
@@ -1014,15 +1065,20 @@
 #pragma mark - click hungup button
 - (void)didClickHungUpButton
 {
-
-//    if (videoOutputStream) {
-//        [fileCapturer stopCapture];
-//        fileCapturer = nil;
-//    }
     STDeleteRoomInfoMessage* deleteMessage = [[STDeleteRoomInfoMessage alloc] initWithInfoKey:kLoginManager.userID];
     [self.room deleteRoomAttributes:@[kLoginManager.userID] message:deleteMessage completion:^(BOOL isSuccess, RongRTCCode desc) {
-        
     }];
+    
+    if (_chatWhiteBoardHandler) {
+        [_chatWhiteBoardHandler leaveRoom];
+        if (![kChatManager countOfRemoteUserDataArray]) {
+            [self.room deleteRoomAttributes:@[kWhiteBoardMessageKey] message:nil completion:^(BOOL isSuccess, RongRTCCode desc) {
+            }];
+            [_chatWhiteBoardHandler deleteRoom];
+        }
+        _chatWhiteBoardHandler = nil;
+    }
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [[RongRTCAVCapturer sharedInstance] stopCapture];
         [[RongRTCEngine sharedEngine] leaveRoom:kLoginManager.roomNumber completion:^(BOOL isSuccess, NSInteger code) {
@@ -1042,14 +1098,13 @@
         
         [UIApplication sharedApplication].idleTimerDisabled = NO;
         
-        
         [kChatManager.localUserDataModel removeKeyPathObservers];
-        
         [kChatManager.localUserDataModel.cellVideoView removeFromSuperview];
         kChatManager.localUserDataModel = nil;
         kLoginManager.isMuteMicrophone = NO;
         kLoginManager.isSwitchCamera = NO;
         kLoginManager.isBackCamera = NO;
+        kLoginManager.isWhiteBoardOpen = NO;
         [kChatManager clearAllDataArray];
         [self.collectionView reloadData];
         [self.collectionView removeFromSuperview];
@@ -1112,6 +1167,15 @@
         _dataSource = [[NSMutableArray alloc] initWithCapacity:100];
     }
     return _dataSource;
+}
+
+- (ChatWhiteBoardHandler *)chatWhiteBoardHandler
+{
+    if (!_chatWhiteBoardHandler) {
+        _chatWhiteBoardHandler = [[ChatWhiteBoardHandler alloc] initWithViewController:self];
+    }
+    
+    return _chatWhiteBoardHandler;
 }
 
 

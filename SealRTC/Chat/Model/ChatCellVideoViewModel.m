@@ -70,6 +70,8 @@
 {
     [self.cellVideoView removeFromSuperview];
     self.cellVideoView = nil;
+    [self.inputStream setVideoRender:nil];
+    self.inputStream = nil;
     [self removeKeyPathObservers];
 }
 
@@ -139,15 +141,10 @@
 -(void)setInputStream:(RongRTCAVInputStream *)inputStream{
     _inputStream = inputStream;
     if ([_inputStream.tag hasPrefix:@"RongRTCFileVideo"]) {
-        NSArray *tags = [_inputStream.tag componentsSeparatedByString:@"-"];
-        NSString *userName = tags[1];
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSString *name = userName;
-            if (name.length >= 4) {
-                name = [name substringToIndex:4];
+            if (![self.infoLabel.text containsString:@"视频文件"]) {
+                self.infoLabel.text = [self.userName stringByAppendingString:@"视频文件"];
             }
-            NSString *fileName = [name stringByAppendingString:tags.lastObject];
-            self.infoLabel.text = fileName;
             self.infoLabel.textAlignment = NSTextAlignmentCenter;
         });
     }
@@ -161,9 +158,7 @@
             name = [name substringToIndex:4];
         }
         if ([self.inputStream.tag hasPrefix:@"RongRTCFileVideo"]) {
-            NSArray *tags = [self.inputStream.tag componentsSeparatedByString:@"-"];
-            NSString *fileName = [name stringByAppendingString:tags.lastObject];
-            self.infoLabel.text = fileName;
+            self.infoLabel.text = [name stringByAppendingString:@"视频文件"];
         }
         else{
             self.infoLabel.text = name;

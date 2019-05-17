@@ -43,6 +43,7 @@ static LoginManager *sharedLoginManager = nil;
         self.isSpeaker = YES;
         self.isMuteMicrophone = NO;
         self.isSwitchCamera = NO;
+        self.isWhiteBoardOpen = NO;
         
         [self initUserDefaults];
     }

@@ -274,6 +274,13 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
         });
         //[[NSNotificationCenter defaultCenter] postNotificationName:STDidRecvDeleteRoomInfoMessageNotification object:message.content];
     }
+    else if ([message.content isKindOfClass:RongWhiteBoardMessage.class]) {
+        RongWhiteBoardMessage *whiteMessage = (RongWhiteBoardMessage *)message.content;
+        if (whiteMessage.whiteBoardDict) {
+            self.chatViewController.chatWhiteBoardHandler.roomUuid = whiteMessage.whiteBoardDict[kWhiteBoardUUID];
+            self.chatViewController.chatWhiteBoardHandler.roomToken = whiteMessage.whiteBoardDict[kWhiteBoardRoomToken];
+        }
+    }
 }
 
 //

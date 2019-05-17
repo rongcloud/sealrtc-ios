@@ -15,9 +15,9 @@
 #import "ChatViewBuilder.h"
 #import "MessageStatusBar.h"
 #import "ChatCellVideoViewModel.h"
-#import "WhiteBoardWebView.h"
 #import "ChatManager.h"
 #import "ChatGPUImageHandler.h"
+#import "ChatWhiteBoardHandler.h"
 
 #define TitleHeight 78
 #define redButtonBackgroundColor [UIColor colorWithRed:243.0/255.0 green:57.0/255.0 blue:58.0/255.0 alpha:1.0]
@@ -41,7 +41,6 @@ typedef enum : NSUInteger {
 @property (nonatomic, weak) IBOutlet UILabel *dataTrafficLabel;
 @property (nonatomic, weak) IBOutlet UILabel *alertLabel;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
-@property (nonatomic, strong) WhiteBoardWebView *whiteBoardWebView;
 @property (nonatomic, strong) UIImageView *homeImageView;
 @property (nonatomic, strong) RongRTCLocalVideoView *localView;
 @property (nonatomic, strong) UIAlertController *alertController;
@@ -58,6 +57,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) ChatRongRTCNetworkMonitorDelegateImpl *chatRongRTCNetworkMonitorDelegateImpl;
 @property (nonatomic, strong) ChatViewBuilder *chatViewBuilder;
 @property (nonatomic, strong) ChatGPUImageHandler *chatGPUImageHandler;
+@property (nonatomic, strong) ChatWhiteBoardHandler *chatWhiteBoardHandler;
 @property (nonatomic, strong) MessageStatusBar *messageStatusBar;
 @property (nonatomic, assign) BOOL isFinishLeave,isLandscapeLeft, isNotLeaveMeAlone;
 @property (nonatomic, assign) UIDeviceOrientation deviceOrientaionBefore;

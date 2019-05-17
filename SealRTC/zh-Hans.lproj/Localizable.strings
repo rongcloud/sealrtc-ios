@@ -45,6 +45,15 @@
 "chat_hd" = "高清";
 "chat_fluent" = "流畅";
 "chat_watchmode" = "观看模式";
+"chat_white_pencil" = "画笔";
+"chat_white_text" = "文字";
+"chat_white_eraser" = "橡皮擦";
+"chat_white_clean" = "清空";
+"chat_white_new" = "新建";
+"chat_white_delete" = "删除";
+"chat_white_join_failed" = "白板服务错误，请稍后重试";
+"chat_white_open_failed" = "房间内未创建白板";
+
 
 "login_input_meeting_welcome" = "欢迎体验高清晰低延迟的实时音视频会议";
 "login_input_meeting_room_name" = "输入以下信息开始会议";

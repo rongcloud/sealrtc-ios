@@ -28,9 +28,13 @@
     
     [Bugly startWithAppId:@"ac3f6a6401" config:config];
     [Bugly setUserIdentifier:[UIDevice currentDevice].name];
+    BOOL openLog = NO;
 #ifndef DEBUG
-    [self redirectNSlogToDocumentFolder];
+    openLog = YES;
 #endif
+    if (openLog && Key_Force_Close_Log == NO) {
+        [self redirectNSlogToDocumentFolder];
+    }
     return YES;
 }
 - (void)redirectNSlogToDocumentFolder {

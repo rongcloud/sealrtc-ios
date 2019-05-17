@@ -23,7 +23,6 @@
 @property (nonatomic, strong) NSMutableArray *allRemoteUserDataArray, *recentDataArray;
 @property (nonatomic, strong) NSMutableArray *observerArray;
 @property (nonatomic, strong) ChatCellVideoViewModel *localUserDataModel;
-@property (nonatomic, strong) NSString *whiteBoardURL;
 
 
 + (ChatManager *)sharedInstance;

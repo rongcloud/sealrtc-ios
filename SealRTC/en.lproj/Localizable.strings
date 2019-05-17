@@ -45,6 +45,14 @@
 "chat_hd" = "HD";
 "chat_fluent" = "fluent";
 "chat_watchmode" = "viewing pattern";
+"chat_white_pencil" = "";
+"chat_white_text" = "";
+"chat_white_eraser" = "";
+"chat_white_clean" = "";
+"chat_white_new" = "";
+"chat_white_delete" = "";
+"chat_white_join_failed" = "White board service error, Please try again later!";
+"chat_white_open_failed" = "No white board created!";
 
 "login_input_meeting_welcome" = "Welcome to SealRTC Audio/Video Meeting";
 "login_input_meeting_room_name" = "Input Room Info";

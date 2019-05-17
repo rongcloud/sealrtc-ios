@@ -10,13 +10,15 @@
 #import "ChatViewController.h"
 #import "CommonUtility.h"
 
-#define MenuButtonCount 3
+#define MenuButtonCount 4
 
 @interface ChatViewBuilder ()
 {
     ChatBubbleMenuViewDelegateImpl *chatBubbleMenuViewDelegateImpl;
     BOOL isLeftDisplay, isRightDisplay;
 }
+
+@property (nonatomic, weak) ChatViewController *chatViewController;
 
 @end
 
@@ -149,9 +151,15 @@
                 [CommonUtility setButtonImage:button imageName:@"chat_speaker_on"];
             }
                 break;
-            case 2:
+            case 2: //人员列表
             {
                 [CommonUtility setButtonImage:button imageName:@"participants"];
+            }
+                break;
+            case 3: //白板开关
+            {
+                self.whiteboardButton = button;
+                [CommonUtility setButtonImage:button imageName:@"chat_white_board_on"];
             }
                 break;
             default:
