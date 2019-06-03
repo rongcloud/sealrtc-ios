@@ -1036,6 +1036,11 @@ typedef NS_ENUM(NSUInteger, RCLogLevel) {
      *  输出错误、警告和一般的日志
      */
     RC_Log_Level_Info = 3,
+    
+    /*!
+     *  输出所有日志
+     */
+    RC_Log_Level_Verbose = 4,
 };
 
 #pragma mark RCTimestampOrder - 历史消息查询顺序

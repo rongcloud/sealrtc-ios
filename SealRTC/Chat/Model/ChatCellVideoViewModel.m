@@ -8,7 +8,7 @@
 
 #import "ChatCellVideoViewModel.h"
 #import "UIColor+ColorChange.h"
-
+#import "ChatManager.h"
 @interface ChatCellVideoViewModel ()
  
 @property (nonatomic,assign) BOOL registerObserverFlag;
@@ -142,9 +142,11 @@
     _inputStream = inputStream;
     if ([_inputStream.tag hasPrefix:@"RongRTCFileVideo"]) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (![self.infoLabel.text containsString:@"视频文件"]) {
-                self.infoLabel.text = [self.userName stringByAppendingString:@"视频文件"];
+            NSString *name = kChatManager.videoOwner;
+            if (name.length >= 4) {
+                name = [name substringToIndex:4];
             }
+            self.infoLabel.text = [name stringByAppendingString:@"-视频文件"];
             self.infoLabel.textAlignment = NSTextAlignmentCenter;
         });
     }
@@ -157,11 +159,13 @@
         if (name.length >= 4) {
             name = [name substringToIndex:4];
         }
-        if ([self.inputStream.tag hasPrefix:@"RongRTCFileVideo"]) {
-            self.infoLabel.text = [name stringByAppendingString:@"视频文件"];
-        }
-        else{
-            self.infoLabel.text = name;
+        if (name) {
+            if ([self.inputStream.tag hasPrefix:@"RongRTCFileVideo"] || [self.infoLabel.text containsString:@"-视频文件"]) {
+                self.infoLabel.text = [name stringByAppendingString:@"-视频文件"];
+            }
+            else{
+                self.infoLabel.text = name;
+            }
         }
     });
 

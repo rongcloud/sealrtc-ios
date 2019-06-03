@@ -10,7 +10,7 @@
 #import "ChatViewController.h"
 #import "CommonUtility.h"
 
-#define MenuButtonCount 4
+#define MenuButtonCount 6
 
 @interface ChatViewBuilder ()
 {
@@ -133,30 +133,63 @@
         button.backgroundColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
         button.tintColor = [UIColor blackColor];
         button.clipsToBounds = YES;
-        button.tag = i;
+        NSInteger tag = i - 1;
+        button.tag = tag;
         [button addTarget:self.chatViewController action:@selector(menuItemButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [buttonsMutable addObject:button];
         
-        switch (button.tag)
+        switch (tag)
         {
-            case 0: //切换前/后摄像头
+            case -1:{
+                [buttonsMutable removeObject:button];
+                button = [UIButton buttonWithType:UIButtonTypeCustom];
+                button.frame = CGRectMake(0.f, 0.f, 36.f, 36.f);
+                button.layer.cornerRadius = button.frame.size.height / 2.f;
+                button.backgroundColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
+                button.clipsToBounds = YES;
+                button.tag = tag;
+                [button addTarget:self.chatViewController action:@selector(menuItemButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                [buttonsMutable addObject:button];
+                [button setImage:[UIImage imageNamed:@"chat_custom_audio_normal"] forState:UIControlStateNormal];
+                [button setImage:[UIImage imageNamed:@"chat_custom_audio_selected"] forState:UIControlStateSelected];
+                self.customAudioButton = button;
+            }
+                break;
+            case 0:{
+                
+                [buttonsMutable removeObject:button];
+                
+                button = [UIButton buttonWithType:UIButtonTypeCustom];
+                button.frame = CGRectMake(0.f, 0.f, 36.f, 36.f);
+                button.layer.cornerRadius = button.frame.size.height / 2.f;
+                button.backgroundColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
+                button.clipsToBounds = YES;
+                button.tag = tag;
+                [button addTarget:self.chatViewController action:@selector(menuItemButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                [buttonsMutable addObject:button];
+                [button setImage:[UIImage imageNamed:@"chat_vc_normalvideo"] forState:UIControlStateNormal];
+                [button setImage:[UIImage imageNamed:@"chat_vc_selectvideo"] forState:UIControlStateSelected];
+                self.customVideoButton = button;
+            }
+                break;
+            case 1: //切换前/后摄像头
             {
                 self.switchCameraButton = button;
                 [CommonUtility setButtonImage:button imageName:@"chat_switch_camera"];
             }
                 break;
-            case 1: //切换扬声器/听筒
+            case 2: //切换扬声器/听筒
             {
                 self.speakerOnOffButton = button;
                 [CommonUtility setButtonImage:button imageName:@"chat_speaker_on"];
             }
                 break;
-            case 2: //人员列表
+            case 3: //人员列表
             {
                 [CommonUtility setButtonImage:button imageName:@"participants"];
             }
                 break;
-            case 3: //白板开关
+            case 4: //白板开关
             {
                 self.whiteboardButton = button;
                 [CommonUtility setButtonImage:button imageName:@"chat_white_board_on"];

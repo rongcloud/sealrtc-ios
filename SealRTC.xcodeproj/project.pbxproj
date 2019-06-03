@@ -13,8 +13,15 @@
 		1782D887226EACB900AA9A74 /* ChatMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1782D886226EACB900AA9A74 /* ChatMembersViewController.m */; };
 		1782D88C226EB3C300AA9A74 /* ChatMemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1782D88A226EB3C300AA9A74 /* ChatMemberCell.m */; };
 		1782D88D226EB3C300AA9A74 /* ChatMemberCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1782D88B226EB3C300AA9A74 /* ChatMemberCell.xib */; };
+		1788283922A0D01700933137 /* RongRTCWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1788283822A0D01700933137 /* RongRTCWebServer.m */; };
+		1788283B22A0D08F00933137 /* libGCDWebServer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1788283A22A0D08F00933137 /* libGCDWebServer.a */; };
+		1788284E22A0D37C00933137 /* GCDWebDAVServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1788284D22A0D37C00933137 /* GCDWebDAVServer.m */; };
+		1788285022A0D3CE00933137 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1788284F22A0D3CE00933137 /* libxml2.tbd */; };
 		17A4296A22714B5500293F78 /* RTActiveWheel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A4296822714B5400293F78 /* RTActiveWheel.m */; };
 		17A4296B22714B5500293F78 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A4296922714B5500293F78 /* MBProgressHUD.m */; };
+		17DD6C2C229CE60700904272 /* RongRTCFileCapturer.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DD6C2B229CE60700904272 /* RongRTCFileCapturer.m */; };
+		17DD6C35229D162000904272 /* No_Excuses.aac in Resources */ = {isa = PBXBuildFile; fileRef = 17DD6C34229D162000904272 /* No_Excuses.aac */; };
+		17FE11E62296842400A933E3 /* ChatLocalVideoRender.m in Sources */ = {isa = PBXBuildFile; fileRef = 17FE11E52296842400A933E3 /* ChatLocalVideoRender.m */; };
 		3907FA151E08E01E007EDC46 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3907FA141E08E01E007EDC46 /* SystemConfiguration.framework */; };
 		390ED55D1D9E07F20046F519 /* CodeRate.plist in Resources */ = {isa = PBXBuildFile; fileRef = 390ED55C1D9E07F20046F519 /* CodeRate.plist */; };
 		3917C2AD21B8F6F300456EDA /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3917C2AB21B8F6F200456EDA /* LoginManager.m */; };
@@ -152,11 +159,38 @@
 		1782D889226EB3C300AA9A74 /* ChatMemberCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatMemberCell.h; sourceTree = "<group>"; };
 		1782D88A226EB3C300AA9A74 /* ChatMemberCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatMemberCell.m; sourceTree = "<group>"; };
 		1782D88B226EB3C300AA9A74 /* ChatMemberCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatMemberCell.xib; sourceTree = "<group>"; };
+		1788283722A0D01700933137 /* RongRTCWebServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RongRTCWebServer.h; sourceTree = "<group>"; };
+		1788283822A0D01700933137 /* RongRTCWebServer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RongRTCWebServer.m; sourceTree = "<group>"; };
+		1788283A22A0D08F00933137 /* libGCDWebServer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGCDWebServer.a; sourceTree = "<group>"; };
+		1788283C22A0D1E400933137 /* GCDWebServerFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerFunctions.h; sourceTree = "<group>"; };
+		1788283D22A0D1E400933137 /* GCDWebServers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServers.h; sourceTree = "<group>"; };
+		1788283E22A0D1E400933137 /* GCDWebServerMultiPartFormRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerMultiPartFormRequest.h; sourceTree = "<group>"; };
+		1788283F22A0D1E400933137 /* GCDWebServerResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerResponse.h; sourceTree = "<group>"; };
+		1788284022A0D1E400933137 /* GCDWebServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServer.h; sourceTree = "<group>"; };
+		1788284122A0D1E400933137 /* GCDWebServerConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerConnection.h; sourceTree = "<group>"; };
+		1788284222A0D1E400933137 /* GCDWebServerDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerDataRequest.h; sourceTree = "<group>"; };
+		1788284322A0D1E400933137 /* GCDWebDAVServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebDAVServer.h; sourceTree = "<group>"; };
+		1788284422A0D1E400933137 /* GCDWebServerHTTPStatusCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerHTTPStatusCodes.h; sourceTree = "<group>"; };
+		1788284522A0D1E500933137 /* GCDWebServerURLEncodedFormRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerURLEncodedFormRequest.h; sourceTree = "<group>"; };
+		1788284622A0D1E500933137 /* GCDWebServerStreamedResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerStreamedResponse.h; sourceTree = "<group>"; };
+		1788284722A0D1E500933137 /* GCDWebServerFileRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerFileRequest.h; sourceTree = "<group>"; };
+		1788284822A0D1E500933137 /* GCDWebServerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerRequest.h; sourceTree = "<group>"; };
+		1788284922A0D1E500933137 /* GCDWebServerDataResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerDataResponse.h; sourceTree = "<group>"; };
+		1788284A22A0D1E500933137 /* GCDWebServerFileResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerFileResponse.h; sourceTree = "<group>"; };
+		1788284B22A0D1E500933137 /* GCDWebServerErrorResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerErrorResponse.h; sourceTree = "<group>"; };
+		1788284C22A0D1E500933137 /* GCDWebUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebUploader.h; sourceTree = "<group>"; };
+		1788284D22A0D37C00933137 /* GCDWebDAVServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebDAVServer.m; sourceTree = "<group>"; };
+		1788284F22A0D3CE00933137 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		17A4296622714B5400293F78 /* RTActiveWheel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTActiveWheel.h; sourceTree = "<group>"; };
 		17A4296722714B5400293F78 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		17A4296822714B5400293F78 /* RTActiveWheel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTActiveWheel.m; sourceTree = "<group>"; };
 		17A4296922714B5500293F78 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		17A93B12224CEE8200FC1705 /* RongIMLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RongIMLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		17DD6C2A229CE60700904272 /* RongRTCFileCapturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RongRTCFileCapturer.h; sourceTree = "<group>"; };
+		17DD6C2B229CE60700904272 /* RongRTCFileCapturer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RongRTCFileCapturer.m; sourceTree = "<group>"; };
+		17DD6C34229D162000904272 /* No_Excuses.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = No_Excuses.aac; sourceTree = "<group>"; };
+		17FE11E42296842400A933E3 /* ChatLocalVideoRender.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatLocalVideoRender.h; sourceTree = "<group>"; };
+		17FE11E52296842400A933E3 /* ChatLocalVideoRender.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatLocalVideoRender.m; sourceTree = "<group>"; };
 		3907FA141E08E01E007EDC46 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3907FA191E08E037007EDC46 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		390ED55C1D9E07F20046F519 /* CodeRate.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CodeRate.plist; sourceTree = "<group>"; };
@@ -401,6 +435,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1788285022A0D3CE00933137 /* libxml2.tbd in Frameworks */,
 				398EDF0E228193F6006B189D /* WebKit.framework in Frameworks */,
 				392AEA862281620F00EC3CA3 /* CoreGraphics.framework in Frameworks */,
 				1773DD90224D145D007213AF /* RongRTCLib.framework in Frameworks */,
@@ -423,6 +458,7 @@
 				9D7D5D441D1B815A000574B2 /* AVFoundation.framework in Frameworks */,
 				46BCF221224DA3C0009E2617 /* RongIMLib.framework in Frameworks */,
 				3907FA151E08E01E007EDC46 /* SystemConfiguration.framework in Frameworks */,
+				1788283B22A0D08F00933137 /* libGCDWebServer.a in Frameworks */,
 				3987F2A71E84B3060024CAFC /* Security.framework in Frameworks */,
 				3991BCF41DD352B100152317 /* Bugly.framework in Frameworks */,
 				46BCF21D224D2D96009E2617 /* libvo-amrwbenc.a in Frameworks */,
@@ -435,6 +471,7 @@
 		1744C42221A3BF1E00452227 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1788284F22A0D3CE00933137 /* libxml2.tbd */,
 				398EDF0D228193F6006B189D /* WebKit.framework */,
 				392AEA852281620E00EC3CA3 /* CoreGraphics.framework */,
 				1773DD8F224D145D007213AF /* RongRTCLib.framework */,
@@ -460,10 +497,41 @@
 				17A4296922714B5500293F78 /* MBProgressHUD.m */,
 				17A4296622714B5400293F78 /* RTActiveWheel.h */,
 				17A4296822714B5400293F78 /* RTActiveWheel.m */,
+				17DD6C2A229CE60700904272 /* RongRTCFileCapturer.h */,
+				17DD6C2B229CE60700904272 /* RongRTCFileCapturer.m */,
+				17DD6C34229D162000904272 /* No_Excuses.aac */,
 				173A2C3022718EC100291E0A /* video_demo1_low.mp4 */,
 				173A2C3222718F6800291E0A /* video_demo2_low.mp4 */,
 			);
 			path = Custom;
+			sourceTree = "<group>";
+		};
+		1788283622A0CFFD00933137 /* webserver */ = {
+			isa = PBXGroup;
+			children = (
+				1788284322A0D1E400933137 /* GCDWebDAVServer.h */,
+				1788284D22A0D37C00933137 /* GCDWebDAVServer.m */,
+				1788284022A0D1E400933137 /* GCDWebServer.h */,
+				1788284122A0D1E400933137 /* GCDWebServerConnection.h */,
+				1788284222A0D1E400933137 /* GCDWebServerDataRequest.h */,
+				1788284922A0D1E500933137 /* GCDWebServerDataResponse.h */,
+				1788284B22A0D1E500933137 /* GCDWebServerErrorResponse.h */,
+				1788284722A0D1E500933137 /* GCDWebServerFileRequest.h */,
+				1788284A22A0D1E500933137 /* GCDWebServerFileResponse.h */,
+				1788283C22A0D1E400933137 /* GCDWebServerFunctions.h */,
+				1788284422A0D1E400933137 /* GCDWebServerHTTPStatusCodes.h */,
+				1788283E22A0D1E400933137 /* GCDWebServerMultiPartFormRequest.h */,
+				1788284822A0D1E500933137 /* GCDWebServerRequest.h */,
+				1788283F22A0D1E400933137 /* GCDWebServerResponse.h */,
+				1788283D22A0D1E400933137 /* GCDWebServers.h */,
+				1788284622A0D1E500933137 /* GCDWebServerStreamedResponse.h */,
+				1788284522A0D1E500933137 /* GCDWebServerURLEncodedFormRequest.h */,
+				1788284C22A0D1E500933137 /* GCDWebUploader.h */,
+				1788283A22A0D08F00933137 /* libGCDWebServer.a */,
+				1788283722A0D01700933137 /* RongRTCWebServer.h */,
+				1788283822A0D01700933137 /* RongRTCWebServer.m */,
+			);
+			path = webserver;
 			sourceTree = "<group>";
 		};
 		3917C2C121BA10B600456EDA /* Delegate */ = {
@@ -490,6 +558,8 @@
 				3917C2CF21BA10B600456EDA /* ChatDataInfoModel.m */,
 				3917C2CA21BA10B600456EDA /* ChatLocalDataInfoModel.h */,
 				3917C2CE21BA10B600456EDA /* ChatLocalDataInfoModel.m */,
+				17FE11E42296842400A933E3 /* ChatLocalVideoRender.h */,
+				17FE11E52296842400A933E3 /* ChatLocalVideoRender.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -856,6 +926,7 @@
 		9D54AC331D06CFA00054A72F /* SealRTC */ = {
 			isa = PBXGroup;
 			children = (
+				1788283622A0CFFD00933137 /* webserver */,
 				B22096432253107D005948E1 /* participants */,
 				B220962A2252FE4C005948E1 /* countryList */,
 				9D3DD0701D59CC5700DC1443 /* Splash */,
@@ -986,7 +1057,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1000;
-				ORGANIZATIONNAME = BridgeMind;
+				ORGANIZATIONNAME = RongCloud;
 				TargetAttributes = {
 					9D54AC301D06CFA00054A72F = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -1032,6 +1103,7 @@
 				981A507A20047E3A00C6E5AA /* InfoPlist.strings in Resources */,
 				397320491D9D35A00016DFC6 /* FrameRate.plist in Resources */,
 				98406B182073701E00EF3004 /* sound.gif in Resources */,
+				17DD6C35229D162000904272 /* No_Excuses.aac in Resources */,
 				39F0543D1DBDEE440072E918 /* Launch Screen.storyboard in Resources */,
 				392AEAB222816A5A00EC3CA3 /* WhiteSDK.bundle in Resources */,
 				1782D88D226EB3C300AA9A74 /* ChatMemberCell.xib in Resources */,
@@ -1066,6 +1138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B220964F22533A14005948E1 /* STParticipantsInfo.m in Sources */,
+				17FE11E62296842400A933E3 /* ChatLocalVideoRender.m in Sources */,
 				3917C2AD21B8F6F300456EDA /* LoginManager.m in Sources */,
 				988FEE7320206D8200FFF09A /* UINavigationController+returnBack.m in Sources */,
 				39D785E61E77BC5B004BAAFC /* RadioButton.m in Sources */,
@@ -1104,6 +1177,7 @@
 				3991BD0E1DD5AA5B00152317 /* MessageStatusBar.m in Sources */,
 				397719911E2CA24700EB45C1 /* SealRTCAppDelegate.m in Sources */,
 				3917C2E321BA10D200456EDA /* GPUImageOutputCamera.m in Sources */,
+				1788284E22A0D37C00933137 /* GCDWebDAVServer.m in Sources */,
 				B21B1D5B22533E9A001C4489 /* STJSONModel.m in Sources */,
 				392D0B732282AAB100B0E21C /* MASConstraint.m in Sources */,
 				1782D88C226EB3C300AA9A74 /* ChatMemberCell.m in Sources */,
@@ -1128,10 +1202,12 @@
 				17A4296A22714B5500293F78 /* RTActiveWheel.m in Sources */,
 				392AEA65228008F500EC3CA3 /* WhiteUtils.m in Sources */,
 				3917C2DB21BA10B600456EDA /* ChatDataInfoModel.m in Sources */,
+				17DD6C2C229CE60700904272 /* RongRTCFileCapturer.m in Sources */,
 				B21B1D612253439B001C4489 /* STDeleteRoomInfoMessage.m in Sources */,
 				392D0B6E2282AAB100B0E21C /* MASCompositeConstraint.m in Sources */,
 				392AEA782280152200EC3CA3 /* InternalApis.m in Sources */,
 				3917C2DA21BA10B600456EDA /* ChatLocalDataInfoModel.m in Sources */,
+				1788283922A0D01700933137 /* RongRTCWebServer.m in Sources */,
 				392AEA7A2280152200EC3CA3 /* DWKWebView.m in Sources */,
 				397320411D9CD82B0016DFC6 /* ZHPickView.m in Sources */,
 				981C3E21202ADEBB00494697 /* BlinkExcelView.m in Sources */,
@@ -1191,203 +1267,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		398470FA215B64B70043154D /* DebugQuic */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_BITCODE = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos;
-			};
-			name = DebugQuic;
-		};
-		398470FB215B64B70043154D /* DebugQuic */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9CVMN4UZK4;
-				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/SealRTC/framework",
-					"$(PROJECT_DIR)/SealRTC/framework",
-					"$(PROJECT_DIR)/SealRTC/3rd",
-					"$(PROJECT_DIR)/SealRTC/framework/IMLib",
-				);
-				GCC_PREFIX_HEADER = "SealRTC/ios/SealRTC-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					WEBRTC_IOS,
-					"DEBUG=1",
-					"QUIC=1",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/SealRTC/ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/SealRTC/framework",
-					"$(PROJECT_DIR)/SealRTC/framework/openssl",
-					"$(PROJECT_DIR)/SealRTC/framework/IMLib",
-					"$(PROJECT_DIR)/SealRTC/3rd",
-					"$(PROJECT_DIR)/SealRTC/3rd/White-SDK-iOS",
-				);
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "cdf6fcc4-d01a-4cdb-b974-c650f223d239";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 1;
-				WARNING_CFLAGS = "-Wno-deprecated-declarations";
-			};
-			name = DebugQuic;
-		};
-		398470FC215B64C10043154D /* ReleaseQuic */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_BITCODE = NO;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = ReleaseQuic;
-		};
-		398470FD215B64C10043154D /* ReleaseQuic */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9CVMN4UZK4;
-				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/SealRTC/framework",
-					"$(PROJECT_DIR)/SealRTC/framework",
-					"$(PROJECT_DIR)/SealRTC/3rd",
-					"$(PROJECT_DIR)/SealRTC/framework/IMLib",
-				);
-				GCC_PREFIX_HEADER = "SealRTC/ios/SealRTC-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					WEBRTC_IOS,
-					"QUIC=1",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/SealRTC/ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/SealRTC/framework",
-					"$(PROJECT_DIR)/SealRTC/framework/openssl",
-					"$(PROJECT_DIR)/SealRTC/framework/IMLib",
-					"$(PROJECT_DIR)/SealRTC/3rd",
-					"$(PROJECT_DIR)/SealRTC/3rd/White-SDK-iOS",
-				);
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1f1ec5b1-adbb-4f73-8081-2b9f57a025e8";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 1;
-				WARNING_CFLAGS = "-Wno-deprecated-declarations";
-			};
-			name = ReleaseQuic;
-		};
 		9D54AC461D06CFA00054A72F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1519,7 +1398,10 @@
 					WEBRTC_IOS,
 					"DEBUG=1",
 				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/include/libxml2",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/SealRTC/ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1530,6 +1412,7 @@
 					"$(PROJECT_DIR)/SealRTC/framework/IMLib",
 					"$(PROJECT_DIR)/SealRTC/3rd",
 					"$(PROJECT_DIR)/SealRTC/3rd/White-SDK-iOS",
+					"$(PROJECT_DIR)/SealRTC/webserver",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
@@ -1559,7 +1442,10 @@
 				);
 				GCC_PREFIX_HEADER = "SealRTC/ios/SealRTC-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_IOS;
-				HEADER_SEARCH_PATHS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/include/libxml2",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/SealRTC/ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1570,6 +1456,7 @@
 					"$(PROJECT_DIR)/SealRTC/framework/IMLib",
 					"$(PROJECT_DIR)/SealRTC/3rd",
 					"$(PROJECT_DIR)/SealRTC/3rd/White-SDK-iOS",
+					"$(PROJECT_DIR)/SealRTC/webserver",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
@@ -1588,9 +1475,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9D54AC461D06CFA00054A72F /* Debug */,
-				398470FA215B64B70043154D /* DebugQuic */,
 				9D54AC471D06CFA00054A72F /* Release */,
-				398470FC215B64C10043154D /* ReleaseQuic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1599,9 +1484,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9D54AC491D06CFA00054A72F /* Debug */,
-				398470FB215B64B70043154D /* DebugQuic */,
 				9D54AC4A1D06CFA00054A72F /* Release */,
-				398470FD215B64C10043154D /* ReleaseQuic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

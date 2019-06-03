@@ -115,7 +115,13 @@ static NSDictionary *selectedServer;
     
     [[RCIMClient sharedRCIMClient] setServerInfo:naviHost fileServer:fileHost];
     [[RCIMClient sharedRCIMClient] setRCConnectionStatusChangeDelegate:self];
-    [[RCIMClient sharedRCIMClient] setLogLevel:RC_Log_Level_Info];
+    if (Key_Force_Close_Log) {
+        [[RCIMClient sharedRCIMClient] setLogLevel:4];
+    }
+    else{
+        [[RCIMClient sharedRCIMClient] setLogLevel:RC_Log_Level_Info];
+    }
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -313,12 +319,17 @@ static NSDictionary *selectedServer;
                                                   error:^(RCConnectErrorCode status) {
                                                       DLog(@"MClient connectWithToken Error: %zd", status);
                                                       if (status == RC_CONN_TOKEN_INCORRECT) {
-                                                          [self.loginViewBuilder showValidateView:YES];
+                                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                                              [self.loginViewBuilder showValidateView:YES];
+
+                                                          });
                                                       }
                                                   }
                                          tokenIncorrect:^{
                                              DLog(@"MClient connectWithToken tokenIncorrect: ");
-                                             [self.loginViewBuilder showValidateView:YES];
+                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                [self.loginViewBuilder showValidateView:YES];
+                                             });
                                          }];
     }
 }

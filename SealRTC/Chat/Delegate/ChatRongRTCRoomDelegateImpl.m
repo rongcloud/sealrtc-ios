@@ -3,7 +3,7 @@
 //  SealRTC
 //
 //  Created by LiuLinhong on 2019/02/14.
-//  Copyright © 2019 BridgeMind. All rights reserved.
+//  Copyright © 2019 RongCloud. All rights reserved.
 //
 
 #import "ChatRongRTCRoomDelegateImpl.h"

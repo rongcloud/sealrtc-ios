@@ -13,7 +13,6 @@
 #import "ChatRongRTCRoomDelegateImpl.h"
 #import "ChatRongRTCNetworkMonitorDelegateImpl.h"
 #import "ChatViewBuilder.h"
-#import "MessageStatusBar.h"
 #import "ChatCellVideoViewModel.h"
 #import "ChatManager.h"
 #import "ChatGPUImageHandler.h"
@@ -58,7 +57,6 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) ChatViewBuilder *chatViewBuilder;
 @property (nonatomic, strong) ChatGPUImageHandler *chatGPUImageHandler;
 @property (nonatomic, strong) ChatWhiteBoardHandler *chatWhiteBoardHandler;
-@property (nonatomic, strong) MessageStatusBar *messageStatusBar;
 @property (nonatomic, assign) BOOL isFinishLeave,isLandscapeLeft, isNotLeaveMeAlone;
 @property (nonatomic, assign) UIDeviceOrientation deviceOrientaionBefore;
 @property (nonatomic, weak) RongRTCRoom *room;

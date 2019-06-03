@@ -125,9 +125,10 @@
                     selectedViewModel.avatarView.frame = remoteVideoView.frame;
                     [selectedViewModel.cellVideoView addSubview:selectedViewModel.avatarView];
                 }
-                
-                [self.chatViewController.room subscribeAVStream:nil tinyStreams:@[selectedViewModel.inputStream] completion:^(BOOL isSuccess, RongRTCCode desc) {
-                }];
+                if (selectedViewModel.inputStream) {
+                    [self.chatViewController.room subscribeAVStream:nil tinyStreams:@[selectedViewModel.inputStream] completion:^(BOOL isSuccess, RongRTCCode desc) {
+                    }];
+                }
                 
                 kLoginManager.isSwitchCamera = !kLoginManager.isSwitchCamera;
             }
@@ -187,8 +188,11 @@
                     [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.avatarView];
                 }
                 
-                [self.chatViewController.room subscribeAVStream:@[selectedViewModel.inputStream] tinyStreams:@[self.originalSelectedViewModel.inputStream] completion:^(BOOL isSuccess, RongRTCCode desc) {
-                }];
+                if (selectedViewModel.inputStream) {
+                    [self.chatViewController.room subscribeAVStream:@[selectedViewModel.inputStream] tinyStreams:@[self.originalSelectedViewModel.inputStream] completion:^(BOOL isSuccess, RongRTCCode desc) {
+                    }];
+                }
+                
             }
         }
         else
@@ -233,8 +237,10 @@
                 [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.avatarView];
             }
             
-            [self.chatViewController.room subscribeAVStream:@[selectedViewModel.inputStream] tinyStreams:nil completion:^(BOOL isSuccess,RongRTCCode desc) {
-            }];
+            if (selectedViewModel.inputStream) {
+                [self.chatViewController.room subscribeAVStream:@[selectedViewModel.inputStream] tinyStreams:nil completion:^(BOOL isSuccess,RongRTCCode desc) {
+                }];
+            }
             
             kLoginManager.isSwitchCamera = !kLoginManager.isSwitchCamera;
         }

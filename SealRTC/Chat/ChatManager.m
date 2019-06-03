@@ -75,6 +75,22 @@ static ChatManager *sharedMeetingManager = nil;
     return nil;
 }
 
+- (void)setRemoteModelUsername:(NSString *)userName userId:(NSString *)userId{
+    if (userId.length <= 0) {
+        return;
+    }
+    for (ChatCellVideoViewModel *model in self.allRemoteUserDataArray)
+    {
+        NSRange range =  [model.streamID rangeOfString:@"_" options:NSLiteralSearch];
+        if (range.location != NSNotFound) {
+            NSString* uid = [model.streamID substringToIndex:range.location];
+            if ([uid isEqualToString:userId]) {
+                model.userName = userName;
+            }
+        }
+    }
+}
+
 - (ChatCellVideoViewModel *)getRemoteUserDataModelSimilarUserID:(NSString *)userID
 {
     if (userID.length <= 0) {
@@ -161,6 +177,17 @@ static ChatManager *sharedMeetingManager = nil;
     }
     return NO;
 }
+
+- (BOOL)isContainRemoteUserFromUserID:(NSString *)userId
+{
+    for (ChatCellVideoViewModel *model in self.allRemoteUserDataArray)
+    {
+        if ([model.userID isEqualToString:userId])
+            return YES;
+    }
+    return NO;
+}
+
 
 #pragma mark - 最近浏览
 - (NSMutableArray *)recentDataArray

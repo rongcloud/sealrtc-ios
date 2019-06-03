@@ -21,7 +21,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.0.5</string>
+	<string>3.0.6</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleSupportedPlatforms</key>
@@ -29,7 +29,7 @@
 		<string>iPhoneOS</string>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>3.0.5.1</string>
+	<string>3.0.6.1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -38,13 +38,9 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Camera usage</string>
+	<string>Use camera to capture video for RTC</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Microphone usage</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Photo Additions usage</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Photo usage</string>
+	<string>Use microphone to capture audio for RTC</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Regular.ttf</string>
@@ -54,8 +50,6 @@
 		<string>audio</string>
 		<string>voip</string>
 	</array>
-	<key>UIFileSharingEnabled</key>
-	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>Launch Screen</string>
 	<key>UIMainStoryboardFile</key>

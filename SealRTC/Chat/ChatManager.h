@@ -23,6 +23,8 @@
 @property (nonatomic, strong) NSMutableArray *allRemoteUserDataArray, *recentDataArray;
 @property (nonatomic, strong) NSMutableArray *observerArray;
 @property (nonatomic, strong) ChatCellVideoViewModel *localUserDataModel;
+@property (nonatomic, strong) ChatCellVideoViewModel *localFileVideoModel;
+@property (nonatomic, strong) NSString *videoOwner;
 
 
 + (ChatManager *)sharedInstance;
@@ -37,11 +39,13 @@
 - (NSArray *)getAllRemoteUserIDArray;
 - (void)addRemoteUserDataModel:(ChatCellVideoViewModel *)model;
 - (void)setRemoteUserDataModel:(ChatCellVideoViewModel *)model atIndex:(NSInteger)index;
+- (void)setRemoteModelUsername:(NSString *)userName userId:(NSString *)userId;
 - (void)removeRemoteUserDataModelFromStreamID:(NSString *)streamID;
 - (void)removeRemoteUserDataModelFromIndex:(NSInteger)index;
 - (NSInteger)indexOfRemoteUserDataArray:(NSString *)streamID;
 - (NSInteger)countOfRemoteUserDataArray;
 - (BOOL)isContainRemoteUserFromStreamID:(NSString *)streamID;
+- (BOOL)isContainRemoteUserFromUserID:(NSString *)userId;
 
 - (ChatCellVideoViewModel *)getRecentUserDataModelFromIndex:(NSInteger)index;
 - (ChatCellVideoViewModel *)getRecentUserDataModelFromUserID:(NSString *)userID;

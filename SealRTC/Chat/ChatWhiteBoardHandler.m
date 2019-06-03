@@ -63,6 +63,7 @@
 #pragma mark - 关闭白板
 - (void)closeWhiteBoardRoom
 {
+    [self.chatViewController setIsHiddenStatusBar:NO];
     kLoginManager.isWhiteBoardOpen = NO;
     [self.whiteBoardView removeFromSuperview];
 }
@@ -309,6 +310,7 @@
 
 - (void)addSubWhiteBoardView
 {
+    [self.chatViewController setIsHiddenStatusBar:YES];
     [self.chatViewController.view addSubview:self.whiteBoardView];
     [self.chatViewController.view bringSubviewToFront:self.whiteBoardView];
 }
