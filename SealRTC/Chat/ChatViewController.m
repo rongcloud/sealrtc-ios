@@ -88,6 +88,7 @@
     self.chatRongRTCRoomDelegateImpl = [[ChatRongRTCRoomDelegateImpl alloc] initWithViewController:self];
     self.chatRongRTCNetworkMonitorDelegateImpl = [[ChatRongRTCNetworkMonitorDelegateImpl alloc] initWithViewController:self];
     [RongRTCEngine sharedEngine].netMonitor = self.chatRongRTCNetworkMonitorDelegateImpl;
+    [RongRTCEngine sharedEngine].monitorDelegate  = self.chatRongRTCNetworkMonitorDelegateImpl;
     
     [self.speakerControlButton setEnabled:NO];
     [self selectSpeakerButtons:NO];
@@ -425,6 +426,7 @@
     [[RCIMClient sharedRCIMClient] registerMessageType:STSetRoomInfoMessage.class];
     [[RCIMClient sharedRCIMClient] registerMessageType:STDeleteRoomInfoMessage.class];
     [[RCIMClient sharedRCIMClient] registerMessageType:RongWhiteBoardMessage.class];
+    [[RongRTCEngine sharedEngine] setMediaServerUrl:kLoginManager.mediaServerURL];
     [[RongRTCEngine sharedEngine] joinRoom:kLoginManager.roomNumber completion:^(RongRTCRoom * _Nullable room, RongRTCCode code) {
  
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -961,12 +963,10 @@
                         }
                         NSInteger index = [kChatManager indexOfRemoteUserDataArray:streamID];
                         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                        if (kLoginManager.isSwitchCamera)
+                        if (kLoginManager.isSwitchCamera
+                            && [self.chatCollectionViewDataSourceDelegateImpl.originalSelectedViewModel.streamID isEqualToString:streamID])
                         {
-                            if ([self.chatCollectionViewDataSourceDelegateImpl.originalSelectedViewModel.streamID isEqualToString:streamID])
-                            {
-                                [self.chatCollectionViewDataSourceDelegateImpl collectionView:self.collectionView didSelectItemAtIndexPath:indexPath];
-                            }
+                            [self.chatCollectionViewDataSourceDelegateImpl collectionView:self.collectionView didSelectItemAtIndexPath:indexPath];
                         }
                         [kChatManager removeRemoteUserDataModelFromStreamID:streamID];
                         FwLogV(RC_Type_RTC,@"A-appReceiveUserLeave-T",@"%@appReceiveUserLeave and remove user",@"sealRTCApp:");

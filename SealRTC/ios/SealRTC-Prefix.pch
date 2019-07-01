@@ -51,6 +51,7 @@
 #define Key_TinyStreamMode @"TinyStream"
 #define Key_CountryCode @"countryCode"
 #define Key_RegionName @"regionName"
+#define Key_MediaServerURL @"mediaServerURL"
 
 
 #define Value_Default_ResolutionRatio 1

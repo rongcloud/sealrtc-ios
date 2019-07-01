@@ -35,6 +35,7 @@
         self.isCloseCamera = NO;
         self.registerObserverFlag = YES;
         self.avatarView = [[ChatAvatarView alloc] init];
+        self.isUnpublish = NO;
         
         [self initLableView];
     }
@@ -59,6 +60,7 @@
         self.isCloseCamera = NO;
         self.registerObserverFlag = YES;
         self.avatarView = [[ChatAvatarView alloc] init];
+        self.isUnpublish = NO;
         
         [self initLableView];
     }

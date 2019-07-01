@@ -10,6 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+bool RunOnXcode(void);
+
 @interface RongRTCWebServer : NSObject
 +(RongRTCWebServer *)sharedWebServer;
 -(void)start;

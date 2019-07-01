@@ -282,6 +282,7 @@ static NSDictionary *selectedServer;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.loginViewBuilder.roomNumberTextField resignFirstResponder];
         if (![self.navigationController.topViewController isKindOfClass:[ChatViewController class]]){
+            DLog(@"performSegueWithIdentifier to ChatViewController");
             [self performSegueWithIdentifier:SegueIdentifierChat sender:self.loginViewBuilder.joinRoomButton];
         }
     });
@@ -299,6 +300,7 @@ static NSDictionary *selectedServer;
         self.loginViewBuilder.phoneNumTextField.text = kLoginManager.phoneNumber;
         [self.loginViewBuilder showValidateView:YES];
         self.loginViewBuilder.countryTxtField.delegate = self;
+        DLog(@"To get SMS validate code");
         [self updateSendSMSButtonEnable:[CommonUtility validateContactNumber:kLoginManager.phoneNumber]];
         CGFloat  originY = 186;
         if (self.view.frame.size.width == 320) {
@@ -307,9 +309,11 @@ static NSDictionary *selectedServer;
         self.loginViewBuilder.inputNumPasswordView.frame = CGRectMake(0, originY,self.loginViewBuilder.inputNumPasswordView.frame.size.width, self.loginViewBuilder.inputNumPasswordView.frame.size.height);
     }
     else if (kLoginManager.isIMConnectionSucc) {
+        DLog(@"navToChatViewController");
         [self navToChatViewController];
     }
     else {
+        DLog(@"start to connectWithToken");
         [[RCIMClient sharedRCIMClient] connectWithToken:kLoginManager.keyToken
                                                 success:^(NSString *userId) {
                                                     DLog(@"MClient connectWithToken Success userId: %@", userId);

@@ -115,6 +115,7 @@
 "setting_build_info" = "Build Info";
 "setting_auto_test" = "Auto Test";
 "setting_water_mark" = "Watermark";
+"setting_media_server_url" = "Media Server URL";
 
 
 "select_country"="Countries/Regions";

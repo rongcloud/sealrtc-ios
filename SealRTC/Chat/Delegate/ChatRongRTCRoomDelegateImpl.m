@@ -67,14 +67,12 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
             {
                 NSInteger index = [kChatManager indexOfRemoteUserDataArray:streamID];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                
-                if (kLoginManager.isSwitchCamera)
+                ChatCellVideoViewModel *leftUserStream = [kChatManager getRemoteUserDataModelFromStreamID:streamID];
+                leftUserStream.isUnpublish = YES;
+                if (kLoginManager.isSwitchCamera
+                    && [weakChatVC.chatCollectionViewDataSourceDelegateImpl.originalSelectedViewModel.streamID isEqualToString:streamID])
                 {
-                    if ([weakChatVC.chatCollectionViewDataSourceDelegateImpl.originalSelectedViewModel.streamID isEqualToString:streamID]
-                        || [weakChatVC.chatCollectionViewDataSourceDelegateImpl.originalSelectedViewModel.streamID isEqualToString:[NSString stringWithFormat:@"%@_screen", streamID]])
-                    {
-                        [weakChatVC.chatCollectionViewDataSourceDelegateImpl collectionView:weakChatVC.collectionView didSelectItemAtIndexPath:indexPath];
-                    }
+                    [weakChatVC.chatCollectionViewDataSourceDelegateImpl collectionView:weakChatVC.collectionView didSelectItemAtIndexPath:indexPath];
                 }
                 
                 [kChatManager removeRemoteUserDataModelFromStreamID:streamID];
@@ -156,7 +154,6 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
 - (void)didUnpublishStreams:(NSArray<RongRTCAVInputStream *>*)streams
 {
     FwLogV(RC_Type_RTC,@"A-appReceiveUnpublishStream-T",@"%@app receive unpublishstreams",@"sealRTCApp:");
-//    [self.chatViewController unsubscribeRemoteResource:streams];
     
     __weak ChatViewController *weakChatVC = self.chatViewController;
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -167,14 +164,12 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
             {
                 NSInteger index = [kChatManager indexOfRemoteUserDataArray:streamID];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                
-                if (kLoginManager.isSwitchCamera)
+                ChatCellVideoViewModel *leftUserStream = [kChatManager getRemoteUserDataModelFromStreamID:streamID];
+                leftUserStream.isUnpublish = YES;
+                if (kLoginManager.isSwitchCamera
+                    && [weakChatVC.chatCollectionViewDataSourceDelegateImpl.originalSelectedViewModel.streamID isEqualToString:streamID])
                 {
-                    if ([weakChatVC.chatCollectionViewDataSourceDelegateImpl.originalSelectedViewModel.streamID isEqualToString:streamID]
-                        || [weakChatVC.chatCollectionViewDataSourceDelegateImpl.originalSelectedViewModel.streamID isEqualToString:[NSString stringWithFormat:@"%@_screen", streamID]])
-                    {
-                        [weakChatVC.chatCollectionViewDataSourceDelegateImpl collectionView:weakChatVC.collectionView didSelectItemAtIndexPath:indexPath];
-                    }
+                    [weakChatVC.chatCollectionViewDataSourceDelegateImpl collectionView:weakChatVC.collectionView didSelectItemAtIndexPath:indexPath];
                 }
                 
                 [kChatManager removeRemoteUserDataModelFromStreamID:streamID];

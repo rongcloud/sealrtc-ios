@@ -29,7 +29,7 @@ static NSUserDefaults *settingUserDefaults = nil;
     
     self.title = NSLocalizedString(@"setting_title", nil);
     self.view.backgroundColor = [UIColor whiteColor];
-    self.sectionNumber = 5;
+    self.sectionNumber = 6;
 
     [self loadPlistData];
     
@@ -42,7 +42,7 @@ static NSUserDefaults *settingUserDefaults = nil;
 {
     [super viewWillAppear:animated];
     [self loadPlistData];
-    self.sectionNumber = 5;
+    self.sectionNumber = 6;
 
     [self.settingViewBuilder.tableView reloadData];
     
@@ -86,21 +86,25 @@ static NSUserDefaults *settingUserDefaults = nil;
 - (void)gpuSwitchAction
 {
     [kLoginManager setIsGPUFilter:self.settingViewBuilder.gpuSwitch.on];
+    [self.settingViewBuilder.mediaServerTextField resignFirstResponder];
 }
 
 - (void)tinyStreamSwitchAction
 {
     [kLoginManager setIsTinyStream:self.settingViewBuilder.tinyStreamSwitch.on];
+    [self.settingViewBuilder.mediaServerTextField resignFirstResponder];
 }
 
 - (void)autoTestAction
 {
     [kLoginManager setIsAutoTest:self.settingViewBuilder.autoTestSwitch.on];
+    [self.settingViewBuilder.mediaServerTextField resignFirstResponder];
 }
 
 - (void)waterMarkAction
 {
     [kLoginManager setIsWaterMark:self.settingViewBuilder.waterMarkSwitch.on];
+    [self.settingViewBuilder.mediaServerTextField resignFirstResponder];
 }
 
 #pragma mark - tap gesture action

@@ -41,7 +41,7 @@
 "chat_data_excel_fps" = "帧率";
 "chat_data_excel_kbps" = "码率";
 "chat_data_excel_lossrate" = "丢包率%";
-"chat_data_excel_delay" = "音视频往返延时(ms)";
+"chat_data_excel_delay" = "音频/视频往返延时(ms)";
 "chat_hd" = "高清";
 "chat_fluent" = "流畅";
 "chat_watchmode" = "观看模式";
@@ -116,6 +116,8 @@
 "setting_build_info" = "编译信息";
 "setting_auto_test" = "自动化测试";
 "setting_water_mark" = "水印";
+"setting_media_server_url" = "媒体服务器";
+
 
 "select_country"="选择国家和地区";
 "select_country_fmt"="选择国家和地区 %@";

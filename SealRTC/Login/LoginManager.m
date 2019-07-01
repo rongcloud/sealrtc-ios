@@ -85,6 +85,7 @@ static LoginManager *sharedLoginManager = nil;
         _phoneNumber = [settingUserDefaults valueForKey:Key_PhoneNumber];
         _countryCode = [settingUserDefaults valueForKey:Key_CountryCode];
         _regionName = [settingUserDefaults valueForKey:Key_RegionName];
+        _mediaServerURL = [settingUserDefaults valueForKey:Key_MediaServerURL];
     }
     else
     {
@@ -237,6 +238,13 @@ static LoginManager *sharedLoginManager = nil;
     } else {
         return @"";
     }
+}
+
+- (void)setMediaServerURL:(NSString *)mediaServerURL
+{
+    _mediaServerURL = mediaServerURL;
+    [settingUserDefaults setObject:mediaServerURL forKey:Key_MediaServerURL];
+    [settingUserDefaults synchronize];
 }
 
 @end

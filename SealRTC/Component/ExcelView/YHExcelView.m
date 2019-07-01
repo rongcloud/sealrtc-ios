@@ -242,12 +242,12 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     _scrollView.frame = self.bounds;
-    _scrollView.contentSize = CGSizeMake(self.tableView.yh_width, self.yh_height);
     if (_tableViewFrame.size.width == 0) {
         _tableView.frame = self.bounds;
     }else{
         _tableView.frame = _tableViewFrame;
     }
+    _scrollView.contentSize = CGSizeMake(self.tableView.yh_width, self.yh_height);
     _bottomBorder.yh_x = 0 ;
     _bottomBorder.yh_y =  self.tableView.contentSize.height ;
     _bottomBorder.yh_width = self.tableView.yh_width;

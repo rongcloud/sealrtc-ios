@@ -9,7 +9,7 @@
 #import "SettingViewBuilder.h"
 #import "SettingViewController.h"
 
-@interface SettingViewBuilder ()
+@interface SettingViewBuilder () <UITextFieldDelegate>
 
 @property (nonatomic, weak) SettingViewController *settingViewController;
 
@@ -46,6 +46,15 @@
     [self.waterMarkSwitch addTarget:self.settingViewController action:@selector(waterMarkAction) forControlEvents:UIControlEventValueChanged];
     [self.waterMarkSwitch setOn:kLoginManager.isWaterMark];
     
+    self.mediaServerTextField = [[UITextField alloc] initWithFrame:CGRectMake(14, 0, ScreenWidth-14, 44)];
+    self.mediaServerTextField.placeholder = @"Media Server URL";
+    self.mediaServerTextField.textAlignment = NSTextAlignmentLeft;
+    self.mediaServerTextField.clearButtonMode = UITextFieldViewModeUnlessEditing;
+    self.mediaServerTextField.keyboardType = UIKeyboardTypeURL;
+    self.mediaServerTextField.returnKeyType = UIReturnKeyDone;
+    self.mediaServerTextField.delegate = self;
+    self.mediaServerTextField.text = kLoginManager.mediaServerURL;
+    
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:UITableViewStyleGrouped];
     self.tableView.dataSource = self.settingViewController.settingTableViewDelegateSourceImpl;
     self.tableView.delegate = self.settingViewController.settingTableViewDelegateSourceImpl;
@@ -54,6 +63,32 @@
     self.resolutionRatioPickview = [[ZHPickView alloc] initPickviewWithPlistName:Key_ResolutionRatio isHaveNavControler:NO];
     self.resolutionRatioPickview.delegate = self.settingViewController.settingPickViewDelegateImpl;
     [self.resolutionRatioPickview setSelectedPickerItem:kLoginManager.resolutionRatioIndex];
+}
+
+#pragma mark - UITextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    __weak typeof(self) weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^{
+        weakSelf.tableView.frame = CGRectMake(weakSelf.tableView.frame.origin.x, -120, weakSelf.tableView.frame.size.width, weakSelf.tableView.frame.size.height);
+    } completion:^(BOOL finished) {
+    }];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    __weak typeof(self) weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^{
+        weakSelf.tableView.frame = CGRectMake(weakSelf.tableView.frame.origin.x, 0, weakSelf.tableView.frame.size.width, weakSelf.tableView.frame.size.height);
+    } completion:^(BOOL finished) {
+        [kLoginManager setMediaServerURL:textField.text];
+    }];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textfield
+{
+    [textfield resignFirstResponder];
+    return YES;
 }
 
 @end

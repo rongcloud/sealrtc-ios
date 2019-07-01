@@ -50,6 +50,7 @@
     }
     
     [pickView show];
+    [self.settingViewController.settingViewBuilder.mediaServerTextField resignFirstResponder];
 }
 
 #pragma mark - UITableViewDataSource
@@ -110,6 +111,11 @@
             cell.textLabel.text = NSLocalizedString(@"setting_water_mark", nil);
         }
             break;
+        case 5:
+        {
+            [cell.contentView addSubview:self.settingViewController.settingViewBuilder.mediaServerTextField];
+        }
+            break;
         default:
             break;
     }
@@ -126,7 +132,13 @@
         case 1:
             return NSLocalizedString(@"setting_local_video", nil);
         case 2:
-            return  NSLocalizedString(@"setting_tiny_stream", nil);
+            return NSLocalizedString(@"setting_tiny_stream", nil);
+        case 3:
+            return NSLocalizedString(@"setting_auto_test", nil);
+        case 4:
+            return NSLocalizedString(@"setting_local_video", nil);
+        case 5:
+            return NSLocalizedString(@"setting_media_server_url", nil);
         default:
             break;
     }
@@ -135,7 +147,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 30.0f;
+    return (section == 0) ? 30.f : 10.f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

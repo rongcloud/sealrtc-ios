@@ -30,11 +30,8 @@
     
     [Bugly startWithAppId:@"ac3f6a6401" config:config];
     [Bugly setUserIdentifier:[UIDevice currentDevice].name];
-    BOOL openLog = NO;
-#ifndef DEBUG
-    openLog = YES;
-#endif
-    if (openLog && Key_Force_Close_Log == NO) {
+    // 自动化测试取消重定向
+    if (Key_Force_Close_Log == NO) {
         [self redirectNSlogToDocumentFolder];
     }
     [[RongRTCWebServer sharedWebServer] start];
@@ -42,21 +39,23 @@
     return YES;
 }
 - (void)redirectNSlogToDocumentFolder {
-    NSLog(@"Log重定向到本地，如果您需要控制台Log，注释掉重定向逻辑即可。");
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths objectAtIndex:0];
-    
-    
-    NSDate *currentDate = [NSDate date];
-    NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
-    [dateformatter setDateFormat:@"MMddHHmmss"];
-    NSString *formattedDate = [dateformatter stringFromDate:currentDate];
-    
-    NSString *fileName = [NSString stringWithFormat:@"rc%@.log", formattedDate];
-    NSString *logFilePath = [documentDirectory stringByAppendingPathComponent:fileName];
-    
-    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stdout);
-    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stderr);
+    // Xcode 调试时直接输出到 Xcode 上，非 Xcode 调试时输出到文件中
+    if (!RunOnXcode()) {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentDirectory = [paths objectAtIndex:0];
+        
+        
+        NSDate *currentDate = [NSDate date];
+        NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
+        [dateformatter setDateFormat:@"MMddHHmmss"];
+        NSString *formattedDate = [dateformatter stringFromDate:currentDate];
+        
+        NSString *fileName = [NSString stringWithFormat:@"rc%@.log", formattedDate];
+        NSString *logFilePath = [documentDirectory stringByAppendingPathComponent:fileName];
+        
+        freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stdout);
+        freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stderr);
+    }
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application

@@ -125,7 +125,7 @@
                     selectedViewModel.avatarView.frame = remoteVideoView.frame;
                     [selectedViewModel.cellVideoView addSubview:selectedViewModel.avatarView];
                 }
-                if (selectedViewModel.inputStream) {
+                if (selectedViewModel.inputStream && !selectedViewModel.isUnpublish) {
                     [self.chatViewController.room subscribeAVStream:nil tinyStreams:@[selectedViewModel.inputStream] completion:^(BOOL isSuccess, RongRTCCode desc) {
                     }];
                 }
@@ -188,11 +188,10 @@
                     [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.avatarView];
                 }
                 
-                if (selectedViewModel.inputStream) {
+                if (selectedViewModel.inputStream && !selectedViewModel.isUnpublish) {
                     [self.chatViewController.room subscribeAVStream:@[selectedViewModel.inputStream] tinyStreams:@[self.originalSelectedViewModel.inputStream] completion:^(BOOL isSuccess, RongRTCCode desc) {
                     }];
                 }
-                
             }
         }
         else
@@ -237,7 +236,7 @@
                 [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.avatarView];
             }
             
-            if (selectedViewModel.inputStream) {
+            if (selectedViewModel.inputStream && !selectedViewModel.isUnpublish) {
                 [self.chatViewController.room subscribeAVStream:@[selectedViewModel.inputStream] tinyStreams:nil completion:^(BOOL isSuccess,RongRTCCode desc) {
                 }];
             }

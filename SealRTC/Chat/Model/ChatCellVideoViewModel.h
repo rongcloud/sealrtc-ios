@@ -38,6 +38,7 @@
 @property (nonatomic, assign) BOOL isShowVideo;
 @property (nonatomic, assign) BOOL isSubscribeSuccess;
 @property (nonatomic, assign) BOOL isConnectSuccess;
+@property (nonatomic, assign) BOOL isUnpublish;
 @property (nonatomic, strong) NSString *subscribeLog;
 @property (nonatomic, strong) NSString *connectLog;
 @property (nonatomic, strong) RongRTCAVInputStream *inputStream;
