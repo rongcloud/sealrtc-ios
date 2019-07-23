@@ -428,7 +428,7 @@
     [[RCIMClient sharedRCIMClient] registerMessageType:RongWhiteBoardMessage.class];
     [[RongRTCEngine sharedEngine] setMediaServerUrl:kLoginManager.mediaServerURL];
     [[RongRTCEngine sharedEngine] joinRoom:kLoginManager.roomNumber completion:^(RongRTCRoom * _Nullable room, RongRTCCode code) {
- 
+       
         dispatch_async(dispatch_get_main_queue(), ^{
             [self showAlertLabelWithString:NSLocalizedString(@"chat_wait_attendees", nil)];
             self.room = room;
@@ -449,12 +449,14 @@
                 al.tag = 1111;
                 [al show];
             }
-            else{
+            else if(room) {
                 self.chatMode = AVChatModeNormal;
                 if (kLoginManager.isCloseCamera) {
                     self.chatMode = AVChatModeAudio;
                 }
                 [self joinChannelImpl];
+            } else {
+                [self showAlertLabelWithString:NSLocalizedString(@"chat_wait_attendees", nil)];
             }
         });
     }];
@@ -471,7 +473,7 @@
                                                                                  @"joinMode":@(self.chatMode),
                                                                                  @"joinTime":@(timestamp)
                                                                                  }];
-    STSetRoomInfoMessage* message = [[STSetRoomInfoMessage alloc] initWithInfo:info forKey:kLoginManager.userID];
+    STSetRoomInfoMessage* message = [[STSetRoomInfoMessage alloc] initWithInfo:info forKey:[RCIMClient sharedRCIMClient].currentUserInfo.userId];
     [self.room setRoomAttributeValue:[info toJsonString] forKey:[RCIMClient sharedRCIMClient].currentUserInfo.userId message:message completion:^(BOOL isSuccess, RongRTCCode desc) {
         [self.room getRoomAttributes:nil completion:^(BOOL isSuccess, RongRTCCode desc, NSDictionary * _Nullable attr) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -552,7 +554,7 @@
             [self hideAlertLabel:YES];
             [self startTalkTimer];
             
-            if (kLoginManager.isAutoTest) {
+            if (kLoginManager.isAutoTest && arr.count > 0 ) {
 //                dispatch_async(dispatch_get_main_queue(), ^{
                     // 自动化使用
                     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(([UIScreen mainScreen].bounds.size.width - 100) / 2, [UIScreen mainScreen].bounds.size.height - 100, 100, 40)];

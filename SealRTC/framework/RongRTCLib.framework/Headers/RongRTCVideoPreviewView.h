@@ -31,7 +31,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  视频填充方式
  */
-@property(nonatomic,assign) RCVideoFillMode fillMode;
+@property (nonatomic, assign) RCVideoFillMode fillMode;
+
+/**
+ 修改Frame时, 是否使用动画, 默认:YES
+ */
+@property (nonatomic, assign) BOOL frameAnimated;
 
 @end
 

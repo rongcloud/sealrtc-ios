@@ -60,6 +60,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic,assign) AVCaptureVideoOrientation videoOrientation;
 
+/**
+ 设置音视频编解码器，目前支持 H264 和 VP8，默认为 H264
+ */
+@property(nonatomic,assign)RongRTCCodecType codecType;
+
 @end
 
 

@@ -9,6 +9,7 @@
 #import "SettingTableViewDelegateSourceImpl.h"
 #import "SettingViewController.h"
 
+
 @interface SettingTableViewDelegateSourceImpl ()
 
 @property (nonatomic, weak) SettingViewController *settingViewController;
@@ -39,29 +40,32 @@
     self.settingViewController.indexPath = indexPath;
     NSInteger section = [indexPath section];
     [self.settingViewController.settingViewBuilder.resolutionRatioPickview remove];
-    ZHPickView *pickView;
     switch (section)
     {
         case 0:
-            pickView = self.settingViewController.settingViewBuilder.resolutionRatioPickview;
+            [self.settingViewController.settingViewBuilder.resolutionRatioPickview show];
+            break;
+        case 4:
             break;
         default:
             break;
     }
-    
-    [pickView show];
-    [self.settingViewController.settingViewBuilder.mediaServerTextField resignFirstResponder];
 }
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    switch (section) {
+        case 1:
+            return 2;
+        default:
+            return 1;
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.settingViewController.sectionNumber;
+    return self.settingViewController.sectionNumber-1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -89,8 +93,22 @@
             break;
         case 1:
         {
-            [cell.contentView addSubview:self.settingViewController.settingViewBuilder.gpuSwitch];
-            cell.textLabel.text = NSLocalizedString(@"setting_gpu_filter", nil);
+            switch (row) {
+                case 0:
+                {
+                    [cell.contentView addSubview:self.settingViewController.settingViewBuilder.gpuSwitch];
+                    cell.textLabel.text = NSLocalizedString(@"setting_gpu_filter", nil);
+                }
+                    break;
+                case 1:
+                {
+                    [cell.contentView addSubview:self.settingViewController.settingViewBuilder.waterMarkSwitch];
+                    cell.textLabel.text = NSLocalizedString(@"setting_water_mark", nil);
+                }
+                    break;
+                default:
+                    break;
+            }
         }
             break;
         case 2:
@@ -103,17 +121,6 @@
         {
             [cell.contentView addSubview:self.settingViewController.settingViewBuilder.autoTestSwitch];
             cell.textLabel.text = NSLocalizedString(@"setting_auto_test", nil);
-        }
-            break;
-        case 4:
-        {
-            [cell.contentView addSubview:self.settingViewController.settingViewBuilder.waterMarkSwitch];
-            cell.textLabel.text = NSLocalizedString(@"setting_water_mark", nil);
-        }
-            break;
-        case 5:
-        {
-            [cell.contentView addSubview:self.settingViewController.settingViewBuilder.mediaServerTextField];
         }
             break;
         default:
@@ -135,10 +142,6 @@
             return NSLocalizedString(@"setting_tiny_stream", nil);
         case 3:
             return NSLocalizedString(@"setting_auto_test", nil);
-        case 4:
-            return NSLocalizedString(@"setting_local_video", nil);
-        case 5:
-            return NSLocalizedString(@"setting_media_server_url", nil);
         default:
             break;
     }

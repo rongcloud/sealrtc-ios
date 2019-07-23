@@ -52,6 +52,8 @@
 #define Key_CountryCode @"countryCode"
 #define Key_RegionName @"regionName"
 #define Key_MediaServerURL @"mediaServerURL"
+#define Key_MediaServerRow @"mediaServerRow"
+#define Key_MediaServerArray @"mediaServerList"
 
 
 #define Value_Default_ResolutionRatio 1
@@ -64,7 +66,8 @@
 #define Value_Default_QuicMode NO
 #define Value_Default_TinyStream YES
 #define Value_Default_WaterMark NO
-#define Valie_Default_AutoTest NO
+#define Value_Default_AutoTest NO
+#define Value_Default_MediaServerRow 0
 
 #define Key_Force_Close_Log NO
 

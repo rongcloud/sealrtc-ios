@@ -225,6 +225,9 @@
 
 - (void)swipeGestureRecognizerAction:(UISwipeGestureRecognizer *)recognize
 {
+    if (kLoginManager.isWhiteBoardOpen) {
+        return;
+    }
     switch (recognize.direction)
     {
         case UISwipeGestureRecognizerDirectionRight:

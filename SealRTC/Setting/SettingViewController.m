@@ -29,7 +29,6 @@ static NSUserDefaults *settingUserDefaults = nil;
     
     self.title = NSLocalizedString(@"setting_title", nil);
     self.view.backgroundColor = [UIColor whiteColor];
-    self.sectionNumber = 6;
 
     [self loadPlistData];
     
@@ -42,8 +41,7 @@ static NSUserDefaults *settingUserDefaults = nil;
 {
     [super viewWillAppear:animated];
     [self loadPlistData];
-    self.sectionNumber = 6;
-
+    self.sectionNumber = 5;
     [self.settingViewBuilder.tableView reloadData];
     
 #ifdef DEBUG
@@ -52,7 +50,7 @@ static NSUserDefaults *settingUserDefaults = nil;
         tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizerAction)];
         [tapGestureRecognizer setNumberOfTapsRequired:5];
     }
-    [self.navigationController.view addGestureRecognizer:tapGestureRecognizer];
+    [self.navigationController.navigationBar addGestureRecognizer:tapGestureRecognizer];
 #endif
 }
 
@@ -61,7 +59,7 @@ static NSUserDefaults *settingUserDefaults = nil;
     [super viewWillDisappear:animated];
     [self.settingViewBuilder.resolutionRatioPickview remove];
     self.navigationItem.rightBarButtonItem = nil;
-    [self.navigationController.view removeGestureRecognizer:tapGestureRecognizer];
+    [self.navigationController.navigationBar removeGestureRecognizer:tapGestureRecognizer];
 }
 
 - (BOOL)navigationShouldPopOnBackButton
@@ -86,25 +84,21 @@ static NSUserDefaults *settingUserDefaults = nil;
 - (void)gpuSwitchAction
 {
     [kLoginManager setIsGPUFilter:self.settingViewBuilder.gpuSwitch.on];
-    [self.settingViewBuilder.mediaServerTextField resignFirstResponder];
 }
 
 - (void)tinyStreamSwitchAction
 {
     [kLoginManager setIsTinyStream:self.settingViewBuilder.tinyStreamSwitch.on];
-    [self.settingViewBuilder.mediaServerTextField resignFirstResponder];
 }
 
 - (void)autoTestAction
 {
     [kLoginManager setIsAutoTest:self.settingViewBuilder.autoTestSwitch.on];
-    [self.settingViewBuilder.mediaServerTextField resignFirstResponder];
 }
 
 - (void)waterMarkAction
 {
     [kLoginManager setIsWaterMark:self.settingViewBuilder.waterMarkSwitch.on];
-    [self.settingViewBuilder.mediaServerTextField resignFirstResponder];
 }
 
 #pragma mark - tap gesture action

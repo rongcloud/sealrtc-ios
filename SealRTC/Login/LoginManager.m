@@ -86,6 +86,8 @@ static LoginManager *sharedLoginManager = nil;
         _countryCode = [settingUserDefaults valueForKey:Key_CountryCode];
         _regionName = [settingUserDefaults valueForKey:Key_RegionName];
         _mediaServerURL = [settingUserDefaults valueForKey:Key_MediaServerURL];
+        _mediaServerSelectedRow = [settingUserDefaults integerForKey:Key_MediaServerRow];
+        _mediaServerArray = [settingUserDefaults valueForKey:Key_MediaServerArray];
     }
     else
     {
@@ -98,8 +100,9 @@ static LoginManager *sharedLoginManager = nil;
         self.minCodeRateIndex = Value_Default_MinCodeRate;
         self.codingStyleIndex = Value_Default_Coding_Style;
         self.isWaterMark = Value_Default_WaterMark;
-        self.isAutoTest = Valie_Default_AutoTest;
+        self.isAutoTest = Value_Default_AutoTest;
         self.phoneNumber = @"";
+        self.mediaServerSelectedRow = Value_Default_MediaServerRow;
     }
 }
 
@@ -244,6 +247,20 @@ static LoginManager *sharedLoginManager = nil;
 {
     _mediaServerURL = mediaServerURL;
     [settingUserDefaults setObject:mediaServerURL forKey:Key_MediaServerURL];
+    [settingUserDefaults synchronize];
+}
+
+- (void)setMediaServerSelectedRow:(NSInteger)mediaServerSelectedRow
+{
+    _mediaServerSelectedRow = mediaServerSelectedRow;
+    [settingUserDefaults setInteger:mediaServerSelectedRow forKey:Key_MediaServerRow];
+    [settingUserDefaults synchronize];
+}
+
+- (void)setMediaServerArray:(NSArray *)mediaServerArray
+{
+    _mediaServerArray = mediaServerArray;
+    [settingUserDefaults setObject:mediaServerArray forKey:Key_MediaServerArray];
     [settingUserDefaults synchronize];
 }
 

@@ -22,6 +22,7 @@ extern NSNotificationName const STParticipantsInfoDidAdd;
 @property (nonatomic, strong) RongRTCRoom* room;
 @property (nonatomic, weak) NSMutableArray<STParticipantsInfo*>* dataSource;
 @property (nonatomic, strong) NSMutableSet<NSString*>* userSet;
+@property (nonatomic, strong) NSMutableSet<NSString*>* currentAllUser;
 @end
 
 @implementation STParticipantsTableViewController
@@ -30,8 +31,26 @@ extern NSNotificationName const STParticipantsInfoDidAdd;
            participantsInfos:(NSMutableArray<STParticipantsInfo*>*) array {
     if (self  = [super initWithStyle:UITableViewStylePlain]) {
         self.room = room;
-        self.dataSource = array;
-        for (STParticipantsInfo* info in array) {
+        for (RongRTCRemoteUser* user  in room.remoteUsers) {
+            if (user.userId.length > 0) {
+                [self.currentAllUser addObject:user.userId];
+            }
+        }
+        if (room.localUser.userId.length > 0) {
+            [self.currentAllUser addObject:room.localUser.userId];
+        }
+        self.dataSource  = array;
+        NSArray* source = [array copy];
+        NSMutableIndexSet* mutableSet = [[NSMutableIndexSet alloc] init];
+        for (int i = 0; i < source.count; i++) {
+            STParticipantsInfo* info  = source[i];
+            if (![self.currentAllUser containsObject:info.userId]) {
+                [mutableSet addIndex:i];
+            }
+        }
+        [self.dataSource removeObjectsAtIndexes:[mutableSet copy]];
+        
+        for (STParticipantsInfo* info in source) {
             if (info.userId.length > 0) {
                 [self.userSet addObject:info.userId];
             }
@@ -62,7 +81,7 @@ extern NSNotificationName const STParticipantsInfoDidAdd;
                 NSDictionary* dicInfo = [NSJSONSerialization JSONObjectWithData:[obj dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
                 STParticipantsInfo* info = [[STParticipantsInfo alloc] initWithDictionary:dicInfo];
                 if (![self.userSet containsObject:key]) {
-                    if (info.userId.length > 0) {
+                    if (info.userId.length > 0 && [self.currentAllUser containsObject:key]) {
                         [self.dataSource addObject:info];
                         [self.userSet addObject:info.userId];
                     }
@@ -81,6 +100,7 @@ extern NSNotificationName const STParticipantsInfoDidAdd;
         });
 
     }];
+    [self updateParticipantsCount];
     self.preferredContentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height / 2);
     //[self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:@"ParticipantsCell"];
     self.tableView.tableHeaderView = self.tableHeader;
@@ -173,6 +193,13 @@ NSString* stringForJoinMode(STJoinMode mode) {
         _userSet = [[NSMutableSet alloc] initWithCapacity:100];
     }
     return _userSet;
+}
+
+- (NSMutableSet<NSString*>*)currentAllUser {
+    if (!_currentAllUser) {
+        _currentAllUser = [[NSMutableSet alloc] initWithCapacity:100];
+    }
+    return _currentAllUser;
 }
 
 //- (NSMutableArray<STParticipantsInfo*>*)dataSource {

@@ -336,7 +336,23 @@ static ChatManager *sharedMeetingManager = nil;
             break;
     }
     
+    //关闭摄像头
     self.captureParam.turnOnCamera = !kLoginManager.isCloseCamera;
+    
+    //编码方式
+    switch (kLoginManager.codingStyleIndex) {
+        case 0:
+            self.captureParam.codecType = RongRTCCodecH264;
+            break;
+        case 1:
+            self.captureParam.codecType = RongRTCCodecVP8;
+            break;
+        case 2:
+            self.captureParam.codecType = RongRTCCodecVP9;
+            break;
+        default:
+            break;
+    }
 }
 
 @end

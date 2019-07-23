@@ -35,9 +35,6 @@ static void *DemoSampleBufferDisplayLayerStatusObserver = &DemoSampleBufferDispl
         self.disPlaylayer.frame = frame;
         self.disPlaylayer.backgroundColor = [UIColor blackColor].CGColor;
         [self.layer addSublayer:self.disPlaylayer];
-        
-        [self.disPlaylayer addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:DemoSampleBufferDisplayLayerStatusObserver];
-        
     }
     return self;
 }
@@ -66,19 +63,5 @@ static void *DemoSampleBufferDisplayLayerStatusObserver = &DemoSampleBufferDispl
         self.disPlaylayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     }
 }
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
-    if (context == DemoSampleBufferDisplayLayerStatusObserver) {
-        AVQueuedSampleBufferRenderingStatus status = (AVQueuedSampleBufferRenderingStatus)[change[NSKeyValueChangeNewKey] integerValue];
-        if (status == AVQueuedSampleBufferRenderingStatusFailed && [UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-            [self.disPlaylayer flushAndRemoveImage];
-        }
-    }
-}
-
--(void)dealloc{
-    [self.disPlaylayer removeObserver:self forKeyPath:@"status"];
-}
-
 
 @end

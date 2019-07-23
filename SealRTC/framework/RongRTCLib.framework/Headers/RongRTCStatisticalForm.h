@@ -16,6 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 RC_EXPORT RongRTCMediaType const RongRTCMediaTypeVideo;
 RC_EXPORT RongRTCMediaType const RongRTCMediaTypeAudio;
 
+typedef NS_ENUM(NSInteger, RongRTCStreamState) {
+    Equivocal = -1,
+    Disabled = 0,
+    Enabled = 1
+};
 
 /**
  媒体流状态统计
@@ -33,7 +38,7 @@ RC_EXPORT RongRTCMediaType const RongRTCMediaTypeAudio;
 @property (nonatomic, readonly) RongRTCMediaType mediaType;
 
 /**
- 音量大小
+ 音量大小, 0 - 9表示音量高低
  */
 @property (nonatomic, readonly) NSInteger audioLevel;
 
@@ -100,6 +105,7 @@ RC_EXPORT RongRTCMediaType const RongRTCMediaTypeAudio;
  统计格式化字符串
  */
 @property (nonatomic, readonly) NSString* formString;
+
 
 @end
 

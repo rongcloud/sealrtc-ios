@@ -56,7 +56,7 @@ typedef void(^RongRTCOperationCallback)(BOOL isSuccess,RongRTCCode desc);
  */
 typedef void(^RongRTCAttributeOperationCallback)(BOOL isSuccess,RongRTCCode desc,NSDictionary * _Nullable attr);
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, RongRTCInputStreamState) {
     /**
      输入流处于禁用状态，不应该订阅，即使订阅该流也不会收到音视频数据
      */
@@ -65,12 +65,12 @@ typedef enum : NSUInteger {
      输入流处于正常状态，可以正常订阅
      */
     RongRTCInputStreamStateNormal
-} RongRTCInputStreamState;
+} ;
 
 /**
  资源类型
  */
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, RTCMediaType) {
     /**
      只有声音
      */
@@ -87,7 +87,7 @@ typedef enum : NSUInteger {
      空数据
      */
     RTCMediaTypeNothing
-} RTCMediaType;
+};
 
 typedef NS_ENUM(NSUInteger, RongRTCVideoSizePreset) {
     /**
@@ -169,11 +169,11 @@ typedef NS_ENUM(NSUInteger, RongRTCCodecType) {
      */
     RongRTCCodecH264,
     /**
-     VP8(目前不支持)
+     VP8
      */
     RongRTCCodecVP8,
     /**
-     VP9(目前不支持)
+     VP9
      */
     RongRTCCodecVP9
 };
@@ -181,7 +181,7 @@ typedef NS_ENUM(NSUInteger, RongRTCCodecType) {
 /**
  摄像头
  */
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, RongRTCDeviceCamera) {
     /**
      未指明
      */
@@ -194,12 +194,12 @@ typedef enum : NSUInteger {
      前置摄像头
      */
     RongRTCCaptureDeviceFront = AVCaptureDevicePositionFront,
-} RongRTCDeviceCamera;
+};
 
 /**
  设置加入房间时音视频使用模式
  */
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, RongRTCJoinRoomMode) {
     /**
      普通试试音视频模式加入
      */
@@ -208,7 +208,7 @@ typedef enum : NSUInteger {
      类直播场景模式加入，观察者模式加入之后会减少信令服务器的消息转发压力，提高直播场景体验
      */
     RongRTCJoinRoomModeLive,
-} RongRTCJoinRoomMode;
+};
 
 /**
  * Error passing block.

@@ -64,21 +64,23 @@
 
 - (void)rotateWaterMark:(BOOL)isBack
 {
-    self.isBackCamera = isBack;
-    if (isBack) {
-        if (self.isTransform) {
-            self.watermarkImageView.frame = CGRectMake(self.videoHeight - 100, self.videoWidth - 100, 80, 80);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.isBackCamera = isBack;
+        if (isBack) {
+            if (self.isTransform) {
+                self.watermarkImageView.frame = CGRectMake(self.videoHeight - 100, self.videoWidth - 100, 80, 80);
+            }
+            else {
+                self.watermarkImageView.frame = CGRectMake(self.videoWidth - 100, self.videoHeight - 100, 80, 80);
+            }
+            
+            self.watermarkImageView.transform = CGAffineTransformRotate(_watermarkImageView.transform, M_PI);
         }
         else {
-            self.watermarkImageView.frame = CGRectMake(self.videoWidth - 100, self.videoHeight - 100, 80, 80);
+            self.watermarkImageView.frame = CGRectMake(20, 20, 80, 80);
+            self.watermarkImageView.transform = CGAffineTransformRotate(_watermarkImageView.transform, -M_PI);
         }
-        
-        self.watermarkImageView.transform = CGAffineTransformRotate(_watermarkImageView.transform, M_PI);
-    }
-    else {
-        self.watermarkImageView.frame = CGRectMake(20, 20, 80, 80);
-        self.watermarkImageView.transform = CGAffineTransformRotate(_watermarkImageView.transform, -M_PI);
-    }
+    });
 }
 
 - (void)transformWaterMark:(BOOL)isTrans
