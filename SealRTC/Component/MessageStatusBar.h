@@ -15,6 +15,9 @@
 @property (nonatomic, assign) CGFloat animateWithDuration;
 @property (nonatomic, assign) CGFloat messageDelaySeconds;
 
+
++ (MessageStatusBar *)sharedInstance;
+
 /**
  *  显示后自动隐藏,整个过程持续1.3秒,同时按自定义颜色显示背景色
  *

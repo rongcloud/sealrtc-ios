@@ -24,7 +24,7 @@
 #import "RongRTCFileCapturer.h"
 #import "ChatLocalVideoRender.h"
 
-@interface ChatViewController () <UINavigationControllerDelegate,UIAlertViewDelegate,RongRTCFileCapturerDelegate>
+@interface ChatViewController () <UINavigationControllerDelegate,UIAlertViewDelegate,RongRTCFileCapturerDelegate,RCConnectionStatusChangeDelegate>
 {
     CGFloat localVideoWidth, localVideoHeight;
     UIButton *silienceButton;
@@ -48,6 +48,7 @@
 @property (nonatomic, strong) IBOutlet UICollectionViewLayout *collectionViewLayout;
 @property (nonatomic, strong) NSMutableArray<STParticipantsInfo*>* dataSource;
 @property (nonatomic, strong) ChatLocalVideoRender *localFileVideoView;
+@property (weak, nonatomic) IBOutlet UILabel *connectingLabel;
 @end
 
 @implementation ChatViewController
@@ -104,11 +105,6 @@
     self.chatGPUImageHandler = [[ChatGPUImageHandler alloc] init];
     
     if (kLoginManager.isGPUFilter || kLoginManager.isWaterMark) {
-//        [RongRTCAVCapturer sharedInstance].videoDisplayBufferCallback = ^CMSampleBufferRef _Nullable(BOOL valid, CMSampleBufferRef  _Nullable sampleBuffer) {
-//            CMSampleBufferRef processedSampleBuffer = [self.chatGPUImageHandler onGPUFilterSource:sampleBuffer];
-//            return processedSampleBuffer;
-//        };
-        
         [RongRTCAVCapturer sharedInstance].videoSendBufferCallback = ^CMSampleBufferRef _Nullable(BOOL valid, CMSampleBufferRef  _Nullable sampleBuffer) {
             CMSampleBufferRef processedSampleBuffer = [self.chatGPUImageHandler onGPUFilterSource:sampleBuffer];
             return processedSampleBuffer;
@@ -144,6 +140,8 @@
     kChatManager.localFileVideoModel.userName = @"我的视频文件";
     [kChatManager.localFileVideoModel.cellVideoView addSubview:kChatManager.localFileVideoModel.infoLabel];
     kChatManager.localFileVideoModel.isShowVideo = YES;
+    
+    [[RCIMClient sharedRCIMClient] setRCConnectionStatusChangeDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -174,6 +172,8 @@
 - (void)handleAudioRouteChange:(NSNotification*)notification
 {
     NSInteger reason = [[[notification userInfo] objectForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+    AVAudioSessionRouteDescription *route = [AVAudioSession sharedInstance].currentRoute;
+    AVAudioSessionPortDescription *port = route.outputs.firstObject;
     switch (reason)
     {
         case AVAudioSessionRouteChangeReasonUnknown:
@@ -188,8 +188,12 @@
             break;
         case AVAudioSessionRouteChangeReasonOverride : //4
         {
-            if ([self isHeadsetPluggedIn])
+            if ([port.portType isEqualToString:AVAudioSessionPortBuiltInReceiver] || [port.portType isEqualToString: AVAudioSessionPortBuiltInSpeaker]){
+                [self reloadSpeakerRoute:YES];
+            }
+            else{
                 [self reloadSpeakerRoute:NO];
+            }
         }
             break;
         case AVAudioSessionRouteChangeReasonWakeFromSleep : //6
@@ -212,13 +216,16 @@
 
 - (void)reloadSpeakerRoute:(BOOL)enable
 {
-    kLoginManager.isSpeaker = !enable;
-    [self switchButtonBackgroundColor:kLoginManager.isSpeaker button:self.chatViewBuilder.speakerOnOffButton];
-    
-    if (enable)
-        [CommonUtility setButtonImage:self.chatViewBuilder.speakerOnOffButton imageName:@"chat_speaker_on"];
-    else
-        [CommonUtility setButtonImage:self.chatViewBuilder.speakerOnOffButton imageName:@"chat_speaker_off"];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        kLoginManager.isSpeaker = !enable;
+        [self switchButtonBackgroundColor:kLoginManager.isSpeaker button:self.chatViewBuilder.speakerOnOffButton];
+        
+        if (enable)
+            [CommonUtility setButtonImage:self.chatViewBuilder.speakerOnOffButton imageName:@"chat_speaker_on"];
+        else
+            [CommonUtility setButtonImage:self.chatViewBuilder.speakerOnOffButton imageName:@"chat_speaker_off"];
+    });
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -554,7 +561,7 @@
             [self hideAlertLabel:YES];
             [self startTalkTimer];
             
-            if (kLoginManager.isAutoTest && arr.count > 0 ) {
+            if (kLoginManager.isAutoTest && arr.count > 0) {
 //                dispatch_async(dispatch_get_main_queue(), ^{
                     // 自动化使用
                     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(([UIScreen mainScreen].bounds.size.width - 100) / 2, [UIScreen mainScreen].bounds.size.height - 100, 100, 40)];
@@ -1306,6 +1313,19 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
+
+- (void)onConnectionStatusChanged:(RCConnectionStatus)status {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (status == ConnectionStatus_Connected) {
+            self.connectingLabel.text = nil;
+            self.connectingLabel.hidden = YES;
+        } else {
+            self.connectingLabel.hidden = NO;
+            self.connectingLabel.text = NSLocalizedString(@"connecting_im", nil);
+        }
+    });
 }
 
 @end

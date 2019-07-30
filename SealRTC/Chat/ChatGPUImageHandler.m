@@ -74,12 +74,13 @@
                 self.watermarkImageView.frame = CGRectMake(self.videoWidth - 100, self.videoHeight - 100, 80, 80);
             }
             
-            self.watermarkImageView.transform = CGAffineTransformRotate(_watermarkImageView.transform, M_PI);
+            self.watermarkImageView.transform = CGAffineTransformRotate(self->_watermarkImageView.transform, M_PI);
         }
         else {
             self.watermarkImageView.frame = CGRectMake(20, 20, 80, 80);
-            self.watermarkImageView.transform = CGAffineTransformRotate(_watermarkImageView.transform, -M_PI);
+            self.watermarkImageView.transform = CGAffineTransformRotate(self->_watermarkImageView.transform, -M_PI);
         }
+        self.watermarkImageView.hidden = ([RongRTCAVCapturer sharedInstance].cameraPosition == AVCaptureDevicePositionFront) ? YES : NO;
     });
 }
 
@@ -111,6 +112,7 @@
 
 - (void)reloadGPUFilter
 {
+    self.watermarkImageView.hidden = ([RongRTCAVCapturer sharedInstance].cameraPosition == AVCaptureDevicePositionFront) ? YES : NO;
     [self uiElement];
     __weak typeof(self) weakSelf = self;
     [self.gupfilter setFrameProcessingCompletionBlock:^(GPUImageOutput *output, CMTime time) {

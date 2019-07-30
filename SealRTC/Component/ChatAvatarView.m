@@ -48,7 +48,7 @@
 - (UIImageView *)closeCameraImageView
 {
     if (!_closeCameraImageView) {
-        _closeCameraImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 90, 83)];
+        _closeCameraImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 76, 90)];
         _closeCameraImageView.contentMode = UIViewContentModeScaleToFill;
         _closeCameraImageView.image = [UIImage imageNamed:@"chat_audio_only"];
     }
@@ -68,13 +68,15 @@
 
 - (void)configUI
 {
+    if (CGRectEqualToRect(self.frame, CGRectMake(0, 0, 90, 120))) {
+        self.closeCameraImageView.frame = CGRectMake(self.closeCameraImageView.frame.origin.x, self.closeCameraImageView.frame.origin.y, 76/2, 90/2);
+    }
+    else {
+        self.closeCameraImageView.frame = CGRectMake(0, 0, 76, 90);
+    }
+    
     self.closeCameraImageView.center = self.center;
     [self addSubview:self.closeCameraImageView];
-    
-//    self.indicatorView.frame = CGRectMake((self.frame.size.width-90)/2,  (self.frame.size.height-90)/2, 90, 90);
-//    [self addSubview:_indicatorView];
-//    _indicatorView.hidesWhenStopped = YES;
-//    [_indicatorView stopAnimating];
 }
 
 - (void)setModel:(ChatAvatarModel *)model

@@ -11,16 +11,26 @@
 
 #define Background_Color [UIColor yellowColor]
 
+static MessageStatusBar *sharedMessageStatusBar = nil;
 @implementation MessageStatusBar
-@synthesize messageLabel = messageLabel;
-- (id)init
+
+
++ (MessageStatusBar *)sharedInstance
+{
+    static dispatch_once_t once_dispatch;
+    dispatch_once(&once_dispatch, ^{
+        sharedMessageStatusBar = [[MessageStatusBar alloc] init];
+    });
+    return sharedMessageStatusBar;
+}
+
+- (instancetype)init
 {
     self = [super init];
     if (self)
     {
         self.windowLevel = UIWindowLevelStatusBar + 1.0f;
 
-//        if (@available(iOS 11.0, *)) {
         NSInteger version = [[[UIDevice currentDevice] systemVersion] integerValue];
         if (version == 11 && [self isiPhoneX]) {
             self.frame = CGRectMake(0,[UIApplication sharedApplication].statusBarFrame.size.height, ScreenWidth, 20.0);
@@ -32,13 +42,13 @@
         self.animateWithDuration = 0.5f;
         self.messageDelaySeconds = 2.f;
         
-        messageLabel = [[UILabel alloc] initWithFrame:self.bounds];
-        messageLabel.backgroundColor = [UIColor clearColor];
-        messageLabel.textColor = [UIColor blackColor];
-        messageLabel.font = [UIFont systemFontOfSize:14.0f];
-        messageLabel.textAlignment = NSTextAlignmentCenter;
-        messageLabel.numberOfLines = 2;
-        [self addSubview:messageLabel];
+        _messageLabel = [[UILabel alloc] initWithFrame:self.bounds];
+        _messageLabel.backgroundColor = [UIColor clearColor];
+        _messageLabel.textColor = [UIColor blackColor];
+        _messageLabel.font = [UIFont systemFontOfSize:14.0f];
+        _messageLabel.textAlignment = NSTextAlignmentCenter;
+        _messageLabel.numberOfLines = 2;
+        [self addSubview:_messageLabel];
     }
     return self;
 }
@@ -55,21 +65,27 @@
 {
     self.hidden = NO;
     self.alpha = 0.0f;
-    messageLabel.text = @"";
+    _messageLabel.text = @"";
     CGSize totalSize = self.frame.size;
     self.frame = (CGRect){ self.frame.origin, totalSize };
     
     [UIView animateWithDuration:self.animateWithDuration animations:^{
         self.alpha = 1.0f;
-        messageLabel.text = message;
+        self->_messageLabel.text = message;
     } completion:^(BOOL finished){
         [UIView animateWithDuration:self.animateWithDuration animations:^{
             self.alpha = 1.0f;
         } completion:^(BOOL finished){
-            messageLabel.text = message;
+            self->_messageLabel.text = message;
             self.hidden = NO;
         }];
     }];
+}
+
+- (void)showMessageStatusBar:(NSString *)message withBackgroundColor:(UIColor *)bgColor
+{
+    self.backgroundColor = bgColor;
+    [self showMessageBarAndHideAuto:message];
 }
 
 - (void)hideManual
@@ -79,15 +95,9 @@
     [UIView animateWithDuration:0.0f animations:^{
         self.alpha = 0.0f;
     } completion:^(BOOL finished){
-        messageLabel.text = @"";
+        self->_messageLabel.text = @"";
         self.hidden = YES;
     }];
-}
-
-- (void)showMessageStatusBar:(NSString *)message withBackgroundColor:(UIColor *)bgColor
-{
-    self.backgroundColor = bgColor;
-    [self showMessageBarAndHideAuto:message];
 }
 
 - (void)showMessageBarAndHideAuto:(NSString *)message
@@ -99,19 +109,19 @@
 {
     self.hidden = NO;
     self.alpha = 0.0f;
-    messageLabel.text = @"";
+    _messageLabel.text = @"";
     CGSize totalSize = self.frame.size;
     self.frame = (CGRect){ self.frame.origin, totalSize };
     
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:self.animateWithDuration animations:^{
         weakSelf.alpha = 1.0f;
-        messageLabel.text = message;
+        self->_messageLabel.text = message;
     } completion:^(BOOL finished){
         [UIView animateWithDuration:self.animateWithDuration delay:self.messageDelaySeconds options:UIViewAnimationOptionCurveLinear animations:^{
             weakSelf.alpha = 0.0f;
         } completion:^(BOOL finished){
-            messageLabel.text = @"";
+            self->_messageLabel.text = @"";
             weakSelf.hidden = YES;
             weakSelf.backgroundColor = Background_Color;
             if (finishBlock)

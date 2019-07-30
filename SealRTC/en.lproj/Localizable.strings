@@ -129,3 +129,5 @@
 
 "close"="Close";
 "online_user_cout_fmt"="Online number %@";
+"voip_network_bad"="network is not good";
+"connecting_im"="Connecting...";

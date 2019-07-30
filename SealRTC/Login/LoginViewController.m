@@ -505,14 +505,11 @@ static NSDictionary *selectedServer;
         textField == self.loginViewBuilder.loginCountryTxtField ) {
         STCountryTableViewController* stc = [[STCountryTableViewController alloc] init];
         stc.delegate = self;
-////        UIViewController* vc = [[UIViewController alloc] init];
         [self.navigationController pushViewController:stc animated:YES];
         return NO;
     }
     return  YES;
 }
-
-
 
 - (BOOL)shouldAutorotate {
     return NO;

@@ -40,6 +40,8 @@ typedef enum : NSUInteger {
 @property (nonatomic, weak) IBOutlet UILabel *dataTrafficLabel;
 @property (nonatomic, weak) IBOutlet UILabel *alertLabel;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *networkLabel;
+
 @property (nonatomic, strong) UIImageView *homeImageView;
 @property (nonatomic, strong) RongRTCLocalVideoView *localView;
 @property (nonatomic, strong) UIAlertController *alertController;

@@ -113,6 +113,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ 当前摄像头的位置
+ */
+@property(nonatomic,readonly) RongRTCDeviceCamera cameraPosition;
+
+/**
  运行通话过程中最大码率设置，单位 bps
  */
 @property(nonatomic,assign) NSUInteger maxBitrate;

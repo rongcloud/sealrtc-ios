@@ -10,6 +10,7 @@
 #import "ChatLocalDataInfoModel.h"
 #import "ChatDataInfoModel.h"
 #import "ChatViewController.h"
+#import "RTActiveWheel.h"
 
 @interface ChatRongRTCNetworkMonitorDelegateImpl ()
 
@@ -119,7 +120,39 @@
 }
 
 - (void)didReportStatForm:(RongRTCStatisticalForm*)form {
+    static CGFloat lossRate = 0;
+    static time_t prePlayTime = 0;
+    const CGFloat lossRateBase = 0.30;
+    BOOL isPlay = NO;
+    for (RongRTCStreamStat* stat in form.sendStats) {
+        if (stat.packetLoss > lossRateBase) {
+            isPlay = YES;
+            break;
+        }
+    }
 
+    for (RongRTCStreamStat* stat in form.recvStats) {
+        if (stat.packetLoss > lossRate) {
+            isPlay = YES;
+            break;
+        }
+    }
+    
+    if (isPlay && time(nil) - prePlayTime > 5) {
+        prePlayTime = time(nil)                 ;
+        NSString* soundPath =  [[NSBundle mainBundle] pathForResource:@"voip_network_error_sound" ofType:@"wav"];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.chatViewController.networkLabel.hidden = NO;
+            self.chatViewController.networkLabel.text = NSLocalizedString(@"voip_network_bad",nil);
+        });
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.chatViewController.networkLabel.hidden = YES;
+            self.chatViewController.networkLabel.text = nil;
+        });
+    }
+    
     [self.bitrateArray removeAllObjects];
      NSMutableArray *localDIArray = [NSMutableArray array];
     [localDIArray addObject:@[NSLocalizedString(@"chat_data_excel_tunnelname", nil),NSLocalizedString(@"chat_data_excel_kbps", nil),NSLocalizedString(@"chat_data_excel_delay", nil)]];

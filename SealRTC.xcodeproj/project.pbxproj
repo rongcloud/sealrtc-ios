@@ -135,6 +135,7 @@
 		B220964C22533389005948E1 /* STParticipantsTableViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = B220964B22533389005948E1 /* STParticipantsTableViewHeader.m */; };
 		B220964F22533A14005948E1 /* STParticipantsInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B220964E22533A14005948E1 /* STParticipantsInfo.m */; };
 		B221359B22696C330033B545 /* STNavigatioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B221359A22696C330033B545 /* STNavigatioViewController.m */; };
+		B25E424C22EAB04F00790D45 /* voip_network_error_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 171B23F522E8381800B13746 /* voip_network_error_sound.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -151,6 +152,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		171B23F522E8381800B13746 /* voip_network_error_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = voip_network_error_sound.wav; sourceTree = "<group>"; };
 		173A2C3022718EC100291E0A /* video_demo1_low.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_demo1_low.mp4; sourceTree = "<group>"; };
 		173A2C3222718F6800291E0A /* video_demo2_low.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_demo2_low.mp4; sourceTree = "<group>"; };
 		1773DD8F224D145D007213AF /* RongRTCLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RongRTCLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -499,6 +501,7 @@
 				17A4296822714B5400293F78 /* RTActiveWheel.m */,
 				17DD6C2A229CE60700904272 /* RongRTCFileCapturer.h */,
 				17DD6C2B229CE60700904272 /* RongRTCFileCapturer.m */,
+				171B23F522E8381800B13746 /* voip_network_error_sound.wav */,
 				17DD6C34229D162000904272 /* No_Excuses.aac */,
 				173A2C3022718EC100291E0A /* video_demo1_low.mp4 */,
 				173A2C3222718F6800291E0A /* video_demo2_low.mp4 */,
@@ -1098,6 +1101,7 @@
 				390ED55D1D9E07F20046F519 /* CodeRate.plist in Resources */,
 				9D3DD0641D58BDBD00DC1443 /* Main.storyboard in Resources */,
 				39B258B322159D1000821CB9 /* RCConfig.plist in Resources */,
+				B25E424C22EAB04F00790D45 /* voip_network_error_sound.wav in Resources */,
 				397320451D9CED2F0016DFC6 /* ResolutionRatio.plist in Resources */,
 				9D3DD09F1D5B1ECF00DC1443 /* Localizable.strings in Resources */,
 				981A507A20047E3A00C6E5AA /* InfoPlist.strings in Resources */,

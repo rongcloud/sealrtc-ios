@@ -115,7 +115,7 @@
 "setting_media_connectiontype" = "连接方式";
 "setting_build_info" = "编译信息";
 "setting_auto_test" = "自动化测试";
-"setting_water_mark" = "水印";
+"setting_water_mark" = "后置摄像头水印";
 "setting_media_server_url" = "媒体服务器";
 
 
@@ -130,4 +130,5 @@
 
 "close"="关闭";
 "online_user_cout_fmt"="在线人数 %@ 人";
-
+"voip_network_bad"="当前通话网络不佳";
+"connecting_im"="正在连接中...";
