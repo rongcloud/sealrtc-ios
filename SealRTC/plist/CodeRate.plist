@@ -4,7 +4,7 @@
 <array>
 	<dict>
 		<key>min</key>
-		<integer>100</integer>
+		<integer>150</integer>
 		<key>max</key>
 		<real>2000</real>
 		<key>default</key>
@@ -14,7 +14,7 @@
 	</dict>
 	<dict>
 		<key>min</key>
-		<integer>100</integer>
+		<integer>350</integer>
 		<key>max</key>
 		<real>2000</real>
 		<key>default</key>
@@ -24,7 +24,7 @@
 	</dict>
 	<dict>
 		<key>min</key>
-		<integer>100</integer>
+		<integer>750</integer>
 		<key>max</key>
 		<real>3000</real>
 		<key>default</key>
@@ -34,7 +34,7 @@
 	</dict>
 	<dict>
 		<key>min</key>
-		<integer>100</integer>
+		<integer>1500</integer>
 		<key>max</key>
 		<integer>5000</integer>
 		<key>default</key>

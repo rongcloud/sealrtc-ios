@@ -22,9 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  音视频 SDK 对应版本
  
- RongRTCLib version: RongRTCLib_Version=>version
- RongRTCLib commit: RongRTCLib_Commit=>commit
- RongRTCLib time: RongRTCLib_Time=>time
+ RongRTCLib version: 3.1.0
+ RongRTCLib commit: ba0a1949
+ RongRTCLib time: 2019-07-29
  
  */
 

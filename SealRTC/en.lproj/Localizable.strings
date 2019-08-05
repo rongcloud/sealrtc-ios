@@ -54,6 +54,7 @@
 "chat_white_join_failed" = "White board service error, Please try again later!";
 "chat_white_open_failed" = "No white board created!";
 
+
 "login_input_meeting_welcome" = "Welcome to SealRTC Audio/Video Meeting";
 "login_input_meeting_room_name" = "Input Room Info";
 "login_input_meeting_user_name" = "UserName";
@@ -85,6 +86,7 @@
 "login_input_count_down_sec" = "Sec";
 "login_input_verify_error" = "Verification Code Error";
 "login_input_user_name"="User Name";
+"login_input_check_version"="V%@ version detected\nupdate?";
 
 
 "setting_title" = "Setting";

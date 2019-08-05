@@ -110,6 +110,7 @@
                     [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.avatarView];
                 }
                 self.chatViewController.selectionModel = kChatManager.localUserDataModel;
+                
                 //远端: 恢复显示在collection cell中
                 RongRTCRemoteVideoView *remoteVideoView = (RongRTCRemoteVideoView *)selectedViewModel.cellVideoView;
                 remoteVideoView.fillMode = RCVideoFillModeAspectFill;
@@ -125,6 +126,7 @@
                     selectedViewModel.avatarView.frame = remoteVideoView.frame;
                     [selectedViewModel.cellVideoView addSubview:selectedViewModel.avatarView];
                 }
+                
                 if (selectedViewModel.inputStream && !selectedViewModel.isUnpublish) {
                     [self.chatViewController.room subscribeAVStream:nil tinyStreams:@[selectedViewModel.inputStream] completion:^(BOOL isSuccess, RongRTCCode desc) {
                     }];
@@ -147,6 +149,12 @@
                 if (!self.originalSelectedViewModel.isShowVideo) {
                     self.originalSelectedViewModel.avatarView.frame = originalRemoteVideoView.frame;
                     [self.originalSelectedViewModel.cellVideoView addSubview:self.originalSelectedViewModel.avatarView];
+                }
+                
+                if (selectedViewModel.inputStream && !selectedViewModel.isUnpublish) {
+                    NSArray *tinys = self.originalSelectedViewModel.inputStream ? @[self.originalSelectedViewModel.inputStream] : nil;
+                    [self.chatViewController.room subscribeAVStream:@[selectedViewModel.inputStream] tinyStreams:tinys completion:^(BOOL isSuccess, RongRTCCode desc) {
+                    }];
                 }
                 
                 //远端: 当前点击的远端,切换到大屏
@@ -187,11 +195,6 @@
                     kChatManager.localUserDataModel.avatarView.frame = localVideoView.frame;
                     [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.avatarView];
                 }
-                
-                if (selectedViewModel.inputStream && !selectedViewModel.isUnpublish) {
-                    [self.chatViewController.room subscribeAVStream:@[selectedViewModel.inputStream] tinyStreams:@[self.originalSelectedViewModel.inputStream] completion:^(BOOL isSuccess, RongRTCCode desc) {
-                    }];
-                }
             }
         }
         else
@@ -220,6 +223,11 @@
                 [selectedViewModel.cellVideoView addSubview:selectedViewModel.avatarView];
             }
             
+            if (selectedViewModel.inputStream && !selectedViewModel.isUnpublish) {
+                [self.chatViewController.room subscribeAVStream:@[selectedViewModel.inputStream] tinyStreams:nil completion:^(BOOL isSuccess,RongRTCCode desc) {
+                }];
+            }
+            
             //本地: 为了在cell上铺满屏,根据所选本地分辨率判断宽高比例,切换到collection cell上
             RongRTCLocalVideoView *localVideoView = (RongRTCLocalVideoView *)kChatManager.localUserDataModel.cellVideoView;
             localVideoView.fillMode = RCVideoFillModeAspectFill;
@@ -234,11 +242,6 @@
             if (!kChatManager.localUserDataModel.isShowVideo) {
                 kChatManager.localUserDataModel.avatarView.frame = localVideoView.frame;
                 [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.avatarView];
-            }
-            
-            if (selectedViewModel.inputStream && !selectedViewModel.isUnpublish) {
-                [self.chatViewController.room subscribeAVStream:@[selectedViewModel.inputStream] tinyStreams:nil completion:^(BOOL isSuccess,RongRTCCode desc) {
-                }];
             }
             
             kLoginManager.isSwitchCamera = !kLoginManager.isSwitchCamera;

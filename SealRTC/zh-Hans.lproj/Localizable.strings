@@ -86,6 +86,7 @@
 "login_input_count_down_sec" = "秒";
 "login_input_verify_error" = "验证码错误, 请重新获取";
 "login_input_user_name"="请输入用户名称";
+"login_input_check_version"="检测到新版本V%@\n是否升级?";
 
 
 "setting_title" = "设置";

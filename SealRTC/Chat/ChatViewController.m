@@ -217,7 +217,7 @@
 - (void)reloadSpeakerRoute:(BOOL)enable
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        kLoginManager.isSpeaker = !enable;
+        kLoginManager.isSpeaker = enable;
         [self switchButtonBackgroundColor:kLoginManager.isSpeaker button:self.chatViewBuilder.speakerOnOffButton];
         
         if (enable)
@@ -583,33 +583,33 @@
     }
     else {
         DLog(@"joinRoom code Failed, code: %zd", code);
-        if (kLoginManager.isAutoTest) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"加入房间失败:%ld",code] preferredStyle:(UIAlertControllerStyleAlert)];
-                UIAlertAction *action = [UIAlertAction actionWithTitle:@"知道了" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-                    [self didClickHungUpButton];
-                }];
-                [alert addAction:action];
-                [self presentViewController:alert animated:YES completion:^{
-                    
-                }];
-            });
-        }
+//        if (kLoginManager.isAutoTest) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"加入房间失败:%ld",code] preferredStyle:(UIAlertControllerStyleAlert)];
+//                UIAlertAction *action = [UIAlertAction actionWithTitle:@"知道了" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+//                    [self didClickHungUpButton];
+//                }];
+//                [alert addAction:action];
+//                [self presentViewController:alert animated:YES completion:^{
+//                    
+//                }];
+//            });
+//        }
     }
 }
 
 - (void)didLeaveRoom {
     if (kLoginManager.isAutoTest) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"已经不在房间中了"] preferredStyle:(UIAlertControllerStyleAlert)];
-            UIAlertAction *action = [UIAlertAction actionWithTitle:@"知道了" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-                [self didClickHungUpButton];
-            }];
-            [alert addAction:action];
-            [self presentViewController:alert animated:YES completion:^{
-                
-            }];
-        });
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"已经不在房间中了"] preferredStyle:(UIAlertControllerStyleAlert)];
+//            UIAlertAction *action = [UIAlertAction actionWithTitle:@"知道了" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+//                [self didClickHungUpButton];
+//            }];
+//            [alert addAction:action];
+//            [self presentViewController:alert animated:YES completion:^{
+//                
+//            }];
+//        });
     }
 }
 
@@ -1070,7 +1070,7 @@
 {
     kLoginManager.isMuteMicrophone = !kLoginManager.isMuteMicrophone;
     [[RongRTCAVCapturer sharedInstance] setMicrophoneDisable:kLoginManager.isMuteMicrophone];
-    [self switchButtonBackgroundColor:kLoginManager.isMuteMicrophone button:btn];
+    [self switchButtonBackgroundColor:!kLoginManager.isMuteMicrophone button:btn];
 
     if (kLoginManager.isMuteMicrophone) {
         [CommonUtility setButtonImage:btn imageName:@"chat_microphone_off"];
@@ -1090,7 +1090,7 @@
             return ;
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self switchButtonBackgroundColor:!kLoginManager.isSpeaker button:btn];
+            [self switchButtonBackgroundColor:kLoginManager.isSpeaker button:btn];
             
             if (kLoginManager.isSpeaker) {
                 [CommonUtility setButtonImage:btn imageName:@"chat_speaker_on"];
@@ -1142,7 +1142,7 @@
 {
     isChatCloseCamera = !isChatCloseCamera;
     [[RongRTCAVCapturer sharedInstance] setCameraDisable:isChatCloseCamera];
-    [self switchButtonBackgroundColor:isChatCloseCamera button:btn];
+    [self switchButtonBackgroundColor:!isChatCloseCamera button:btn];
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     if (UIInterfaceOrientationPortrait == orientation) {
         [RongRTCAVCapturer sharedInstance].videoOrientation =  AVCaptureVideoOrientationPortrait;
@@ -1245,7 +1245,7 @@
 - (void)switchButtonBackgroundColor:(BOOL)is button:(UIButton *)btn
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        btn.backgroundColor = is ? [UIColor whiteColor] : [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
+        btn.backgroundColor = !is ? [UIColor whiteColor] : [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
     });
 }
 

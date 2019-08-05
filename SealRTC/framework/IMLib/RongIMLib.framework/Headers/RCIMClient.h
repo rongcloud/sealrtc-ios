@@ -31,6 +31,7 @@
 #import "RCUserInfo.h"
 #import "RCUserOnlineStatusInfo.h"
 #import "RCWatchKitStatusDelegate.h"
+#import "RCSendMessageOption.h"
 
 #pragma mark - 消息接收监听器
 
@@ -372,18 +373,6 @@
                    error:(void (^)(RCConnectErrorCode status))errorBlock
           tokenIncorrect:(void (^)(void))tokenIncorrectBlock;
 
-///*!
-// 重新建立与服务器的连接
-//
-// @param successBlock 重新连接成功的回调
-// @param errorBlock   重新连接失败的回调
-//
-// @warning 升级说明：从2.2.3版本开始，删除此方法。
-// SDK在前后台切换或者网络出现异常都会自动重连，会保证连接的可靠性，不需要App手动进行重连操作。
-// */
-//- (void)reconnect:(void (^)(NSString *userId))successBlock
-//            error:(void (^)(RCConnectErrorCode status))errorBlock;
-
 /*!
  断开与融云服务器的连接
 
@@ -576,6 +565,44 @@
                      error:(void (^)(RCErrorCode nErrorCode, long messageId))errorBlock;
 
 /*!
+ 发送消息
+ 
+ @param conversationType    发送消息的会话类型
+ @param targetId            发送消息的目标会话ID
+ @param content             消息的内容
+ @param pushContent         接收方离线时需要显示的远程推送内容
+ @param pushData            接收方离线时需要在远程推送中携带的非显示数据
+ @param option              消息的相关配置
+ @param successBlock        消息发送成功的回调 [messageId:消息的ID]
+ @param errorBlock          消息发送失败的回调 [nErrorCode:发送失败的错误码,
+ messageId:消息的ID]
+ @return                    发送的消息实体
+ 
+ @discussion 当接收方离线并允许远程推送时，会收到远程推送。
+ 远程推送中包含两部分内容，一是pushContent，用于显示；二是pushData，用于携带不显示的数据。
+ 
+ SDK内置的消息类型，如果您将pushContent和pushData置为nil，会使用默认的推送格式进行远程推送。
+ 自定义类型的消息，需要您自己设置pushContent和pushData来定义推送内容，否则将不会进行远程推送。
+ 
+ 如果您使用此方法发送图片消息，需要您自己实现图片的上传，构建一个RCImageMessage对象，
+ 并将RCImageMessage中的imageUrl字段设置为上传成功的URL地址，然后使用此方法发送。
+ 
+ 如果您使用此方法发送文件消息，需要您自己实现文件的上传，构建一个RCFileMessage对象，
+ 并将RCFileMessage中的fileUrl字段设置为上传成功的URL地址，然后使用此方法发送。
+ 
+ @warning 如果您使用IMLib，可以使用此方法发送消息；
+ 如果您使用IMKit，请使用RCIM中的同名方法发送消息，否则不会自动更新UI。
+ */
+- (RCMessage *)sendMessage:(RCConversationType)conversationType
+                  targetId:(NSString *)targetId
+                   content:(RCMessageContent *)content
+               pushContent:(NSString *)pushContent
+                  pushData:(NSString *)pushData
+                    option:(RCSendMessageOption *)option
+                   success:(void (^)(long messageId))successBlock
+                     error:(void (^)(RCErrorCode nErrorCode, long messageId))errorBlock;
+
+/*!
  发送媒体消息（图片消息或文件消息）
 
  @param conversationType    发送消息的会话类型
@@ -761,6 +788,21 @@
                              content:(RCMessageContent *)content
                             sentTime:(long long)sentTime;
 
+
+/*!
+ 根据文件URL地址下载文件内容
+ 
+ @param fileName            指定的文件名称 需要开发者指定文件后缀 (例如 rongCloud.mov)
+ @param mediaUrl            文件的URL地址
+ @param progressBlock       文件下载进度更新的回调 [progress:当前的下载进度, 0 <= progress <= 100]
+ @param successBlock        下载成功的回调[mediaPath:下载成功后本地存放的文件路径 文件路径为文件消息的默认地址]
+ @param errorBlock          下载失败的回调[errorCode:下载失败的错误码]
+  */
+- (void)downloadMediaFile:(NSString *)fileName
+                 mediaUrl:(NSString *)mediaUrl
+                 progress:(void (^)(int progress))progressBlock
+                  success:(void (^)(NSString *mediaPath))successBlock
+                    error:(void (^)(RCErrorCode errorCode))errorBlock;
 /*!
  下载消息内容中的媒体信息
 
@@ -994,20 +1036,20 @@
  发送定向消息
 
  @param conversationType 发送消息的会话类型
- @param targetId         发送消息的目标会话ID
- @param userIdList       发送给的用户ID列表
+ @param targetId         发送消息的目标会话 ID
+ @param userIdList       接收消息的用户 ID 列表
  @param content          消息的内容
  @param pushContent      接收方离线时需要显示的远程推送内容
  @param pushData         接收方离线时需要在远程推送中携带的非显示数据
- @param successBlock     消息发送成功的回调 [messageId:消息的ID]
+ @param successBlock     消息发送成功的回调 [messageId:消息的 ID]
  @param errorBlock       消息发送失败的回调 [errorCode:发送失败的错误码,
- messageId:消息的ID]
+ messageId:消息的 ID]
 
  @return 发送的消息实体
 
  @discussion 此方法用于在群组和讨论组中发送消息给其中的部分用户，其它用户不会收到这条消息。
- 如果您使用IMLib，可以使用此方法发送定向消息；
- 如果您使用IMKit，请使用RCIM中的同名方法发送定向消息，否则不会自动更新UI。
+ 如果您使用 IMLib，可以使用此方法发送定向消息；
+ 如果您使用 IMKit，请使用 RCIM 中的同名方法发送定向消息，否则不会自动更新 UI。
 
  @warning 此方法目前仅支持群组和讨论组。
  */
@@ -1447,7 +1489,7 @@ FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
 /*!
  删除某个会话中的所有消息
 
- @param conversationType    会话类型，不支持聊天室
+ @param conversationType    会话类型
  @param targetId            目标会话ID
  @return                    是否删除成功
  */
@@ -2018,15 +2060,15 @@ FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
 /*!
  加入聊天室（如果聊天室不存在则会创建）
 
- @param targetId                聊天室ID
- @param messageCount 进入聊天室时获取历史消息的数量，-1<=messageCount<=50
- @param successBlock            加入聊天室成功的回调
- @param errorBlock              加入聊天室失败的回调
- [status:加入聊天室失败的错误码]
+ @param targetId        聊天室 ID
+ @param messageCount    进入聊天室时获取历史消息的数量，-1 <= messageCount <= 50
+ @param successBlock    加入聊天室成功的回调
+ @param errorBlock      加入聊天室失败的回调
+ [status: 加入聊天室失败的错误码]
 
  @discussion
- 可以通过传入的messageCount设置加入聊天室成功之后，需要获取的历史消息数量。
- -1表示不获取任何历史消息，0表示不特殊设置而使用SDK默认的设置（默认为获取10条），0<messageCount<=50为具体获取的消息数量,最大值为50。注：如果是7.x系统获取历史消息数量不要大于30
+ 可以通过传入的 messageCount 设置加入聊天室成功之后需要获取的历史消息数量。
+ -1 表示不获取任何历史消息，0 表示不特殊设置而使用SDK默认的设置（默认为获取 10 条），0 < messageCount <= 50 为具体获取的消息数量,最大值为 50。注：如果是 7.x 系统获取历史消息数量不要大于 30
  */
 - (void)joinChatRoom:(NSString *)targetId
         messageCount:(int)messageCount
@@ -2034,23 +2076,21 @@ FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
                error:(void (^)(RCErrorCode status))errorBlock;
 
 /*!
- 加入已经存在的聊天室（如果不存在或超限会返回聊天室不存在错误23410 或 人数超限
- 23411）
+ 加入已经存在的聊天室（如果聊天室不存在返回错误 23410，人数超限返回错误 23411）
 
- @param targetId                聊天室ID
- @param messageCount 进入聊天室时获取历史消息的数量，-1<=messageCount<=50
- @param successBlock            加入聊天室成功的回调
- @param errorBlock              加入聊天室失败的回调
- [status:加入聊天室失败的错误码]
+ @param targetId        聊天室 ID
+ @param messageCount    进入聊天室时获取历史消息的数量，-1 <= messageCount <= 50
+ @param successBlock    加入聊天室成功的回调
+ @param errorBlock      加入聊天室失败的回调
+ [status: 加入聊天室失败的错误码]
 
  @warning
- 注意：使用Kit库的会话页面viewDidLoad会自动调用joinChatRoom加入聊天室（聊天室不存在会自动创建），
- 如果您只想加入已存在的聊天室，需要在push到会话页面之前调用这个方法并且messageCount
- 传-1，成功之后push到会话页面，失败需要您做相应提示处理
+ 注意：使用 IMKit 库的会话页面，viewDidLoad 会自动调用 joinChatRoom 加入聊天室（聊天室不存在会自动创建）。
+ 如果您只想加入已存在的聊天室，需要在 push 到会话页面之前调用这个方法并且 messageCount 传 -1，成功之后 push 到会话页面，失败需要您做相应提示处理。
 
  @discussion
- 可以通过传入的messageCount设置加入聊天室成功之后，需要获取的历史消息数量。
- -1表示不获取任何历史消息，0表示不特殊设置而使用SDK默认的设置（默认为获取10条），0<messageCount<=50为具体获取的消息数量,最大值为50。
+ 可以通过传入的 messageCount 设置加入聊天室成功之后，需要获取的历史消息数量。
+ -1 表示不获取任何历史消息，0 表示不特殊设置而使用SDK默认的设置（默认为获取 10 条），0 < messageCount <= 50 为具体获取的消息数量，最大值为 50。
  */
 - (void)joinExistChatRoom:(NSString *)targetId
              messageCount:(int)messageCount
@@ -2311,7 +2351,16 @@ FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
  @discussion
  2.9.12 之前的版本只支持 8KHz。如果设置为 16KHz，老版本将无法播放 16KHz 的语音消息。
  */
-@property (nonatomic, assign) RCSampleRate sampleRate;
+@property (nonatomic, assign) RCSampleRate sampleRate __deprecated_msg("已废弃，请勿使用。");
+
+/**
+  语音消息类型，默认RCVoiceMessageTypeOrdinary
+  
+  @discussion 老版本 SDK 不兼容新版本语音消息
+  2.9.19 之前的版本无法播放高音质语音消息；
+  2.9.19 及之后的版本可以同时兼容普通音质语音消息和高音质语音消息。
+  */
+@property (nonatomic, assign) RCVoiceMessageType voiceMsgType;
 
 #pragma mark - 客服方法
 /*!
@@ -2596,9 +2645,9 @@ FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
                           failure:(void (^)(RCErrorCode nErrorCode))errorBlock;
 
 /**
- 获取离线消息补偿时间 （以天为单位）
+ 获取离线消息时间 （以天为单位）
 
- @return 离线消息补偿时间
+ @return 离线消息存储时间
  */
 - (int)getOfflineMessageDuration;
 
@@ -2608,6 +2657,13 @@ FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
  @param  appVer   用户 APP 的版本信息。
  */
 - (void)setAppVer:(NSString *)appVer;
+
+/**
+ GIF 消息大小限制，以 KB 为单位，超过这个大小的 GIF 消息不能被发送
+ 
+ @return GIF 消息大小，以 KB 为单位
+ */
+- (NSInteger)getGIFLimitSize;
 
 @end
 

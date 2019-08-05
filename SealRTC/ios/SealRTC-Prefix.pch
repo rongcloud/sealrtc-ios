@@ -60,7 +60,7 @@
 #define Value_Default_FrameRate 0
 #define Value_Default_MaxCodeRate 100
 #define Value_Default_Coding_Style 0
-#define Value_Default_MinCodeRate 10
+#define Value_Default_MinCodeRate 35
 #define Value_Default_GPUFilter NO
 #define Value_Default_SRTPEncrypt NO
 #define Value_Default_QuicMode NO
