@@ -17,9 +17,14 @@
 #define RCIMFileURL @"img.cn.ronghub.com"
 #define RCDEMOServerURL @"sealrtc.rongcloud.cn"
 
+//SECRET请到官网获取
+#define RCIM_API_SECRET @""
+#define RCIM_API_SERVER @"http://api-cn.ronghub.com"
+
 #define MAX_NORMAL_PERSONS 9
 #define MAX_AUDIO_PERSONS 30
 
+#define ENABLE_MANUAL_MEDIASERVER false
 
 #define kEverLaunched @"everLaunched"
 #define kDefaultRoomNumber @"DefaultRoomNumber"

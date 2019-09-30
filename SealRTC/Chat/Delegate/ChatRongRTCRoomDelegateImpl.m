@@ -209,10 +209,10 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
  @param stream 流信息
  @param enable 当前流是否可用
  */
-- (void)stream:(RongRTCAVInputStream*)stream didVideoEnable:(BOOL)mute {
+- (void)stream:(RongRTCAVInputStream*)stream didVideoEnable:(BOOL)enable {
     ChatCellVideoViewModel *remoteModel = [kChatManager getRemoteUserDataModelFromStreamID:stream.streamId];
-    remoteModel.isShowVideo = mute;
-    if (!mute) {
+    remoteModel.isShowVideo = enable;
+    if (!enable) {
         remoteModel.avatarView.frame = remoteModel.cellVideoView.frame;
         [remoteModel.cellVideoView addSubview:remoteModel.avatarView];
     }

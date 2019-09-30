@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1710AD62230A85DA00B78FF6 /* RCFetchTokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1710AD61230A85DA00B78FF6 /* RCFetchTokenManager.m */; };
 		173A2C3122718EF900291E0A /* video_demo1_low.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 173A2C3022718EC100291E0A /* video_demo1_low.mp4 */; };
 		173A2C3322718F6800291E0A /* video_demo2_low.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 173A2C3222718F6800291E0A /* video_demo2_low.mp4 */; };
+		1748C0B822FAC8290082463B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1748C0B722FAC8290082463B /* MobileCoreServices.framework */; };
 		1773DD90224D145D007213AF /* RongRTCLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1773DD8F224D145D007213AF /* RongRTCLib.framework */; };
 		1782D887226EACB900AA9A74 /* ChatMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1782D886226EACB900AA9A74 /* ChatMembersViewController.m */; };
 		1782D88C226EB3C300AA9A74 /* ChatMemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1782D88A226EB3C300AA9A74 /* ChatMemberCell.m */; };
@@ -152,6 +154,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1710AD60230A85D900B78FF6 /* RCFetchTokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCFetchTokenManager.h; sourceTree = "<group>"; };
+		1710AD61230A85DA00B78FF6 /* RCFetchTokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCFetchTokenManager.m; sourceTree = "<group>"; };
 		171B23F522E8381800B13746 /* voip_network_error_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = voip_network_error_sound.wav; sourceTree = "<group>"; };
 		173A2C3022718EC100291E0A /* video_demo1_low.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_demo1_low.mp4; sourceTree = "<group>"; };
 		173A2C3222718F6800291E0A /* video_demo2_low.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_demo2_low.mp4; sourceTree = "<group>"; };
@@ -437,6 +441,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1748C0B822FAC8290082463B /* MobileCoreServices.framework in Frameworks */,
 				1788285022A0D3CE00933137 /* libxml2.tbd in Frameworks */,
 				398EDF0E228193F6006B189D /* WebKit.framework in Frameworks */,
 				392AEA862281620F00EC3CA3 /* CoreGraphics.framework in Frameworks */,
@@ -473,6 +478,7 @@
 		1744C42221A3BF1E00452227 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1748C0B722FAC8290082463B /* MobileCoreServices.framework */,
 				1788284F22A0D3CE00933137 /* libxml2.tbd */,
 				398EDF0D228193F6006B189D /* WebKit.framework */,
 				392AEA852281620E00EC3CA3 /* CoreGraphics.framework */,
@@ -585,6 +591,8 @@
 				39244CDC1DDC0E7300C6CC2A /* CommonUtility.m */,
 				394DEFAA22143AEB009E090A /* RTHttpNetworkWorker.h */,
 				394DEFAB22143AEB009E090A /* RTHttpNetworkWorker.m */,
+				1710AD60230A85D900B78FF6 /* RCFetchTokenManager.h */,
+				1710AD61230A85DA00B78FF6 /* RCFetchTokenManager.m */,
 				392AEA63228008F500EC3CA3 /* WhiteUtils.h */,
 				392AEA64228008F500EC3CA3 /* WhiteUtils.m */,
 			);
@@ -1210,6 +1218,7 @@
 				B21B1D612253439B001C4489 /* STDeleteRoomInfoMessage.m in Sources */,
 				392D0B6E2282AAB100B0E21C /* MASCompositeConstraint.m in Sources */,
 				392AEA782280152200EC3CA3 /* InternalApis.m in Sources */,
+				1710AD62230A85DA00B78FF6 /* RCFetchTokenManager.m in Sources */,
 				3917C2DA21BA10B600456EDA /* ChatLocalDataInfoModel.m in Sources */,
 				1788283922A0D01700933137 /* RongRTCWebServer.m in Sources */,
 				392AEA7A2280152200EC3CA3 /* DWKWebView.m in Sources */,
@@ -1388,6 +1397,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3.1.3.2;
 				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1418,6 +1428,7 @@
 					"$(PROJECT_DIR)/SealRTC/3rd/White-SDK-iOS",
 					"$(PROJECT_DIR)/SealRTC/webserver",
 				);
+				MARKETING_VERSION = 3.1.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1435,6 +1446,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3.1.3.2;
 				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1462,6 +1474,7 @@
 					"$(PROJECT_DIR)/SealRTC/3rd/White-SDK-iOS",
 					"$(PROJECT_DIR)/SealRTC/webserver",
 				);
+				MARKETING_VERSION = 3.1.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
