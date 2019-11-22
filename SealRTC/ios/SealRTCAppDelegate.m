@@ -20,16 +20,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
-    BuglyConfig *config = [[BuglyConfig alloc] init];
-#ifdef DEBUG
-    config.channel = @"Debug";
-#else
-    config.channel = @"Release";
-#endif
-    
-    [Bugly startWithAppId:@"ac3f6a6401" config:config];
-    [Bugly setUserIdentifier:[UIDevice currentDevice].name];
     // 自动化测试取消重定向
     if (Key_Force_Close_Log == NO) {
         [self redirectNSlogToDocumentFolder];
