@@ -77,6 +77,7 @@ FOUNDATION_EXPORT const unsigned char RongIMLibVersionString[];
 #import <RongIMLib/RCUploadMediaStatusListener.h>
 #import <RongIMLib/RCUserInfo.h>
 #import <RongIMLib/RCWatchKitStatusDelegate.h>
+#import <RongIMLib/RCRemoteHistoryMsgOption.h>
 
 #import <RongIMLib/RCFileMessage.h>
 #import <RongIMLib/RCFileUtility.h>
@@ -86,6 +87,6 @@ FOUNDATION_EXPORT const unsigned char RongIMLibVersionString[];
 // log
 #import <RongIMLib/RCFwLog.h>
 
-//Downlad
+// Downlad
 #import <RongIMLib/RCDownloadItem.h>
 #import <RongIMLib/RCResumeableDownloader.h>

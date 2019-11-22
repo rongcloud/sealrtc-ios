@@ -59,6 +59,9 @@
 #define Key_MediaServerURL @"mediaServerURL"
 #define Key_MediaServerRow @"mediaServerRow"
 #define Key_MediaServerArray @"mediaServerList"
+#define Key_KickOffTime @"kickOffTime"
+#define Key_KickOffRoomNumber @"kickOffRoomNumber"
+#define Key_IsKickOff @"isKickOff"
 
 
 #define Value_Default_ResolutionRatio 1
@@ -75,7 +78,7 @@
 #define Value_Default_MediaServerRow 0
 
 #define Key_Force_Close_Log NO
-
+#define IS_NOT_PRIVATE_ENVIRONMENT
 
 #ifndef DLog
     #define DLog(fmt, ...) NSLog((@"%s [Line %d] LLH...... " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);

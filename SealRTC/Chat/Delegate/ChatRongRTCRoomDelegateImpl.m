@@ -12,6 +12,7 @@
 #import "STSetRoomInfoMessage.h"
 #import "STDeleteRoomInfoMessage.h"
 #import "STParticipantsInfo.h"
+#import "STKickOffInfoMessage.h"
 
 @interface ChatRongRTCRoomDelegateImpl ()
 
@@ -21,6 +22,7 @@
 
 NSNotificationName const STParticipantsInfoDidRemove = @"STParticipantsInfoDidRemove";
 NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
+NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUpdate";
 
 @implementation ChatRongRTCRoomDelegateImpl
 
@@ -44,7 +46,6 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
     NSString *userId = user.userId;
     DLog(@"didJoinUser userID: %@", userId);
     [self.chatViewController hideAlertLabel:YES];
-    
     [self.chatViewController startTalkTimer];
 }
 
@@ -99,28 +100,7 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
             [weakChatVC hideAlertLabel:NO];
         }
     });
-    
-    //[[NSNotificationCenter defaultCenter] postNotificationName:STDidLeaveUserNotificatioin object:user];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSInteger index = NSNotFound;
-        for (int i = 0; i < self.infos.count; i++) {
-            STParticipantsInfo* info = self.infos[i];
-            if ([info.userId isEqualToString:user.userId]) {
-                index = i;
-                break;
-            }
-        }
-        int count = self.chatViewController.room.remoteUsers.count;
-        if (index != NSNotFound) {
-            [self.infos removeObjectAtIndex:index];
-            [[NSNotificationCenter defaultCenter]
-                postNotificationName:STParticipantsInfoDidRemove
-                              object:[NSIndexPath indexPathForRow:index inSection:0]];
-//            [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
-        }
-        //[self updateParticipantsCount];
-    });
+    [self didLeftMasterUser:user.userId];
 }
 
 /**
@@ -187,6 +167,7 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
 {
     FwLogV(RC_Type_RTC,@"A-appreceiveLeaveRoom-T",@"%@all reveive leave room",@"sealRTCApp:");
     [self.chatViewController didLeaveRoom];
+//    [self.chatViewController didLeaveRoom];
 }
 
 /**
@@ -236,10 +217,10 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
                 }
             }
             if (!isFound) {
-                [self.infos insertObject:infoMessage.info atIndex:0];
-                [[NSNotificationCenter defaultCenter]
-                 postNotificationName:STParticipantsInfoDidAdd
-                               object:[NSIndexPath indexPathForRow:0 inSection:0]];
+                [self.infos addObject:infoMessage.info];
+                [[NSNotificationCenter defaultCenter] postNotificationName:STParticipantsInfoDidAdd
+                                                                    object:[NSIndexPath indexPathForRow:[self.infos count]-1 inSection:0]];
+                [self.chatViewController showAlertLabelWithAnimate:[NSString stringWithFormat:NSLocalizedString(@"chat_user_join_room", nil), infoMessage.info.userName]];
             }
         });
         ChatCellVideoViewModel* model = [kChatManager getRemoteUserDataModelSimilarUserID:infoMessage.key];
@@ -250,24 +231,7 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
         if (infoMessage.key <= 0) {
             return;
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSInteger index = NSNotFound;
-            for (int i = 0; i < self.infos.count; i++) {
-                STParticipantsInfo* info = self.infos[i];
-                if ([info.userId isEqualToString:infoMessage.key]) {
-                    index = i;
-                    break;
-                }
-            }
-            
-            if (index != NSNotFound) {
-                [self.infos removeObjectAtIndex:index];
-                [[NSNotificationCenter defaultCenter]
-                 postNotificationName:STParticipantsInfoDidRemove
-                 object:[NSIndexPath indexPathForRow:index inSection:0]];
-            }
-        });
-        //[[NSNotificationCenter defaultCenter] postNotificationName:STDidRecvDeleteRoomInfoMessageNotification object:message.content];
+        [self didLeftMasterUser:infoMessage.key];
     }
     else if ([message.content isKindOfClass:RongWhiteBoardMessage.class]) {
         RongWhiteBoardMessage *whiteMessage = (RongWhiteBoardMessage *)message.content;
@@ -276,65 +240,75 @@ NSNotificationName const STParticipantsInfoDidAdd = @"STParticipantsInfoDidAdd";
             self.chatViewController.chatWhiteBoardHandler.roomToken = whiteMessage.whiteBoardDict[kWhiteBoardRoomToken];
         }
     }
+    else if ([message.content isKindOfClass:STKickOffInfoMessage.class]) {
+        STKickOffInfoMessage *kickOffMessage = (STKickOffInfoMessage *)message.content;
+        if (kickOffMessage.kickOffDict) {
+            NSString *kickedUserId = kickOffMessage.kickOffDict[@"userId"];
+            if ([kickedUserId isEqualToString:kLoginManager.userID] && !kLoginManager.isMaster) {
+                kLoginManager.kickOffTime = [[NSDate date] timeIntervalSince1970];
+                kLoginManager.kickOffRoomNumber = kLoginManager.roomNumber;
+                kLoginManager.isKickOff = YES;
+                [self.chatViewController didClickHungUpButton];
+            }
+        }
+    }
 }
 
-//
-//- (void)didRecvSetRoomInfoNotification:(NSNotification*)notification {
-//    STSetRoomInfoMessage* infoMessage = (STSetRoomInfoMessage*)notification.object;
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        BOOL isFound = NO;
-//        for (STParticipantsInfo* info in self.infos) {
-//            if ([info.userId isEqualToString:infoMessage.key]) {
-//                isFound = YES;
-//                break;
-//            }
-//        }
-//        if (!isFound) {
-//            [self.dataSource addObject:infoMessage.info];
-//            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.dataSource.count-1 inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
-//        }
-//        [self updateParticipantsCount];
-//    });
-//}
-
-//- (void)didRecvDeleteRoomInfoNotification:(NSNotification*)notification {
-//    STDeleteRoomInfoMessage* infoMessage = (STDeleteRoomInfoMessage*)notification.object;
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        NSInteger index = NSNotFound;
-//        for (int i = 0; i < self.dataSource.count; i++) {
-//            STParticipantsInfo* info = self.dataSource[i];
-//            if ([info.userId isEqualToString:infoMessage.key]) {
-//                index = i;
-//                break;
-//            }
-//        }
-//
-//        if (index != NSNotFound) {
-//            [self.dataSource removeObjectAtIndex:index];
-//            [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
-//        }
-//        [self updateParticipantsCount];
-//    });
-//}
-
-//- (void)didLeaveUserNotification:(NSNotification*)notification {
-//    RongRTCRemoteUser* user = (RongRTCRemoteUser*)notification.object;
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        NSInteger index = NSNotFound;
-//        for (int i = 0; i < self.dataSource.count; i++) {
-//            STParticipantsInfo* info = self.dataSource[i];
-//            if ([info.userId isEqualToString:user.userId]) {
-//                index = i;
-//                break;
-//            }
-//        }
-//
-//        if (index != NSNotFound) {
-//            [self.dataSource removeObjectAtIndex:index];
-//            [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
-//        }
-//        [self updateParticipantsCount];
-//    });}
-
+#pragma mark - Private
+- (void)didLeftMasterUser:(NSString *)userId {
+    BOOL isLeftUserMaster = NO;
+    NSInteger index = NSNotFound;
+    for (int i = 0; i < self.infos.count; i++) {
+        STParticipantsInfo* info = self.infos[i];
+        if ([info.userId isEqualToString:userId]) {
+            index = i;
+            isLeftUserMaster = info.master;
+            break;
+        }
+    }
+    
+    if (isLeftUserMaster) {
+        [self.chatViewController.room getRoomAttributes:nil completion:^(BOOL isSuccess, RongRTCCode desc, NSDictionary * _Nullable attr) {
+            for (id key in attr) {
+                NSString *obj = attr[key];
+                NSDictionary *dicInfo = [NSJSONSerialization JSONObjectWithData:[obj dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+                STParticipantsInfo *info = [[STParticipantsInfo alloc] initWithDictionary:dicInfo];
+                for (int j = 0; j < self.infos.count; j++) {
+                    STParticipantsInfo *tmpInfo = self.infos[j];
+                    if ([tmpInfo.userId isEqualToString:info.userId]) {
+                        tmpInfo.master = info.master;
+                        if (info.master) {
+                            if ([info.userId isEqualToString:kLoginManager.userID]) {
+                                kLoginManager.isMaster = YES;
+                            }
+                            [self.chatViewController showAlertLabelWithAnimate:[NSString stringWithFormat:NSLocalizedString(@"chat_user_kick_become_master", nil), info.userName]];
+                        }
+                    }
+                }
+            }
+            
+            NSInteger leftUserIndex = NSNotFound;
+            for (int i = 0; i < self.infos.count; i++) {
+                STParticipantsInfo* info = self.infos[i];
+                if ([info.userId isEqualToString:userId]) {
+                    leftUserIndex = i;
+                    break;
+                }
+            }
+            
+            if (leftUserIndex != NSNotFound && [self.infos count] > leftUserIndex) {
+                [self.infos removeObjectAtIndex:leftUserIndex];
+            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:STParticipantsInfoDidUpdate object:nil];
+        }];
+    }
+    else {
+        if (index != NSNotFound) {
+            [self.infos removeObjectAtIndex:index];
+            [[NSNotificationCenter defaultCenter] postNotificationName:STParticipantsInfoDidRemove
+                                                                object:[NSIndexPath indexPathForRow:index inSection:0]];
+        }
+    }
+}
 
 @end

@@ -265,9 +265,12 @@
 
 /**
  URL 编码
- 
+
  @return 编码后的 URL
  */
 + (NSString *)encodeURL:(NSString *)url;
+
++ (NSData *)compressImage:(UIImage *)sourceImage;
+
 @end
 #endif

@@ -210,6 +210,14 @@
     self.excelView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.35];
     self.excelView.hidden = YES;
     [self.chatViewController.view addSubview:self.excelView];
+    
+    self.masterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (ScreenHeight-26)/2 + 30, ScreenWidth, 26)];
+    self.masterLabel.textAlignment = NSTextAlignmentCenter;
+    self.masterLabel.font = [UIFont systemFontOfSize:16];
+    self.masterLabel.backgroundColor = [UIColor clearColor];
+    self.masterLabel.hidden = YES;
+    self.masterLabel.textColor = [UIColor whiteColor];
+    [self.chatViewController.view addSubview:self.masterLabel];
 }
 
 - (void)initSwipeGesture
@@ -261,6 +269,11 @@
         default:
             break;
     }
+}
+
+- (void)dealloc {
+    [self.excelView removeFromSuperview];
+    self.excelView = nil;
 }
 
 @end

@@ -15,7 +15,7 @@
 
 @interface ChatViewBuilder : NSObject
 
-@property (nonatomic, strong) UILabel *infoLabel, *snifferLabel;
+@property (nonatomic, strong) UILabel *infoLabel, *snifferLabel, *masterLabel;
 @property (nonatomic, strong) BlinkExcelView *excelView;
 @property (nonatomic, strong) UIButton *hungUpButton, *openCameraButton, *speakerOnOffButton, *microphoneOnOffButton, *switchCameraButton, *whiteboardButton,*customVideoButton,*customAudioButton;
 @property (nonatomic, strong) DWBubbleMenuButton *upMenuView;

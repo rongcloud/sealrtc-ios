@@ -71,7 +71,7 @@ static LoginManager *sharedLoginManager = nil;
     
     BOOL isPlistExist = [CommonUtility isFileExistsAtPath:settingUserDefaultPath];
     if (isPlistExist)
-    {   
+    {
         _isGPUFilter = [settingUserDefaults boolForKey:Key_GPUFilter];
         _isSRTPEncrypt = [settingUserDefaults boolForKey:Key_SRTPEncrypt];
         _isTinyStream = [settingUserDefaults boolForKey:Key_TinyStreamMode];
@@ -85,9 +85,24 @@ static LoginManager *sharedLoginManager = nil;
         _phoneNumber = [settingUserDefaults valueForKey:Key_PhoneNumber];
         _countryCode = [settingUserDefaults valueForKey:Key_CountryCode];
         _regionName = [settingUserDefaults valueForKey:Key_RegionName];
+        if (!_regionName || [_regionName isEqualToString:@""]) {
+            _regionName = NSLocalizedString(@"login_input_region_china", nil);
+        }
         _mediaServerURL = [settingUserDefaults valueForKey:Key_MediaServerURL];
         _mediaServerSelectedRow = [settingUserDefaults integerForKey:Key_MediaServerRow];
         _mediaServerArray = [settingUserDefaults valueForKey:Key_MediaServerArray];
+        _privateAppServer = [settingUserDefaults valueForKey:@"privateAppServer"];
+        _privateIMServer = [settingUserDefaults valueForKey:@"privateIMServer"];
+        _privateNavi = [settingUserDefaults valueForKey:@"privateNavi"];
+        _privateAppSecret = [settingUserDefaults valueForKey:@"privateAppSecret"];
+        _privateAppKey = [settingUserDefaults valueForKey:@"privateAppKey"];
+        _isPrivateEnvironment = NO;
+        if ([settingUserDefaults valueForKey:@"isPrivateEnvironment"] && _privateNavi && _privateIMServer && _privateAppKey && _privateAppSecret) {
+            _isPrivateEnvironment = [[settingUserDefaults valueForKey:@"isPrivateEnvironment"] boolValue];
+        }
+        _kickOffTime = [settingUserDefaults integerForKey:Key_KickOffTime];
+        _kickOffRoomNumber = [settingUserDefaults valueForKey:Key_KickOffRoomNumber];
+        _isKickOff = [settingUserDefaults boolForKey:Key_IsKickOff];
     }
     else
     {
@@ -102,7 +117,11 @@ static LoginManager *sharedLoginManager = nil;
         self.isWaterMark = Value_Default_WaterMark;
         self.isAutoTest = Value_Default_AutoTest;
         self.phoneNumber = @"";
+        self.regionName = NSLocalizedString(@"login_input_region_china", nil);
         self.mediaServerSelectedRow = Value_Default_MediaServerRow;
+        self.kickOffTime = 0;
+        self.kickOffRoomNumber = @"";
+        self.isKickOff = NO;
     }
 }
 
@@ -257,10 +276,68 @@ static LoginManager *sharedLoginManager = nil;
     [settingUserDefaults synchronize];
 }
 
+-(void)setPrivateAppSecret:(NSString *)privateAppSecret{
+    _privateAppSecret = privateAppSecret;
+    [settingUserDefaults setObject:privateAppSecret forKey:@"privateAppSecret"];
+    [settingUserDefaults synchronize];
+}
+
+-(void)setPrivateNavi:(NSString *)privateNavi{
+    _privateNavi = privateNavi;
+    [settingUserDefaults setObject:privateNavi forKey:@"privateNavi"];
+    [settingUserDefaults synchronize];
+}
+
+-(void)setPrivateAppKey:(NSString *)privateAppKey{
+    _privateAppKey = privateAppKey;
+    [settingUserDefaults setObject:privateAppKey forKey:@"privateAppKey"];
+    [settingUserDefaults synchronize];
+}
+
+-(void)setPrivateIMServer:(NSString *)privateIMServer{
+    _privateIMServer = privateIMServer;
+    [settingUserDefaults setObject:privateIMServer forKey:@"privateIMServer"];
+    [settingUserDefaults synchronize];
+}
+
+-(void)setIsPrivateEnvironment:(BOOL)isPrivateEnvironment{
+    _isPrivateEnvironment = isPrivateEnvironment;
+    [settingUserDefaults setBool:isPrivateEnvironment forKey:@"isPrivateEnvironment"];
+    [settingUserDefaults synchronize];
+}
+
+-(void)setPrivateAppServer:(NSString *)privateAppServer{
+    _privateAppServer = privateAppServer;
+    [settingUserDefaults setObject:privateAppServer forKey:@"privateAppServer"];
+    [settingUserDefaults synchronize];
+    
+}
+
 - (void)setMediaServerArray:(NSArray *)mediaServerArray
 {
     _mediaServerArray = mediaServerArray;
     [settingUserDefaults setObject:mediaServerArray forKey:Key_MediaServerArray];
+    [settingUserDefaults synchronize];
+}
+
+- (void)setKickOffTime:(long long)kickOffTime
+{
+    _kickOffTime = kickOffTime;
+    [settingUserDefaults setInteger:kickOffTime forKey:Key_KickOffTime];
+    [settingUserDefaults synchronize];
+}
+
+- (void)setKickOffRoomNumber:(NSString *)kickOffRoomNumber
+{
+    _kickOffRoomNumber = kickOffRoomNumber;
+    [settingUserDefaults setObject:kickOffRoomNumber forKey:Key_KickOffRoomNumber];
+    [settingUserDefaults synchronize];
+}
+
+- (void)setIsKickOff:(BOOL)isKickOff
+{
+    _isKickOff = isKickOff;
+    [settingUserDefaults setBool:isKickOff forKey:Key_IsKickOff];
     [settingUserDefaults synchronize];
 }
 

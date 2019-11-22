@@ -82,4 +82,6 @@ typedef enum : NSUInteger {
 - (void)didConnectToUser:(NSString *)userId;
 - (void)receivePublishMessage;
 - (void)didLeaveRoom;
+- (void)showAlertLabelWithAnimate:(NSString *)text;
+
 @end

@@ -8,7 +8,7 @@
 
 #import "RongRTCAVOutputStream.h"
 #import <CoreMedia/CoreMedia.h>
-#import <UIkit/UIkit.h>
+#import <UIKit/UIKit.h>
 #import "RongRTCVideoCaptureParam.h"
 #import "RongRTCDefine.h"
 #import "RongRTCAudioMixerEngine.h"
@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param tag 标识
  @return 失败
  */
--(instancetype)initWithParameters:(nullable RongRTCStreamParams*)pars
+- (instancetype)initWithParameters:(nullable RongRTCStreamParams*)pars
                               tag:(NSString*)tag NS_UNAVAILABLE;
 
 /**
@@ -162,9 +162,17 @@ NS_ASSUME_NONNULL_BEGIN
  另外如果仅仅是文件声音混合，请直接使用 RongRTCAudioMixerEngine，使用更加简单方便
  
  @param pcmBuffer 声音 buffer
+ @param action 设置混音模式
  @return 是否混合成功
  */
 -(BOOL)writePCMBuffer:(NSData *)pcmBuffer action:(RTCAudioAction)action;
+
+/**
+ 将所有远端用户静音，注：该功能只是不播放接收到的音频数据
+ 
+ @param mute 是否静音所有远端用户，YES 为禁止，NO 为允许
+ */
+-(void)muteAllRemoteAudio:(BOOL)mute;
 
 @end
 

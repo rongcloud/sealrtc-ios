@@ -192,7 +192,7 @@ typedef NS_ENUM(NSInteger, RCConnectErrorCode) {
      重连过程中当前用户在其它设备上登录
      */
     RC_CONN_OTHER_DEVICE_LOGIN = 31023,
-    
+
     /*!
      连接被拒绝
 
@@ -221,7 +221,7 @@ typedef NS_ENUM(NSInteger, RCConnectErrorCode) {
      调用过connect之后，只有在token错误或者被踢下线或者用户logout的情况下才需要再次调用connect。SDK会自动重连，不需要应用多次调用connect来保证连接性。
      */
     RC_CONNECTION_EXIST = 34001,
-    
+
     /*!
      开发者接口调用时传入的参数错误
 
@@ -382,17 +382,22 @@ typedef NS_ENUM(NSInteger, RCErrorCode) {
      消息中敏感词已经被替换 （接收方可以收到被替换之后的消息）
      */
     RC_MSG_REPLACED_SENSITIVE_WORD = 21502,
-    
+
     /*!
      小视频消息超限
      */
     RC_SIGHT_MSG_DURATION_LIMIT_EXCEED = 34002,
-    
+
     /*!
      GIF 消息大小超限
      */
     RC_GIF_MSG_SIZE_LIMIT_EXCEED = 34003,
 
+};
+
+typedef NS_ENUM(NSInteger, RCDBErrorCode) {
+    RCDBOpenSuccess = 0,
+    RCDBOpenFailed = 33002,
 };
 
 #pragma mark - 连接状态
@@ -612,22 +617,22 @@ typedef NS_ENUM(NSUInteger, RCConversationType) {
      推送服务会话
      */
     ConversationType_PUSHSERVICE = 9,
-    
+
     /*!
      加密会话（仅对部分私有云用户开放，公有云用户不适用）
      */
     ConversationType_Encrypted = 11,
-    
+
     /**
      * RTC 会话
      */
     ConversationType_RTC = 12,
-    
+
     /*!
      无效类型
      */
     ConversationType_INVALID
-    
+
 };
 
 #pragma mark RCConversationNotificationStatus - 会话提醒状态
@@ -758,7 +763,7 @@ typedef NS_ENUM(NSUInteger, RCSentStatus) {
      发送已取消
      */
     SentStatus_CANCELED = 70,
-    
+
     /*!
      无效类型
      */
@@ -828,11 +833,16 @@ typedef NS_ENUM(NSUInteger, RCMediaType) {
      其他文件
      */
     MediaType_FILE = 4,
-    
+
     /*!
      小视频
      */
-    MediaType_SIGHT = 5
+    MediaType_SIGHT = 5,
+
+    /*!
+     合并转发
+     */
+    MediaType_HTML = 6
 };
 
 #pragma mark RCMediaType - 消息中@提醒的类型
@@ -853,28 +863,25 @@ typedef NS_ENUM(NSUInteger, RCMentionedType) {
 
 /**
  语音消息采样率
- 
+
  - RCSample_Rate_8000: 8KHz
  - RCSample_Rate_16000: 16KHz
  */
-typedef NS_ENUM(NSInteger,RCSampleRate)
-{
-    RCSample_Rate_8000 = 1,         //8KHz
-    RCSample_Rate_16000 = 2,        //16KHz
+typedef NS_ENUM(NSInteger, RCSampleRate) {
+    RCSample_Rate_8000 = 1, // 8KHz
+    RCSample_Rate_16000 = 2, // 16KHz
 };
 
 /**
  语音消息类型
- 
+
  - RCVoiceMessageTypeOrdinary: 普通音质语音消息
  - RCVoiceMessageTypeHighQuality: 高音质语音消息
  */
-typedef NS_ENUM(NSInteger,RCVoiceMessageType)
-{
+typedef NS_ENUM(NSInteger, RCVoiceMessageType) {
     RCVoiceMessageTypeOrdinary = 1,
     RCVoiceMessageTypeHighQuality = 2,
 };
-
 
 #pragma mark - 公众服务相关
 
@@ -1040,6 +1047,12 @@ typedef NS_ENUM(NSUInteger, RCCSEvaType) {
  日志级别
  */
 typedef NS_ENUM(NSUInteger, RCLogLevel) {
+
+    /*!
+     *  不输出任何日志
+     */
+    RC_Log_Level_None = 0,
+
     /*!
      *  只输出错误的日志
      */
@@ -1054,12 +1067,12 @@ typedef NS_ENUM(NSUInteger, RCLogLevel) {
      *  输出错误、警告和一般的日志
      */
     RC_Log_Level_Info = 3,
-    
+
     /*!
      *  输出输出错误、警告和一般的日志以及 debug 日志
      */
     RC_Log_Level_Debug = 4,
-    
+
     /*!
      *  输出所有日志
      */

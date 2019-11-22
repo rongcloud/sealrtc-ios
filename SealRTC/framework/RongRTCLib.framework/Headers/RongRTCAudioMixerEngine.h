@@ -11,29 +11,65 @@
 #import <RongIMLib/RongIMLib.h>
 
 typedef enum : NSUInteger {
-    // 只进行音频混合，不播放音频数据
+    /**
+     只进行音频混合，不播放音频数据
+     */
     RTCAudioActionOnlyMix,
-    // 只进行声音文件的播放，不混合声音数据，不发送声音文件数据（发送 Mic 数据），
+    
+    /**
+     只进行声音文件的播放，不混合声音数据，不发送声音文件数据（发送 Mic 数据），
+    */
     RTCAudioActionOnlyPlay,
-    // 混合音频的同时播放音频
+    
+    /**
+     混合音频的同时播放音频
+     */
     RTCAudioActionMixAndPlay,
-    // 使用提供的音频源进行发送，不采集 mic 数据
+    /**
+     使用提供的音频源进行发送，不采集 mic 数据
+     */
     RTCAudioActionReplace,
-    // 直接使用 Mic 采集的音频数据进行发送（包含录制的人声和从扬声器出来的声音）
+    /**
+     直接使用 Mic 采集的音频数据进行发送（包含录制的人声和从扬声器出来的声音）
+     */
     RTCAudioActionLoopback
+    
 } RTCAudioAction;
 
 typedef enum : NSUInteger {
+    
+    /**
+     normal
+     */
     RTCMixEngineStatusNormal,
+    
+    /**
+     准备中
+     */
     RTCMixEngineStatusPrepare,
+    /**
+     播放中（或混音中）
+     */
     RTCMixEngineStatusPlaying,
+    /**
+     暂停中
+     */
     RTCMixEngineStatusPause,
 } RTCMixEngineStatus;
 
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ 混音引擎
+ */
 @interface RongRTCAudioMixerEngine : NSObject
+
+/**
+ 获取混音引擎单例
+
+ @return 混音引擎单例
+ */
 +(RongRTCAudioMixerEngine *)sharedEngine;
 
 /**

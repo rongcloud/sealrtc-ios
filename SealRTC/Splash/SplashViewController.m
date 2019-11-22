@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *loadingLabel;
 
+@property (weak, nonatomic) IBOutlet UIImageView *logo;
 @end
 
 @implementation SplashViewController
@@ -20,6 +21,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.loadingLabel.text = NSLocalizedString(@"splash_loading", nil);
+#ifdef IS_PRIVATE_ENVIRONMENT
+    self.logo.image = [UIImage imageNamed:@"splash_logo_private"];
+#endif
 }
 
 - (void)didReceiveMemoryWarning {

@@ -10,7 +10,7 @@
 #import "CommonUtility.h"
 #import "SXAlertView.h"
 #import "LoginViewController.h"
-#import "SettingDebugModeViewController.h"
+
 
 static NSUserDefaults *settingUserDefaults = nil;
 
@@ -43,15 +43,6 @@ static NSUserDefaults *settingUserDefaults = nil;
     [self loadPlistData];
     self.sectionNumber = 5;
     [self.settingViewBuilder.tableView reloadData];
-    
-#ifdef DEBUG
-    if (!tapGestureRecognizer)
-    {
-        tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizerAction)];
-        [tapGestureRecognizer setNumberOfTapsRequired:5];
-    }
-    [self.navigationController.navigationBar addGestureRecognizer:tapGestureRecognizer];
-#endif
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -99,14 +90,6 @@ static NSUserDefaults *settingUserDefaults = nil;
 - (void)waterMarkAction
 {
     [kLoginManager setIsWaterMark:self.settingViewBuilder.waterMarkSwitch.on];
-}
-
-#pragma mark - tap gesture action
-- (void)tapGestureRecognizerAction
-{
-    SettingDebugModeViewController *settingDebugModeViewController = [[SettingDebugModeViewController alloc] init];
-    if (![self.navigationController.topViewController isKindOfClass:[SettingDebugModeViewController class]])
-        [self.navigationController pushViewController:settingDebugModeViewController animated:YES];
 }
 
 #pragma mark - share setting UserDefaults

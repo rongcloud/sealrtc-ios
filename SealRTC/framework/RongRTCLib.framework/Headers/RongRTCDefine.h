@@ -90,10 +90,11 @@ typedef NS_ENUM(NSUInteger, RTCMediaType) {
 };
 
 typedef NS_ENUM(NSUInteger, RongRTCVideoSizePreset) {
+    RongRTCVideoSizePreset176x144,
     /**
      分辨率 256X144
      */
-    RongRTCVideoSizePreset256x144        = 1,
+    RongRTCVideoSizePreset256x144,
     /**
      分辨率 320X240
      */
@@ -123,7 +124,7 @@ typedef NS_ENUM(NSUInteger, RongRTCVideoSizePreset) {
 /**
  视频方向
  */
-typedef NS_ENUM(NSUInteger, RongRTCVideoOrientation) {
+typedef NS_ENUM(NSUInteger, RonngRTCVideoOrientation) {
     /**
      竖立，home 键在下部
      */
@@ -140,12 +141,40 @@ typedef NS_ENUM(NSUInteger, RongRTCVideoOrientation) {
      竖立，home 键在右侧
      */
     RonngRTCVideoOrientationLandscapeLeft,
+} __deprecated_msg("已废弃，请勿使用。");
+
+/**
+ 视频方向
+ */
+typedef NS_ENUM(NSUInteger, RongRTCVideoOrientation) {
+    /**
+     竖立，home 键在下部
+     */
+    RongRTCVideoOrientationPortrait            = 1,
+    /**
+     竖立，home 键在上部
+     */
+    RongRTCVideoOrientationPortraitUpsideDown,
+    /**
+     横屏，home 键在左侧
+     */
+    RongRTCVideoOrientationLandscapeRight,
+    /**
+     竖立，home 键在右侧
+     */
+    RongRTCVideoOrientationLandscapeLeft,
 };
+
+
 
 /**
  帧率
  */
 typedef NS_ENUM(NSUInteger, RongRTCVideoFPS) {
+    /**
+    每秒 10 帧
+    */
+    RongRTCVideoFPS10,
     /**
      每秒 15 帧
      */

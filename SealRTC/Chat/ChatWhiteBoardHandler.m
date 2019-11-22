@@ -288,10 +288,12 @@
 #pragma mark - 退出房间
 - (void)leaveRoom
 {
-    self.isJoined = NO;
-    [self.whiteSDK setCommonCallbackDelegate:nil];
-    [self.whiteRoom disconnect:^{
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.isJoined = NO;
+        [self.whiteSDK setCommonCallbackDelegate:nil];
+        [self.whiteRoom disconnect:^{
+        }];
+    });
 }
 
 #pragma mark - 删除房间

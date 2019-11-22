@@ -7,6 +7,7 @@
 //
 
 #import "RCFetchTokenManager.h"
+#import "LoginManager.h"
 #include <CommonCrypto/CommonCrypto.h>
 
 
@@ -63,11 +64,20 @@
     if (!portraitUri) portraitUri = @"http";
     
     NSString *api = [NSString stringWithFormat:@"%@/%@",RCIM_API_SERVER,suffix];
-    
+    if (kLoginManager.isPrivateEnvironment) {
+        NSString *serverAPI = kLoginManager.privateIMServer;
+        if (![serverAPI hasPrefix:@"http"]) {
+            serverAPI = [@"https://" stringByAppendingFormat:@""];
+        }
+        api = [NSString stringWithFormat:@"%@/%@",serverAPI,suffix];
+    }
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:api]];
     request.HTTPMethod = @"POST";
     
     [request setValue:RCIMAPPKey forHTTPHeaderField:@"App-Key"];
+    if (kLoginManager.isPrivateEnvironment) {
+        [request setValue:kLoginManager.privateAppKey forHTTPHeaderField:@"App-Key"];
+    }
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
 
     NSString *Nonce = [NSString stringWithFormat:@"%u",100000+arc4random()%100000];
@@ -77,6 +87,9 @@
     [request setValue:Timestamp forHTTPHeaderField:@"Timestamp"];
 
     NSString *Signature = [NSString stringWithFormat:@"%@%@%@",RCIM_API_SECRET,Nonce,Timestamp];
+    if (kLoginManager.isPrivateEnvironment) {
+        Signature = [NSString stringWithFormat:@"%@%@%@",kLoginManager.privateAppSecret,Nonce,Timestamp];
+    }
     [request setValue:Signature.sha1 forHTTPHeaderField:@"Signature"];
     NSString *bodyStr = [NSString stringWithFormat:@"userId=%@&portraitUri=%@&name=%@",userId,portraitUri,username];
     request.HTTPBody = [bodyStr dataUsingEncoding:NSUTF8StringEncoding];

@@ -53,6 +53,12 @@
 "chat_white_delete" = "";
 "chat_white_join_failed" = "White board service error, Please try again later!";
 "chat_white_open_failed" = "No white board created!";
+"chat_volume_setting" = "Volume Settings";
+"chat_user_kick" = "Remove";
+"chat_user_kick_master" = "Admin";
+"chat_user_kick_msg" = "Remove %@?";
+"chat_user_kick_become_master" = "%@ becomes new admin";
+"chat_user_join_room" = "%@ joined room";
 
 
 "login_input_meeting_welcome" = "Welcome to SealRTC Audio/Video Meeting";
@@ -85,11 +91,31 @@
 "login_input_phone_validate_logon" = "Verify Login";
 "login_input_count_down_sec" = "Sec";
 "login_input_verify_error" = "Verification Code Error";
-"login_input_user_name"="User Name";
-"login_input_check_version"="V%@ version detected\nupdate?";
+"login_input_user_name" = "User Name";
+"login_input_check_version" = "V%@ version detected\nupdate?";
+"login_input_region_china" = "China";
+"login_input_kickoff_msg" = "You were removed from the room.\nTry again later";
 
 
 "setting_title" = "Setting";
+
+"setting_private_environment" = "Connection Setting";
+"setting_private_environment_title" = "Environment Setting";
+
+"setting_private_environment_appkey" = "AppKey";
+"setting_private_environment_appsecret" = "AppSecret";
+"setting_private_environment_naviserver" = "Private NavServer address";
+"setting_private_environment_serverapi" = "Private Server API address";
+"setting_private_environment_appserver" = "APP Server address(Optional)";
+
+"setting_private_environment_placeholder0" = "AppKey";
+"setting_private_environment_placeholder1" = "AppSecret";
+"setting_private_environment_placeholder2" = "http(s)://cn.xxx.com or IP + port address";
+"setting_private_environment_placeholder3" = "http(s)://cn.xxx.com or IP + port address";
+"setting_private_environment_placeholder4" = "http(s)://cn.xxx.com or IP + port address";
+
+
+
 "setting_resolution_ratio" = "Resolution Ratio";
 "setting_frame_rate" = "Frame Rate";
 "setting_code_rate" = "Max Code Rate";

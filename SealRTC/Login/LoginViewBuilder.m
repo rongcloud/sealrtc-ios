@@ -43,7 +43,11 @@
     
     //logo
     self.loginIconImageView = [[UIImageView alloc] initWithFrame:CGRectMake((ScreenWidth - 75) / 2, 150, 75, 75)];
+#ifdef IS_PRIVATE_ENVIRONMENT
+    self.loginIconImageView.image = [UIImage imageNamed:@"splash_logo_private"];
+#else
     self.loginIconImageView.image = [UIImage imageNamed:@"splash_logo"];
+#endif
     [self.loginViewController.view addSubview:self.loginIconImageView];
    
     //下方输入view
@@ -99,7 +103,7 @@
     self.roomNumberTextField.font = [UIFont systemFontOfSize:18];
     self.roomNumberTextField.textColor = [UIColor colorWithRed:34.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0];
     self.roomNumberTextField.textAlignment = NSTextAlignmentLeft;
-    self.roomNumberTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    self.roomNumberTextField.keyboardType = UIKeyboardTypeAlphabet;
     self.roomNumberTextField.returnKeyType = UIReturnKeyDone;
     self.roomNumberTextField.borderStyle = UITextBorderStyleRoundedRect;
     self.roomNumberTextField.placeholder = NSLocalizedString(@"login_input_meeting_room_NO", nil);
@@ -107,7 +111,6 @@
     self.roomNumberTextField.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
     [self.roomNumberTextField addTarget:self.loginViewController action:@selector(roomNumberTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [self.inputNumPasswordView addSubview:self.roomNumberTextField];
-    
     
     // 用户名称
     self.usernameTextField = [[UITextField alloc]initWithFrame:CGRectMake(30, self.roomNumberTextField.frame.origin.y + self.roomNumberTextField.frame.size.height + 10, ScreenWidth - 60, 44)];
@@ -121,14 +124,19 @@
     self.usernameTextField.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
     [self.usernameTextField addTarget:self.loginViewController action:@selector(userNameTextfieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [self.inputNumPasswordView addSubview:self.usernameTextField];
-
+    
+    originY = self.usernameTextField.frame.origin.y;
+    CGFloat height = self.usernameTextField.frame.size.height;
+    
+#ifndef IS_PRIVATE_ENVIRONMENT
+    //国家和地区
     UITextField* loginCountryTxtField = [[UITextField alloc] initWithFrame:(CGRect){30,self.usernameTextField.frame.origin.y + self.usernameTextField.frame.size.height + 10,ScreenWidth - 60,44}];
      //loginCountryTxtField.textColor = [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:153.0f/255.0f alpha:1];
     loginCountryTxtField.font = [UIFont systemFontOfSize:18];
     //countryTxtField.textColor = [UIColor colorWithRed:34.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0];
     loginCountryTxtField.textAlignment = NSTextAlignmentLeft;
     loginCountryTxtField.borderStyle = UITextBorderStyleRoundedRect;
-    loginCountryTxtField.text = NSLocalizedString(@"select_country", nil);
+    loginCountryTxtField.text = [NSString stringWithFormat:NSLocalizedString(@"select_country_fmt", nil), kLoginManager.regionName];
     loginCountryTxtField.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
     UILabel* loginArrowLabel = [[UILabel alloc] initWithFrame:(CGRect){0,0,44,44}];
     loginArrowLabel.textAlignment = NSTextAlignmentCenter;
@@ -139,10 +147,12 @@
     loginCountryTxtField.delegate = self.loginViewController;
     [self.inputNumPasswordView addSubview:loginCountryTxtField];
     self.loginCountryTxtField = loginCountryTxtField;
-
     
+    originY = loginCountryTxtField.frame.origin.y;
+    height = self.loginCountryTxtField.frame.size.height;
+#endif
     //手机号
-    self.phoneNumLoginTextField = [[UITextField alloc] initWithFrame:CGRectMake(30, loginCountryTxtField.frame.origin.y + loginCountryTxtField.frame.size.height + 10, ScreenWidth - 60, 44)];
+    self.phoneNumLoginTextField = [[UITextField alloc] initWithFrame:CGRectMake(30, originY + height + 10, ScreenWidth - 60, 44)];
     self.phoneNumLoginTextField.font = [UIFont systemFontOfSize:18];
     self.phoneNumLoginTextField.textColor = [UIColor colorWithRed:34.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0];
     self.phoneNumLoginTextField.textAlignment = NSTextAlignmentLeft;

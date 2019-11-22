@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString* userName;
 @property (nonatomic, assign, readonly) long long joinTime;
 @property (nonatomic, assign, readonly) STJoinMode joinMode;
+@property (nonatomic, assign) NSInteger master;
 
 @end
 

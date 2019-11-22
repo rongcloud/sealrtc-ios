@@ -53,6 +53,12 @@
 "chat_white_delete" = "删除";
 "chat_white_join_failed" = "白板服务错误，请稍后重试";
 "chat_white_open_failed" = "房间内未创建白板";
+"chat_volume_setting" = "音量设置";
+"chat_user_kick" = "移除用户";
+"chat_user_kick_master" = "管理员";
+"chat_user_kick_msg" = "请确认是否移除%@?";
+"chat_user_kick_become_master" = "%@成为新管理员";
+"chat_user_join_room" = "%@加入会议";
 
 
 "login_input_meeting_welcome" = "欢迎体验高清晰低延迟的实时音视频会议";
@@ -85,11 +91,29 @@
 "login_input_phone_validate_logon" = "验证登录";
 "login_input_count_down_sec" = "秒";
 "login_input_verify_error" = "验证码错误, 请重新获取";
-"login_input_user_name"="请输入用户名称";
-"login_input_check_version"="检测到新版本V%@\n是否升级?";
+"login_input_user_name" = "请输入用户名称";
+"login_input_check_version" = "检测到新版本V%@\n是否升级?";
+"login_input_region_china" = "中国";
+"login_input_kickoff_msg" = "你已经被管理员移出房间,\n请稍后再尝试加入";
 
 
 "setting_title" = "设置";
+
+"setting_private_environment" = "连接设置";
+"setting_private_environment_title" = "环境设置";
+
+"setting_private_environment_appkey" = "AppKey";
+"setting_private_environment_appsecret" = "AppSecret";
+"setting_private_environment_naviserver" = "私有环境 NavServer 地址";
+"setting_private_environment_serverapi" = "私有环境 Server API 地址";
+"setting_private_environment_appserver" = "APPServer(可选，未部署 AppServer 可不设置)";
+"setting_private_environment_placeholder0" = "应用的 AppKey";
+"setting_private_environment_placeholder1" = "应用的 App Secret";
+"setting_private_environment_placeholder2" = "http(s)://cn.xxx.com 或 IP + 端口 地址";
+"setting_private_environment_placeholder3" = "http(s)://cn.xxx.com 或 IP + 端口 地址";
+"setting_private_environment_placeholder4" = "http(s)://cn.xxx.com 或 IP + 端口 地址";
+
+
 "setting_resolution_ratio" = "分辨率";
 "setting_frame_rate" = "帧率";
 "setting_code_rate" = "最大码率";
@@ -125,9 +149,9 @@
 
 "me"="自己";
 
-"video_mode"="视频模式加入";
-"audio_mode"="音频模式加入";
-"receive_only_mode"="旁观者模式加入";
+"video_mode"="视频模式";
+"audio_mode"="音频模式";
+"receive_only_mode"="旁听者模式";
 
 "close"="关闭";
 "online_user_cout_fmt"="在线人数 %@ 人";

@@ -320,6 +320,10 @@ static ChatManager *sharedMeetingManager = nil;
     if ([muArray count] > kLoginManager.maxCodeRateIndex)
         self.captureParam.maxBitrate = [muArray[kLoginManager.maxCodeRateIndex] integerValue];
     
+    //最小码率
+    if ([muArray count] > kLoginManager.minCodeRateIndex)
+        self.captureParam.minBitrate = [muArray[kLoginManager.minCodeRateIndex] integerValue];
+    
     //帧率
     switch (kLoginManager.frameRateIndex) {
         case 0:

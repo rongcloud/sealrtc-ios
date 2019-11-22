@@ -35,7 +35,11 @@
     NSInteger section = self.settingViewController.indexPath.section;
     switch (section)
     {
+#ifdef IS_PRIVATE_ENVIRONMENT
+        case 1:
+#else
         case 0:
+#endif
         {
             if (kLoginManager.resolutionRatioIndex != selectedRow)
             {

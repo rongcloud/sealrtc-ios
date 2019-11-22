@@ -20,11 +20,13 @@
 #import "STParticipantsInfo.h"
 #import "STSetRoomInfoMessage.h"
 #import "STDeleteRoomInfoMessage.h"
+#import "STKickOffInfoMessage.h"
 #import "RTActiveWheel.h"
 #import "RongRTCFileCapturer.h"
 #import "ChatLocalVideoRender.h"
+#import "RongAudioVolumeControl.h"
 
-@interface ChatViewController () <UINavigationControllerDelegate,UIAlertViewDelegate,RongRTCFileCapturerDelegate,RCConnectionStatusChangeDelegate>
+@interface ChatViewController () <UINavigationControllerDelegate,UIAlertViewDelegate,RongRTCFileCapturerDelegate,RCConnectionStatusChangeDelegate,RongAudioVolumeControlDelegate>
 {
     CGFloat localVideoWidth, localVideoHeight;
     UIButton *silienceButton;
@@ -35,6 +37,8 @@
     RongRTCFileCapturer *fileCapturer;
     RongRTCAVOutputStream *videoOutputStream;
     BOOL isStartPublishAudio;
+    BOOL isShowController;
+    BOOL isShowVolumeControl;
 }
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *mainVieTopMargin;
@@ -49,6 +53,10 @@
 @property (nonatomic, strong) NSMutableArray<STParticipantsInfo*>* dataSource;
 @property (nonatomic, strong) ChatLocalVideoRender *localFileVideoView;
 @property (weak, nonatomic) IBOutlet UILabel *connectingLabel;
+@property (nonatomic, strong) UIButton *audioControl;
+@property (nonatomic, strong) RongAudioVolumeControl *controller;
+@property (nonatomic, strong) UIButton *audioBubbleButton;
+@property (nonatomic, strong) STParticipantsTableViewController *participantsTableViewController;
 @end
 
 @implementation ChatViewController
@@ -97,6 +105,7 @@
     [self addObserver];
     
     self.localView = [[RongRTCLocalVideoView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+    self.localView.frameAnimated = NO;
     self.localView.fillMode = RCVideoFillModeAspect;
     [self.videoMainView addSubview:self.localView];
     
@@ -104,9 +113,11 @@
     [kChatManager configParameter];
     self.chatGPUImageHandler = [[ChatGPUImageHandler alloc] init];
     
+    __weak typeof(self) weakSelf = self;
+    
     if (kLoginManager.isGPUFilter || kLoginManager.isWaterMark) {
         [RongRTCAVCapturer sharedInstance].videoSendBufferCallback = ^CMSampleBufferRef _Nullable(BOOL valid, CMSampleBufferRef  _Nullable sampleBuffer) {
-            CMSampleBufferRef processedSampleBuffer = [self.chatGPUImageHandler onGPUFilterSource:sampleBuffer];
+            CMSampleBufferRef processedSampleBuffer = [weakSelf.chatGPUImageHandler onGPUFilterSource:sampleBuffer];
             return processedSampleBuffer;
         };
     }
@@ -115,6 +126,8 @@
         [RongRTCAVCapturer sharedInstance].videoSendBufferCallback = nil;
     }
 
+    
+    
     kChatManager.localUserDataModel = nil;
     kChatManager.localUserDataModel = [[ChatCellVideoViewModel alloc] initWithView:self.localView];
     kChatManager.localUserDataModel.streamID = kLoginManager.userID;
@@ -142,8 +155,36 @@
     kChatManager.localFileVideoModel.isShowVideo = YES;
     
     [[RCIMClient sharedRCIMClient] setRCConnectionStatusChangeDelegate:self];
+    
+    RongAudioVolumeControl *control = [[RongAudioVolumeControl alloc]initWithFrame:CGRectMake(0, 0, 170, 90)];
+    control.delegate = self;
+    control.center = CGPointMake(self.view.frame.size.width/2, 250);
+    control.layer.masksToBounds = YES;
+    control.layer.cornerRadius = 5.f;
+    control.hidden = YES;
+    [self.view addSubview:control];
+    
+    self.controller = control;
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0.f, 0.f, 36.f, 36.f);
+    [button addTarget:self action:@selector(audioControlButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [button setImage:[UIImage imageNamed:@"chat_av_audio_adjust_gray"] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"chat_av_audio_adjust"] forState:UIControlStateSelected];
+    self.audioControl = button;
+    self.audioControl.hidden = YES;
+    [self.view addSubview:self.audioControl];
 }
 
+-(void)audioControlButtonClick:(UIButton *)button{
+    button.selected = !button.selected;
+    self.controller.hidden = !button.selected;
+    isShowController = !self.controller.hidden;
+}
+
+-(void)volumeValueChanged:(NSInteger)value{
+    [RongRTCAudioMixerEngine sharedEngine].volume = value/10.0;
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -210,6 +251,7 @@
 - (void)dealloc
 {
     self.collectionView = nil;
+    self.participantsTableViewController = nil;
     _chatWhiteBoardHandler = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -324,6 +366,11 @@
             [self.chatGPUImageHandler transformWaterMark:isTrans];
         }
     }];
+    
+    CGPoint point = [self.audioBubbleButton convertPoint:self.audioBubbleButton.frame.origin toView:self.view];
+    self.audioControl.frame = CGRectMake(point.x - 45, point.y, self.audioControl.frame.size.width, self.audioControl.frame.size.height);
+    self.controller.center = CGPointMake(size.width/2, point.y + 60);
+    
 }
 
 #pragma mark - status bar
@@ -391,8 +438,20 @@
             _collectionViewTopMargin.constant = 0;
         }
     }
-
     self.isHiddenStatusBar = flag;
+    if (flag) {
+        self.audioControl.hidden = YES;
+        self.controller.hidden = YES;
+    }
+    else{
+        if (isShowController) {
+            self.controller.hidden = NO;
+        }
+        if (isShowVolumeControl) {
+            self.audioControl.hidden = NO;
+        }
+    }
+    
 }
 
 #pragma mark - touch event
@@ -433,7 +492,8 @@
     [[RCIMClient sharedRCIMClient] registerMessageType:STSetRoomInfoMessage.class];
     [[RCIMClient sharedRCIMClient] registerMessageType:STDeleteRoomInfoMessage.class];
     [[RCIMClient sharedRCIMClient] registerMessageType:RongWhiteBoardMessage.class];
-    [[RongRTCEngine sharedEngine] setMediaServerUrl:kLoginManager.mediaServerURL];
+    [[RCIMClient sharedRCIMClient] registerMessageType:STKickOffInfoMessage.class];
+    if (ENABLE_MANUAL_MEDIASERVER) [[RongRTCEngine sharedEngine] setMediaServerUrl:kLoginManager.mediaServerURL];
     [[RongRTCEngine sharedEngine] joinRoom:kLoginManager.roomNumber completion:^(RongRTCRoom * _Nullable room, RongRTCCode code) {
        
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -474,11 +534,15 @@
     [UIApplication sharedApplication].idleTimerDisabled = YES;
     self.chatRongRTCRoomDelegateImpl.infos = self.dataSource;
     self.room.delegate = self.chatRongRTCRoomDelegateImpl;
+    
+    kLoginManager.isMaster = [self.room.remoteUsers count] ? NO : YES;
+    NSInteger master = kLoginManager.isMaster ? 1 : 0;
     long long timestamp = [[NSDate date] timeIntervalSince1970] * 1000;
     STParticipantsInfo* info  = [[STParticipantsInfo alloc] initWithDictionary:@{@"userId":[RCIMClient sharedRCIMClient].currentUserInfo.userId,
                                                                                  @"userName":kLoginManager.username,
                                                                                  @"joinMode":@(self.chatMode),
-                                                                                 @"joinTime":@(timestamp)
+                                                                                 @"joinTime":@(timestamp),
+                                                                                 @"master":@(master)
                                                                                  }];
     STSetRoomInfoMessage* message = [[STSetRoomInfoMessage alloc] initWithInfo:info forKey:[RCIMClient sharedRCIMClient].currentUserInfo.userId];
     [self.room setRoomAttributeValue:[info toJsonString] forKey:[RCIMClient sharedRCIMClient].currentUserInfo.userId message:message completion:^(BOOL isSuccess, RongRTCCode desc) {
@@ -686,6 +750,7 @@
             if (![kChatManager isContainRemoteUserFromStreamID:streamID] || model.cellVideoView == nil) {
                 RongRTCRemoteVideoView *view = [[RongRTCRemoteVideoView alloc] initWithFrame:CGRectMake(0, 0, 90, 120)];
                 view.fillMode = RCVideoFillModeAspectFill;
+                view.frameAnimated = NO;
                 [stream setVideoRender:view];
                 
                 ChatCellVideoViewModel *chatCellVideoViewModel = [[ChatCellVideoViewModel alloc] initWithView:view];
@@ -731,6 +796,7 @@
             
             RongRTCRemoteVideoView *view = [[RongRTCRemoteVideoView alloc] initWithFrame:CGRectMake(0, 0, 90, 120)];
             view.fillMode = RCVideoFillModeAspectFill;
+            view.frameAnimated = NO;
             
             ChatCellVideoViewModel *chatCellVideoViewModel = [[ChatCellVideoViewModel alloc] initWithView:view];
             chatCellVideoViewModel.streamID = stream.streamId;
@@ -766,39 +832,13 @@
                 if (inStream.streamType != RTCMediaTypeVideo) {
                     continue;
                 }
-                
-                NSString *sid = inStream.streamId;
                 if (isSuccess) {
                     FwLogV(RC_Type_RTC,@"A-appSubscribeStream-T",@"%@all subscribe streams success",@"sealRTCApp:");
                     DLog(@"subscribeAVStream Success");
-//                    if (kLoginManager.isAutoTest) {
-//                        // 自动化使用
-////                        dispatch_async(dispatch_get_main_queue(), ^{
-//                            ChatCellVideoViewModel *chatCellVideoViewModel = [kChatManager getRemoteUserDataModelFromStreamID:sid];
-//                            chatCellVideoViewModel.isSubscribeSuccess = YES;
-//                            chatCellVideoViewModel.subscribeLog = @"订阅成功了";
-//                            NSInteger index = [kChatManager indexOfRemoteUserDataArray:sid];
-//                            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-//                            DLog(@"LLH.....subscribeAVStream success");
-//                            [self.collectionView reloadData];
-////                        });
-//                    }
                 }
                 else {
                     FwLogV(RC_Type_RTC,@"A-appSubscribeStream-T",@"%@all subscribe streams error",@"sealRTCApp:");
                     DLog(@"subscribeAVStream Failed, Desc: %@", @(desc));
-//                    if (kLoginManager.isAutoTest) {
-//                        // 自动化使用
-////                        dispatch_async(dispatch_get_main_queue(), ^{
-//                            ChatCellVideoViewModel *chatCellVideoViewModel = [kChatManager getRemoteUserDataModelFromStreamID:sid];
-//                            chatCellVideoViewModel.isSubscribeSuccess = NO;
-//                            chatCellVideoViewModel.subscribeLog = [@"" stringByAppendingFormat:@"%ld",desc];
-//                            NSInteger index =[kChatManager indexOfRemoteUserDataArray:sid];
-//                            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-//                            DLog(@"LLH.....subscribeAVStream fail: %zd", index);
-//                            [self.collectionView reloadData];
-////                        });
-//                    }
                 }
             }
         }];
@@ -807,18 +847,6 @@
 
 - (void)didConnectToUser:(NSString *)userId {
     FwLogV(RC_Type_RTC,@"A-appConnectToStream-T",@"%@appConnectTostream collectionview to render",@"sealRTCApp:");
-//    if (kLoginManager.isAutoTest) {
-//        // 自动化使用
-////        dispatch_async(dispatch_get_main_queue(), ^{
-//            ChatCellVideoViewModel *chatCellVideoViewModel = [kChatManager getRemoteUserDataModelFromStreamID:userId];
-//            chatCellVideoViewModel.isConnectSuccess = YES;
-//            chatCellVideoViewModel.connectLog = @"流通了";
-//            NSInteger index =[kChatManager indexOfRemoteUserDataArray:userId];
-//            DLog(@"LLH...... didConnectToUser index: %zd", index);
-//            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-//            [self.collectionView reloadData];
-////        });
-//    }
 }
 
 - (void)unsubscribeRemoteResource:(NSArray<RongRTCAVInputStream *> *)streams
@@ -861,10 +889,24 @@
 }
 
 #pragma mark - show alert label
-- (void)showAlertLabelWithString:(NSString *)text;
+- (void)showAlertLabelWithString:(NSString *)text
 {
     self.alertLabel.hidden = NO;
     self.alertLabel.text = text;
+}
+
+- (void)showAlertLabelWithAnimate:(NSString *)text
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.chatViewBuilder.masterLabel.hidden = NO;
+        self.chatViewBuilder.masterLabel.alpha = 1;
+        self.chatViewBuilder.masterLabel.text = text;
+        
+        [UIView animateWithDuration:3.0 animations:^{
+            self.chatViewBuilder.masterLabel.alpha = 0;
+        } completion:^(BOOL finished){
+        }];
+    });
 }
 
 #pragma mark - hide alert label
@@ -926,19 +968,34 @@
                 [RTActiveWheel showPromptHUDAddedTo:self.view text:@"请先关闭视频文件"];
                 return;
             }
+            self.audioBubbleButton = sender;
             sender.selected = !sender.selected;
             if (sender.selected) {
-                NSString *path = [[NSBundle mainBundle] pathForResource:@"No_Excuses" ofType:@"aac"];
-                [[RongRTCAudioMixerEngine sharedEngine] mix:path action:RTCAudioActionReplace loop:YES];
+                NSString *path = [[NSBundle mainBundle] pathForResource:@"my_homeland" ofType:@"aac"];
+                [[RongRTCAudioMixerEngine sharedEngine] mix:path action:RTCAudioActionMixAndPlay loop:YES];
                 [[RongRTCAudioMixerEngine sharedEngine] start];
+                
+                CGPoint point = [sender convertPoint:sender.frame.origin toView:self.view];
+                self.audioControl.frame = CGRectMake(point.x - 45, point.y, self.audioControl.frame.size.width, self.audioControl.frame.size.height);
+                self.audioControl.hidden = NO;
+                self.controller.center = CGPointMake(self.view.frame.size.width/2, point.y + 60);
+                isShowController = NO;
+                isShowVolumeControl = YES;
             }
             else{
                 [[RongRTCAudioMixerEngine sharedEngine] stop];
+                self.audioControl.hidden = YES;
+                self.controller.hidden = YES;
+                self.audioControl.selected = NO;
+                isShowController = NO;
+                isShowVolumeControl = NO;
             }
         }
             break;
         case 0:
             {
+                isShowController = NO;
+                isShowVolumeControl = NO;
                 self.chatViewBuilder.upMenuView.buttons[0].selected = NO;
                 [[RongRTCAudioMixerEngine sharedEngine] stop];
                 sender.selected = !sender.selected;
@@ -958,6 +1015,9 @@
                     UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"选择视频文件" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"视频文件 1",@"视频文件 2", nil];
                     al.tag = 9999;
                     [al show];
+                    self.audioControl.selected = NO;
+                    self.audioControl.hidden = YES;
+                    self.controller.hidden = YES;
                 }
                 else{
                     [fileCapturer stopCapture];
@@ -1103,10 +1163,10 @@
 
 #pragma mark - click member
 - (void)didClickMemeberBtn {
-    STParticipantsTableViewController* spt = [[STParticipantsTableViewController alloc] initWithRoom:self.room participantsInfos:self.dataSource];
-    STPresentationViewController* pvc = [[STPresentationViewController alloc] initWithPresentedViewController:spt presentingViewController:self];
-    spt.transitioningDelegate = pvc;
-    [self presentViewController:spt animated:YES completion:nil];
+    self.participantsTableViewController = [[STParticipantsTableViewController alloc] initWithRoom:self.room participantsInfos:self.dataSource];
+    STPresentationViewController* pvc = [[STPresentationViewController alloc] initWithPresentedViewController:self.participantsTableViewController presentingViewController:self];
+    self.participantsTableViewController.transitioningDelegate = pvc;
+    [self presentViewController:self.participantsTableViewController animated:YES completion:nil];
 }
 
 #pragma mark - click white board
@@ -1184,14 +1244,31 @@
 #pragma mark - click hungup button
 - (void)didClickHungUpButton
 {
-    [[RongRTCAudioMixerEngine sharedEngine] stop];
+    if (kLoginManager.isMaster && [self.dataSource count] > 1) {
+        STParticipantsInfo *firstInfo = (STParticipantsInfo *)self.dataSource[1];
+        if ([firstInfo.userId isEqualToString:kLoginManager.userID]) {
+            firstInfo = (STParticipantsInfo *)self.dataSource[0];
+        }
+        NSString *userId = firstInfo.userId;
+        if (userId) {
+            STParticipantsInfo *info = [[STParticipantsInfo alloc] initWithDictionary:@{@"userId":firstInfo.userId,
+                                                                                        @"userName":firstInfo.userName,
+                                                                                        @"joinMode":@(firstInfo.joinMode),
+                                                                                        @"joinTime":@(firstInfo.joinTime),
+                                                                                        @"master":@(1)
+            }];
+            STSetRoomInfoMessage *message = [[STSetRoomInfoMessage alloc] initWithInfo:info forKey:firstInfo.userId];
+            [self.room setRoomAttributeValue:[info toJsonString] forKey:firstInfo.userId message:message completion:^(BOOL isSuccess, RongRTCCode desc) {}];
+        }
+    }
     
+    [[RongRTCAudioMixerEngine sharedEngine] stop];
+    [RongRTCAVCapturer sharedInstance].videoSendBufferCallback = nil;
     if (fileCapturer) {
         [fileCapturer stopCapture];
         fileCapturer.delegate = nil;
         fileCapturer = nil;
     }
-    kChatManager.localFileVideoModel = nil;
     
     STDeleteRoomInfoMessage* deleteMessage = [[STDeleteRoomInfoMessage alloc] initWithInfoKey:kLoginManager.userID];
     [self.room deleteRoomAttributes:@[kLoginManager.userID] message:deleteMessage completion:^(BOOL isSuccess, RongRTCCode desc) {
@@ -1207,10 +1284,18 @@
         _chatWhiteBoardHandler = nil;
     }
     
+    __weak typeof(self) weakSelf = self;
+    
     dispatch_async(dispatch_get_main_queue(), ^{
+        [kChatManager.localFileVideoModel.cellVideoView removeFromSuperview];
+        kChatManager.localFileVideoModel = nil;
+        [[RCIMClient sharedRCIMClient] setRCConnectionStatusChangeDelegate:nil];
+        [self.controller removeFromSuperview];
+        self.controller = nil;
+        [self.participantsTableViewController dismissViewControllerAnimated:YES completion:nil];
         [[RongRTCAVCapturer sharedInstance] stopCapture];
         [[RongRTCEngine sharedEngine] leaveRoom:kLoginManager.roomNumber completion:^(BOOL isSuccess, NSInteger code) {
-            self.room = nil;
+            weakSelf.room = nil;
             if (isSuccess) {
                 DLog(@"leaveRoom Success");
             }else {
@@ -1218,11 +1303,12 @@
             }
         }];
         
-        self.isFinishLeave = YES;
-        [self.durationTimer invalidate];
-        self.talkTimeLabel.text = @"";
-        self.localView.hidden = NO;
-        [self.localView removeFromSuperview];
+        weakSelf.isFinishLeave = YES;
+        [weakSelf.durationTimer invalidate];
+        weakSelf.talkTimeLabel.text = @"";
+        weakSelf.localView.hidden = NO;
+        [weakSelf.localView removeFromSuperview];
+        weakSelf.localView = nil;
         
         [UIApplication sharedApplication].idleTimerDisabled = NO;
         
@@ -1234,10 +1320,11 @@
         kLoginManager.isBackCamera = NO;
         kLoginManager.isWhiteBoardOpen = NO;
         [kChatManager clearAllDataArray];
-        [self.collectionView reloadData];
-        [self.collectionView removeFromSuperview];
-        self.collectionView = nil;
-        [self.navigationController popViewControllerAnimated:YES];
+        [weakSelf.collectionView reloadData];
+        [weakSelf.collectionView removeFromSuperview];
+        weakSelf.collectionView.chatVC = nil;
+        weakSelf.collectionView = nil;
+        [weakSelf.navigationController popViewControllerAnimated:YES];
     });
 }
 
