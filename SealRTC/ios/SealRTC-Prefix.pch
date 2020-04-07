@@ -13,13 +13,16 @@
 
 //AppKey请到官网获取
 #define RCIMAPPKey @""
-#define RCIMNavURL @"nav.cn.ronghub.com"
-#define RCIMFileURL @"img.cn.ronghub.com"
-#define RCDEMOServerURL @"sealrtc.rongcloud.cn"
-
 //SECRET请到官网获取
 #define RCIM_API_SECRET @""
-#define RCIM_API_SERVER @"http://api-cn.ronghub.com"
+#define RCIMNavURL @"nav.cn.ronghub.com"
+//请自行搭建Demo Server, 此Server用于获取Toekn
+#define RCDEMOServerURL @""
+#define RCIM_API_SERVER @""
+#define RCIMFileURL @"img.cn.ronghub.com"
+//直播Demo Server, 请自行搭建
+#define RCLiveURL @""
+
 
 #define MAX_NORMAL_PERSONS 9
 #define MAX_AUDIO_PERSONS 30
@@ -49,6 +52,7 @@
 #define Key_GPUFilter @"GPUFilter"
 #define Key_WaterMark @"WaterMark"
 #define Key_SRTPEncrypt @"SRTPEncrypt"
+#define Key_AudioScenarioMusic @"AudioScenarioMusic"
 #define Key_AutoTest @"AutoTest"
 #define Key_PhoneNumber @"PhoneNumber"
 #define Key_AutoTest @"AutoTest"
@@ -59,18 +63,21 @@
 #define Key_MediaServerURL @"mediaServerURL"
 #define Key_MediaServerRow @"mediaServerRow"
 #define Key_MediaServerArray @"mediaServerList"
+
+#define Key_IsHost @"isHost"
+
 #define Key_KickOffTime @"kickOffTime"
 #define Key_KickOffRoomNumber @"kickOffRoomNumber"
 #define Key_IsKickOff @"isKickOff"
 
-
-#define Value_Default_ResolutionRatio 1
-#define Value_Default_FrameRate 0
-#define Value_Default_MaxCodeRate 100
+#define Value_Default_ResolutionRatio 8
+#define Value_Default_FrameRate 1
+#define Value_Default_MaxCodeRate 45
 #define Value_Default_Coding_Style 0
-#define Value_Default_MinCodeRate 35
+#define Value_Default_MinCodeRate 6
 #define Value_Default_GPUFilter NO
 #define Value_Default_SRTPEncrypt NO
+#define Value_Default_AudioScenarioMusic NO
 #define Value_Default_QuicMode NO
 #define Value_Default_TinyStream YES
 #define Value_Default_WaterMark NO
@@ -79,6 +86,7 @@
 
 #define Key_Force_Close_Log NO
 #define IS_NOT_PRIVATE_ENVIRONMENT
+#define IS_NOT_LIVE
 
 #ifndef DLog
     #define DLog(fmt, ...) NSLog((@"%s [Line %d] LLH...... " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);

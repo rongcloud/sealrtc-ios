@@ -8,10 +8,6 @@
 		<data>
 		aabTsnwjWjlFM4sQ/m4/HOGE3Ys=
 		</data>
-		<key>Headers/RCBurnMessageService.h</key>
-		<data>
-		CN4UFgUeEJi6N1oAi32WJn1Yqro=
-		</data>
 		<key>Headers/RCCSLeaveMessage.h</key>
 		<data>
 		w2NQi2f658lb2p44qP5LVYF+j9w=
@@ -32,6 +28,10 @@
 		<data>
 		766JfP6z7CS7cFAsqfFGf7WDMCw=
 		</data>
+		<key>Headers/RCChatroomKVNotificationMessage.h</key>
+		<data>
+		S/6GN63GEN2mDica6ujJuh2CEXE=
+		</data>
 		<key>Headers/RCCommandMessage.h</key>
 		<data>
 		GVziKTCAJtxM2zmlsAHBj+Onzgo=
@@ -46,7 +46,7 @@
 		</data>
 		<key>Headers/RCConversation.h</key>
 		<data>
-		Bf3j5EEcEazolsSjIxYdAbkdOq4=
+		3UzAMiOheVhi+GFtQUFyS4WL8po=
 		</data>
 		<key>Headers/RCCustomerServiceConfig.h</key>
 		<data>
@@ -86,7 +86,7 @@
 		</data>
 		<key>Headers/RCFwLog.h</key>
 		<data>
-		NHhzUMaQK4CjK+OW/JWDurCcsjY=
+		93ijDifcS/l0vppmdXa+9vHRftM=
 		</data>
 		<key>Headers/RCGIFMessage.h</key>
 		<data>
@@ -98,7 +98,7 @@
 		</data>
 		<key>Headers/RCGroupNotificationMessage.h</key>
 		<data>
-		z0WU2mjJAqzQgrtonYcmuPweB+w=
+		kQztBaIZcT6ajtX5cCwyTFD/yhs=
 		</data>
 		<key>Headers/RCHQVoiceMessage.h</key>
 		<data>
@@ -106,7 +106,7 @@
 		</data>
 		<key>Headers/RCIMClient.h</key>
 		<data>
-		tQDI1ngM0afQffsAabM6SDQBcaI=
+		vzWe+Tvi2mAnRwSJWo/6ro1NeYU=
 		</data>
 		<key>Headers/RCImageMessage.h</key>
 		<data>
@@ -190,7 +190,11 @@
 		</data>
 		<key>Headers/RCRecallNotificationMessage.h</key>
 		<data>
-		aMQ78yMnRLH5PyOTpLvRz6YEtk0=
+		fvUtkxClHfwSTgRJTYPayPKPQpI=
+		</data>
+		<key>Headers/RCReferenceMessage.h</key>
+		<data>
+		72qPldhoFDNJeCavrQRBO08oSV4=
 		</data>
 		<key>Headers/RCRemoteHistoryMsgOption.h</key>
 		<data>
@@ -222,7 +226,7 @@
 		</data>
 		<key>Headers/RCStatusDefine.h</key>
 		<data>
-		tCYjazZnHUyfRONm6NIagQ5bv68=
+		ntUMPYZPPt0/lr1byUUwrm5OeXE=
 		</data>
 		<key>Headers/RCStatusMessage.h</key>
 		<data>
@@ -262,7 +266,7 @@
 		</data>
 		<key>Headers/RCUtilities.h</key>
 		<data>
-		R/f3eevhgicu1fVcz1x/JTOtypI=
+		aO0+7lzXVUuVoRnUaijQW9HRSSI=
 		</data>
 		<key>Headers/RCVoiceMessage.h</key>
 		<data>
@@ -274,7 +278,7 @@
 		</data>
 		<key>Headers/RongIMLib.h</key>
 		<data>
-		DV91hzx3MgPWQ7huNCdxD7i+iEc=
+		zHco4sGeS1Zsu3etsjSD5Rvipis=
 		</data>
 		<key>Headers/interf_dec.h</key>
 		<data>
@@ -286,7 +290,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		ONxkrDk40oHydOjNqA6BFvMNoUs=
+		dxzukCl7s8MmtT9nEwNsQIHjqSU=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -304,17 +308,6 @@
 			<key>hash2</key>
 			<data>
 			SIdtDu4oYCGc7ULjtoM84UO6++IyzbGUPuql7Yup208=
-			</data>
-		</dict>
-		<key>Headers/RCBurnMessageService.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			CN4UFgUeEJi6N1oAi32WJn1Yqro=
-			</data>
-			<key>hash2</key>
-			<data>
-			Djdgco9B/PwnzukPcjNWDCBkUAwnB20Ns1O8VjjZyHY=
 			</data>
 		</dict>
 		<key>Headers/RCCSLeaveMessage.h</key>
@@ -372,6 +365,17 @@
 			XstJN4ccHrgrxUzkKAePFSEkUfq7CWjAPEvfJAtWRtc=
 			</data>
 		</dict>
+		<key>Headers/RCChatroomKVNotificationMessage.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			S/6GN63GEN2mDica6ujJuh2CEXE=
+			</data>
+			<key>hash2</key>
+			<data>
+			DNNnCuTA57AEZI757UWjxq9Jvq6e7LyODqBjlukSGyM=
+			</data>
+		</dict>
 		<key>Headers/RCCommandMessage.h</key>
 		<dict>
 			<key>hash</key>
@@ -409,11 +413,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Bf3j5EEcEazolsSjIxYdAbkdOq4=
+			3UzAMiOheVhi+GFtQUFyS4WL8po=
 			</data>
 			<key>hash2</key>
 			<data>
-			dgdQig0+f/L4U05wXLFjHWa4nGL6SH/YoVT2e211kDc=
+			0Luo9liEdFrlhvSMwWYOUe27oyKVRNlfxrwfQ1C64Ms=
 			</data>
 		</dict>
 		<key>Headers/RCCustomerServiceConfig.h</key>
@@ -519,11 +523,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			NHhzUMaQK4CjK+OW/JWDurCcsjY=
+			93ijDifcS/l0vppmdXa+9vHRftM=
 			</data>
 			<key>hash2</key>
 			<data>
-			3i3yxtxfLoI7AlpsbduPziNpeKFuTONUT4cfpvO5/4E=
+			eMYTlWBW2VCd8s++2CiXFJOCb+5sdONAROwGO7R7Rko=
 			</data>
 		</dict>
 		<key>Headers/RCGIFMessage.h</key>
@@ -552,11 +556,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			z0WU2mjJAqzQgrtonYcmuPweB+w=
+			kQztBaIZcT6ajtX5cCwyTFD/yhs=
 			</data>
 			<key>hash2</key>
 			<data>
-			qRHtMPphqoFM43fF4eNDnL5+mpzVQM+RrTB1JkhuZH8=
+			KrfxyO1DIyMuYK/Ahkn85Xu+lo70Lmmqx3OzbnQsfNM=
 			</data>
 		</dict>
 		<key>Headers/RCHQVoiceMessage.h</key>
@@ -574,11 +578,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			tQDI1ngM0afQffsAabM6SDQBcaI=
+			vzWe+Tvi2mAnRwSJWo/6ro1NeYU=
 			</data>
 			<key>hash2</key>
 			<data>
-			EaGQUcB1mTMNpKlPPGLvigArkdgFQfsqVOtfA50umgU=
+			w9fIU+Z1FaPJoXqltMRurW2KZhecHqtZipeYcssQDWI=
 			</data>
 		</dict>
 		<key>Headers/RCImageMessage.h</key>
@@ -805,11 +809,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			aMQ78yMnRLH5PyOTpLvRz6YEtk0=
+			fvUtkxClHfwSTgRJTYPayPKPQpI=
 			</data>
 			<key>hash2</key>
 			<data>
-			PJSWyqsQnqS+Dm5zSDoSvAat7jClxtviRV1RzmqlexY=
+			l4seLm+yO3yrD+l5RZoHWMzfi6VwFKRxebPwjcZev8k=
+			</data>
+		</dict>
+		<key>Headers/RCReferenceMessage.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			72qPldhoFDNJeCavrQRBO08oSV4=
+			</data>
+			<key>hash2</key>
+			<data>
+			1DlSEXtSxq/+g9FgYesekYmMyrIpWaIHb7RHLqRhTMc=
 			</data>
 		</dict>
 		<key>Headers/RCRemoteHistoryMsgOption.h</key>
@@ -893,11 +908,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			tCYjazZnHUyfRONm6NIagQ5bv68=
+			ntUMPYZPPt0/lr1byUUwrm5OeXE=
 			</data>
 			<key>hash2</key>
 			<data>
-			gF237d79Qz1300OeIXT6b5J3B8tbFclFyStmZoz6Nrs=
+			RYepDBXIu7OaJtayjQDC/9BefrgE6rBCcvmTlbrf7lw=
 			</data>
 		</dict>
 		<key>Headers/RCStatusMessage.h</key>
@@ -1003,11 +1018,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			R/f3eevhgicu1fVcz1x/JTOtypI=
+			aO0+7lzXVUuVoRnUaijQW9HRSSI=
 			</data>
 			<key>hash2</key>
 			<data>
-			BsbO6yDeyhQ5BCZXoHVjRfCsyYqMVmQmqaA2qpmhlO0=
+			u26d9xtkv5HWgkA2QcgKZo6/vbe5FsKVpyQ7oxmZhes=
 			</data>
 		</dict>
 		<key>Headers/RCVoiceMessage.h</key>
@@ -1036,11 +1051,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			DV91hzx3MgPWQ7huNCdxD7i+iEc=
+			zHco4sGeS1Zsu3etsjSD5Rvipis=
 			</data>
 			<key>hash2</key>
 			<data>
-			TUpYKzCh5+EKvbajePdrJntfWrXgXmY2JNeItCUR3cQ=
+			DS5MdFQ83jDJD3Poegb8BKq6LB0tJ2XW0cmtxzN5Pkw=
 			</data>
 		</dict>
 		<key>Headers/interf_dec.h</key>

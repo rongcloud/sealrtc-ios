@@ -59,6 +59,9 @@
 "chat_user_kick_msg" = "Remove %@?";
 "chat_user_kick_become_master" = "%@ becomes new admin";
 "chat_user_join_room" = "%@ joined room";
+"chat_user_leave_room" = "%@ left room";
+"chat_kicked_by_server" = "You have been removed from the room!";
+"chat_join_kicked_by_server" = "You are not allowed to join the room!";
 
 
 "login_input_meeting_welcome" = "Welcome to SealRTC Audio/Video Meeting";
@@ -68,6 +71,7 @@
 "login_input_meeting_room_NO" = "Room ID";
 "login_input_encryption_key" = "Encryption Key";
 "login_input_enter_meeting_room" = "Join Room";
+"login_input_enter_meeting_room1" = "Join Room";
 "login_input_login_meeting_room" = "Logining...";
 "login_input_login_connecting" = "Connecting";
 "login_input_login_network_disable" = "Network Disable";
@@ -107,13 +111,13 @@
 "setting_private_environment_naviserver" = "Private NavServer address";
 "setting_private_environment_serverapi" = "Private Server API address";
 "setting_private_environment_appserver" = "APP Server address(Optional)";
-
+"setting_private_environment_mediaserver" = "Private MediaServer address（Optional）";
 "setting_private_environment_placeholder0" = "AppKey";
 "setting_private_environment_placeholder1" = "AppSecret";
 "setting_private_environment_placeholder2" = "http(s)://cn.xxx.com or IP + port address";
 "setting_private_environment_placeholder3" = "http(s)://cn.xxx.com or IP + port address";
 "setting_private_environment_placeholder4" = "http(s)://cn.xxx.com or IP + port address";
-
+"setting_private_environment_placeholder5" = "http(s)://cn.xxx.com or IP + port address";
 
 
 "setting_resolution_ratio" = "Resolution Ratio";
@@ -144,7 +148,11 @@
 "setting_auto_test" = "Auto Test";
 "setting_water_mark" = "Watermark";
 "setting_media_server_url" = "Media Server URL";
-
+"setting_audio_scenario" = "Audio Scenario";
+"setting_userid_title" = "User ID (long press to copy to clipboard)";
+"setting_userid_tip" = "User ID copied to clipboard";
+"breakdown_analysis"="Breakdown analysis";
+"log_upload"="Log upload";
 
 "select_country"="Countries/Regions";
 "select_country_fmt"="Countries/Regions %@";
@@ -157,5 +165,5 @@
 
 "close"="Close";
 "online_user_cout_fmt"="Online number %@";
-"voip_network_bad"="network is not good";
+"voip_network_bad_fmt"="The network state of %@ is not good！";
 "connecting_im"="Connecting...";

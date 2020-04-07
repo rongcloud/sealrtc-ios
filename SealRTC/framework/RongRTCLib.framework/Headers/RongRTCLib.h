@@ -2,7 +2,7 @@
 //  RongRTCLib.h
 //  RongRTCLib
 //
-//  Created by birney on 2018/12/13.
+//  Created by RongCloud on 2018/12/13.
 //  Copyright © 2018年 RongCloud. All rights reserved.
 //
 
@@ -18,22 +18,30 @@ FOUNDATION_EXPORT const unsigned char RongRTCLibVersionString[];
 
 
 #import <RongRTCLib/RongRTCActivityMonitorDelegate.h>
+#import <RongRTCLib/RongRTCAudioConfig.h>
 #import <RongRTCLib/RongRTCAudioMixerEngine.h>
 #import <RongRTCLib/RongRTCAVCapturer.h>
 #import <RongRTCLib/RongRTCAVInputStream.h>
 #import <RongRTCLib/RongRTCAVOutputStream.h>
 #import <RongRTCLib/RongRTCCodeDefine.h>
-#import <RongRTCLib/RongRTCConfig.h>
+#import <RongRTCLib/RongRTCCustomLayout.h>
 #import <RongRTCLib/RongRTCDefine.h>
 #import <RongRTCLib/RongRTCEngine.h>
+#import <RongRTCLib/RongRTCLiveAVInputStream.h>
+#import <RongRTCLib/RongRTCLiveInfo.h>
 #import <RongRTCLib/RongRTCLocalUser.h>
 #import <RongRTCLib/RongRTCLocalVideoView.h>
-#import <RongRTCLib/RongRTCNetworkMonitorDelegate.h>
+#import <RongRTCLib/RongRTCMediaConfig.h>
+#import <RongRTCLib/RongRTCMixConfig.h>
 #import <RongRTCLib/RongRTCRemoteUser.h>
 #import <RongRTCLib/RongRTCRemoteVideoView.h>
 #import <RongRTCLib/RongRTCRoom.h>
+#import <RongRTCLib/RongRTCRoomConfig.h>
 #import <RongRTCLib/RongRTCRoomDelegate.h>
 #import <RongRTCLib/RongRTCStatisticalForm.h>
 #import <RongRTCLib/RongRTCUser.h>
 #import <RongRTCLib/RongRTCVideoCaptureParam.h>
+#import <RongRTCLib/RongRTCVideoConfig.h>
+#import <RongRTCLib/RongRTCVideoExtend.h>
+#import <RongRTCLib/RongRTCVideoLayout.h>
 #import <RongRTCLib/RongRTCVideoPreviewView.h>

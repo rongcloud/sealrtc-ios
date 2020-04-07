@@ -10,7 +10,7 @@
 #import "CommonUtility.h"
 #import "SXAlertView.h"
 #import "LoginViewController.h"
-
+#import "UIView+Toast.h"
 
 static NSUserDefaults *settingUserDefaults = nil;
 
@@ -34,6 +34,7 @@ static NSUserDefaults *settingUserDefaults = nil;
     
     self.settingTableViewDelegateSourceImpl = [[SettingTableViewDelegateSourceImpl alloc] initWithViewController:self];
     self.settingPickViewDelegateImpl = [[SettingPickViewDelegateImpl alloc] initWithViewController:self];
+    self.settingTextFieldDelegateImpl = [[SettingTextFieldDelegateImpl alloc] initWithViewController:self];
     self.settingViewBuilder = [[SettingViewBuilder alloc] initWithViewController:self];
 }
 
@@ -41,8 +42,10 @@ static NSUserDefaults *settingUserDefaults = nil;
 {
     [super viewWillAppear:animated];
     [self loadPlistData];
-    self.sectionNumber = 5;
+    self.sectionNumber = 7;
     [self.settingViewBuilder.tableView reloadData];
+    self.settingViewBuilder.userIDTextField.text = kLoginManager.userID;
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -90,6 +93,25 @@ static NSUserDefaults *settingUserDefaults = nil;
 - (void)waterMarkAction
 {
     [kLoginManager setIsWaterMark:self.settingViewBuilder.waterMarkSwitch.on];
+}
+
+- (void)audioScenarioAction {
+    [kLoginManager setIsAudioScenarioMusic:self.settingViewBuilder.audioScenarioSwitch.on];
+}
+
+
+#pragma mark - tap gesture action
+- (void)longPressedGestureAction:(UILongPressGestureRecognizer *)gesture {
+    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)gesture;
+    if (press.state == UIGestureRecognizerStateBegan) {
+        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+        if (kLoginManager.userID && kLoginManager.userID.length > 0) {
+            pasteboard.string = kLoginManager.userID;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.view makeToast:NSLocalizedString(@"setting_userid_tip", nil) duration:1.5 position:CSToastPositionCenter];
+            });
+        }
+    }
 }
 
 #pragma mark - share setting UserDefaults

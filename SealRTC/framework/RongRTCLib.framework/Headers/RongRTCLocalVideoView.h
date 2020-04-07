@@ -2,33 +2,31 @@
 //  RCLocalPreviewView.h
 //  RongRTCLib
 //
-//  Created by zhaobingdong on 2018/12/17.
+//  Created by RongCloud on 2018/12/17.
 //  Copyright © 2018年 RongCloud. All rights reserved.
 //
 
 #import "RongRTCVideoPreviewView.h"
 #import <AVFoundation/AVFoundation.h>
 
-// 请不要直接在 localView 上添加视图，内部会有翻转的逻辑
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
-视频渲染的 view
-*/
+/*!
+ 视频渲染的 view
+ 
+ @discussion
+ 请不要直接在 localView 上添加视图, 内部会有翻转的逻辑, 仅供手机摄像头视频显示使用
+ */
 @interface RongRTCLocalVideoView : RongRTCVideoPreviewView
 
-
-/**
- 渲染视图
+/*!
+ 刷新渲染视图 View
  
- @param sample 视频 sampleBuffer
- */
-- (void)renderSampleBuffer:(CMSampleBufferRef)sample;
-
-
-/**
- 刷新渲染视图 View.
+ @discussion
+ 刷新渲染视图 View
+ 
+ @remarks 视频配置
  */
 - (void)flushVideoView;
 

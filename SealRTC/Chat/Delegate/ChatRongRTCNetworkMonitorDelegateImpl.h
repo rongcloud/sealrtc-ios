@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ChatRongRTCNetworkMonitorDelegateImpl : NSObject <RongRTCNetworkMonitorDelegate,RongRTCActivityMonitorDelegate>
+@interface ChatRongRTCNetworkMonitorDelegateImpl : NSObject <RongRTCActivityMonitorDelegate>
 
 - (instancetype)initWithViewController:(UIViewController *)vc;
 

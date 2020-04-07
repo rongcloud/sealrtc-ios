@@ -81,7 +81,7 @@ static ChatManager *sharedMeetingManager = nil;
     }
     for (ChatCellVideoViewModel *model in self.allRemoteUserDataArray)
     {
-        NSRange range =  [model.streamID rangeOfString:@"_" options:NSLiteralSearch];
+        NSRange range = [model.streamID rangeOfString:@"_" options:NSBackwardsSearch];
         if (range.location != NSNotFound) {
             NSString* uid = [model.streamID substringToIndex:range.location];
             if ([uid isEqualToString:userId]) {
@@ -273,7 +273,7 @@ static ChatManager *sharedMeetingManager = nil;
 - (RongRTCVideoCaptureParam *)captureParam
 {
     if (!_captureParam) {
-        _captureParam = [[RongRTCVideoCaptureParam alloc] init];
+        _captureParam = [RongRTCVideoCaptureParam defaultParameters];
     }
     return _captureParam;
 }
@@ -292,13 +292,37 @@ static ChatManager *sharedMeetingManager = nil;
     self.captureParam.tinyStreamEnable = kLoginManager.isTinyStream;
     
     switch (kLoginManager.resolutionRatioIndex) {
-        case 0: //320*240
+        case 0:
+            self.captureParam.videoSizePreset = RongRTCVideoSizePreset176x132;
+            break;
+        case 1:
+            self.captureParam.videoSizePreset = RongRTCVideoSizePreset256x144;
+            break;
+        case 2:
+            self.captureParam.videoSizePreset = RongRTCVideoSizePreset320x180;
+            break;
+        case 3:
+            self.captureParam.videoSizePreset = RongRTCVideoSizePreset240x240;
+            break;
+        case 4:
             self.captureParam.videoSizePreset = RongRTCVideoSizePreset320x240;
             break;
-        case 1: //640*480
+        case 5:
+            self.captureParam.videoSizePreset = RongRTCVideoSizePreset480x360;
+            break;
+        case 6:
+            self.captureParam.videoSizePreset = RongRTCVideoSizePreset640x360;
+            break;
+        case 7:
+            self.captureParam.videoSizePreset = RongRTCVideoSizePreset480x480;
+            break;
+        case 8:
             self.captureParam.videoSizePreset = RongRTCVideoSizePreset640x480;
             break;
-        case 2: //1280*720
+        case 9:
+            self.captureParam.videoSizePreset = RongRTCVideoSizePreset720x480;
+            break;
+        case 10:
             self.captureParam.videoSizePreset = RongRTCVideoSizePreset1280x720;
             break;
         default:
@@ -327,12 +351,15 @@ static ChatManager *sharedMeetingManager = nil;
     //帧率
     switch (kLoginManager.frameRateIndex) {
         case 0:
-            self.captureParam.videoFrameRate = RongRTCVideoFPS15;
+            self.captureParam.videoFrameRate = RongRTCVideoFPS10;
             break;
         case 1:
-            self.captureParam.videoFrameRate = RongRTCVideoFPS24;
+            self.captureParam.videoFrameRate = RongRTCVideoFPS15;
             break;
         case 2:
+            self.captureParam.videoFrameRate = RongRTCVideoFPS24;
+            break;
+        case 3:
             self.captureParam.videoFrameRate = RongRTCVideoFPS30;
             break;
         default:
@@ -348,15 +375,16 @@ static ChatManager *sharedMeetingManager = nil;
         case 0:
             self.captureParam.codecType = RongRTCCodecH264;
             break;
-        case 1:
-            self.captureParam.codecType = RongRTCCodecVP8;
-            break;
-        case 2:
-            self.captureParam.codecType = RongRTCCodecVP9;
-            break;
+//        case 1:
+//            self.captureParam.codecType = RongRTCCodecVP8;
+//            break;
+//        case 2:
+//            self.captureParam.codecType = RongRTCCodecVP9;
+//            break;
         default:
             break;
     }
+    self.captureParam.audioScenario = kLoginManager.isAudioScenarioMusic ? RongRTCAudioScenarioMusic : RongRTCAudioScenarioDefault;
 }
 
 @end

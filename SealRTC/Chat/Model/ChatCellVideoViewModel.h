@@ -18,7 +18,7 @@
 @property (nonatomic, strong) UIView *itemCoverView;
 @property (nonatomic, copy) NSString* userName;
 
-@property (nonatomic, assign) NSString *frameRate;
+@property (nonatomic, assign) NSInteger bitRate;
 @property (nonatomic, assign) NSInteger frameRateRecv;
 @property (nonatomic, assign) NSInteger frameWidthRecv;
 @property (nonatomic, assign) NSInteger frameHeightRecv;

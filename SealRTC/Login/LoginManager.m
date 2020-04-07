@@ -74,6 +74,7 @@ static LoginManager *sharedLoginManager = nil;
     {
         _isGPUFilter = [settingUserDefaults boolForKey:Key_GPUFilter];
         _isSRTPEncrypt = [settingUserDefaults boolForKey:Key_SRTPEncrypt];
+        _isAudioScenarioMusic = [settingUserDefaults boolForKey:Key_AudioScenarioMusic];
         _isTinyStream = [settingUserDefaults boolForKey:Key_TinyStreamMode];
         _resolutionRatioIndex = [settingUserDefaults integerForKey:Key_ResolutionRatio];
         _frameRateIndex = [settingUserDefaults integerForKey:Key_FrameRate];
@@ -96,6 +97,7 @@ static LoginManager *sharedLoginManager = nil;
         _privateNavi = [settingUserDefaults valueForKey:@"privateNavi"];
         _privateAppSecret = [settingUserDefaults valueForKey:@"privateAppSecret"];
         _privateAppKey = [settingUserDefaults valueForKey:@"privateAppKey"];
+        _privateMediaServer = [settingUserDefaults valueForKey:@"privateMediaServer"];
         _isPrivateEnvironment = NO;
         if ([settingUserDefaults valueForKey:@"isPrivateEnvironment"] && _privateNavi && _privateIMServer && _privateAppKey && _privateAppSecret) {
             _isPrivateEnvironment = [[settingUserDefaults valueForKey:@"isPrivateEnvironment"] boolValue];
@@ -108,6 +110,7 @@ static LoginManager *sharedLoginManager = nil;
     {
         self.isGPUFilter = Value_Default_GPUFilter;
         self.isSRTPEncrypt = Value_Default_SRTPEncrypt;
+        self.isAudioScenarioMusic = Value_Default_AudioScenarioMusic;
         self.isTinyStream = Value_Default_TinyStream;
         self.resolutionRatioIndex = Value_Default_ResolutionRatio;
         self.frameRateIndex = Value_Default_FrameRate;
@@ -147,6 +150,13 @@ static LoginManager *sharedLoginManager = nil;
 {
     _isSRTPEncrypt = isSRTPEncrypt;
     [settingUserDefaults setBool:isSRTPEncrypt forKey:Key_SRTPEncrypt];
+    [settingUserDefaults synchronize];
+}
+
+- (void)setIsAudioScenarioMusic:(BOOL)isAudioScenarioMusic
+{
+    _isAudioScenarioMusic = isAudioScenarioMusic;
+    [settingUserDefaults setBool:isAudioScenarioMusic forKey:Key_AudioScenarioMusic];
     [settingUserDefaults synchronize];
 }
 
@@ -198,6 +208,12 @@ static LoginManager *sharedLoginManager = nil;
     [settingUserDefaults setBool:isAutoTest forKey:Key_AutoTest];
     [settingUserDefaults synchronize];
 }
+- (void)setIsHost:(BOOL)isHost
+{
+    _isHost = isHost;
+    [settingUserDefaults setBool:isHost forKey:Key_IsHost];
+    [settingUserDefaults synchronize];
+}
 
 - (void)setUsername:(NSString *)username
 {
@@ -208,7 +224,12 @@ static LoginManager *sharedLoginManager = nil;
     [userDefaults setObject:username forKey:kDefaultUserName];
     [userDefaults synchronize];
 }
-
+-(void)setLiveUrl:(NSString *)liveUrl{
+    if (!liveUrl) {
+           liveUrl = @"";
+       }
+       _liveUrl = liveUrl;
+}
 - (void)setUserID:(NSString *)userID
 {
     _userID = userID;
@@ -312,7 +333,11 @@ static LoginManager *sharedLoginManager = nil;
     [settingUserDefaults synchronize];
     
 }
-
+-(void)setPrivateMediaServer:(NSString *)privateMediaServer{
+    _privateMediaServer = privateMediaServer;
+    [settingUserDefaults setObject:privateMediaServer forKey:@"privateMediaServer"];
+    [settingUserDefaults synchronize];
+}
 - (void)setMediaServerArray:(NSArray *)mediaServerArray
 {
     _mediaServerArray = mediaServerArray;

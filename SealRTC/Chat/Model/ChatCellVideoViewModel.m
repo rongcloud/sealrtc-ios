@@ -114,8 +114,8 @@
     self.infoLabelGradLayer = [CAGradientLayer layer];
     self.infoLabelGradLayer.frame = self.infoLabel.frame;
     self.infoLabelGradLayer.hidden = YES;
-    [self.infoLabelGradLayer setColors:@[(id)[UIColor colorWithRed:0 green:0 blue:0 alpha:0.35].CGColor, (id)[UIColor clearColor].CGColor]];
-    [self.cellVideoView.layer addSublayer:self.infoLabelGradLayer];
+    [self.infoLabelGradLayer setColors:@[(id)[UIColor colorWithRed:1 green:0 blue:0 alpha:0.3].CGColor, (id)[UIColor clearColor].CGColor]];
+//    [self.cellVideoView.layer addSublayer:self.infoLabelGradLayer];
     [self.infoLabelGradLayer setStartPoint:CGPointMake(0, 1)];
     [self.infoLabelGradLayer setEndPoint:CGPointMake(0, 0)];
     
@@ -126,6 +126,7 @@
     if (self.registerObserverFlag)
     {
         [self addObserver:self forKeyPath:@"audioLevel" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+        [self addObserver:self forKeyPath:@"bitRate" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
         self.registerObserverFlag = YES;
     }
 }
@@ -135,6 +136,7 @@
     if (self.registerObserverFlag)
     {
         [self removeObserver:self forKeyPath:@"audioLevel"];
+        [self removeObserver:self forKeyPath:@"bitRate"];
         self.registerObserverFlag = NO;
     }
 }
@@ -185,17 +187,28 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
-    if (self.audioLevel == 0)
-    {
-        self.audioLevelView.hidden = YES;
-        return;
+    if ([keyPath isEqualToString:@"audioLevel"]) {
+        if (self.audioLevel == 0)
+        {
+            self.audioLevelView.hidden = YES;
+            return;
+        }
+        else {
+            self.audioLevelView.hidden = NO;
+        }
+        
+        self.audioLevelView.frame = CGRectMake(self.infoLabel.frame.size.width-16, 0, self.infoLabel.frame.size.height, self.infoLabel.frame.size.height);
+        [self.infoLabel bringSubviewToFront:self.audioLevelView];
     }
-    else {
-        self.audioLevelView.hidden = NO;
+    else if ([keyPath isEqualToString:@"bitRate"]) {
+        NSInteger newBitRate = [change[@"new"] integerValue];
+        if (!newBitRate) {
+            self.infoLabel.textColor = [UIColor redColor];
+        }
+        else {
+            self.infoLabel.textColor = [UIColor whiteColor];
+        }
     }
-    
-    self.audioLevelView.frame = CGRectMake(self.infoLabel.frame.size.width-16, 0, self.infoLabel.frame.size.height, self.infoLabel.frame.size.height);
-    [self.infoLabel bringSubviewToFront:self.audioLevelView];
 }
 
 @end

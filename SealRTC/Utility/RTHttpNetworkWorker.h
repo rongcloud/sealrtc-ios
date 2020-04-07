@@ -25,7 +25,12 @@ NS_ASSUME_NONNULL_BEGIN
                    response:(void (^)(NSDictionary *respDict))resp
                       error:(void (^)(NSError* error))errorBlock;
 
+- (void)getMediaServerList:(void (^)(NSDictionary *respDict))resp;
 
+- (void)getDemoVersionInfo:(void (^)(NSDictionary *respDict))resp;
+- (void)publish:(NSString *)roomId roomName:(NSString *)roomName liveUrl:(NSString *)liveUrl completion:(void (^)(BOOL success))completion;
+- (void)query:(NSString *)roomId completion:(void (^)( BOOL isSuccess, NSArray *_Nullable))completion;
+- (void)unpublish:(NSString *)roomId  completion:(void (^)(BOOL success))completion;
 @end
 
 

@@ -2,7 +2,7 @@
 //  RCRemoteVideoView.h
 //  RongRTCLib
 //
-//  Created by zhaobingdong on 2018/12/17.
+//  Created by RongCloud on 2018/12/17.
 //  Copyright © 2018年 RongCloud. All rights reserved.
 //
 
@@ -15,10 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface RongRTCRemoteVideoView : RongRTCVideoPreviewView
 
-/**
+/*!
  是否隐藏视图
  
- @param isHidden 是否关闭
+ @param isHidden 是否隐藏, YES 隐藏  NO 不隐藏
+ @discussion
+ 隐藏视图后, 显示为纯黑底色
+ 
+ @remarks 视频配置
  */
 - (void)hiddenVideoView:(BOOL)isHidden;
 

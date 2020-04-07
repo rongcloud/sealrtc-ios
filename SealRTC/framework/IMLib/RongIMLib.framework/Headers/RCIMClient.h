@@ -34,6 +34,24 @@
 #import "RCSendMessageOption.h"
 #import "RCRemoteHistoryMsgOption.h"
 
+/*!
+ @const 收到已读回执的Notification
+
+ @discussion 收到消息已读回执之后，IMLib会分发此通知。
+
+ Notification的object为nil，userInfo为NSDictionary对象，
+ 其中key值分别为@"cType"、@"tId"、@"messageTime",
+ 对应的value为会话类型的NSNumber对象、会话的targetId、已阅读的最后一条消息的sendTime。
+ 如：
+ NSNumber *ctype = [notification.userInfo objectForKey:@"cType"];
+ NSNumber *time = [notification.userInfo objectForKey:@"messageTime"];
+ NSString *targetId = [notification.userInfo objectForKey:@"tId"];
+ NSString *fromUserId = [notification.userInfo objectForKey:@"fId"];
+
+ 收到这个消息之后可以更新这个会话中messageTime以前的消息UI为已读（底层数据库消息状态已经改为已读）。
+ */
+FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
+
 #pragma mark - 消息接收监听器
 
 /*!
@@ -889,12 +907,17 @@ deviceToken 是系统提供的，从苹果服务器获取的，用于 APNs 远�
  @param progressBlock       文件下载进度更新的回调 [progress:当前的下载进度, 0 <= progress <= 100]
  @param successBlock        下载成功的回调[mediaPath:下载成功后本地存放的文件路径 文件路径为文件消息的默认地址]
  @param errorBlock          下载失败的回调[errorCode:下载失败的错误码]
+ 
+ @warning  **已废弃，请勿使用。**
+ 升级说明：如果您之前使用了此接口，可以直接替换为downloadMediaFile:mediaUrl:progress:success:error:cancel:接口 行为和实现完全一致。
+
   */
 - (void)downloadMediaFile:(NSString *)fileName
                  mediaUrl:(NSString *)mediaUrl
                  progress:(void (^)(int progress))progressBlock
                   success:(void (^)(NSString *mediaPath))successBlock
-                    error:(void (^)(RCErrorCode errorCode))errorBlock;
+                    error:(void (^)(RCErrorCode errorCode))errorBlock __deprecated_msg("已废弃，请勿使用。");
+
 /*!
  下载消息内容中的媒体信息
 
@@ -907,6 +930,10 @@ deviceToken 是系统提供的，从苹果服务器获取的，用于 APNs 远�
  @param successBlock        下载成功的回调
  [mediaPath:下载成功后本地存放的文件路径]
  @param errorBlock          下载失败的回调[errorCode:下载失败的错误码]
+ 
+ @warning  **已废弃，请勿使用。**
+ 升级说明：如果您之前使用了此接口，可以直接替换为downloadMediaFile:targetId:mediaType:mediaUrl:progress:success:error:cancel:接口 行为和实现完全一致。
+
  */
 - (void)downloadMediaFile:(RCConversationType)conversationType
                  targetId:(NSString *)targetId
@@ -914,7 +941,49 @@ deviceToken 是系统提供的，从苹果服务器获取的，用于 APNs 远�
                  mediaUrl:(NSString *)mediaUrl
                  progress:(void (^)(int progress))progressBlock
                   success:(void (^)(NSString *mediaPath))successBlock
-                    error:(void (^)(RCErrorCode errorCode))errorBlock;
+                    error:(void (^)(RCErrorCode errorCode))errorBlock __deprecated_msg("已废弃，请勿使用。");
+
+/*!
+ 根据文件URL地址下载文件内容
+
+ @param fileName            指定的文件名称 需要开发者指定文件后缀 (例如 rongCloud.mov)
+ @param mediaUrl            文件的URL地址
+ @param progressBlock       文件下载进度更新的回调 [progress:当前的下载进度, 0 <= progress <= 100]
+ @param successBlock        下载成功的回调[mediaPath:下载成功后本地存放的文件路径 文件路径为文件消息的默认地址]
+ @param errorBlock          下载失败的回调[errorCode:下载失败的错误码]
+ @param cancelBlock         用户取消了下载的回调
+
+*/
+- (void)downloadMediaFile:(NSString *)fileName
+                 mediaUrl:(NSString *)mediaUrl
+                 progress:(void (^)(int progress))progressBlock
+                  success:(void (^)(NSString *mediaPath))successBlock
+                    error:(void (^)(RCErrorCode errorCode))errorBlock
+                   cancel:(void (^)(void))cancelBlock;
+
+/*!
+ 下载消息内容中的媒体信息
+
+ @param conversationType    消息的会话类型
+ @param targetId            消息的目标会话ID
+ @param mediaType           消息内容中的多媒体文件类型，目前仅支持图片
+ @param mediaUrl            多媒体文件的网络URL
+ @param progressBlock       消息下载进度更新的回调 [progress:当前的下载进度, 0
+ <= progress <= 100]
+ @param successBlock        下载成功的回调
+ [mediaPath:下载成功后本地存放的文件路径]
+ @param errorBlock          下载失败的回调[errorCode:下载失败的错误码]
+ @param cancelBlock         用户取消了下载的回调
+
+ */
+- (void)downloadMediaFile:(RCConversationType)conversationType
+                 targetId:(NSString *)targetId
+                mediaType:(RCMediaType)mediaType
+                 mediaUrl:(NSString *)mediaUrl
+                 progress:(void (^)(int progress))progressBlock
+                  success:(void (^)(NSString *mediaPath))successBlock
+                    error:(void (^)(RCErrorCode errorCode))errorBlock
+                   cancel:(void (^)(void))cancelBlock;
 
 /*!
  下载消息内容中的媒体信息
@@ -939,6 +1008,15 @@ deviceToken 是系统提供的，从苹果服务器获取的，用于 APNs 远�
  @return YES表示取消成功，NO表示取消失败，即已经下载完成或者消息不存在。
  */
 - (BOOL)cancelDownloadMediaMessage:(long)messageId;
+
+/*!
+取消下载中的媒体信息
+
+@param mediaUrl 媒体消息Url
+
+@return YES表示取消成功，NO表示取消失败，即已经下载完成或者消息不存在。
+*/
+- (BOOL)cancelDownloadMediaUrl:(NSString *)mediaUrl;
 
 ///*!
 // 发送状态消息
@@ -1173,23 +1251,6 @@ deviceToken 是系统提供的，从苹果服务器获取的，用于 APNs 远�
 - (void)setReceiveMessageDelegate:(id<RCIMClientReceiveMessageDelegate>)delegate object:(id)userData;
 
 #pragma mark 消息阅读回执
-/*!
- @const 收到已读回执的Notification
-
- @discussion 收到消息已读回执之后，IMLib会分发此通知。
-
- Notification的object为nil，userInfo为NSDictionary对象，
- 其中key值分别为@"cType"、@"tId"、@"messageTime",
- 对应的value为会话类型的NSNumber对象、会话的targetId、已阅读的最后一条消息的sendTime。
- 如：
- NSNumber *ctype = [notification.userInfo objectForKey:@"cType"];
- NSNumber *time = [notification.userInfo objectForKey:@"messageTime"];
- NSString *targetId = [notification.userInfo objectForKey:@"tId"];
- NSString *fromUserId = [notification.userInfo objectForKey:@"fId"];
-
- 收到这个消息之后可以更新这个会话中messageTime以前的消息UI为已读（底层数据库消息状态已经改为已读）。
- */
-FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
 
 /*!
  发送某个会话中消息阅读的回执
@@ -1560,10 +1621,10 @@ FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
 /*!
  删除消息
 
- @param messageIds  消息ID的列表
+ @param messageIds  消息ID的列表，元素需要为 NSNumber 类型
  @return            是否删除成功
  */
-- (BOOL)deleteMessages:(NSArray *)messageIds;
+- (BOOL)deleteMessages:(NSArray<NSNumber *> *)messageIds;
 
 /*!
  删除某个会话中的所有消息
@@ -2482,6 +2543,7 @@ FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
 
  @discussion
  2.9.12 之前的版本只支持 8KHz。如果设置为 16KHz，老版本将无法播放 16KHz 的语音消息。
+ 客服会话只支持 8KHz。
  */
 @property (nonatomic, assign) RCSampleRate sampleRate __deprecated_msg("已废弃，请勿使用。");
 
@@ -2490,7 +2552,8 @@ FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
 
   @discussion 老版本 SDK 不兼容新版本语音消息
   2.9.19 之前的版本无法播放高音质语音消息；
-  2.9.19 及之后的版本可以同时兼容普通音质语音消息和高音质语音消息。
+  2.9.19 及之后的版本可以同时兼容普通音质语音消息和高音质语音消息；
+  客服会话类型 (ConversationType_CUSTOMERSERVICE) 不支持高音质语音消息。
   */
 @property (nonatomic, assign) RCVoiceMessageType voiceMsgType;
 
@@ -2795,6 +2858,128 @@ FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
  @return GIF 消息大小，以 KB 为单位
  */
 - (NSInteger)getGIFLimitSize;
+
+#pragma mark - 聊天室状态存储 (使用前必须先联系商务开通)
+/**
+ 设置聊天室自定义属性
+
+ @param chatroomId   聊天室 Id
+ @param key 聊天室属性名称，Key 支持大小写英文字母、数字、部分特殊符号 + = - _ 的组合方式，最大长度 128 个字符
+ @param value 聊天室属性对应的值，最大长度 4096 个字符
+ @param sendNotification   是否需要发送通知，如果发送通知，聊天室中的其他用户会接收到 RCChatroomKVNotificationMessage
+ 通知消息，消息内容中包含操作类型(type)、属性名称(key)、属性名称对应的值(value)和自定义字段(extra)
+ @param autoDelete   用户掉线或退出时，是否自动删除该 Key、Value 值；自动删除时不会发送通知
+ @param notificationExtra   通知的自定义字段，RC:chrmKVNotiMsg 通知消息中会包含此字段，最大长度 2 kb
+ @param  successBlock 成功回调
+ @param  errorBlock   失败回调
+
+ @discussion 必须先开通聊天室状态存储功能
+ 设置聊天室自定义属性，当 key 不存在时，代表增加属性； 当 key 已经存在时，代表更新属性的值，且只有 key
+ 的创建者可以更新属性的值。
+ */
+- (void)setChatRoomEntry:(NSString *)chatroomId
+                     key:(NSString *)key
+                   value:(NSString *)value
+        sendNotification:(BOOL)sendNotification
+              autoDelete:(BOOL)autoDelete
+       notificationExtra:(NSString *)notificationExtra
+                 success:(void (^)(void))successBlock
+                   error:(void (^)(RCErrorCode nErrorCode))errorBlock;
+
+/**
+ 强制设置聊天室自定义属性
+
+ @param chatroomId   聊天室 Id
+ @param key 聊天室属性名称，Key 支持大小写英文字母、数字、部分特殊符号 + = - _ 的组合方式，最大长度 128 个字符
+ @param value 聊天室属性对应的值，最大长度 4096 个字符
+ @param sendNotification   是否需要发送通知，如果发送通知，聊天室中的其他用户会接收到 RCChatroomKVNotificationMessage
+ 通知消息，消息内容中包含操作类型(type)、属性名称(key)、属性名称对应的值(value)和自定义字段(extra)
+ @param autoDelete   用户掉线或退出时，是否自动删除该 Key、Value 值；自动删除时不会发送通知
+ @param notificationExtra   通知的自定义字段，RCChatroomKVNotificationMessage 通知消息中会包含此字段，最大长度 2 kb
+ @param  successBlock 成功回调
+ @param  errorBlock   失败回调
+
+ @discussion 必须先开通聊天室状态存储功能
+ 强制设置聊天室自定义属性，当 key 不存在时，代表增加属性； 当 key 已经存在时，代表更新属性的值。
+ */
+- (void)forceSetChatRoomEntry:(NSString *)chatroomId
+                          key:(NSString *)key
+                        value:(NSString *)value
+             sendNotification:(BOOL)sendNotification
+                   autoDelete:(BOOL)autoDelete
+            notificationExtra:(NSString *)notificationExtra
+                      success:(void (^)(void))successBlock
+                        error:(void (^)(RCErrorCode nErrorCode))errorBlock;
+
+/**
+ 获取聊天室单个属性
+
+ @param chatroomId 聊天室 Id
+ @param key 聊天室属性名称
+ @param successBlock 成功回调
+ @param errorBlock 失败回调
+
+ @discussion 必须先开通聊天室状态存储功能
+ */
+- (void)getChatRoomEntry:(NSString *)chatroomId
+                     key:(NSString *)key
+                 success:(void (^)(NSDictionary *entry))successBlock
+                   error:(void (^)(RCErrorCode nErrorCode))errorBlock;
+
+/**
+ 获取聊天室所有自定义属性
+
+ @param chatroomId 聊天室 Id
+ @param successBlock 成功回调
+ @param errorBlock 失败回调
+
+ @discussion 必须先开通聊天室状态存储功能
+ */
+- (void)getAllChatRoomEntries:(NSString *)chatroomId
+                      success:(void (^)(NSDictionary *entry))successBlock
+                        error:(void (^)(RCErrorCode nErrorCode))errorBlock;
+
+/**
+ 删除聊天室自定义属性
+
+ @param chatroomId 聊天室 Id
+ @param key 聊天室属性名称
+ @param sendNotification   是否需要发送通知，如果发送通知，聊天室中的其他用户会接收到 RCChatroomKVNotificationMessage
+ 通知消息，消息内容中包含操作类型(type)、属性名称(key)、属性名称对应的值(value)和自定义字段(extra)
+ @param notificationExtra   通知的自定义字段，RCChatroomKVNotificationMessage 通知消息中会包含此字段，最大长度 2 kb
+ @param  successBlock 成功回调
+ @param  errorBlock   失败回调
+
+ @discussion 必须先开通聊天室状态存储功能
+ 删除聊天室自定义属性，只有自己设置的属性可以被删除。
+ */
+- (void)removeChatRoomEntry:(NSString *)chatroomId
+                        key:(NSString *)key
+           sendNotification:(BOOL)sendNotification
+          notificationExtra:(NSString *)notificationExtra
+                    success:(void (^)(void))successBlock
+                      error:(void (^)(RCErrorCode nErrorCode))errorBlock;
+
+/**
+ 强制删除聊天室自定义属性
+
+ @param chatroomId 聊天室 Id
+ @param key 聊天室属性名称
+ @param sendNotification   是否需要发送通知，如果发送通知，聊天室中的其他用户会接收到 RCChatroomKVNotificationMessage
+ 通知消息，消息内容中包含操作类型(type)、属性名称(key)、属性名称对应的值(value)和自定义字段(extra)
+ @param notificationExtra   通知的自定义字段，RCChatroomKVNotificationMessage 通知消息中会包含此字段，最大长度 2 kb
+ @param  successBlock 成功回调
+ @param  errorBlock   失败回调
+
+ @discussion 必须先开通聊天室状态存储功能
+ 强制删除聊天室自定义属性。
+ */
+- (void)forceRemoveChatRoomEntry:(NSString *)chatroomId
+                             key:(NSString *)key
+                sendNotification:(BOOL)sendNotification
+               notificationExtra:(NSString *)notificationExtra
+                         success:(void (^)(void))successBlock
+                           error:(void (^)(RCErrorCode nErrorCode))errorBlock;
 
 @end
 

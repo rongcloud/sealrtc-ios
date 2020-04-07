@@ -49,7 +49,7 @@
     self.loginIconImageView.image = [UIImage imageNamed:@"splash_logo"];
 #endif
     [self.loginViewController.view addSubview:self.loginIconImageView];
-   
+    
     //下方输入view
     
     NSInteger passwordViewHeight = ScreenHeight - 186 + 54;
@@ -87,19 +87,18 @@
     self.versionLabel.text = APP_Version;
     [self.inputNumPasswordView addSubview:self.versionLabel];
     
-    
-    ////////////////
     //请输入会议室名称
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, self.versionLabel.frame.origin.y + self.versionLabel.frame.size.height + 10, ScreenWidth - 60, 26)];
-
+    
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.font = [UIFont systemFontOfSize:18];
     self.titleLabel.textColor = JoinButtonEnableBackgroundColor;
     self.titleLabel.text = NSLocalizedString(@"login_input_meeting_room_name", nil);
     [self.inputNumPasswordView addSubview:self.titleLabel];
-
+    
     //房间号
     self.roomNumberTextField = [[UITextField alloc] initWithFrame:CGRectMake(30, self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height + 10, ScreenWidth - 60, 44)];
+    self.roomNumberTextField.tag = 300936;
     self.roomNumberTextField.font = [UIFont systemFontOfSize:18];
     self.roomNumberTextField.textColor = [UIColor colorWithRed:34.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0];
     self.roomNumberTextField.textAlignment = NSTextAlignmentLeft;
@@ -114,6 +113,7 @@
     
     // 用户名称
     self.usernameTextField = [[UITextField alloc]initWithFrame:CGRectMake(30, self.roomNumberTextField.frame.origin.y + self.roomNumberTextField.frame.size.height + 10, ScreenWidth - 60, 44)];
+    self.usernameTextField.tag = 300937;
     self.usernameTextField.font = [UIFont systemFontOfSize:18];
     self.usernameTextField.textColor = [UIColor colorWithRed:34.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0];
     self.usernameTextField.textAlignment = NSTextAlignmentLeft;
@@ -131,7 +131,7 @@
 #ifndef IS_PRIVATE_ENVIRONMENT
     //国家和地区
     UITextField* loginCountryTxtField = [[UITextField alloc] initWithFrame:(CGRect){30,self.usernameTextField.frame.origin.y + self.usernameTextField.frame.size.height + 10,ScreenWidth - 60,44}];
-     //loginCountryTxtField.textColor = [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:153.0f/255.0f alpha:1];
+    //loginCountryTxtField.textColor = [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:153.0f/255.0f alpha:1];
     loginCountryTxtField.font = [UIFont systemFontOfSize:18];
     //countryTxtField.textColor = [UIColor colorWithRed:34.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0];
     loginCountryTxtField.textAlignment = NSTextAlignmentLeft;
@@ -177,7 +177,7 @@
     self.radioButtons = [NSMutableArray arrayWithCapacity:3];
     CGRect btnRect = CGRectMake(30, 10, ScreenWidth - 60, 24);
     NSArray *optionTitles = @[NSLocalizedString(@"login_input_radio_close_camera", nil), NSLocalizedString(@"login_input_radio_observer", nil)];
-
+    
     for (NSInteger i = 0; i < [optionTitles count]; i++)
     {
         RadioButton *btn = [[RadioButton alloc] initWithFrame:btnRect];
@@ -195,14 +195,20 @@
         [btn setSelected:NO];
         [self.radioButtons addObject:btn];
     }
-
+    
     [self.radioButtons[0] setGroupButtons:self.radioButtons]; // Setting buttons into the group
-//    [self.radioButtons[0] setSelected:YES]; // Making the first button initially selected
+    //    [self.radioButtons[0] setSelected:YES]; // Making the first button initially selected
     [self.inputNumPasswordView addSubview:rbView];
-
+    
     //加入会议室按钮
     self.joinRoomButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.joinRoomButton.frame = CGRectMake(30, self.phoneNumLoginTextField.frame.origin.y + self.phoneNumLoginTextField.frame.size.height + 85, ScreenWidth - 60, 44);
+    #ifdef IS_LIVE
+        self.joinRoomButton.frame = CGRectMake(30, self.phoneNumLoginTextField.frame.origin.y + self.phoneNumLoginTextField.frame.size.height + 85, (ScreenWidth - 60) / 2 - 10, 44);
+    #else
+        self.joinRoomButton.frame = CGRectMake(30, self.phoneNumLoginTextField.frame.origin.y + self.phoneNumLoginTextField.frame.size.height + 85, ScreenWidth - 60, 44);
+    #endif
+     
+    
     [self.joinRoomButton setTintColor:[UIColor whiteColor]];
     self.joinRoomButton.titleLabel.font = [UIFont systemFontOfSize:18];
     self.joinRoomButton.enabled = NO;
@@ -212,7 +218,47 @@
     [self.joinRoomButton addTarget:self.loginViewController action:@selector(joinRoomButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.inputNumPasswordView addSubview:self.joinRoomButton];
     
-
+    //加入会议室按钮
+    self.audioLiveBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.audioLiveBtn.frame = CGRectMake(self.joinRoomButton.frame.origin.x + 10 + self.joinRoomButton.frame.size.width, self.phoneNumLoginTextField.frame.origin.y + self.phoneNumLoginTextField.frame.size.height + 85, (ScreenWidth - 60) / 2 - 10, 44);
+    [self.audioLiveBtn setTintColor:[UIColor whiteColor]];
+    self.audioLiveBtn.titleLabel.font = [UIFont systemFontOfSize:18];
+    self.audioLiveBtn.enabled = NO;
+    self.audioLiveBtn.backgroundColor = JoinButtonUnableBackgroundColor;
+    [self.audioLiveBtn.layer setMasksToBounds:YES];
+    [self.audioLiveBtn.layer setCornerRadius:4.0];
+    [self.audioLiveBtn addTarget:self.loginViewController action:@selector(audioLiveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.audioLiveBtn setTitle:@"音频直播" forState:UIControlStateNormal];
+    [self.audioLiveBtn setTitle:@"音频直播" forState:UIControlStateHighlighted];
+#ifdef IS_LIVE
+    [self.inputNumPasswordView addSubview:self.audioLiveBtn];
+#else
+    
+#endif
+    
+    
+    //观看直播
+    self.watchLiveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.watchLiveButton.frame = CGRectMake(30, self.phoneNumLoginTextField.frame.origin.y + self.phoneNumLoginTextField.frame.size.height + 85 + self.joinRoomButton.frame.size.height + 30, ScreenWidth - 60, 44);
+    [self.watchLiveButton setTintColor:[UIColor whiteColor]];
+    self.watchLiveButton.titleLabel.font = [UIFont systemFontOfSize:18];
+    self.watchLiveButton.enabled = NO;
+    self.watchLiveButton.backgroundColor = JoinButtonUnableBackgroundColor;
+    [self.watchLiveButton.layer setMasksToBounds:YES];
+    [self.watchLiveButton.layer setCornerRadius:4.0];
+    [self.watchLiveButton addTarget:self.loginViewController action:@selector(watchLiveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    self.watchLiveButton.enabled = YES;
+    self.watchLiveButton.backgroundColor = JoinButtonEnableBackgroundColor;
+    [self.watchLiveButton setTitle:@"观看直播" forState:UIControlStateNormal];
+    [self.watchLiveButton setTitle:@"观看直播" forState:UIControlStateHighlighted];
+#ifdef IS_LIVE
+    [self.inputNumPasswordView addSubview:self.watchLiveButton];
+#else
+    
+#endif
+    
+    
+    
     //短信验证********************************************************************
     self.validateView = [[UIView alloc] initWithFrame:CGRectMake(0, self.versionLabel.frame.origin.y + self.versionLabel.frame.size.height + 10, ScreenWidth, self.inputNumPasswordView.frame.size.height -  (self.versionLabel.frame.origin.y + self.versionLabel.frame.size.height + 10))];
     if(self.loginViewController.view.frame.size.width == 320){
@@ -229,7 +275,7 @@
     self.phoneNumLabel.textColor = JoinButtonEnableBackgroundColor;
     self.phoneNumLabel.text = NSLocalizedString(@"login_input_phone_logon", nil);
     [self.validateView addSubview:self.phoneNumLabel];
-
+    
     UITextField* countryTxtField = [[UITextField alloc] initWithFrame:(CGRect){30,0,ScreenWidth - 60,44}];
     //countryTxtField.textColor = [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:153.0f/255.0f alpha:1];
     countryTxtField.font = [UIFont systemFontOfSize:18];
@@ -250,7 +296,7 @@
     
     //手机号
     self.phoneNumTextField = [[UITextField alloc] initWithFrame:CGRectMake(30, countryTxtField.frame.origin.y + countryTxtField.frame.size.height + 10, ScreenWidth - 60, 44)];
-//        self.phoneNumTextField = [[UITextField alloc] initWithFrame:CGRectMake(30, 0, ScreenWidth - 60, 44)];
+    //        self.phoneNumTextField = [[UITextField alloc] initWithFrame:CGRectMake(30, 0, ScreenWidth - 60, 44)];
     self.phoneNumTextField.font = [UIFont systemFontOfSize:18];
     //self.phoneNumTextField.textColor = [UIColor colorWithRed:34.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0];
     self.phoneNumTextField.textAlignment = NSTextAlignmentLeft;

@@ -91,7 +91,7 @@
             {
                 //本地: 恢复在大屏上显示
                 RongRTCLocalVideoView *localVideoView = (RongRTCLocalVideoView *)kChatManager.localUserDataModel.cellVideoView;
-                localVideoView.fillMode = RCVideoFillModeAspect;
+                localVideoView.fillMode = RongRTCVideoFillModeAspect;
                 localVideoView.frame = self.chatViewController.videoMainView.frame;
                 [self.chatViewController.videoMainView addSubview:kChatManager.localUserDataModel.cellVideoView];
                 
@@ -113,7 +113,7 @@
                 
                 //远端: 恢复显示在collection cell中
                 RongRTCRemoteVideoView *remoteVideoView = (RongRTCRemoteVideoView *)selectedViewModel.cellVideoView;
-                remoteVideoView.fillMode = RCVideoFillModeAspectFill;
+                remoteVideoView.fillMode = RongRTCVideoFillModeAspect;
                 remoteVideoView.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
                 [cell.videoView addSubview:selectedViewModel.cellVideoView];
                 [cell.videoView addSubview:selectedViewModel.infoLabel];
@@ -138,7 +138,7 @@
             {
                 //远端: 之前切换到大屏上的远端,先切换回原collection cell上
                 RongRTCRemoteVideoView *originalRemoteVideoView = (RongRTCRemoteVideoView *)self.originalSelectedViewModel.cellVideoView;
-                originalRemoteVideoView.fillMode = RCVideoFillModeAspectFill;
+                originalRemoteVideoView.fillMode = RongRTCVideoFillModeAspect;
                 originalRemoteVideoView.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
                 [self.chatViewController.selectedChatCell.videoView addSubview:self.originalSelectedViewModel.cellVideoView];
                 
@@ -162,7 +162,7 @@
                 originalRemoteUserID = selectedViewModel.streamID;
                 
                 RongRTCRemoteVideoView *remoteVideoView = (RongRTCRemoteVideoView *)selectedViewModel.cellVideoView;
-                remoteVideoView.fillMode = RCVideoFillModeAspect;
+                remoteVideoView.fillMode = RongRTCVideoFillModeAspect;
                 remoteVideoView.frame = self.chatViewController.videoMainView.frame;
                 [self.chatViewController.videoMainView addSubview:selectedViewModel.cellVideoView];
                 
@@ -183,7 +183,7 @@
                 
                 //本地: 为在cell上铺满屏,根据所选本地分辨率判断宽高比例,切换到collection cell上
                 RongRTCLocalVideoView *localVideoView = (RongRTCLocalVideoView *)kChatManager.localUserDataModel.cellVideoView;
-                localVideoView.fillMode = RCVideoFillModeAspectFill;
+                localVideoView.fillMode = RongRTCVideoFillModeAspect;
                 localVideoView.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
                 [cell.videoView addSubview:kChatManager.localUserDataModel.cellVideoView];
                 
@@ -204,7 +204,7 @@
             originalRemoteUserID = selectedViewModel.streamID;
             
             RongRTCRemoteVideoView *remoteVideoView = (RongRTCRemoteVideoView *)selectedViewModel.cellVideoView;
-            remoteVideoView.fillMode = RCVideoFillModeAspect;
+            remoteVideoView.fillMode = RongRTCVideoFillModeAspect;
             remoteVideoView.frame = self.chatViewController.videoMainView.frame;
             [self.chatViewController.videoMainView addSubview:selectedViewModel.cellVideoView];
             
@@ -230,7 +230,7 @@
             
             //本地: 为了在cell上铺满屏,根据所选本地分辨率判断宽高比例,切换到collection cell上
             RongRTCLocalVideoView *localVideoView = (RongRTCLocalVideoView *)kChatManager.localUserDataModel.cellVideoView;
-            localVideoView.fillMode = RCVideoFillModeAspectFill;
+            localVideoView.fillMode = RongRTCVideoFillModeAspect;
             localVideoView.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
             [cell.videoView addSubview:kChatManager.localUserDataModel.cellVideoView];
             

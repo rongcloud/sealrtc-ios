@@ -24,7 +24,8 @@
     
     self.title = NSLocalizedString(@"setting_private_environment_title", nil);
     
-    self.placeholders = @[NSLocalizedString(@"setting_private_environment_placeholder0",nil),NSLocalizedString(@"setting_private_environment_placeholder1",nil),NSLocalizedString(@"setting_private_environment_placeholder2",nil),NSLocalizedString(@"setting_private_environment_placeholder3",nil),NSLocalizedString(@"setting_private_environment_placeholder4",nil)];
+    self.placeholders = @[NSLocalizedString(@"setting_private_environment_placeholder0",nil),NSLocalizedString(@"setting_private_environment_placeholder1",nil),NSLocalizedString(@"setting_private_environment_placeholder2",nil),NSLocalizedString(@"setting_private_environment_placeholder3",nil),NSLocalizedString(@"setting_private_environment_placeholder4",nil),
+        NSLocalizedString(@"setting_private_environment_placeholder5",nil)];
     
     self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
@@ -33,9 +34,11 @@
     
     
     [self.tableView registerNib:[UINib nibWithNibName:@"PrivateSettingCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"PrivateSettingCell"];
-    
+    if (!kLoginManager.privateMediaServer) {
+        kLoginManager.privateMediaServer = @"";
+    }
     if (kLoginManager.isPrivateEnvironment) {
-        self.dataSource = @[kLoginManager.privateAppKey,kLoginManager.privateAppSecret,kLoginManager.privateNavi,kLoginManager.privateIMServer];
+        self.dataSource = @[kLoginManager.privateAppKey,kLoginManager.privateAppSecret,kLoginManager.privateNavi,kLoginManager.privateIMServer,kLoginManager.privateMediaServer];
     }
 
 }
@@ -49,17 +52,24 @@
     NSString *appSecret = cells[1].textField.text;
     NSString *naviServer = cells[2].textField.text;
     NSString *serverApi = cells[3].textField.text;
+    NSString *mediaServer = cells[4].textField.text;
+    if (!mediaServer) {
+        mediaServer = @"";
+    }
     if (appKey.length > 5 && appSecret.length > 5 && naviServer.length > 5 && serverApi.length > 5) {
         kLoginManager.isPrivateEnvironment = YES;
         kLoginManager.privateAppKey = appKey;
         kLoginManager.privateNavi = naviServer;
         kLoginManager.privateAppSecret = appSecret;
         kLoginManager.privateIMServer = serverApi;
+        kLoginManager.privateMediaServer = mediaServer;
     }
+    
+    kLoginManager.keyToken = @"";
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4;
+    return 5;
 }
 
 
@@ -104,7 +114,7 @@
         case 3:
             return NSLocalizedString(@"setting_private_environment_serverapi", nil);
         case 4:
-            return NSLocalizedString(@"setting_private_environment_appserver", nil);
+            return NSLocalizedString(@"setting_private_environment_mediaserver", nil);
         default:
             break;
     }

@@ -72,6 +72,7 @@ typedef NS_OPTIONS(NSUInteger, RCLogType) {
 + (NSString *)getIpWithHost:(NSString *)hostName;
 + (void)setRcDebugLogLevel:(NSInteger)rcDebugLogLevel;
 + (void)setRcDebugLogMaxSize:(long long)rcDebugLogMaxSize;
+- (void)uploadLog:(void (^)(int code))errorBlock;
 - (void)uploadDebugLog;
 - (void)write:(RCFwLogLevel)level
          type:(RCLogType)type

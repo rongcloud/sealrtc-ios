@@ -37,4 +37,15 @@
  是否是管理员操作
  */
 @property (nonatomic, assign) BOOL isAdmin;
+
+/*!
+ 撤回的文本消息的内容
+*/
+@property (nonatomic, copy) NSString *recallContent;
+
+/*!
+ 撤回动作的时间（毫秒）
+*/
+@property (nonatomic, assign) long long recallActionTime;
+
 @end

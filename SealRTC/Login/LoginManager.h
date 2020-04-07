@@ -15,9 +15,9 @@
 @interface LoginManager : NSObject
 
 @property (nonatomic, strong) NSURL *tokenURL;
-@property (nonatomic, assign) BOOL isGPUFilter, isSRTPEncrypt, isTinyStream, isWaterMark;
+@property (nonatomic, assign) BOOL isGPUFilter, isSRTPEncrypt, isTinyStream, isWaterMark , isHost, isAudioScenarioMusic;
 @property (nonatomic, assign) NSInteger resolutionRatioIndex, frameRateIndex, maxCodeRateIndex, minCodeRateIndex, codingStyleIndex, mediaServerSelectedRow;
-@property (nonatomic, strong) NSString *roomNumber, *keyToken, *appKey, *phoneNumber, *userID,*username,*countryCode,*regionName;
+@property (nonatomic, strong) NSString *roomNumber, *keyToken, *appKey, *phoneNumber, *userID,*username,*countryCode,*regionName , *liveUrl;
 @property (nonatomic, strong) NSString *selectedServer, *mediaServerURL;
 @property (nonatomic, strong, readonly) RongRTCEngine *rongRTCEngine;
 @property (nonatomic, assign) BOOL isLoginTokenSucc, isIMConnectionSucc, isAutoTest, isMaster;
@@ -29,7 +29,7 @@
 
 
 @property (nonatomic, assign)BOOL isPrivateEnvironment;
-@property (nonatomic, copy)NSString *privateAppKey,*privateAppSecret,*privateNavi,*privateIMServer,*privateAppServer;
+@property (nonatomic, copy)NSString *privateAppKey,*privateAppSecret,*privateNavi,*privateIMServer,*privateAppServer,*privateMediaServer;
 
 
 + (LoginManager *)sharedInstance;

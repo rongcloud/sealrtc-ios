@@ -34,10 +34,10 @@
 {
     _array = array;
     if (array.count > 1) {
-        self.titleArray = array[0];
-        self.dataArray = array[1];
+        self.titleArray = [array[0] copy];
+        self.dataArray = [array[1] copy];
+        [self.excelView.tableView reloadData];
     }
-    [self.excelView.tableView reloadData];
 }
 
 - (void)configUI:(CGRect)framesize
@@ -106,11 +106,9 @@
         return 3;
     }
     return 7;
-    //    return ((indexPath.row) % 9 ) + 1;
 }
 
 - (CGFloat)excelView:(YHExcelView *)excelView widthForColumnAtIndex:(YHExcelViewIndexPath *)indexPath atSection:(NSInteger)section {
-    //    return [self.colWidthArray[indexPath.col] doubleValue] * ([UIScreen mainScreen].bounds.size.width/320);
     if (section == 0) {
         return self.excelView.frame.size.width/3;
     }
@@ -123,18 +121,19 @@
         col = [[YHExcelViewColumn alloc] initWithReuseIdentifier:@"col"];
         col.textLabel.font = [UIFont systemFontOfSize:10];
     }
-    if (indexPath.row == 0) {
+    if (indexPath.row == 0 && [self.titleArray count]) {
         NSArray *titles = self.titleArray[0];
-        if (indexPath.section == 1) {
+        if (indexPath.section == 1 && [self.dataArray count]) {
             titles = self.dataArray[0];
         }
-        col.textLabel.text = titles[indexPath.col];
-
+        if ([titles count]) {
+            col.textLabel.text = titles[indexPath.col];
+        }
         col.backgroundColor = [UIColor clearColor];
         col.section = indexPath.section;
         return col;
     }
-    if (indexPath.section == 0 && indexPath.row != 0) {
+    if (indexPath.section == 0 && indexPath.row != 0 && [self.titleArray count]) {
         
         ChatLocalDataInfoModel *localModel = (ChatLocalDataInfoModel *)self.titleArray[indexPath.row];
         switch (indexPath.col) {
@@ -151,7 +150,7 @@
                 break;
         }
         
-    }else if (indexPath.row != 0){
+    }else if (indexPath.row != 0 && [self.dataArray count]){
         ChatDataInfoModel *info = (ChatDataInfoModel *)self.dataArray[indexPath.row];
         switch (indexPath.col) {
             case 0:
@@ -179,7 +178,6 @@
                 break;
         }
     }
-//    NSString *text = [NSString stringWithFormat:@"%@行%@列",@(indexPath.row),@(indexPath.col)];
     col.backgroundColor = [UIColor clearColor];
     col.section = indexPath.section;
     return col;

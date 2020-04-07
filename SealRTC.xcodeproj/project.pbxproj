@@ -25,8 +25,6 @@
 		17A5EF5F237AA36E0032E992 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17A5EF5D237AA36E0032E992 /* Main.storyboard */; };
 		17A5EF64237AA3710032E992 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17A5EF62237AA3710032E992 /* LaunchScreen.storyboard */; };
 		17A5EF67237AA3710032E992 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A5EF66237AA3710032E992 /* main.m */; };
-		17A5EF71237AA3710032E992 /* PrivateSealRTCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A5EF70237AA3710032E992 /* PrivateSealRTCTests.m */; };
-		17A5EF7C237AA3710032E992 /* PrivateSealRTCUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A5EF7B237AA3710032E992 /* PrivateSealRTCUITests.m */; };
 		17A5EF89237AA5AD0032E992 /* RongIMLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A93B12224CEE8200FC1705 /* RongIMLib.framework */; };
 		17A5EF8C237AA5B70032E992 /* RongRTCLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1773DD8F224D145D007213AF /* RongRTCLib.framework */; };
 		17A5EF8E237AA5C80032E992 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D7D5D4E1D1B8605000574B2 /* VideoToolbox.framework */; };
@@ -63,7 +61,6 @@
 		17A5EFC2237AAA020032E992 /* ChatCellVideoViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3917C2CB21BA10B600456EDA /* ChatCellVideoViewModel.m */; };
 		17A5EFC3237AAA020032E992 /* ChatDataInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3917C2CF21BA10B600456EDA /* ChatDataInfoModel.m */; };
 		17A5EFC4237AAA020032E992 /* ChatLocalDataInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3917C2CE21BA10B600456EDA /* ChatLocalDataInfoModel.m */; };
-		17A5EFC5237AAA020032E992 /* ChatLocalVideoRender.m in Sources */ = {isa = PBXBuildFile; fileRef = 17FE11E52296842400A933E3 /* ChatLocalVideoRender.m */; };
 		17A5EFC6237AAA090032E992 /* ChatBubbleMenuViewDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3917C2C421BA10B600456EDA /* ChatBubbleMenuViewDelegateImpl.m */; };
 		17A5EFC7237AAA090032E992 /* ChatCollectionViewDataSourceDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3917C2C321BA10B600456EDA /* ChatCollectionViewDataSourceDelegateImpl.m */; };
 		17A5EFC8237AAA090032E992 /* ChatRongRTCRoomDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B258A62215111300821CB9 /* ChatRongRTCRoomDelegateImpl.m */; };
@@ -119,7 +116,6 @@
 		17A5EFFA237AAA6E0032E992 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D4A1B420DA533700F26ACA /* Reachability.m */; };
 		17A5EFFC237AAA7A0032E992 /* libWhiteSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 392AEA8B22816A5A00EC3CA3 /* libWhiteSDK.a */; };
 		17A5EFFD237AAA7E0032E992 /* WhiteSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 392AEA8822816A5A00EC3CA3 /* WhiteSDK.bundle */; };
-		17A5EFFF237AAA970032E992 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		17A5F000237AAA970032E992 /* SettingPickViewDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 392AEA3B227FE39200EC3CA3 /* SettingPickViewDelegateImpl.m */; };
 		17A5F001237AAA970032E992 /* SettingTableViewDelegateSourceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 392AEA3C227FE39200EC3CA3 /* SettingTableViewDelegateSourceImpl.m */; };
 		17A5F002237AAA970032E992 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3973203D1D9BEF470016DFC6 /* SettingViewController.m */; };
@@ -156,7 +152,6 @@
 		17D4597B2356C25000FBCD71 /* my_homeland.aac in Resources */ = {isa = PBXBuildFile; fileRef = 17D4597A2356C25000FBCD71 /* my_homeland.aac */; };
 		17D4597E2356C37900FBCD71 /* RongAudioVolumeControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 17D4597D2356C37900FBCD71 /* RongAudioVolumeControl.m */; };
 		17DD6C2C229CE60700904272 /* RongRTCFileCapturer.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DD6C2B229CE60700904272 /* RongRTCFileCapturer.m */; };
-		17FE11E62296842400A933E3 /* ChatLocalVideoRender.m in Sources */ = {isa = PBXBuildFile; fileRef = 17FE11E52296842400A933E3 /* ChatLocalVideoRender.m */; };
 		3907FA151E08E01E007EDC46 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3907FA141E08E01E007EDC46 /* SystemConfiguration.framework */; };
 		390ED55D1D9E07F20046F519 /* CodeRate.plist in Resources */ = {isa = PBXBuildFile; fileRef = 390ED55C1D9E07F20046F519 /* CodeRate.plist */; };
 		3917C2AD21B8F6F300456EDA /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3917C2AB21B8F6F200456EDA /* LoginManager.m */; };
@@ -228,6 +223,8 @@
 		39B258B322159D1000821CB9 /* RCConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39B258B022159D1000821CB9 /* RCConfig.plist */; };
 		39BDCFE11DCC43AF004820E3 /* CodingStyle.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39BDCFE01DCC43AF004820E3 /* CodingStyle.plist */; };
 		39BE2C242373C571008BD6A9 /* STKickOffInfoMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 39BE2C222373C570008BD6A9 /* STKickOffInfoMessage.m */; };
+		39C6699A23F1487300154DF5 /* SettingTextFieldDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C6699923F1487300154DF5 /* SettingTextFieldDelegateImpl.m */; };
+		39C6699B23F1487300154DF5 /* SettingTextFieldDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C6699923F1487300154DF5 /* SettingTextFieldDelegateImpl.m */; };
 		39CD92DB228BF66400F3454B /* RongWhiteBoardMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CD92D9228BF66300F3454B /* RongWhiteBoardMessage.m */; };
 		39CD92E6228C216100F3454B /* ColorSelectionCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CD92E5228C216100F3454B /* ColorSelectionCollectionViewController.m */; };
 		39D4A1B620DA533800F26ACA /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D4A1B420DA533700F26ACA /* Reachability.m */; };
@@ -272,24 +269,13 @@
 		B220964F22533A14005948E1 /* STParticipantsInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B220964E22533A14005948E1 /* STParticipantsInfo.m */; };
 		B221359B22696C330033B545 /* STNavigatioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B221359A22696C330033B545 /* STNavigatioViewController.m */; };
 		B25E424C22EAB04F00790D45 /* voip_network_error_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 171B23F522E8381800B13746 /* voip_network_error_sound.wav */; };
+		E83B6AD42318F46C00A3373A /* RCSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = E83B6AD32318F46C00A3373A /* RCSelectView.m */; };
+		E83B6AD72318F52E00A3373A /* RCBackView.m in Sources */ = {isa = PBXBuildFile; fileRef = E83B6AD62318F52E00A3373A /* RCBackView.m */; };
+		E83B6ADA2318F7F700A3373A /* RCSelectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E83B6AD92318F7F700A3373A /* RCSelectModel.m */; };
+		E84B4EB623AB28AC009C955D /* RCBackView.m in Sources */ = {isa = PBXBuildFile; fileRef = E83B6AD62318F52E00A3373A /* RCBackView.m */; };
+		E84B4EB723AB28B6009C955D /* RCSelectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E83B6AD92318F7F700A3373A /* RCSelectModel.m */; };
+		E84B4EB823AB28C5009C955D /* RCSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = E83B6AD32318F46C00A3373A /* RCSelectView.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		17A5EF6D237AA3710032E992 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9D54AC291D06CFA00054A72F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 17A5EF51237AA36D0032E992;
-			remoteInfo = PrivateSealRTC;
-		};
-		17A5EF78237AA3710032E992 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9D54AC291D06CFA00054A72F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 17A5EF51237AA36D0032E992;
-			remoteInfo = PrivateSealRTC;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		394DEFB322143F63009E090A /* Embed Frameworks */ = {
@@ -350,12 +336,6 @@
 		17A5EF63237AA3710032E992 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		17A5EF65237AA3710032E992 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17A5EF66237AA3710032E992 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		17A5EF6C237AA3710032E992 /* PrivateSealRTCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrivateSealRTCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		17A5EF70237AA3710032E992 /* PrivateSealRTCTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrivateSealRTCTests.m; sourceTree = "<group>"; };
-		17A5EF72237AA3710032E992 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		17A5EF77237AA3710032E992 /* PrivateSealRTCUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrivateSealRTCUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		17A5EF7B237AA3710032E992 /* PrivateSealRTCUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrivateSealRTCUITests.m; sourceTree = "<group>"; };
-		17A5EF7D237AA3710032E992 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17A5EF87237AA5A50032E992 /* librcsdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = librcsdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		17A5EF93237AA66A0032E992 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
 		17A5EF94237AA66A0032E992 /* RongRTCLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RongRTCLib.framework; sourceTree = "<group>"; };
@@ -380,8 +360,6 @@
 		17D4597D2356C37900FBCD71 /* RongAudioVolumeControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RongAudioVolumeControl.m; sourceTree = "<group>"; };
 		17DD6C2A229CE60700904272 /* RongRTCFileCapturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RongRTCFileCapturer.h; sourceTree = "<group>"; };
 		17DD6C2B229CE60700904272 /* RongRTCFileCapturer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RongRTCFileCapturer.m; sourceTree = "<group>"; };
-		17FE11E42296842400A933E3 /* ChatLocalVideoRender.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatLocalVideoRender.h; sourceTree = "<group>"; };
-		17FE11E52296842400A933E3 /* ChatLocalVideoRender.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatLocalVideoRender.m; sourceTree = "<group>"; };
 		3907FA141E08E01E007EDC46 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3907FA191E08E037007EDC46 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		390ED55C1D9E07F20046F519 /* CodeRate.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CodeRate.plist; sourceTree = "<group>"; };
@@ -537,6 +515,8 @@
 		39BDCFE01DCC43AF004820E3 /* CodingStyle.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CodingStyle.plist; sourceTree = "<group>"; };
 		39BE2C222373C570008BD6A9 /* STKickOffInfoMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKickOffInfoMessage.m; sourceTree = "<group>"; };
 		39BE2C232373C570008BD6A9 /* STKickOffInfoMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKickOffInfoMessage.h; sourceTree = "<group>"; };
+		39C6699823F1487300154DF5 /* SettingTextFieldDelegateImpl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingTextFieldDelegateImpl.h; sourceTree = "<group>"; };
+		39C6699923F1487300154DF5 /* SettingTextFieldDelegateImpl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingTextFieldDelegateImpl.m; sourceTree = "<group>"; };
 		39CD92D9228BF66300F3454B /* RongWhiteBoardMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RongWhiteBoardMessage.m; sourceTree = "<group>"; };
 		39CD92DA228BF66300F3454B /* RongWhiteBoardMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RongWhiteBoardMessage.h; sourceTree = "<group>"; };
 		39CD92E4228C216100F3454B /* ColorSelectionCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorSelectionCollectionViewController.h; sourceTree = "<group>"; };
@@ -619,6 +599,12 @@
 		B220964E22533A14005948E1 /* STParticipantsInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STParticipantsInfo.m; sourceTree = "<group>"; };
 		B221359922696C330033B545 /* STNavigatioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STNavigatioViewController.h; sourceTree = "<group>"; };
 		B221359A22696C330033B545 /* STNavigatioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STNavigatioViewController.m; sourceTree = "<group>"; };
+		E83B6AD22318F46C00A3373A /* RCSelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCSelectView.h; sourceTree = "<group>"; };
+		E83B6AD32318F46C00A3373A /* RCSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCSelectView.m; sourceTree = "<group>"; };
+		E83B6AD52318F52E00A3373A /* RCBackView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCBackView.h; sourceTree = "<group>"; };
+		E83B6AD62318F52E00A3373A /* RCBackView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCBackView.m; sourceTree = "<group>"; };
+		E83B6AD82318F7F700A3373A /* RCSelectModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCSelectModel.h; sourceTree = "<group>"; };
+		E83B6AD92318F7F700A3373A /* RCSelectModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCSelectModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -644,20 +630,6 @@
 				17A5EFFC237AAA7A0032E992 /* libWhiteSDK.a in Frameworks */,
 				17A5EF8F237AA5CC0032E992 /* AVFoundation.framework in Frameworks */,
 				17A5EF8C237AA5B70032E992 /* RongRTCLib.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		17A5EF69237AA3710032E992 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		17A5EF74237AA3710032E992 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -787,24 +759,6 @@
 			path = PrivateSealRTC;
 			sourceTree = "<group>";
 		};
-		17A5EF6F237AA3710032E992 /* PrivateSealRTCTests */ = {
-			isa = PBXGroup;
-			children = (
-				17A5EF70237AA3710032E992 /* PrivateSealRTCTests.m */,
-				17A5EF72237AA3710032E992 /* Info.plist */,
-			);
-			path = PrivateSealRTCTests;
-			sourceTree = "<group>";
-		};
-		17A5EF7A237AA3710032E992 /* PrivateSealRTCUITests */ = {
-			isa = PBXGroup;
-			children = (
-				17A5EF7B237AA3710032E992 /* PrivateSealRTCUITests.m */,
-				17A5EF7D237AA3710032E992 /* Info.plist */,
-			);
-			path = PrivateSealRTCUITests;
-			sourceTree = "<group>";
-		};
 		17A5EF92237AA66A0032E992 /* framework */ = {
 			isa = PBXGroup;
 			children = (
@@ -867,8 +821,6 @@
 				3917C2CF21BA10B600456EDA /* ChatDataInfoModel.m */,
 				3917C2CA21BA10B600456EDA /* ChatLocalDataInfoModel.h */,
 				3917C2CE21BA10B600456EDA /* ChatLocalDataInfoModel.m */,
-				17FE11E42296842400A933E3 /* ChatLocalVideoRender.h */,
-				17FE11E52296842400A933E3 /* ChatLocalVideoRender.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -915,6 +867,8 @@
 				392AEA3B227FE39200EC3CA3 /* SettingPickViewDelegateImpl.m */,
 				392AEA39227FE39200EC3CA3 /* SettingTableViewDelegateSourceImpl.h */,
 				392AEA3C227FE39200EC3CA3 /* SettingTableViewDelegateSourceImpl.m */,
+				39C6699823F1487300154DF5 /* SettingTextFieldDelegateImpl.h */,
+				39C6699923F1487300154DF5 /* SettingTextFieldDelegateImpl.m */,
 			);
 			path = Delegate;
 			sourceTree = "<group>";
@@ -1097,6 +1051,12 @@
 				39A2958F217DA70C0091B6BB /* LoginViewBuilder.m */,
 				3917C2AC21B8F6F200456EDA /* LoginManager.h */,
 				3917C2AB21B8F6F200456EDA /* LoginManager.m */,
+				E83B6AD52318F52E00A3373A /* RCBackView.h */,
+				E83B6AD62318F52E00A3373A /* RCBackView.m */,
+				E83B6AD22318F46C00A3373A /* RCSelectView.h */,
+				E83B6AD32318F46C00A3373A /* RCSelectView.m */,
+				E83B6AD82318F7F700A3373A /* RCSelectModel.h */,
+				E83B6AD92318F7F700A3373A /* RCSelectModel.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1145,16 +1105,16 @@
 			isa = PBXGroup;
 			children = (
 				981C3E0B202ADDEB00494697 /* UIView+YHCategory.h */,
-				981C3E0C202ADDEB00494697 /* YHExcelViewColumn.h */,
-				981C3E0D202ADDEB00494697 /* YHExcelViewIndexPath.m */,
-				981C3E0E202ADDEB00494697 /* YHExcelTitleView.m */,
-				981C3E0F202ADDEB00494697 /* YHExcelViewColumn.m */,
 				981C3E10202ADDEB00494697 /* UIView+YHCategory.m */,
 				981C3E11202ADDEB00494697 /* YHExcel.h */,
+				981C3E14202ADDEB00494697 /* YHExcelTitleView.h */,
+				981C3E0E202ADDEB00494697 /* YHExcelTitleView.m */,
 				981C3E12202ADDEB00494697 /* YHExcelView.h */,
 				981C3E0A202ADDEB00494697 /* YHExcelView.m */,
+				981C3E0C202ADDEB00494697 /* YHExcelViewColumn.h */,
+				981C3E0F202ADDEB00494697 /* YHExcelViewColumn.m */,
 				981C3E13202ADDEB00494697 /* YHExcelViewIndexPath.h */,
-				981C3E14202ADDEB00494697 /* YHExcelTitleView.h */,
+				981C3E0D202ADDEB00494697 /* YHExcelViewIndexPath.m */,
 			);
 			path = ExcelView;
 			sourceTree = "<group>";
@@ -1213,8 +1173,6 @@
 			children = (
 				9D54AC331D06CFA00054A72F /* SealRTC */,
 				17A5EF53237AA36D0032E992 /* PrivateSealRTC */,
-				17A5EF6F237AA3710032E992 /* PrivateSealRTCTests */,
-				17A5EF7A237AA3710032E992 /* PrivateSealRTCUITests */,
 				9D54AC321D06CFA00054A72F /* Products */,
 				1744C42221A3BF1E00452227 /* Frameworks */,
 			);
@@ -1225,8 +1183,6 @@
 			children = (
 				9D54AC311D06CFA00054A72F /* SealRTC.app */,
 				17A5EF52237AA36D0032E992 /* PrivateSealRTC.app */,
-				17A5EF6C237AA3710032E992 /* PrivateSealRTCTests.xctest */,
-				17A5EF77237AA3710032E992 /* PrivateSealRTCUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1358,42 +1314,6 @@
 			productReference = 17A5EF52237AA36D0032E992 /* PrivateSealRTC.app */;
 			productType = "com.apple.product-type.application";
 		};
-		17A5EF6B237AA3710032E992 /* PrivateSealRTCTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 17A5EF81237AA3710032E992 /* Build configuration list for PBXNativeTarget "PrivateSealRTCTests" */;
-			buildPhases = (
-				17A5EF68237AA3710032E992 /* Sources */,
-				17A5EF69237AA3710032E992 /* Frameworks */,
-				17A5EF6A237AA3710032E992 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				17A5EF6E237AA3710032E992 /* PBXTargetDependency */,
-			);
-			name = PrivateSealRTCTests;
-			productName = PrivateSealRTCTests;
-			productReference = 17A5EF6C237AA3710032E992 /* PrivateSealRTCTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		17A5EF76237AA3710032E992 /* PrivateSealRTCUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 17A5EF84237AA3710032E992 /* Build configuration list for PBXNativeTarget "PrivateSealRTCUITests" */;
-			buildPhases = (
-				17A5EF73237AA3710032E992 /* Sources */,
-				17A5EF74237AA3710032E992 /* Frameworks */,
-				17A5EF75237AA3710032E992 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				17A5EF79237AA3710032E992 /* PBXTargetDependency */,
-			);
-			name = PrivateSealRTCUITests;
-			productName = PrivateSealRTCUITests;
-			productReference = 17A5EF77237AA3710032E992 /* PrivateSealRTCUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		9D54AC301D06CFA00054A72F /* SealRTC */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9D54AC481D06CFA00054A72F /* Build configuration list for PBXNativeTarget "SealRTC" */;
@@ -1427,18 +1347,6 @@
 						DevelopmentTeam = 9CVMN4UZK4;
 						ProvisioningStyle = Automatic;
 					};
-					17A5EF6B237AA3710032E992 = {
-						CreatedOnToolsVersion = 11.2;
-						DevelopmentTeam = 9CVMN4UZK4;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 17A5EF51237AA36D0032E992;
-					};
-					17A5EF76237AA3710032E992 = {
-						CreatedOnToolsVersion = 11.2;
-						DevelopmentTeam = 9CVMN4UZK4;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 17A5EF51237AA36D0032E992;
-					};
 					9D54AC301D06CFA00054A72F = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 9CVMN4UZK4;
@@ -1463,8 +1371,6 @@
 			targets = (
 				9D54AC301D06CFA00054A72F /* SealRTC */,
 				17A5EF51237AA36D0032E992 /* PrivateSealRTC */,
-				17A5EF6B237AA3710032E992 /* PrivateSealRTCTests */,
-				17A5EF76237AA3710032E992 /* PrivateSealRTCUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1491,20 +1397,6 @@
 				17A5EFBC237AA9F70032E992 /* my_homeland.aac in Resources */,
 				17A5EFFD237AAA7E0032E992 /* WhiteSDK.bundle in Resources */,
 				17A5EF5F237AA36E0032E992 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		17A5EF6A237AA3710032E992 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		17A5EF75237AA3710032E992 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1564,6 +1456,7 @@
 				17A5EFCD237AAA110032E992 /* ChatGPUImageHandler.m in Sources */,
 				17A5EFC9237AAA090032E992 /* ChatRongRTCNetworkMonitorDelegateImpl.m in Sources */,
 				17A5EFAA237AA8F70032E992 /* GCDWebDAVServer.m in Sources */,
+				E84B4EB723AB28B6009C955D /* RCSelectModel.m in Sources */,
 				17A5EFAC237AA9020032E992 /* RongRTCWebServer.m in Sources */,
 				17A5EFE3237AAA3D0032E992 /* UIColor+ColorChange.m in Sources */,
 				17A5EFD2237AAA270032E992 /* YHExcelViewIndexPath.m in Sources */,
@@ -1583,7 +1476,7 @@
 				17A5EFED237AAA5B0032E992 /* MASConstraintMaker.m in Sources */,
 				17A5EFD3237AAA270032E992 /* YHExcelTitleView.m in Sources */,
 				17A5F00E237AAAAD0032E992 /* STSetRoomInfoMessage.m in Sources */,
-				17A5EFFF237AAA970032E992 /* (null) in Sources */,
+				E84B4EB823AB28C5009C955D /* RCSelectView.m in Sources */,
 				17A5EFB6237AA9DA0032E992 /* LoginViewBuilder.m in Sources */,
 				17A5EFEB237AAA5B0032E992 /* ViewController+MASAdditions.m in Sources */,
 				17A5EFE5237AAA440032E992 /* RongWhiteBoardMessage.m in Sources */,
@@ -1602,11 +1495,11 @@
 				17A5EFB8237AA9F70032E992 /* MBProgressHUD.m in Sources */,
 				17A5EFB9237AA9F70032E992 /* RTActiveWheel.m in Sources */,
 				17A5EFE8237AAA4A0032E992 /* RCFetchTokenManager.m in Sources */,
+				39C6699B23F1487300154DF5 /* SettingTextFieldDelegateImpl.m in Sources */,
 				17A5F022237AAD700032E992 /* PrivateCloudSettingViewController.m in Sources */,
 				17A5EFE1237AAA3D0032E992 /* UICollectionView+RongRTCBgView.m in Sources */,
 				17A5F003237AAA970032E992 /* SettingViewBuilder.m in Sources */,
 				17A5EFCE237AAA110032E992 /* ChatWhiteBoardHandler.m in Sources */,
-				17A5EFC5237AAA020032E992 /* ChatLocalVideoRender.m in Sources */,
 				17A5EFE6237AAA4A0032E992 /* CommonUtility.m in Sources */,
 				17A5EFEF237AAA5B0032E992 /* NSArray+MASAdditions.m in Sources */,
 				17A5EFC8237AAA090032E992 /* ChatRongRTCRoomDelegateImpl.m in Sources */,
@@ -1615,6 +1508,7 @@
 				17A5F00B237AAAAD0032E992 /* STParticipantsTableViewHeader.m in Sources */,
 				17A5EFC2237AAA020032E992 /* ChatCellVideoViewModel.m in Sources */,
 				17A5F006237AAAA40032E992 /* RCCCpinyin.m in Sources */,
+				E84B4EB623AB28AC009C955D /* RCBackView.m in Sources */,
 				17A5EFE4237AAA3D0032E992 /* NSString+length.m in Sources */,
 				17A5F004237AAA9E0032E992 /* SplashViewController.m in Sources */,
 				17A5F011237AAB9E0032E992 /* SealRTCAppDelegate.m in Sources */,
@@ -1654,28 +1548,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		17A5EF68237AA3710032E992 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				17A5EF71237AA3710032E992 /* PrivateSealRTCTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		17A5EF73237AA3710032E992 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				17A5EF7C237AA3710032E992 /* PrivateSealRTCUITests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		9D54AC2D1D06CFA00054A72F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				B220964F22533A14005948E1 /* STParticipantsInfo.m in Sources */,
-				17FE11E62296842400A933E3 /* ChatLocalVideoRender.m in Sources */,
 				3917C2AD21B8F6F300456EDA /* LoginManager.m in Sources */,
 				988FEE7320206D8200FFF09A /* UINavigationController+returnBack.m in Sources */,
 				39D785E61E77BC5B004BAAFC /* RadioButton.m in Sources */,
@@ -1703,6 +1580,7 @@
 				394D15961DF00A9D001CE166 /* SettingViewBuilder.m in Sources */,
 				B220964222530A61005948E1 /* RCCCpinyin.m in Sources */,
 				1782D887226EACB900AA9A74 /* ChatMembersViewController.m in Sources */,
+				E83B6AD72318F52E00A3373A /* RCBackView.m in Sources */,
 				B220963F22530A35005948E1 /* RCDCountry.m in Sources */,
 				98EEB1C02041554400E77E7E /* NSString+length.m in Sources */,
 				392D0B6F2282AAB100B0E21C /* MASConstraintMaker.m in Sources */,
@@ -1716,11 +1594,13 @@
 				3917C2E321BA10D200456EDA /* GPUImageOutputCamera.m in Sources */,
 				1788284E22A0D37C00933137 /* GCDWebDAVServer.m in Sources */,
 				B21B1D5B22533E9A001C4489 /* STJSONModel.m in Sources */,
+				39C6699A23F1487300154DF5 /* SettingTextFieldDelegateImpl.m in Sources */,
 				17A5F021237AAD700032E992 /* PrivateCloudSettingViewController.m in Sources */,
 				392D0B732282AAB100B0E21C /* MASConstraint.m in Sources */,
 				1782D88C226EB3C300AA9A74 /* ChatMemberCell.m in Sources */,
 				392D0B6C2282AAB100B0E21C /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				3917C2D621BA10B600456EDA /* ChatBubbleMenuViewDelegateImpl.m in Sources */,
+				E83B6ADA2318F7F700A3373A /* RCSelectModel.m in Sources */,
 				9D7D5C441D1AB294000574B2 /* main.m in Sources */,
 				392AEA772280152200EC3CA3 /* DSCallInfo.m in Sources */,
 				392D0B752282AAB100B0E21C /* MASViewAttribute.m in Sources */,
@@ -1758,6 +1638,7 @@
 				392AEA7D2280224000EC3CA3 /* ChatWhiteBoardHandler.m in Sources */,
 				392D0B702282AAB100B0E21C /* MASLayoutConstraint.m in Sources */,
 				B220964C22533389005948E1 /* STParticipantsTableViewHeader.m in Sources */,
+				E83B6AD42318F46C00A3373A /* RCSelectView.m in Sources */,
 				B220963C22530A0E005948E1 /* STCountryTableViewController.m in Sources */,
 				394DEFAC22143AEB009E090A /* RTHttpNetworkWorker.m in Sources */,
 				3917C2D921BA10B600456EDA /* ChatCellVideoViewModel.m in Sources */,
@@ -1768,19 +1649,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		17A5EF6E237AA3710032E992 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 17A5EF51237AA36D0032E992 /* PrivateSealRTC */;
-			targetProxy = 17A5EF6D237AA3710032E992 /* PBXContainerItemProxy */;
-		};
-		17A5EF79237AA3710032E992 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 17A5EF51237AA36D0032E992 /* PrivateSealRTC */;
-			targetProxy = 17A5EF78237AA3710032E992 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		17A5EF5D237AA36E0032E992 /* Main.storyboard */ = {
@@ -1916,100 +1784,6 @@
 			};
 			name = Release;
 		};
-		17A5EF82237AA3710032E992 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 9CVMN4UZK4;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = PrivateSealRTCTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.PrivateSealRTCTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PrivateSealRTC.app/PrivateSealRTC";
-			};
-			name = Debug;
-		};
-		17A5EF83237AA3710032E992 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9CVMN4UZK4;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = PrivateSealRTCTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.PrivateSealRTCTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PrivateSealRTC.app/PrivateSealRTC";
-			};
-			name = Release;
-		};
-		17A5EF85237AA3710032E992 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 9CVMN4UZK4;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = PrivateSealRTCUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.PrivateSealRTCUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PrivateSealRTC;
-			};
-			name = Debug;
-		};
-		17A5EF86237AA3710032E992 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9CVMN4UZK4;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = PrivateSealRTCUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.PrivateSealRTCUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PrivateSealRTC;
-			};
-			name = Release;
-		};
 		9D54AC461D06CFA00054A72F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2127,7 +1901,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.1.6.1;
+				CURRENT_PROJECT_VERSION = 3.2.2.1;
 				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2158,9 +1932,9 @@
 					"$(PROJECT_DIR)/SealRTC/3rd/White-SDK-iOS",
 					"$(PROJECT_DIR)/SealRTC/webserver",
 				);
-				MARKETING_VERSION = 3.1.6;
+				MARKETING_VERSION = 3.2.2;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtcapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2176,7 +1950,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.1.6.1;
+				CURRENT_PROJECT_VERSION = 3.2.2.1;
 				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2204,9 +1978,9 @@
 					"$(PROJECT_DIR)/SealRTC/3rd/White-SDK-iOS",
 					"$(PROJECT_DIR)/SealRTC/webserver",
 				);
-				MARKETING_VERSION = 3.1.6;
+				MARKETING_VERSION = 3.2.2;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtcapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2223,24 +1997,6 @@
 			buildConfigurations = (
 				17A5EF7F237AA3710032E992 /* Debug */,
 				17A5EF80237AA3710032E992 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		17A5EF81237AA3710032E992 /* Build configuration list for PBXNativeTarget "PrivateSealRTCTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				17A5EF82237AA3710032E992 /* Debug */,
-				17A5EF83237AA3710032E992 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		17A5EF84237AA3710032E992 /* Build configuration list for PBXNativeTarget "PrivateSealRTCUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				17A5EF85237AA3710032E992 /* Debug */,
-				17A5EF86237AA3710032E992 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

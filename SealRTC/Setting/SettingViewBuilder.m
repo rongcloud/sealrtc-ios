@@ -54,6 +54,23 @@
     self.resolutionRatioPickview = [[ZHPickView alloc] initPickviewWithPlistName:Key_ResolutionRatio isHaveNavControler:NO];
     self.resolutionRatioPickview.delegate = self.settingViewController.settingPickViewDelegateImpl;
     [self.resolutionRatioPickview setSelectedPickerItem:kLoginManager.resolutionRatioIndex];
+    
+    self.userIDTextField = [[UITextField alloc]initWithFrame:CGRectMake(16, 0, ScreenWidth -16, 44)];
+    self.userIDTextField.font = [UIFont systemFontOfSize:18];
+    self.userIDTextField.textAlignment = NSTextAlignmentLeft;
+    self.userIDTextField.returnKeyType = UIReturnKeyDone;
+    self.userIDTextField.keyboardType = UIKeyboardTypeNumberPad;
+    self.userIDTextField.delegate = self.settingViewController.settingTextFieldDelegateImpl;
+    
+    UILongPressGestureRecognizer *userIDTextFieldLongPress =
+        [[UILongPressGestureRecognizer alloc] initWithTarget:self.settingViewController action:@selector(longPressedGestureAction:)];
+    [self.userIDTextField addGestureRecognizer:userIDTextFieldLongPress];
+    
+    //音频
+    self.audioScenarioSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth -6-60, 6, 60, 28)];
+    [self.audioScenarioSwitch addTarget:self.settingViewController action:@selector(audioScenarioAction) forControlEvents:UIControlEventValueChanged];
+    [self.audioScenarioSwitch setOn:kLoginManager.isAudioScenarioMusic];
+
 }
 
 @end

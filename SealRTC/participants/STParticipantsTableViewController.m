@@ -69,7 +69,6 @@ extern NSNotificationName const STParticipantsInfoDidUpdate;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     NSNotificationCenter* defalutCenter = [NSNotificationCenter defaultCenter];
     [defalutCenter addObserver:self
                       selector:@selector(participantsInfoDidChange:)
@@ -161,44 +160,40 @@ extern NSNotificationName const STParticipantsInfoDidUpdate;
     cell.detailTextLabel.textColor = [UIColor lightGrayColor];
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.text = [NSString stringWithFormat:@"%@ (%@)", info.userName, stringForJoinMode(info.joinMode)]; ;
-    
-    if (kLoginManager.isMaster) {
-        if ([info.userId isEqualToString:kLoginManager.userID]) {
-            cell.detailTextLabel.text = NSLocalizedString(@"chat_user_kick_master", nil);
-        }
-        else {
-            cell.detailTextLabel.text = @"";
-            UIButton *btn;
-            for (NSInteger i = 0; i < [self.removeUserButtonArray count]; i++) {
-                UIButton *tmpBtn = (UIButton *)self.removeUserButtonArray[i];
-                if (tmpBtn.tag == row) {
-                    btn = tmpBtn;
-                }
-            }
-            
-            if (!btn) {
-                btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-                btn.frame = CGRectMake(ScreenWidth - 80, 0, 80, 44);
-                btn.titleLabel.font = [UIFont systemFontOfSize:16];
-                [btn setTitle:NSLocalizedString(@"chat_user_kick", nil) forState:UIControlStateNormal];
-                [btn setTitle:NSLocalizedString(@"chat_user_kick", nil) forState:UIControlStateHighlighted];
-                [btn addTarget:self action:@selector(cellButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                [self.removeUserButtonArray addObject:btn];
-            }
-            
-            btn.tag = row;
-            [cell.contentView addSubview:btn];
-        }
-    }
-    else {
-        cell.detailTextLabel.text = info.master ? NSLocalizedString(@"chat_user_kick_master", nil) : @"";
-    }
+    cell.detailTextLabel.text = info.master ? NSLocalizedString(@"chat_user_kick_master", nil) : @"";
     
     return cell;
 }
 
+#pragma mark - Table view deletate
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        return UITableViewCellEditingStyleNone;
+    }
+    return UITableViewCellEditingStyleDelete;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (!kLoginManager.isMaster) {
+        return nil;
+    }
+    if (indexPath.row == 0 ) {
+        return nil;
+    }
+    UITableViewRowAction* deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:NSLocalizedString(@"chat_user_kick", nil) handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        STParticipantsInfo *info = self.dataSource[indexPath.row];
+        NSDictionary *msgDict = @{@"userId" : info.userId};
+         STKickOffInfoMessage *message = [[STKickOffInfoMessage alloc] initKickOffMessage:msgDict];
+         [self.room sendRTCMessage:message success:^(long messageId) {
+         } error:^(RCErrorCode nErrorCode, long messageId) {
+         }];
+    }];
+    return @[deleteAction];
 }
 
 #pragma mark - notification selector
@@ -218,29 +213,6 @@ extern NSNotificationName const STParticipantsInfoDidUpdate;
 #pragma mark - Target Action
 - (void)closeAction {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)cellButtonPressed:(UIButton *)button {
-    DLog(@"LLH...... button.tag: %zd", button.tag);
-    STParticipantsInfo *info = self.dataSource[button.tag];
-    
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"setting_OK", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSDictionary *msgDict = @{@"userId" : info.userId};
-        STKickOffInfoMessage *message = [[STKickOffInfoMessage alloc] initKickOffMessage:msgDict];
-        [self.room sendRTCMessage:message success:^(long messageId) {
-        } error:^(RCErrorCode nErrorCode, long messageId) {
-        }];
-    }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"setting_Cancel", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    }];
-    
-    NSString *msg = [NSString stringWithFormat:NSLocalizedString(@"chat_user_kick_msg", nil), info.userName];
-    UIAlertController *controler = [UIAlertController alertControllerWithTitle:msg message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [controler addAction:cancelAction];
-    [controler addAction:okAction];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self presentViewController:controler animated:YES completion:^{}];
-    });
 }
 
 #pragma mark - getters

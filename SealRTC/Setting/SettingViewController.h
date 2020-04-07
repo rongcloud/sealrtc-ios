@@ -11,6 +11,7 @@
 #import "SettingViewBuilder.h"
 #import "SettingTableViewDelegateSourceImpl.h"
 #import "SettingPickViewDelegateImpl.h"
+#import "SettingTextFieldDelegateImpl.h"
 #import "UINavigationController+returnBack.h"
 #import "LoginManager.h"
 
@@ -28,6 +29,7 @@
 @property (nonatomic, strong) NSArray *resolutionRatioArray, *frameRateArray, *codeRateArray, *codingStyleArray;
 @property (nonatomic, strong) SettingTableViewDelegateSourceImpl *settingTableViewDelegateSourceImpl;
 @property (nonatomic, strong) SettingPickViewDelegateImpl *settingPickViewDelegateImpl;
+@property (nonatomic, strong) SettingTextFieldDelegateImpl *settingTextFieldDelegateImpl;
 @property (nonatomic, strong) UIAlertController *alertController;
 
 
@@ -36,5 +38,6 @@
 - (void)tinyStreamSwitchAction;
 - (void)autoTestAction;
 - (void)waterMarkAction;
+- (void)longPressedGestureAction:(UILongPressGestureRecognizer *)gesture;
 
 @end

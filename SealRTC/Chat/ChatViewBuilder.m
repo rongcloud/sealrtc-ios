@@ -10,7 +10,7 @@
 #import "ChatViewController.h"
 #import "CommonUtility.h"
 
-#define MenuButtonCount 6
+#define MenuButtonCount 7
 
 @interface ChatViewBuilder ()
 {
@@ -193,6 +193,24 @@
             {
                 self.whiteboardButton = button;
                 [CommonUtility setButtonImage:button imageName:@"chat_white_board_on"];
+            }
+                break;
+            case 5:{
+                [buttonsMutable removeObject:button];
+                button = [UIButton buttonWithType:UIButtonTypeCustom];
+                button.frame = CGRectMake(0.f, 0.f, 36.f, 36.f);
+                button.layer.cornerRadius = button.frame.size.height / 2.f;
+                button.backgroundColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
+                button.clipsToBounds = YES;
+                button.tag = tag;
+                [button addTarget:self.chatViewController action:@selector(menuItemButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                [buttonsMutable addObject:button];
+                [button setImage:[UIImage imageNamed:@"chat_custom_audio_normal"] forState:UIControlStateNormal];
+                [button setImage:[UIImage imageNamed:@"chat_custom_audio_selected"] forState:UIControlStateSelected];
+                if(!kLoginManager.isAudioScenarioMusic) {
+                    button.enabled = NO;
+                }
+                self.musicModeButton = button;
             }
                 break;
             default:

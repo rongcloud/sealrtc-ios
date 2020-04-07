@@ -87,7 +87,7 @@
  @param extra           当前操作的附加信息
  @return                群组通知消息对象
 
- @discussion 群组关系有开发者文虎，所有的群组操作都由您的服务器自己管理和维护。
+ @discussion 群组关系由开发者维护，所有的群组操作都由您的服务器自己管理和维护。
  所以群组通知的操作名和目标对象、消息内容、扩展信息您均可以自己定制，只要您发送方和接收方针对具体字段内容做好UI显示即可。
  */
 + (instancetype)notificationWithOperation:(NSString *)operation

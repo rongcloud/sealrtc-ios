@@ -12,6 +12,10 @@
 #import "STSetRoomInfoMessage.h"
 #import "STDeleteRoomInfoMessage.h"
 #import "STParticipantsInfo.h"
+
+#define KWidth 360
+#define kHeight 640
+
 #import "STKickOffInfoMessage.h"
 
 @interface ChatRongRTCRoomDelegateImpl ()
@@ -42,7 +46,7 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
  */
 - (void)didJoinUser:(RongRTCRemoteUser*)user
 {
-    FwLogV(RC_Type_RTC,@"A-appReceiveUserJoin-T",@"%@appReceiveUserJoin",@"sealRTCApp:");
+    FwLogD(RC_Type_APP,@"A-appReceiveUserJoin-T",@"%@appReceiveUserJoin",@"sealRTCApp:");
     NSString *userId = user.userId;
     DLog(@"didJoinUser userID: %@", userId);
     [self.chatViewController hideAlertLabel:YES];
@@ -55,7 +59,7 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
  */
 - (void)didLeaveUser:(RongRTCRemoteUser*)user
 {
-    FwLogV(RC_Type_RTC,@"A-appReceiveUserLeave-T",@"%@appReceiveUserLeave",@"sealRTCApp:");
+    FwLogD(RC_Type_APP,@"A-appReceiveUserLeave-T",@"%@appReceiveUserLeave",@"sealRTCApp:");
     __weak ChatViewController *weakChatVC = self.chatViewController;
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *userId = user.userId;
@@ -77,14 +81,15 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
                 }
                 
                 [kChatManager removeRemoteUserDataModelFromStreamID:streamID];
-                FwLogV(RC_Type_RTC,@"A-appReceiveUserLeave-T",@"%@appReceiveUserLeave and remove user",@"sealRTCApp:");
+                FwLogD(RC_Type_APP,@"A-appReceiveUserLeave-T",@"%@appReceiveUserLeave and remove user",@"sealRTCApp:");
                 [weakChatVC.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                [self.chatViewController showAlertLabelWithAnimate:[NSString stringWithFormat:NSLocalizedString(@"chat_user_leave_room", nil), leftUserStream.userName]];
                 
                 if (weakChatVC.orignalRow > 0)
                     weakChatVC.orignalRow--;
             }
         }
-        FwLogV(RC_Type_RTC,@"A-appReceiveUserJoin-T",@"usercount: %@",@([kChatManager countOfRemoteUserDataArray]));
+        FwLogD(RC_Type_APP,@"A-appReceiveUserJoin-T",@"usercount: %@",@([kChatManager countOfRemoteUserDataArray]));
         if ([kChatManager countOfRemoteUserDataArray] == 0)
         {
             if (weakChatVC.durationTimer)
@@ -96,13 +101,16 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
             
             weakChatVC.dataTrafficLabel.hidden = YES;
             weakChatVC.talkTimeLabel.text = @"";//NSLocalizedString(@"chat_total_time", nil);
-            FwLogV(RC_Type_RTC,@"A-appReceiveUserJoin-T",@"hideAlertLabel NO");
+            FwLogD(RC_Type_APP,@"A-appReceiveUserJoin-T",@"hideAlertLabel NO");
             [weakChatVC hideAlertLabel:NO];
         }
     });
     [self didLeftMasterUser:user.userId];
 }
 
+- (void)didOfflineUser:(RongRTCRemoteUser*)user {
+    [self didLeaveUser:user];
+}
 /**
  数据流第一个关键帧到达
  @param stream 开始接收数据的 stream
@@ -112,7 +120,7 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
 }
 
 -(void)didConnectToStream:(RongRTCAVInputStream *)stream{
-    FwLogV(RC_Type_RTC,@"A-appConnectToStream-T",@"%@appConnectTostream",@"sealRTCApp:");
+    FwLogD(RC_Type_APP,@"A-appConnectToStream-T",@"%@appConnectTostream",@"sealRTCApp:");
     if (stream.streamId) {
         [self.chatViewController didConnectToUser:stream.streamId];
     } else {
@@ -122,7 +130,12 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
 
 - (void)didPublishStreams:(NSArray <RongRTCAVInputStream *>*)streams
 {
-    FwLogV(RC_Type_RTC,@"A-appPublishStreaam-T",@"%@appPublishStream",@"sealRTCApp:");
+    // 去掉布局
+//    RongRTCMixStreamConfig *streamConfig = [self setOutputConfigWithMode:1 renderMode:2];
+//    [[RongRTCEngine sharedEngine] setMixStreamConfig:streamConfig completion:^(BOOL isSuccess, RongRTCCode code) {
+//        NSLog(@"%ld",code);
+//    }];
+    FwLogD(RC_Type_APP,@"A-appPublishStreaam-T",@"%@appPublishStream",@"sealRTCApp:");
     [self.chatViewController receivePublishMessage];
     [self.chatViewController subscribeRemoteResource:streams];
 }
@@ -133,7 +146,7 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
  */
 - (void)didUnpublishStreams:(NSArray<RongRTCAVInputStream *>*)streams
 {
-    FwLogV(RC_Type_RTC,@"A-appReceiveUnpublishStream-T",@"%@app receive unpublishstreams",@"sealRTCApp:");
+    FwLogD(RC_Type_APP,@"A-appReceiveUnpublishStream-T",@"%@app receive unpublishstreams",@"sealRTCApp:");
     
     __weak ChatViewController *weakChatVC = self.chatViewController;
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -153,7 +166,7 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
                 }
                 
                 [kChatManager removeRemoteUserDataModelFromStreamID:streamID];
-                FwLogV(RC_Type_RTC,@"A-appReceiveUserLeave-T",@"%@appReceiveUserLeave and remove user",@"sealRTCApp:");
+                FwLogD(RC_Type_APP,@"A-appReceiveUserLeave-T",@"%@appReceiveUserLeave and remove user",@"sealRTCApp:");
                 [weakChatVC.collectionView deleteItemsAtIndexPaths:@[indexPath]];
                 
                 if (weakChatVC.orignalRow > 0)
@@ -165,9 +178,14 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
 
 - (void)didKickedOutOfTheRoom:(RongRTCRoom *)room
 {
-    FwLogV(RC_Type_RTC,@"A-appreceiveLeaveRoom-T",@"%@all reveive leave room",@"sealRTCApp:");
+    FwLogD(RC_Type_APP,@"A-appreceiveLeaveRoom-T",@"%@all reveive leave room",@"sealRTCApp:");
     [self.chatViewController didLeaveRoom];
-//    [self.chatViewController didLeaveRoom];
+}
+
+- (void)didKickedByServer:(RongRTCRoom *)room
+{
+    FwLogD(RC_Type_APP,@"A-appReceiveKickedByServer-T",@"%@all reveive leave room",@"sealRTCApp:");
+    [self.chatViewController didLeaveRoom];
 }
 
 /**
@@ -305,6 +323,12 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
     else {
         if (index != NSNotFound) {
             [self.infos removeObjectAtIndex:index];
+            if (self.infos.count == 1) {
+                self.infos[0].master = YES;
+                kLoginManager.isMaster = YES;
+                [[NSNotificationCenter defaultCenter] postNotificationName:STParticipantsInfoDidUpdate
+                                                                    object:[NSIndexPath indexPathForRow:0 inSection:0]];
+            }
             [[NSNotificationCenter defaultCenter] postNotificationName:STParticipantsInfoDidRemove
                                                                 object:[NSIndexPath indexPathForRow:index inSection:0]];
         }

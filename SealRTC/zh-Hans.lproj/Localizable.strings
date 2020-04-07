@@ -58,7 +58,10 @@
 "chat_user_kick_master" = "管理员";
 "chat_user_kick_msg" = "请确认是否移除%@?";
 "chat_user_kick_become_master" = "%@成为新管理员";
-"chat_user_join_room" = "%@加入会议";
+"chat_user_join_room" = "%@进入房间";
+"chat_user_leave_room" = "%@退出房间";
+"chat_kicked_by_server" = "您已被移出房间!";
+"chat_join_kicked_by_server" = "您被禁止加入该房间!";
 
 
 "login_input_meeting_welcome" = "欢迎体验高清晰低延迟的实时音视频会议";
@@ -68,6 +71,7 @@
 "login_input_meeting_room_NO" = "请输入会议室ID";
 "login_input_encryption_key" = "加密秘匙";
 "login_input_enter_meeting_room" = "开始会议";
+"login_input_enter_meeting_room1" = "视频直播";
 "login_input_login_meeting_room" = "登录中...";
 "login_input_login_connecting" = "连接中";
 "login_input_login_network_disable" = "当前网络不可用，请检查网络设置";
@@ -107,12 +111,13 @@
 "setting_private_environment_naviserver" = "私有环境 NavServer 地址";
 "setting_private_environment_serverapi" = "私有环境 Server API 地址";
 "setting_private_environment_appserver" = "APPServer(可选，未部署 AppServer 可不设置)";
+"setting_private_environment_mediaserver" = "私有环境 MediaServer 地址（可选）";
 "setting_private_environment_placeholder0" = "应用的 AppKey";
 "setting_private_environment_placeholder1" = "应用的 App Secret";
 "setting_private_environment_placeholder2" = "http(s)://cn.xxx.com 或 IP + 端口 地址";
 "setting_private_environment_placeholder3" = "http(s)://cn.xxx.com 或 IP + 端口 地址";
 "setting_private_environment_placeholder4" = "http(s)://cn.xxx.com 或 IP + 端口 地址";
-
+"setting_private_environment_placeholder5" = "http(s)://cn.xxx.com or IP + port address";
 
 "setting_resolution_ratio" = "分辨率";
 "setting_frame_rate" = "帧率";
@@ -142,7 +147,11 @@
 "setting_auto_test" = "自动化测试";
 "setting_water_mark" = "后置摄像头水印";
 "setting_media_server_url" = "媒体服务器";
-
+"setting_audio_scenario" = "音频场景";
+"setting_userid_title" = "用户ID (长按可复制到剪切板)";
+"setting_userid_tip" = "用户ID已复制到剪切板";
+"breakdown_analysis"="问题分析";
+"log_upload"="日志上传";
 
 "select_country"="选择国家和地区";
 "select_country_fmt"="选择国家和地区 %@";
@@ -155,5 +164,5 @@
 
 "close"="关闭";
 "online_user_cout_fmt"="在线人数 %@ 人";
-"voip_network_bad"="当前通话网络不佳";
+"voip_network_bad_fmt"="用户 %@ 的网络状况不佳";
 "connecting_im"="正在连接中...";

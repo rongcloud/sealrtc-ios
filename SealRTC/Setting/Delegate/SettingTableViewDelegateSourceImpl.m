@@ -9,8 +9,11 @@
 #import "SettingTableViewDelegateSourceImpl.h"
 #import "SettingViewController.h"
 #import "PrivateCloudSettingViewController.h"
+#import "RTActiveWheel.h"
+#import <RongIMLib/RongIMLib.h>
 
 #ifndef IS_PRIVATE_ENVIRONMENT
+
 
 @interface SettingTableViewDelegateSourceImpl ()
 
@@ -47,6 +50,24 @@
         case 0:
             [self.settingViewController.settingViewBuilder.resolutionRatioPickview show];
             break;
+        case 4:{
+            UIWindow* keyWindow = [UIApplication sharedApplication].keyWindow;
+            [RTActiveWheel showHUDAddedTo:keyWindow];
+            [[RCFwLog getInstance] uploadLog:^(int code) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (0 == code) {
+                        [RTActiveWheel dismissViewDelay:1 forView:keyWindow processText:@"上传成功"];
+                    } else {
+                        [RTActiveWheel dismissViewDelay:1 forView:keyWindow warningText:@"上传失败"];
+                    }
+                });
+            }];
+        }
+        break;
+        case 5:
+        {
+        }
+            break;
         default:
             break;
     }
@@ -65,12 +86,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (ENABLE_MANUAL_MEDIASERVER) {
-        return self.settingViewController.sectionNumber;
-    }
-    else{
-        return self.settingViewController.sectionNumber - 1;
-    }
+    return self.settingViewController.sectionNumber;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -131,6 +147,23 @@
         case 4:
         {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.textLabel.text = NSLocalizedString(@"log_upload", nil);
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+            break;
+        case 5:
+        {
+            [cell.contentView addSubview:self.settingViewController.settingViewBuilder.userIDTextField];
+        }
+            break;
+        case 6:
+        {
+            [cell.contentView addSubview:self.settingViewController.settingViewBuilder.audioScenarioSwitch];
+            cell.textLabel.text = NSLocalizedString(@"setting_audio_scenario", nil);
+        }
+           break;
+        case 7: {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.textLabel.text = @"Media Server URL";
         }
             break;
@@ -154,6 +187,12 @@
         case 3:
             return NSLocalizedString(@"setting_auto_test", nil);
         case 4:
+            return NSLocalizedString(@"breakdown_analysis", nil);
+        case 5:
+            return NSLocalizedString(@"setting_userid_title", nil);
+        case 6:
+            return NSLocalizedString(@"setting_audio_scenario", nil);
+        case 7:
             return NSLocalizedString(@"setting_media_server_url", nil);
         default:
             break;
@@ -240,13 +279,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-
-    if (ENABLE_MANUAL_MEDIASERVER) {
-        return self.settingViewController.sectionNumber;
-    }
-    else{
-        return self.settingViewController.sectionNumber - 1;
-    }
+    return self.settingViewController.sectionNumber;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -311,6 +344,17 @@
             break;
         case 5:
         {
+            [cell.contentView addSubview:self.settingViewController.settingViewBuilder.userIDTextField];
+        }
+            break;
+        case 6:
+        {
+            [cell.contentView addSubview:self.settingViewController.settingViewBuilder.audioScenarioSwitch];
+            cell.textLabel.text = NSLocalizedString(@"setting_audio_scenario", nil);
+        }
+            break;
+        case 7:
+        {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.textLabel.text = @"Media Server URL";
         }
@@ -337,6 +381,10 @@
         case 4:
             return NSLocalizedString(@"setting_auto_test", nil);
         case 5:
+            return NSLocalizedString(@"setting_userid_title", nil);
+        case 6:
+            return NSLocalizedString(@"setting_audio_scenario", nil);
+        case 7:
             return NSLocalizedString(@"setting_media_server_url", nil);
         default:
             break;

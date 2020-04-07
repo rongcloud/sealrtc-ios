@@ -2,8 +2,8 @@
 //  RongRTCStatisticalForm.h
 //  RongRTCLib
 //
-//  Created by birney on 2019/5/30.
-//  Copyright © 2019 Bailing Cloud. All rights reserved.
+//  Created by RongCloud on 2019/5/30.
+//  Copyright © 2019 RongCloud. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -52,7 +52,6 @@ typedef NS_ENUM(NSInteger, RongRTCStreamState) {
  */
 @property (nonatomic, readonly) float packetLoss;
 
-
 /**
  视频帧宽度
  */
@@ -63,7 +62,6 @@ typedef NS_ENUM(NSInteger, RongRTCStreamState) {
  */
 @property (nonatomic, readonly) NSInteger frameHeight;
 
-
 /**
  往返时间
  */
@@ -73,7 +71,6 @@ typedef NS_ENUM(NSInteger, RongRTCStreamState) {
  帧率
  */
 @property (nonatomic, readonly) NSInteger frameRate;
-
 
 /**
  抖动
@@ -100,22 +97,18 @@ typedef NS_ENUM(NSInteger, RongRTCStreamState) {
  */
 @property (nonatomic, readonly) NSInteger googNacksReceived;
 
-
 /**
  统计格式化字符串
  */
 @property (nonatomic, readonly) NSString* formString;
 
-
 @end
-
 
 
 /**
  sdk 状态统计表
  */
 @interface RongRTCStatisticalForm : NSObject
-
 
 /**
  cpu 使用率
@@ -136,7 +129,6 @@ typedef NS_ENUM(NSInteger, RongRTCStreamState) {
  系统 cpu 使用率
  */
 @property (nonatomic, readonly) float cpuUsageOfOS;
-
 
 /**
  网络类型，wlan 4g
@@ -177,6 +169,11 @@ typedef NS_ENUM(NSInteger, RongRTCStreamState) {
  下行 媒体流状态统计 数组
  */
 @property (nonatomic, readonly) NSArray<RongRTCStreamStat*>* recvStats;
+
+/**
+ 通过 trackId 查找到此 Track 所属的 UserId
+ */
++ (NSString *)fetchUserIdFromTrackId:(NSString *)trackId;
 
 @end
 

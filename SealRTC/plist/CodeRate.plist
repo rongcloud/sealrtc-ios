@@ -4,41 +4,111 @@
 <array>
 	<dict>
 		<key>min</key>
+		<integer>80</integer>
+		<key>max</key>
+		<integer>225</integer>
+		<key>default</key>
 		<integer>150</integer>
+		<key>step</key>
+		<integer>5</integer>
+	</dict>
+	<dict>
+		<key>min</key>
+		<integer>80</integer>
 		<key>max</key>
-		<real>2000</real>
+		<integer>360</integer>
 		<key>default</key>
-		<integer>500</integer>
+		<integer>240</integer>
+		<key>step</key>
+		<integer>5</integer>
+	</dict>
+	<dict>
+		<key>min</key>
+		<integer>80</integer>
+		<key>max</key>
+		<integer>420</integer>
+		<key>default</key>
+		<integer>280</integer>
+		<key>step</key>
+		<integer>5</integer>
+	</dict>
+	<dict>
+		<key>min</key>
+		<integer>80</integer>
+		<key>max</key>
+		<integer>420</integer>
+		<key>default</key>
+		<integer>280</integer>
+		<key>step</key>
+		<integer>5</integer>
+	</dict>
+	<dict>
+		<key>min</key>
+		<integer>80</integer>
+		<key>max</key>
+		<integer>600</integer>
+		<key>default</key>
+		<integer>400</integer>
 		<key>step</key>
 		<integer>10</integer>
 	</dict>
 	<dict>
 		<key>min</key>
-		<integer>350</integer>
+		<integer>120</integer>
 		<key>max</key>
-		<real>2000</real>
+		<integer>960</integer>
 		<key>default</key>
-		<integer>1000</integer>
+		<integer>650</integer>
 		<key>step</key>
 		<integer>10</integer>
 	</dict>
 	<dict>
 		<key>min</key>
-		<integer>750</integer>
+		<integer>120</integer>
 		<key>max</key>
-		<real>3000</real>
+		<integer>1200</integer>
 		<key>default</key>
-		<real>2500</real>
+		<integer>800</integer>
 		<key>step</key>
-		<integer>50</integer>
+		<integer>20</integer>
 	</dict>
 	<dict>
 		<key>min</key>
+		<integer>120</integer>
+		<key>max</key>
+		<integer>1200</integer>
+		<key>default</key>
+		<integer>800</integer>
+		<key>step</key>
+		<integer>20</integer>
+	</dict>
+	<dict>
+		<key>min</key>
+		<integer>120</integer>
+		<key>max</key>
+		<real>1400</real>
+		<key>default</key>
+		<integer>900</integer>
+		<key>step</key>
+		<integer>20</integer>
+	</dict>
+	<dict>
+		<key>min</key>
+		<integer>160</integer>
+		<key>max</key>
 		<integer>1500</integer>
-		<key>max</key>
-		<integer>5000</integer>
 		<key>default</key>
-		<real>4500</real>
+		<real>1000</real>
+		<key>step</key>
+		<integer>20</integer>
+	</dict>
+	<dict>
+		<key>min</key>
+		<integer>200</integer>
+		<key>max</key>
+		<real>3300</real>
+		<key>default</key>
+		<real>2200</real>
 		<key>step</key>
 		<integer>50</integer>
 	</dict>

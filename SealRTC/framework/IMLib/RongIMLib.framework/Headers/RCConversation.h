@@ -125,7 +125,14 @@
 
  @discussion 在清除会话未读数（clearMessagesUnreadStatus:targetId:）的时候，会将此状态置成 NO。
  */
-@property (nonatomic, assign) BOOL hasUnreadMentioned;
+@property (nonatomic, assign, readonly) BOOL hasUnreadMentioned;
+
+/*!
+会话中@消息的个数
+
+@discussion 在清除会话未读数（clearMessagesUnreadStatus:targetId:）的时候，会将此值置成 0。
+*/
+@property (nonatomic, assign) int mentionedCount;
 
 /*!
  RCConversation初始化方法（已废弃，请勿使用）
