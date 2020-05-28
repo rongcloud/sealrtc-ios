@@ -41,7 +41,8 @@ typedef enum : NSUInteger {
 @property (nonatomic, weak) IBOutlet UILabel *alertLabel;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *networkLabel;
-
+@property(nonatomic , strong)UIScrollView *scrollView ;
+@property(nonatomic , strong)UIView *zoomView;
 @property (nonatomic, strong) UIImageView *homeImageView;
 @property (nonatomic, strong) RongRTCLocalVideoView *localView;
 @property (nonatomic, strong) UIAlertController *alertController;
@@ -65,6 +66,7 @@ typedef enum : NSUInteger {
 @property (nonatomic)RongRTCCode joinRoomCode;
 @property (nonatomic)AVChatMode chatMode;
 @property (nonatomic, weak) ChatCellVideoViewModel* selectionModel;
+@property (assign, nonatomic) BOOL openComp;
 
 - (void)hideAlertLabel:(BOOL)isHidden;
 - (void)selectSpeakerButtons:(BOOL)selected;

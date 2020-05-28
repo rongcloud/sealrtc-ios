@@ -20,7 +20,7 @@
 @property (nonatomic, strong) UIButton *hungUpButton, *openCameraButton, *speakerOnOffButton, *microphoneOnOffButton, *switchCameraButton, *whiteboardButton,*customVideoButton,*customAudioButton,*musicModeButton;
 @property (nonatomic, strong) DWBubbleMenuButton *upMenuView;
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer, *rightSwipeGestureRecognizer;
-
+- (void)enableSwipeGesture:(BOOL)enable;
 - (instancetype)initWithViewController:(UIViewController *)vc;
 
 @end

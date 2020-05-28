@@ -80,7 +80,7 @@
             self.watermarkImageView.frame = CGRectMake(20, 20, 80, 80);
             self.watermarkImageView.transform = CGAffineTransformRotate(self->_watermarkImageView.transform, -M_PI);
         }
-        self.watermarkImageView.hidden = ([RongRTCAVCapturer sharedInstance].cameraPosition == AVCaptureDevicePositionFront) ? YES : NO;
+        self.watermarkImageView.hidden = ([RongRTCVideoCapturer sharedInstance].cameraPosition == AVCaptureDevicePositionFront) ? YES : NO;
     });
 }
 
@@ -112,7 +112,7 @@
 
 - (void)reloadGPUFilter
 {
-    self.watermarkImageView.hidden = ([RongRTCAVCapturer sharedInstance].cameraPosition == AVCaptureDevicePositionFront) ? YES : NO;
+    self.watermarkImageView.hidden = ([RongRTCVideoCapturer sharedInstance].cameraPosition == AVCaptureDevicePositionFront) ? YES : NO;
     [self uiElement];
     __weak typeof(self) weakSelf = self;
     [self.gupfilter setFrameProcessingCompletionBlock:^(GPUImageOutput *output, CMTime time) {
@@ -202,7 +202,7 @@
 - (UIView *)contentView
 {
     if (!_contentView) {
-        switch (kChatManager.captureParam.videoSizePreset) {
+        switch (kChatManager.videoCaptureParam.videoSizePreset) {
             case RongRTCVideoSizePreset256x144:
                 self.videoWidth = 256;
                 self.videoHeight = 144;

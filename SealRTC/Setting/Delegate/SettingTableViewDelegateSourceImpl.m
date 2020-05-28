@@ -64,7 +64,7 @@
             }];
         }
         break;
-        case 5:
+        case 6:
         {
         }
             break;
@@ -78,7 +78,7 @@
 {
     switch (section) {
         case 1:
-            return 2;
+            return 1;
         default:
             return 1;
     }
@@ -115,13 +115,8 @@
         case 1:
         {
             switch (row) {
+              
                 case 0:
-                {
-                    [cell.contentView addSubview:self.settingViewController.settingViewBuilder.gpuSwitch];
-                    cell.textLabel.text = NSLocalizedString(@"setting_gpu_filter", nil);
-                }
-                    break;
-                case 1:
                 {
                     [cell.contentView addSubview:self.settingViewController.settingViewBuilder.waterMarkSwitch];
                     cell.textLabel.text = NSLocalizedString(@"setting_water_mark", nil);
@@ -146,23 +141,16 @@
             break;
         case 4:
         {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.textLabel.text = NSLocalizedString(@"log_upload", nil);
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
-            break;
-        case 5:
-        {
             [cell.contentView addSubview:self.settingViewController.settingViewBuilder.userIDTextField];
         }
             break;
-        case 6:
+        case 5:
         {
             [cell.contentView addSubview:self.settingViewController.settingViewBuilder.audioScenarioSwitch];
             cell.textLabel.text = NSLocalizedString(@"setting_audio_scenario", nil);
         }
            break;
-        case 7: {
+        case 6: {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.textLabel.text = @"Media Server URL";
         }
@@ -187,12 +175,10 @@
         case 3:
             return NSLocalizedString(@"setting_auto_test", nil);
         case 4:
-            return NSLocalizedString(@"breakdown_analysis", nil);
-        case 5:
             return NSLocalizedString(@"setting_userid_title", nil);
-        case 6:
+        case 5:
             return NSLocalizedString(@"setting_audio_scenario", nil);
-        case 7:
+        case 6:
             return NSLocalizedString(@"setting_media_server_url", nil);
         default:
             break;
@@ -254,7 +240,7 @@
         case 1:
             [self.settingViewController.settingViewBuilder.resolutionRatioPickview show];
             break;
-        case 5:
+        case 6:
         {
             MediaServerURLViewController *mediaServerURLViewController = [[MediaServerURLViewController alloc] init];
             if (![self.settingViewController.navigationController.topViewController isKindOfClass:[MediaServerURLViewController class]])
@@ -271,7 +257,7 @@
 {
     switch (section) {
         case 2:
-            return 2;
+            return 1;
         default:
             return 1;
     }
@@ -313,13 +299,8 @@
         case 2:
         {
             switch (row) {
+              
                 case 0:
-                {
-                    [cell.contentView addSubview:self.settingViewController.settingViewBuilder.gpuSwitch];
-                    cell.textLabel.text = NSLocalizedString(@"setting_gpu_filter", nil);
-                }
-                    break;
-                case 1:
                 {
                     [cell.contentView addSubview:self.settingViewController.settingViewBuilder.waterMarkSwitch];
                     cell.textLabel.text = NSLocalizedString(@"setting_water_mark", nil);

@@ -156,9 +156,7 @@
             }
                 break;
             case 0:{
-                
                 [buttonsMutable removeObject:button];
-                
                 button = [UIButton buttonWithType:UIButtonTypeCustom];
                 button.frame = CGRectMake(0.f, 0.f, 36.f, 36.f);
                 button.layer.cornerRadius = button.frame.size.height / 2.f;
@@ -288,7 +286,10 @@
             break;
     }
 }
-
+- (void)enableSwipeGesture:(BOOL)enable{
+    _rightSwipeGestureRecognizer.enabled = enable;
+    _leftSwipeGestureRecognizer.enabled = enable;
+}
 - (void)dealloc {
     [self.excelView removeFromSuperview];
     self.excelView = nil;

@@ -12,7 +12,6 @@
 		173A2C3322718F6800291E0A /* video_demo2_low.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 173A2C3222718F6800291E0A /* video_demo2_low.mp4 */; };
 		1748C0B822FAC8290082463B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1748C0B722FAC8290082463B /* MobileCoreServices.framework */; };
 		17667FC8233DEFFC0080ED25 /* CallKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17667FC7233DEFFB0080ED25 /* CallKit.framework */; };
-		1773DD90224D145D007213AF /* RongRTCLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1773DD8F224D145D007213AF /* RongRTCLib.framework */; };
 		1782D887226EACB900AA9A74 /* ChatMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1782D886226EACB900AA9A74 /* ChatMembersViewController.m */; };
 		1782D88C226EB3C300AA9A74 /* ChatMemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1782D88A226EB3C300AA9A74 /* ChatMemberCell.m */; };
 		1782D88D226EB3C300AA9A74 /* ChatMemberCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1782D88B226EB3C300AA9A74 /* ChatMemberCell.xib */; };
@@ -22,20 +21,10 @@
 		1788285022A0D3CE00933137 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1788284F22A0D3CE00933137 /* libxml2.tbd */; };
 		17A4296A22714B5500293F78 /* RTActiveWheel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A4296822714B5400293F78 /* RTActiveWheel.m */; };
 		17A4296B22714B5500293F78 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A4296922714B5500293F78 /* MBProgressHUD.m */; };
-		17A5EF5F237AA36E0032E992 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17A5EF5D237AA36E0032E992 /* Main.storyboard */; };
-		17A5EF64237AA3710032E992 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17A5EF62237AA3710032E992 /* LaunchScreen.storyboard */; };
-		17A5EF67237AA3710032E992 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A5EF66237AA3710032E992 /* main.m */; };
 		17A5EF89237AA5AD0032E992 /* RongIMLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A93B12224CEE8200FC1705 /* RongIMLib.framework */; };
 		17A5EF8C237AA5B70032E992 /* RongRTCLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1773DD8F224D145D007213AF /* RongRTCLib.framework */; };
 		17A5EF8E237AA5C80032E992 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D7D5D4E1D1B8605000574B2 /* VideoToolbox.framework */; };
 		17A5EF8F237AA5CC0032E992 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D7D5D431D1B815A000574B2 /* AVFoundation.framework */; };
-		17A5EF9F237AA66B0032E992 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A5EF93237AA66A0032E992 /* Bugly.framework */; };
-		17A5EFA0237AA66B0032E992 /* RongRTCLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A5EF94237AA66A0032E992 /* RongRTCLib.framework */; };
-		17A5EFA3237AA66B0032E992 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A5EF98237AA66B0032E992 /* libopencore-amrwb.a */; };
-		17A5EFA4237AA66B0032E992 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A5EF99237AA66B0032E992 /* libopencore-amrnb.a */; };
-		17A5EFA5237AA66B0032E992 /* libvo-amrwbenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A5EF9A237AA66B0032E992 /* libvo-amrwbenc.a */; };
-		17A5EFA6237AA66B0032E992 /* RCConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 17A5EF9B237AA66B0032E992 /* RCConfig.plist */; };
-		17A5EFA8237AA66B0032E992 /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A5EF9D237AA66B0032E992 /* GPUImage.framework */; };
 		17A5EFAA237AA8F70032E992 /* GCDWebDAVServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1788284D22A0D37C00933137 /* GCDWebDAVServer.m */; };
 		17A5EFAB237AA8FA0032E992 /* libGCDWebServer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1788283A22A0D08F00933137 /* libGCDWebServer.a */; };
 		17A5EFAC237AA9020032E992 /* RongRTCWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1788283822A0D01700933137 /* RongRTCWebServer.m */; };
@@ -229,6 +218,11 @@
 		39CD92E6228C216100F3454B /* ColorSelectionCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CD92E5228C216100F3454B /* ColorSelectionCollectionViewController.m */; };
 		39D4A1B620DA533800F26ACA /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D4A1B420DA533700F26ACA /* Reachability.m */; };
 		39D785E61E77BC5B004BAAFC /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D785E51E77BC5B004BAAFC /* RadioButton.m */; };
+		39E4D8C3247E134A000D69A7 /* RongRTCLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39E4D8C2247E134A000D69A7 /* RongRTCLib.framework */; };
+		39E4D8CD247E13FD000D69A7 /* STAudioMixerConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 39E4D8C8247E13FD000D69A7 /* STAudioMixerConfiguration.m */; };
+		39E4D8CE247E13FD000D69A7 /* STAudioModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39E4D8C9247E13FD000D69A7 /* STAudioModeViewController.m */; };
+		39E4D8CF247E13FD000D69A7 /* STAudioMixingPannelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39E4D8CA247E13FD000D69A7 /* STAudioMixingPannelController.m */; };
+		39E4D8D0247E13FD000D69A7 /* UIViews+Localized.m in Sources */ = {isa = PBXBuildFile; fileRef = 39E4D8CB247E13FD000D69A7 /* UIViews+Localized.m */; };
 		39F0543D1DBDEE440072E918 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39F0543B1DBDEE440072E918 /* Launch Screen.storyboard */; };
 		39F62AC4237BDF8A0003CD06 /* STKickOffInfoMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 39BE2C222373C570008BD6A9 /* STKickOffInfoMessage.m */; };
 		46BCF21B224D2D96009E2617 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46BCF218224D2D95009E2617 /* libopencore-amrnb.a */; };
@@ -331,20 +325,7 @@
 		17A4296822714B5400293F78 /* RTActiveWheel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTActiveWheel.m; sourceTree = "<group>"; };
 		17A4296922714B5500293F78 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		17A5EF52237AA36D0032E992 /* PrivateSealRTC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrivateSealRTC.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		17A5EF54237AA36E0032E992 /* SealRTCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SealRTCAppDelegate.h; sourceTree = "<group>"; };
-		17A5EF5E237AA36E0032E992 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		17A5EF63237AA3710032E992 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		17A5EF65237AA3710032E992 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		17A5EF66237AA3710032E992 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		17A5EF87237AA5A50032E992 /* librcsdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = librcsdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		17A5EF93237AA66A0032E992 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
-		17A5EF94237AA66A0032E992 /* RongRTCLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RongRTCLib.framework; sourceTree = "<group>"; };
-		17A5EF97237AA66B0032E992 /* RongIMLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RongIMLib.framework; sourceTree = "<group>"; };
-		17A5EF98237AA66B0032E992 /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
-		17A5EF99237AA66B0032E992 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
-		17A5EF9A237AA66B0032E992 /* libvo-amrwbenc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libvo-amrwbenc.a"; sourceTree = "<group>"; };
-		17A5EF9B237AA66B0032E992 /* RCConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RCConfig.plist; sourceTree = "<group>"; };
-		17A5EF9D237AA66B0032E992 /* GPUImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GPUImage.framework; sourceTree = "<group>"; };
 		17A5EFAD237AA9460032E992 /* libz.1.2.8.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.8.tbd; path = usr/lib/libz.1.2.8.tbd; sourceTree = SDKROOT; };
 		17A5EFB2237AA9860032E992 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
 		17A5F01A237AAD6F0032E992 /* PrivateCloudSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateCloudSettingViewController.m; sourceTree = "<group>"; };
@@ -511,7 +492,6 @@
 		39B258A52215111300821CB9 /* ChatRongRTCRoomDelegateImpl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatRongRTCRoomDelegateImpl.h; sourceTree = "<group>"; };
 		39B258A62215111300821CB9 /* ChatRongRTCRoomDelegateImpl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatRongRTCRoomDelegateImpl.m; sourceTree = "<group>"; };
 		39B258B022159D1000821CB9 /* RCConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RCConfig.plist; sourceTree = "<group>"; };
-		39B258B6221650DC00821CB9 /* RongRTCLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RongRTCLib.framework; path = "../../../../Library/Developer/Xcode/DerivedData/RongRTC-fghgehtpeqmmmzgazupjynsjekgc/Build/Products/Debug-iphoneos/RongRTCLib.framework"; sourceTree = "<group>"; };
 		39BDCFE01DCC43AF004820E3 /* CodingStyle.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CodingStyle.plist; sourceTree = "<group>"; };
 		39BE2C222373C570008BD6A9 /* STKickOffInfoMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKickOffInfoMessage.m; sourceTree = "<group>"; };
 		39BE2C232373C570008BD6A9 /* STKickOffInfoMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKickOffInfoMessage.h; sourceTree = "<group>"; };
@@ -526,6 +506,15 @@
 		39D4A1B520DA533700F26ACA /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		39D785E41E77BC5B004BAAFC /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
 		39D785E51E77BC5B004BAAFC /* RadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioButton.m; sourceTree = "<group>"; };
+		39E4D8C2247E134A000D69A7 /* RongRTCLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RongRTCLib.framework; path = framework/RongRTCLib.framework; sourceTree = "<group>"; };
+		39E4D8C5247E13FD000D69A7 /* UIViews+Localized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViews+Localized.h"; sourceTree = "<group>"; };
+		39E4D8C6247E13FD000D69A7 /* STAudioMixingPannelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STAudioMixingPannelController.h; sourceTree = "<group>"; };
+		39E4D8C7247E13FD000D69A7 /* STAudioModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STAudioModeViewController.h; sourceTree = "<group>"; };
+		39E4D8C8247E13FD000D69A7 /* STAudioMixerConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STAudioMixerConfiguration.m; sourceTree = "<group>"; };
+		39E4D8C9247E13FD000D69A7 /* STAudioModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STAudioModeViewController.m; sourceTree = "<group>"; };
+		39E4D8CA247E13FD000D69A7 /* STAudioMixingPannelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STAudioMixingPannelController.m; sourceTree = "<group>"; };
+		39E4D8CB247E13FD000D69A7 /* UIViews+Localized.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViews+Localized.m"; sourceTree = "<group>"; };
+		39E4D8CC247E13FD000D69A7 /* STAudioMixerConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STAudioMixerConfiguration.h; sourceTree = "<group>"; };
 		39F0543C1DBDEE440072E918 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
 		46BCF218224D2D95009E2617 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libopencore-amrnb.a"; path = "3rd/libopencore-amrnb.a"; sourceTree = "<group>"; };
 		46BCF219224D2D96009E2617 /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libopencore-amrwb.a"; path = "3rd/libopencore-amrwb.a"; sourceTree = "<group>"; };
@@ -618,14 +607,8 @@
 				17A5EFB0237AA9720032E992 /* Security.framework in Frameworks */,
 				17A5EFAF237AA96B0032E992 /* SystemConfiguration.framework in Frameworks */,
 				17A5EFAE237AA9460032E992 /* libz.1.2.8.tbd in Frameworks */,
-				17A5EFA8237AA66B0032E992 /* GPUImage.framework in Frameworks */,
-				17A5EF9F237AA66B0032E992 /* Bugly.framework in Frameworks */,
 				17A5EF8E237AA5C80032E992 /* VideoToolbox.framework in Frameworks */,
-				17A5EFA5237AA66B0032E992 /* libvo-amrwbenc.a in Frameworks */,
-				17A5EFA4237AA66B0032E992 /* libopencore-amrnb.a in Frameworks */,
 				17A5EF89237AA5AD0032E992 /* RongIMLib.framework in Frameworks */,
-				17A5EFA3237AA66B0032E992 /* libopencore-amrwb.a in Frameworks */,
-				17A5EFA0237AA66B0032E992 /* RongRTCLib.framework in Frameworks */,
 				17A5EFAB237AA8FA0032E992 /* libGCDWebServer.a in Frameworks */,
 				17A5EFFC237AAA7A0032E992 /* libWhiteSDK.a in Frameworks */,
 				17A5EF8F237AA5CC0032E992 /* AVFoundation.framework in Frameworks */,
@@ -637,12 +620,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39E4D8C3247E134A000D69A7 /* RongRTCLib.framework in Frameworks */,
 				17667FC8233DEFFC0080ED25 /* CallKit.framework in Frameworks */,
 				1748C0B822FAC8290082463B /* MobileCoreServices.framework in Frameworks */,
 				1788285022A0D3CE00933137 /* libxml2.tbd in Frameworks */,
 				398EDF0E228193F6006B189D /* WebKit.framework in Frameworks */,
 				392AEA862281620F00EC3CA3 /* CoreGraphics.framework in Frameworks */,
-				1773DD90224D145D007213AF /* RongRTCLib.framework in Frameworks */,
 				393373451E6FDB6E0084F6C9 /* libz.tbd in Frameworks */,
 				393373441E6FDB3C0084F6C9 /* libbz2.tbd in Frameworks */,
 				393373421E6FDB320084F6C9 /* libiconv.tbd in Frameworks */,
@@ -744,43 +727,6 @@
 				1788283822A0D01700933137 /* RongRTCWebServer.m */,
 			);
 			path = webserver;
-			sourceTree = "<group>";
-		};
-		17A5EF53237AA36D0032E992 /* PrivateSealRTC */ = {
-			isa = PBXGroup;
-			children = (
-				17A5EF54237AA36E0032E992 /* SealRTCAppDelegate.h */,
-				17A5EF92237AA66A0032E992 /* framework */,
-				17A5EF5D237AA36E0032E992 /* Main.storyboard */,
-				17A5EF62237AA3710032E992 /* LaunchScreen.storyboard */,
-				17A5EF65237AA3710032E992 /* Info.plist */,
-				17A5EF66237AA3710032E992 /* main.m */,
-			);
-			path = PrivateSealRTC;
-			sourceTree = "<group>";
-		};
-		17A5EF92237AA66A0032E992 /* framework */ = {
-			isa = PBXGroup;
-			children = (
-				17A5EF93237AA66A0032E992 /* Bugly.framework */,
-				17A5EF94237AA66A0032E992 /* RongRTCLib.framework */,
-				17A5EF95237AA66A0032E992 /* IMLib */,
-				17A5EF9D237AA66B0032E992 /* GPUImage.framework */,
-			);
-			name = framework;
-			path = SealRTC/framework;
-			sourceTree = SOURCE_ROOT;
-		};
-		17A5EF95237AA66A0032E992 /* IMLib */ = {
-			isa = PBXGroup;
-			children = (
-				17A5EF97237AA66B0032E992 /* RongIMLib.framework */,
-				17A5EF98237AA66B0032E992 /* libopencore-amrwb.a */,
-				17A5EF99237AA66B0032E992 /* libopencore-amrnb.a */,
-				17A5EF9A237AA66B0032E992 /* libvo-amrwbenc.a */,
-				17A5EF9B237AA66B0032E992 /* RCConfig.plist */,
-			);
-			path = IMLib;
 			sourceTree = "<group>";
 		};
 		17A5F019237AAD6F0032E992 /* PrivateCloud */ = {
@@ -1101,6 +1047,22 @@
 			path = Reachability;
 			sourceTree = "<group>";
 		};
+		39E4D8C4247E13FD000D69A7 /* AudioMixer */ = {
+			isa = PBXGroup;
+			children = (
+				39E4D8C5247E13FD000D69A7 /* UIViews+Localized.h */,
+				39E4D8C6247E13FD000D69A7 /* STAudioMixingPannelController.h */,
+				39E4D8C7247E13FD000D69A7 /* STAudioModeViewController.h */,
+				39E4D8C8247E13FD000D69A7 /* STAudioMixerConfiguration.m */,
+				39E4D8C9247E13FD000D69A7 /* STAudioModeViewController.m */,
+				39E4D8CA247E13FD000D69A7 /* STAudioMixingPannelController.m */,
+				39E4D8CB247E13FD000D69A7 /* UIViews+Localized.m */,
+				39E4D8CC247E13FD000D69A7 /* STAudioMixerConfiguration.h */,
+			);
+			name = AudioMixer;
+			path = SealRTC/AudioMixer;
+			sourceTree = SOURCE_ROOT;
+		};
 		981C3E09202ADDEB00494697 /* ExcelView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1148,6 +1110,7 @@
 		9D3DD0741D59D11200DC1443 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				39E4D8C4247E13FD000D69A7 /* AudioMixer */,
 				1782D88E226EC16000AA9A74 /* Custom */,
 				1782D888226EB39800AA9A74 /* Cell */,
 				3917C2C921BA10B600456EDA /* Model */,
@@ -1172,9 +1135,8 @@
 			isa = PBXGroup;
 			children = (
 				9D54AC331D06CFA00054A72F /* SealRTC */,
-				17A5EF53237AA36D0032E992 /* PrivateSealRTC */,
-				9D54AC321D06CFA00054A72F /* Products */,
 				1744C42221A3BF1E00452227 /* Frameworks */,
+				9D54AC321D06CFA00054A72F /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1231,10 +1193,10 @@
 		9D7D5D451D1B8165000574B2 /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				39E4D8C2247E134A000D69A7 /* RongRTCLib.framework */,
 				46BCF218224D2D95009E2617 /* libopencore-amrnb.a */,
 				46BCF219224D2D96009E2617 /* libopencore-amrwb.a */,
 				46BCF21A224D2D96009E2617 /* libvo-amrwbenc.a */,
-				39B258B6221650DC00821CB9 /* RongRTCLib.framework */,
 				39B258AD22159D1000821CB9 /* IMLib */,
 				394DEF952213F3F1009E090A /* RongCrashReport.framework */,
 				3991BCF31DD352B100152317 /* Bugly.framework */,
@@ -1389,14 +1351,11 @@
 				17A5EFBD237AA9F70032E992 /* voip_network_error_sound.wav in Resources */,
 				17A5F013237AAC270032E992 /* Localizable.strings in Resources */,
 				17A5EFBE237AA9F70032E992 /* video_demo1_low.mp4 in Resources */,
-				17A5EFA6237AA66B0032E992 /* RCConfig.plist in Resources */,
 				17A5F012237AAC070032E992 /* Images.xcassets in Resources */,
 				17A5F026237AAD700032E992 /* PrivateSettingCell.xib in Resources */,
-				17A5EF64237AA3710032E992 /* LaunchScreen.storyboard in Resources */,
 				17A5EFC1237AA9FC0032E992 /* ChatMemberCell.xib in Resources */,
 				17A5EFBC237AA9F70032E992 /* my_homeland.aac in Resources */,
 				17A5EFFD237AAA7E0032E992 /* WhiteSDK.bundle in Resources */,
-				17A5EF5F237AA36E0032E992 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1517,7 +1476,6 @@
 				17A5EFBA237AA9F70032E992 /* RongRTCFileCapturer.m in Sources */,
 				17A5F00F237AAAAD0032E992 /* STDeleteRoomInfoMessage.m in Sources */,
 				17A5EFE7237AAA4A0032E992 /* RTHttpNetworkWorker.m in Sources */,
-				17A5EF67237AA3710032E992 /* main.m in Sources */,
 				17A5EFB4237AA9DA0032E992 /* LoginTextFieldDelegateImpl.m in Sources */,
 				39F62AC4237BDF8A0003CD06 /* STKickOffInfoMessage.m in Sources */,
 				17A5EFD1237AAA1D0032E992 /* GPUImageOutputCamera.m in Sources */,
@@ -1553,6 +1511,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B220964F22533A14005948E1 /* STParticipantsInfo.m in Sources */,
+				39E4D8CF247E13FD000D69A7 /* STAudioMixingPannelController.m in Sources */,
 				3917C2AD21B8F6F300456EDA /* LoginManager.m in Sources */,
 				988FEE7320206D8200FFF09A /* UINavigationController+returnBack.m in Sources */,
 				39D785E61E77BC5B004BAAFC /* RadioButton.m in Sources */,
@@ -1614,6 +1573,7 @@
 				392AEA3D227FE39200EC3CA3 /* SettingPickViewDelegateImpl.m in Sources */,
 				981C3E1C202ADDEB00494697 /* YHExcelTitleView.m in Sources */,
 				17A5F027237AAD700032E992 /* UIView+Toast.m in Sources */,
+				39E4D8CD247E13FD000D69A7 /* STAudioMixerConfiguration.m in Sources */,
 				398EDF1622819804006B189D /* YYClassInfo.m in Sources */,
 				17D4597E2356C37900FBCD71 /* RongAudioVolumeControl.m in Sources */,
 				392D0B6D2282AAB100B0E21C /* ViewController+MASAdditions.m in Sources */,
@@ -1642,6 +1602,8 @@
 				B220963C22530A0E005948E1 /* STCountryTableViewController.m in Sources */,
 				394DEFAC22143AEB009E090A /* RTHttpNetworkWorker.m in Sources */,
 				3917C2D921BA10B600456EDA /* ChatCellVideoViewModel.m in Sources */,
+				39E4D8CE247E13FD000D69A7 /* STAudioModeViewController.m in Sources */,
+				39E4D8D0247E13FD000D69A7 /* UIViews+Localized.m in Sources */,
 				3917C2EA21BA118A00456EDA /* ChatAvatarView.m in Sources */,
 				981C3E1E202ADDEB00494697 /* UIView+YHCategory.m in Sources */,
 				B2209649225319EC005948E1 /* STPresentationViewController.m in Sources */,
@@ -1651,22 +1613,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		17A5EF5D237AA36E0032E992 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				17A5EF5E237AA36E0032E992 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		17A5EF62237AA3710032E992 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				17A5EF63237AA3710032E992 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 		39F0543B1DBDEE440072E918 /* Launch Screen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1901,7 +1847,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.2.2.1;
+				CURRENT_PROJECT_VERSION = 3.2.4.1;
 				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1921,7 +1867,7 @@
 					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/SealRTC/ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1932,7 +1878,7 @@
 					"$(PROJECT_DIR)/SealRTC/3rd/White-SDK-iOS",
 					"$(PROJECT_DIR)/SealRTC/webserver",
 				);
-				MARKETING_VERSION = 3.2.2;
+				MARKETING_VERSION = 3.2.4;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtcapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1950,7 +1896,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.2.2.1;
+				CURRENT_PROJECT_VERSION = 3.2.4.1;
 				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1967,7 +1913,7 @@
 					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/SealRTC/ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1978,7 +1924,7 @@
 					"$(PROJECT_DIR)/SealRTC/3rd/White-SDK-iOS",
 					"$(PROJECT_DIR)/SealRTC/webserver",
 				);
-				MARKETING_VERSION = 3.2.2;
+				MARKETING_VERSION = 3.2.4;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtcapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

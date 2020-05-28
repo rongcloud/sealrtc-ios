@@ -73,6 +73,7 @@
 {
     @synchronized (self)
     {
+        [self.chatViewController.scrollView zoomToRect:CGRectMake(0, 0, ScreenWidth, ScreenHeight) animated:NO];
         NSInteger selectedRow = indexPath.row;
         ChatCellVideoViewModel *selectedViewModel = [kChatManager getRemoteUserDataModelFromIndex:selectedRow];
 
@@ -92,8 +93,10 @@
                 //本地: 恢复在大屏上显示
                 RongRTCLocalVideoView *localVideoView = (RongRTCLocalVideoView *)kChatManager.localUserDataModel.cellVideoView;
                 localVideoView.fillMode = RongRTCVideoFillModeAspect;
-                localVideoView.frame = self.chatViewController.videoMainView.frame;
-                [self.chatViewController.videoMainView addSubview:kChatManager.localUserDataModel.cellVideoView];
+                localVideoView.frame = self.chatViewController.scrollView.frame;
+                self.chatViewController.zoomView = kChatManager.localUserDataModel.cellVideoView;
+                [self.chatViewController.scrollView addSubview:kChatManager.localUserDataModel.cellVideoView];
+
                 
                 CGFloat offset = 16;
                 if (@available(iOS 11.0, *)) {
@@ -103,7 +106,9 @@
                 }
                 kChatManager.localUserDataModel.infoLabel.frame = CGRectMake(13, localVideoView.frame.size.height - offset, localVideoView.frame.size.width - 26, kChatManager.localUserDataModel.infoLabel.frame.size.height);
                 kChatManager.localUserDataModel.infoLabelGradLayer.frame = kChatManager.localUserDataModel.infoLabel.frame;
-                [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.infoLabel];
+//                [kChatManager.localUserDataModel.cellVideoView addSubview:kChatManager.localUserDataModel.infoLabel];
+                
+                [self.chatViewController.videoMainView addSubview:kChatManager.localUserDataModel.infoLabel];
                 
                 if (!kChatManager.localUserDataModel.isShowVideo) {
                     kChatManager.localUserDataModel.avatarView.frame = localVideoView.frame;
@@ -162,9 +167,12 @@
                 originalRemoteUserID = selectedViewModel.streamID;
                 
                 RongRTCRemoteVideoView *remoteVideoView = (RongRTCRemoteVideoView *)selectedViewModel.cellVideoView;
+
                 remoteVideoView.fillMode = RongRTCVideoFillModeAspect;
-                remoteVideoView.frame = self.chatViewController.videoMainView.frame;
-                [self.chatViewController.videoMainView addSubview:selectedViewModel.cellVideoView];
+                remoteVideoView.frame = self.chatViewController.scrollView.frame;
+                self.chatViewController.zoomView = selectedViewModel.cellVideoView;
+                [self.chatViewController.scrollView addSubview:selectedViewModel.cellVideoView];
+
                 
                 CGFloat offset = 16;
                 if (@available(iOS 11.0, *)) {
@@ -174,7 +182,11 @@
                 }
                 selectedViewModel.infoLabel.frame = CGRectMake(0, remoteVideoView.frame.size.height - offset, remoteVideoView.frame.size.width, selectedViewModel.infoLabel.frame.size.height);
                 selectedViewModel.infoLabelGradLayer.frame = selectedViewModel.infoLabel.frame;
-                [selectedViewModel.cellVideoView addSubview:selectedViewModel.infoLabel];
+//                [selectedViewModel.cellVideoView addSubview:selectedViewModel.infoLabel];
+                
+                
+                [self.chatViewController.videoMainView addSubview:selectedViewModel.infoLabel];
+                
                 self.chatViewController.selectionModel = selectedViewModel;
                 if (!selectedViewModel.isShowVideo) {
                     selectedViewModel.avatarView.frame = remoteVideoView.frame;
@@ -204,9 +216,12 @@
             originalRemoteUserID = selectedViewModel.streamID;
             
             RongRTCRemoteVideoView *remoteVideoView = (RongRTCRemoteVideoView *)selectedViewModel.cellVideoView;
+
             remoteVideoView.fillMode = RongRTCVideoFillModeAspect;
-            remoteVideoView.frame = self.chatViewController.videoMainView.frame;
-            [self.chatViewController.videoMainView addSubview:selectedViewModel.cellVideoView];
+            remoteVideoView.frame = self.chatViewController.scrollView.frame;
+            self.chatViewController.zoomView = selectedViewModel.cellVideoView;
+            [self.chatViewController.scrollView addSubview:selectedViewModel.cellVideoView];
+
             
             CGFloat offset = 16;
             if (@available(iOS 11.0, *)) {
@@ -216,7 +231,10 @@
             }
             selectedViewModel.infoLabel.frame = CGRectMake(13, remoteVideoView.frame.size.height - offset, remoteVideoView.frame.size.width - 26, selectedViewModel.infoLabel.frame.size.height);
             selectedViewModel.infoLabelGradLayer.frame = selectedViewModel.infoLabel.frame;
-            [selectedViewModel.cellVideoView addSubview:selectedViewModel.infoLabel];
+//            [selectedViewModel.cellVideoView addSubview:selectedViewModel.infoLabel];
+            
+            [self.chatViewController.videoMainView addSubview:selectedViewModel.infoLabel];
+            
             self.chatViewController.selectionModel = selectedViewModel;
             if (!selectedViewModel.isShowVideo) {
                 selectedViewModel.avatarView.frame = remoteVideoView.frame;

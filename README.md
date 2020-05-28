@@ -4,3 +4,5 @@
 
 2. 工程中缺少必须的AppKey,  该宏定义在SealRTC_Prefix.pch中, 如: #define RCIMAPPKey @"", 请在官网 https://www.rongcloud.cn/ 注册账号后, 登录获取
 
+3. 请在官网下载融云SDK, 取得下载解压后的IMLib文件夹和 RongRTCLib.framework, 放置在工程的 /sealrtc-ios/SealRTC/framework/ 路径下
+

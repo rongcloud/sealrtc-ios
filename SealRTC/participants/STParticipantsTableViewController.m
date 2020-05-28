@@ -168,7 +168,7 @@ extern NSNotificationName const STParticipantsInfoDidUpdate;
 #pragma mark - Table view deletate
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
+    if (indexPath.row == 0 || !kLoginManager.isMaster) {
         return UITableViewCellEditingStyleNone;
     }
     return UITableViewCellEditingStyleDelete;

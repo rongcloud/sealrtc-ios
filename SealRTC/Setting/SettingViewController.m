@@ -42,7 +42,7 @@ static NSUserDefaults *settingUserDefaults = nil;
 {
     [super viewWillAppear:animated];
     [self loadPlistData];
-    self.sectionNumber = 7;
+    self.sectionNumber = 6;
     [self.settingViewBuilder.tableView reloadData];
     self.settingViewBuilder.userIDTextField.text = kLoginManager.userID;
     

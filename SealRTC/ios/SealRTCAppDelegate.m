@@ -21,7 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // 自动化测试取消重定向
-    if (Key_Force_Close_Log == NO) {
+    if (Key_Force_Close_Log) {
         [self redirectNSlogToDocumentFolder];
     }
     [[RongRTCWebServer sharedWebServer] start];

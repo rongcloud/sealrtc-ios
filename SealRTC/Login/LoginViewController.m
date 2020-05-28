@@ -19,6 +19,7 @@
 #import "RCFetchTokenManager.h"
 #import "RCSelectView.h"
 #import "RCBackView.h"
+
 typedef NS_ENUM(NSInteger, TextFieldInputError)
 {
     TextFieldInputErrorNil,
@@ -309,8 +310,6 @@ static NSDictionary *selectedServer;
 #pragma mark - prepareForSegue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if (![segue.identifier isEqualToString:SegueIdentifierChat])
-        return;
 }
 
 - (void)navToChatViewController:(BOOL)isHost

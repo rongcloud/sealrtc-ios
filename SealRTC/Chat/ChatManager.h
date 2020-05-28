@@ -18,7 +18,8 @@
 @interface ChatManager : NSObject
 
 @property (nonatomic, strong) RongRTCEngine *rongRTCEngine;
-@property (nonatomic, strong) RongRTCVideoCaptureParam *captureParam;
+@property (nonatomic, strong) RongRTCVideoCaptureParam *videoCaptureParam;
+@property (nonatomic, strong) RongRTCAudioCaptureParam *audioCaptureParam;
 @property (nonatomic, strong) NSString *userID;
 @property (nonatomic, strong) NSMutableArray *allRemoteUserDataArray, *recentDataArray;
 @property (nonatomic, strong) NSMutableArray *observerArray;
@@ -56,6 +57,7 @@
 - (void)removeRecentUserDataModelFromUserID:(NSString *)userID;
 - (NSInteger)indexOfRecentUserDataArray:(NSString *)userID;
 
-- (void)configParameter;
+- (void)configAudioParameter;
+- (void)configVideoParameter;
 
 @end

@@ -24,7 +24,8 @@ typedef NS_ENUM(NSInteger, RongRTCFileVideoCapturerStatus) {
 @implementation RongRTCFileCapturer
 {
     AVAssetReader *_reader;
-    AVAssetReaderTrackOutput *_outTrack;
+    AVAssetReaderTrackOutput *_outVideoTrack;
+    AVAssetReaderTrackOutput *_outAudioTrack;
     RongRTCFileVideoCapturerStatus _status;
     CMTime _lastPresentationTime;
     dispatch_queue_t _frameQueue;
@@ -32,7 +33,7 @@ typedef NS_ENUM(NSInteger, RongRTCFileVideoCapturerStatus) {
     
     Float64 _currentMediaTime;
     Float64 _currentVideoTime;
-    
+    NSThread* _audioDecodeThread;
 }
 
 -(void)startCapturingFromFilePath:(NSString *)filePath onError:(RongRTCVideoCapturerErrorBlock)errorBlock{
@@ -74,15 +75,64 @@ typedef NS_ENUM(NSInteger, RongRTCFileVideoCapturerStatus) {
     NSDictionary *options = @{
                               (NSString *)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)
                               };
-    _outTrack =
+    _outVideoTrack =
     [[AVAssetReaderTrackOutput alloc] initWithTrack:allTracks.firstObject outputSettings:options];
-    [_reader addOutput:_outTrack];
-    
+    [_reader addOutput:_outVideoTrack];
+    [self setupAudioTrakOutput:asset];
     [_reader startReading];
+    if (!_audioDecodeThread) {
+        _audioDecodeThread = [[NSThread alloc] initWithTarget:self selector:@selector(audioDecode) object:nil];
+    }
+    [_audioDecodeThread start];
     [self readNextBuffer];
 }
+
 - (void)stopCapture {
     _status = RongRTCFileVideoCapturerStatusStopped;
+}
+
+- (void)setupAudioTrakOutput:(AVURLAsset*)asset {
+    AVAssetTrack* audioTrack = [asset tracksWithMediaType:AVMediaTypeAudio].firstObject;
+    AudioStreamBasicDescription asbd = RongRTCAudioMixer.writeAsbd;
+     NSDictionary* settings = @{AVFormatIDKey:               @(kAudioFormatLinearPCM),
+                                AVSampleRateKey:             @(asbd.mSampleRate),
+                                AVNumberOfChannelsKey:       @(asbd.mChannelsPerFrame),
+                                AVLinearPCMIsNonInterleaved: @(NO)};
+    _outAudioTrack = [[AVAssetReaderTrackOutput alloc] initWithTrack:audioTrack outputSettings:settings];
+    if ([_reader canAddOutput:_outAudioTrack]) {
+        [_reader addOutput:_outAudioTrack];
+    }
+}
+
+- (void)audioDecode {
+    SInt64 sampleTime = 0;
+    while (true) {
+        CMSampleBufferRef sample = [_outAudioTrack copyNextSampleBuffer];
+        if (!sample) {
+            break;
+        }
+        AudioBufferList abl = {0};
+        CMBlockBufferRef blockBuffer;
+        CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sample,
+                                                                NULL,
+                                                                &abl,
+                                                                sizeof(abl),
+                                                                NULL,
+                                                                NULL,
+                                                                0,
+                                                                &blockBuffer);
+        CMItemCount count =  CMSampleBufferGetNumSamples(sample);
+        [[RongRTCAudioMixer sharedEngine] writeAudioBufferList:&abl frames:(UInt32)count sampleTime:sampleTime playback:YES];
+        sampleTime += count;
+        CFRelease(blockBuffer);
+        CFRelease(sample);
+        if(_status == RongRTCFileVideoCapturerStatusStopped) {
+            break;
+        }
+    }
+
+    [_audioDecodeThread cancel];
+    _audioDecodeThread = nil;
 }
 
 #pragma mark - Private
@@ -101,13 +151,14 @@ typedef NS_ENUM(NSInteger, RongRTCFileVideoCapturerStatus) {
 - (dispatch_queue_t)frameQueue {
     if (!_frameQueue) {
         _frameQueue = dispatch_queue_create("org.webrtc.filecapturer.video", DISPATCH_QUEUE_SERIAL);
-        dispatch_set_target_queue(_frameQueue,
-                                  dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0));
+//        dispatch_set_target_queue(_frameQueue,
+//                                  dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0));
     }
     return _frameQueue;
 }
 
 - (void)readNextBuffer {
+       __weak typeof(self) weakSelf = self;
     if (_status == RongRTCFileVideoCapturerStatusStopped) {
         [_reader cancelReading];
         _reader = nil;
@@ -122,9 +173,12 @@ typedef NS_ENUM(NSInteger, RongRTCFileVideoCapturerStatus) {
         return;
     }
     
-    CMSampleBufferRef sampleBuffer = [_outTrack copyNextSampleBuffer];
+    CMSampleBufferRef sampleBuffer = [_outVideoTrack copyNextSampleBuffer];
     if (!sampleBuffer) {
-        [self readNextBuffer];
+        dispatch_async([weakSelf frameQueue], ^{
+            [weakSelf readNextBuffer];
+        });
+        
         return;
     }
     if (CMSampleBufferGetNumSamples(sampleBuffer) != 1 || !CMSampleBufferIsValid(sampleBuffer) ||
@@ -142,10 +196,11 @@ typedef NS_ENUM(NSInteger, RongRTCFileVideoCapturerStatus) {
     Float64 presentationDifference =
     CMTimeGetSeconds(CMTimeSubtract(presentationTime, _lastPresentationTime));
     _lastPresentationTime = presentationTime;
+    __weak typeof(self) weakSelf = self;
     if (isnan(presentationDifference)) {
         CFRelease(sampleBuffer);
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self readNextBuffer];
+        dispatch_async([weakSelf frameQueue], ^{
+            [weakSelf readNextBuffer];
         });
         return;
     }
@@ -155,8 +210,8 @@ typedef NS_ENUM(NSInteger, RongRTCFileVideoCapturerStatus) {
     Float64 delta = fabs(_currentMediaTime - _currentVideoTime);
     if (delta > 0.5) {
         CFRelease(sampleBuffer);
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self readNextBuffer];
+        dispatch_async([weakSelf frameQueue], ^{
+            [weakSelf readNextBuffer];
         });
         return;
     }
@@ -175,14 +230,14 @@ typedef NS_ENUM(NSInteger, RongRTCFileVideoCapturerStatus) {
         CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
         if (!pixelBuffer) {
             CFRelease(sampleBuffer);
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [self readNextBuffer];
+            dispatch_async([weakSelf frameQueue], ^{
+                [weakSelf readNextBuffer];
             });
             return;
         }
         
         [self.delegate didOutputSampleBuffer:sampleBuffer];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async([weakSelf frameQueue], ^{
             [self readNextBuffer];
         });
 
