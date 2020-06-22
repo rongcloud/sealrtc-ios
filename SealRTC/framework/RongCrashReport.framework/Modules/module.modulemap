@@ -1,6 +1,0 @@
-framework module RongCrashReport {
-  umbrella header "RongCrashReport.h"
-
-  export *
-  module * { export * }
-}

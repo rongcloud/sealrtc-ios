@@ -128,8 +128,9 @@ static LoginManager *sharedLoginManager = nil;
     }
 }
 
-- (RongRTCEngine*)rongRTCEngine {
-    return [RongRTCEngine sharedEngine];
+#pragma mark - Getter & Setter
+- (RCRTCEngine*)rongRTCEngine {
+    return [RCRTCEngine sharedInstance];
 }
 
 - (void)setIsGPUFilter:(BOOL)isGPUFilter
@@ -159,7 +160,11 @@ static LoginManager *sharedLoginManager = nil;
     [settingUserDefaults setBool:isAudioScenarioMusic forKey:Key_AudioScenarioMusic];
     [settingUserDefaults synchronize];
 }
-
+-(void)setIsVideoMirror:(BOOL)isVideoMirror{
+    _isVideoMirror = isVideoMirror;
+    [settingUserDefaults setBool:isVideoMirror forKey:Key_VideoMirror];
+    [settingUserDefaults synchronize];
+}
 - (void)setIsTinyStream:(BOOL)isTinyStream
 {
     _isTinyStream = isTinyStream;
@@ -262,7 +267,14 @@ static LoginManager *sharedLoginManager = nil;
     [settingUserDefaults setObject:regionName forKey:Key_RegionName];
     [settingUserDefaults synchronize];
 }
+-(void)setNavi:(NSString *)navi{
+    [settingUserDefaults setObject:navi forKey:@"navi"];
+    [settingUserDefaults synchronize];
+}
+-(NSString *)navi{
+    return [settingUserDefaults valueForKey:@"navi"];
 
+}
 - (void)setKeyToken:(NSString *)keyToken
 {
     [settingUserDefaults setObject:keyToken forKey:self.phoneNumber];

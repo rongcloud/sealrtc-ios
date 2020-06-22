@@ -53,9 +53,9 @@
 #define Key_WaterMark @"WaterMark"
 #define Key_SRTPEncrypt @"SRTPEncrypt"
 #define Key_AudioScenarioMusic @"AudioScenarioMusic"
+#define Key_VideoMirror @"VideoMirror"
 #define Key_AutoTest @"AutoTest"
 #define Key_PhoneNumber @"PhoneNumber"
-#define Key_AutoTest @"AutoTest"
 #define Key_KeyToken @"KeyToken"
 #define Key_TinyStreamMode @"TinyStream"
 #define Key_CountryCode @"countryCode"
@@ -83,7 +83,7 @@
 #define Value_Default_WaterMark NO
 #define Value_Default_AutoTest NO
 #define Value_Default_MediaServerRow 0
-
+#define IS_DEFAULT_CHATWIEW YES
 #define Key_Force_Close_Log NO
 #define IS_NOT_PRIVATE_ENVIRONMENT
 #define IS_NOT_LIVE

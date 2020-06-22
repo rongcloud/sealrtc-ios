@@ -7,11 +7,9 @@
 //
 
 #import "SealRTCAppDelegate.h"
-#import "RongRTCWebServer.h"
-#import <Bugly/Bugly.h>
-#import <RongRTCLib/RongRTCEngine.h>
+#import "RCRTCWebServer.h"
+#import <RongRTCLib/RCRTCEngine.h>
 #import <ReplayKit/ReplayKit.h>
-
 @implementation SealRTCAppDelegate {
     UIWindow *_window;
 }
@@ -24,7 +22,7 @@
     if (Key_Force_Close_Log) {
         [self redirectNSlogToDocumentFolder];
     }
-    [[RongRTCWebServer sharedWebServer] start];
+    [[RCRTCWebServer sharedWebServer] start];
     
     return YES;
 }
@@ -59,7 +57,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     [UIApplication sharedApplication].idleTimerDisabled = NO;
-    [[RongRTCWebServer sharedWebServer] stop];
+    [[RCRTCWebServer sharedWebServer] stop];
 }
 
 @end

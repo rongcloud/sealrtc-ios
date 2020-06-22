@@ -17,7 +17,7 @@
 
 @property (nonatomic, strong) UILabel *infoLabel, *snifferLabel, *masterLabel;
 @property (nonatomic, strong) BlinkExcelView *excelView;
-@property (nonatomic, strong) UIButton *hungUpButton, *openCameraButton, *speakerOnOffButton, *microphoneOnOffButton, *switchCameraButton, *whiteboardButton,*customVideoButton,*customAudioButton,*musicModeButton;
+@property (nonatomic, strong) UIButton *hungUpButton, *openCameraButton, *speakerOnOffButton, *microphoneOnOffButton, *switchCameraButton, *whiteboardButton, *customVideoButton, *customAudioButton, *musicModeButton, *HDButton, *cameraFocusButton;
 @property (nonatomic, strong) DWBubbleMenuButton *upMenuView;
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer, *rightSwipeGestureRecognizer;
 - (void)enableSwipeGesture:(BOOL)enable;

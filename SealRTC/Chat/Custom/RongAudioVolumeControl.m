@@ -60,7 +60,7 @@
         return;
     }
     value = value + 1;
-    _volumeLab.text = [NSString stringWithFormat:@"%ld",value];
+    _volumeLab.text = [NSString stringWithFormat:@"%@",@(value)];
     [self.delegate volumeValueChanged:value];
 }
 
@@ -70,7 +70,7 @@
         return;
     }
     value = value - 1;
-    _volumeLab.text = [NSString stringWithFormat:@"%ld",value];
+    _volumeLab.text = [NSString stringWithFormat:@"%@",@(value)];
     [self.delegate volumeValueChanged:value];
 }
 

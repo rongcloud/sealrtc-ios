@@ -25,7 +25,7 @@
 
 
 - (void)dealloc {
-    self.processString = nil;
+    //self.processString = nil;
 }
 
 + (RTActiveWheel *)showHUDAddedTo:(UIView *)view {

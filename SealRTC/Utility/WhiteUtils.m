@@ -14,11 +14,7 @@ static NSString *APIHost = @"https://cloudcapiv4.herewhite.com";
 
 + (NSString *)sdkToken
 {
-    /* FIXME: 此处 tonken 只做 demo 试用。
-     实际使用时，请从 console.herewhite.com 重新注册申请。
-     该 token 不应该保存在客户端中，所有涉及该 token 的请求，都应该放在服务器中。
-     */
-    return @"WHITEcGFydG5lcl9pZD02dFBKT1lzMG52MHFoQzN2Z1BRUXVmN0t0RnVOVGl0bzBhRFAmc2lnPTMyZTRiNTMwNjkyN2RhN2I3NzI4MjMwOTJlZTNmNDJhNWI3MGMyMjU6YWRtaW5JZD0yMTEmcm9sZT1taW5pJmV4cGlyZV90aW1lPTE1ODkzNzY1MjEmYWs9NnRQSk9ZczBudjBxaEMzdmdQUVF1ZjdLdEZ1TlRpdG8wYURQJmNyZWF0ZV90aW1lPTE1NTc4MTk1Njkmbm9uY2U9MTU1NzgxOTU2OTQyNTAw";
+    return @"";
 }
 
 //FIXME:我们推荐将这两个请求，放在您的服务器端进行。防止您从 console.herewhite.com 获取的 token 发生泄露。

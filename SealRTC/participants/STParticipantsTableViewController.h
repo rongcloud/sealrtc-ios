@@ -10,11 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class RongRTCRoom;
+@class RCRTCRoom;
 @class STParticipantsInfo;
 @interface STParticipantsTableViewController : UITableViewController
 
-- (instancetype)initWithRoom:(RongRTCRoom*)room
+- (instancetype)initWithRoom:(RCRTCRoom*)room
            participantsInfos:(NSMutableArray<STParticipantsInfo*>*) array;
 
 @end

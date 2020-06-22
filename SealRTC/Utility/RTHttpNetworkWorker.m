@@ -70,6 +70,7 @@ static RTHttpNetworkWorker* defaultWorker = nil;
     [task  resume];
 }
 
+
 - (void)validateSMSPhoneNum:(NSString *)phoneNum
                  regionCode:(NSString*)regionCode
                        code:(NSString *)code
@@ -85,7 +86,7 @@ static RTHttpNetworkWorker* defaultWorker = nil;
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     //此处生成公有云UserID
-    NSDictionary *dic = @{@"phone":phoneNum, @"region":regionCode, @"code":code, @"key":[NSString stringWithFormat:@"%@_%@_ios", phoneNum, kDeviceUUID]};
+    NSDictionary *dic = @{@"phone":phoneNum, @"region":regionCode, @"code":code, @"key":[NSString stringWithFormat:@"%@_%@_ios", phoneNum, kDeviceUUID],@"appkey":RCIMAPPKey};
     NSData* data = [NSJSONSerialization dataWithJSONObject:dic options:kNilOptions error:nil];
     request.HTTPBody = data;
     
@@ -204,6 +205,8 @@ static RTHttpNetworkWorker* defaultWorker = nil;
     }];
     [task  resume];
 }
+
+
 #pragma mark - NSURLSessionDelegate
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
  completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler

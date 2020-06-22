@@ -14,7 +14,7 @@
 
 @interface STAudioMixingPannelController () <STAudioModeViewControllerDelegate,
                                              UIDocumentPickerDelegate,
-                                             RongRTCAudioMixerAudioPlayDelegate>
+                                             RCRTCAudioMixerAudioPlayDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *fileNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *mixerModelLabel;
 @property (weak, nonatomic) IBOutlet UILabel *localVolumeLabel;
@@ -82,10 +82,10 @@ NSString* desc(NSInteger mode) {
     self.tableView.backgroundView = effectView;
     
     NSString* fileName = self.config.audioFileURL.lastPathComponent;
-    Float64 duration =  [RongRTCAudioMixer durationOfAudioFile:self.config.audioFileURL];
+    Float64 duration =  [RCRTCAudioMixer durationOfAudioFile:self.config.audioFileURL];
     self.endTimeLabel.text = [self textFormatOfDuration:duration];
     self.audioFileDuration = duration;
-    [RongRTCAudioMixer sharedEngine].delegate = self;
+    [RCRTCAudioMixer sharedInstance].delegate = self;
     self.fileNameLabel.text = fileName;
     self.localVolumeSlider.value = self.config.localVolume;
     self.micVolumeSlider.value = self.config.micVolume;
@@ -94,7 +94,7 @@ NSString* desc(NSInteger mode) {
     self.micVolumeLabel.text = [NSString stringWithFormat:@"%@",@((NSInteger)self.config.micVolume)];
     self.remoteVolumeLabel.text = [NSString stringWithFormat:@"%@",@((NSInteger)self.config.remoteVolume)];
     self.mixerModelLabel.text = desc(self.config.mixerModeIndex);
-    if ([RongRTCAudioMixer sharedEngine].status == RTCMixEngineStatusPlaying) {
+    if ([RCRTCAudioMixer sharedInstance].status == RTCMixEngineStatusPlaying) {
         self.playBtn.selected = YES;
     }
 }
@@ -117,7 +117,7 @@ NSString* desc(NSInteger mode) {
     Float64 fmiutes = duration / 60.0f;
     NSUInteger minutes = fmiutes;
     NSUInteger seconds = duration - minutes * 60;
-    return [NSString stringWithFormat:@"%02lu:%02lu", minutes, seconds];
+    return [NSString stringWithFormat:@"%02lu:%02lu", (unsigned long)minutes, (unsigned long)seconds];
 }
 #pragma mark - Target Action
 - (IBAction)closeAction:(id)sender {
@@ -126,21 +126,21 @@ NSString* desc(NSInteger mode) {
 - (IBAction)localVolumeChanged:(UISlider*)sender {
     self.localVolumeLabel.text = [NSString stringWithFormat:@"%@",@((NSInteger)sender.value)];
     self.config.localVolume = (NSInteger)sender.value;
-    [[RongRTCAudioMixer sharedEngine] setPlayingVolume:sender.value];
+    [[RCRTCAudioMixer sharedInstance] setPlayingVolume:sender.value];
 }
 - (IBAction)micVolumeChanged:(UISlider *)sender {
     self.micVolumeLabel.text = [NSString stringWithFormat:@"%@",@((NSInteger)sender.value)];
     self.config.micVolume = (NSInteger)sender.value;
-    [[RongRTCAudioCapturer sharedInstance] setMicVolume:sender.value];
+    [[RCRTCEngine sharedInstance].defaultAudioStream setRecordingVolume:sender.value];
 }
 - (IBAction)remoteVolumeChanged:(UISlider *)sender {
     self.remoteVolumeLabel.text = [NSString stringWithFormat:@"%@",@((NSInteger)sender.value)];
     self.config.remoteVolume = (NSInteger)sender.value;
-    [[RongRTCAudioMixer sharedEngine] setMixingVolume:sender.value];
+    [[RCRTCAudioMixer sharedInstance] setMixingVolume:sender.value];
 }
 
 - (IBAction)progressDidChanged:(UISlider *)sender {
-    [[RongRTCAudioMixer sharedEngine] setPlayProgress:sender.value];
+    [[RCRTCAudioMixer sharedInstance] setPlayProgress:sender.value];
     self.updatePlayingTimeDisable = NO;
     self.playBtn.selected = YES;
 }
@@ -149,30 +149,30 @@ NSString* desc(NSInteger mode) {
 }
 
 - (IBAction)resetAction:(id)sender {
-    [[RongRTCAudioMixer sharedEngine] stop];
+    [[RCRTCAudioMixer sharedInstance] stop];
     self.playBtn.selected = NO;
 }
 
 - (IBAction)playAction:(UIButton *)sender {
     if (!sender.isSelected) {
-        if ([RongRTCAudioMixer sharedEngine].status == RTCMixEngineStatusPause) {
-            [[RongRTCAudioMixer sharedEngine] resume];
+        if ([RCRTCAudioMixer sharedInstance].status == RTCMixEngineStatusPause) {
+            [[RCRTCAudioMixer sharedInstance] resume];
         } else {
             NSURL* audioURL = self.config.audioFileURL;
             @try {
                 BOOL isPlay = NO;
-                RongRTCMixerMode mode = RongRTCMixerModeNone;
+                RCRTCMixerMode mode = RCRTCMixerModeNone;
                 if (self.config.mixingOption & STAudioMixingOptionPlaying) {
                     isPlay = YES;
                 }
                 if (self.config.mixingOption & STAudioMixingOptionMixing) {
-                    mode = RongRTCMixerModeMixing;
+                    mode = RCRTCMixerModeMixing;
                 }
                 
                 if (self.config.mixingOption & STAudioMixingOptionReplaceMic) {
-                    mode = RongRTCMixerModeReplace;
+                    mode = RCRTCMixerModeReplace;
                 }
-                [[RongRTCAudioMixer sharedEngine] startMixingWithURL:audioURL
+                [[RCRTCAudioMixer sharedInstance] startMixingWithURL:audioURL
                                                             playback:isPlay
                                                            mixerMode:mode
                                                            loopCount:NSUIntegerMax];
@@ -184,7 +184,7 @@ NSString* desc(NSInteger mode) {
             }
         }
     } else {
-        [[RongRTCAudioMixer sharedEngine] pause];
+        [[RCRTCAudioMixer sharedInstance] pause];
     }
     sender.selected = !sender.isSelected;
 }
@@ -218,9 +218,9 @@ NSString* desc(NSInteger mode) {
 - (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentAtURL:(NSURL *)url {
     self.config.audioFileURL = url;
     self.fileNameLabel.text = url.lastPathComponent;
-    [[RongRTCAudioMixer sharedEngine] stop];
+    [[RCRTCAudioMixer sharedInstance] stop];
     self.playBtn.selected = NO;
-    Float64 duration =  [RongRTCAudioMixer durationOfAudioFile:self.config.audioFileURL];
+    Float64 duration =  [RCRTCAudioMixer durationOfAudioFile:self.config.audioFileURL];
     self.audioFileDuration = duration;
     self.playingTimeLabel.text = @"00:00";
     self.endTimeLabel.text = [self textFormatOfDuration:duration];
@@ -247,7 +247,7 @@ NSString* desc(NSInteger mode) {
     self.mixerModelLabel.text = desc(index);
     self.config.mixerModeIndex = index;
     self.config.mixingOption = option;
-    [[RongRTCAudioMixer sharedEngine] stop];
+    [[RCRTCAudioMixer sharedInstance] stop];
     self.playBtn.selected = NO;
 }
 

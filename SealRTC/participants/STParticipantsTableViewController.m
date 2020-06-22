@@ -22,7 +22,7 @@ extern NSNotificationName const STParticipantsInfoDidUpdate;
 @interface STParticipantsTableViewController ()
 
 @property (nonatomic, strong) STParticipantsTableViewHeader* tableHeader;
-@property (nonatomic, strong) RongRTCRoom* room;
+@property (nonatomic, strong) RCRTCRoom* room;
 @property (nonatomic, weak) NSMutableArray<STParticipantsInfo*>* dataSource;
 @property (nonatomic, strong) NSMutableArray* removeUserButtonArray;
 @property (nonatomic, strong) NSMutableSet<NSString*>* userSet;
@@ -31,11 +31,11 @@ extern NSNotificationName const STParticipantsInfoDidUpdate;
 
 @implementation STParticipantsTableViewController
 
-- (instancetype)initWithRoom:(RongRTCRoom*)room
+- (instancetype)initWithRoom:(RCRTCRoom*)room
            participantsInfos:(NSMutableArray<STParticipantsInfo*>*) array {
     if (self  = [super initWithStyle:UITableViewStylePlain]) {
         self.room = room;
-        for (RongRTCRemoteUser* user  in room.remoteUsers) {
+        for (RCRTCRemoteUser* user  in room.remoteUsers) {
             if (user.userId.length > 0) {
                 [self.currentAllUser addObject:user.userId];
             }
@@ -82,7 +82,9 @@ extern NSNotificationName const STParticipantsInfoDidUpdate;
                       selector:@selector(participantsInfoDidChange:)
                           name:STParticipantsInfoDidUpdate
                         object:nil];
-    [self.room getRoomAttributes:nil completion:^(BOOL isSuccess, RongRTCCode desc, NSDictionary * _Nullable attr) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
+    [self.room getRoomAttributes:nil completion:^(BOOL isSuccess, RCRTCCode desc, NSDictionary * _Nullable attr) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [attr enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, NSString*  _Nonnull obj, BOOL * _Nonnull stop) {
                 NSDictionary* dicInfo = [NSJSONSerialization JSONObjectWithData:[obj dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
@@ -122,7 +124,7 @@ extern NSNotificationName const STParticipantsInfoDidUpdate;
             [self updateParticipantsCount];
         });
     }];
-
+#pragma clang diagnostic pop
     [self updateParticipantsCount];
     self.preferredContentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height / 2);
     //[self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:@"ParticipantsCell"];
@@ -189,7 +191,7 @@ extern NSNotificationName const STParticipantsInfoDidUpdate;
         STParticipantsInfo *info = self.dataSource[indexPath.row];
         NSDictionary *msgDict = @{@"userId" : info.userId};
          STKickOffInfoMessage *message = [[STKickOffInfoMessage alloc] initKickOffMessage:msgDict];
-         [self.room sendRTCMessage:message success:^(long messageId) {
+         [self.room sendMessage:message success:^(long messageId) {
          } error:^(RCErrorCode nErrorCode, long messageId) {
          }];
     }];

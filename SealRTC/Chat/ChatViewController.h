@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <RongRTCLib/RongRTCLib.h>
+
 #import "ChatCell.h"
 #import "ChatCollectionViewDataSourceDelegateImpl.h"
 #import "ChatRongRTCRoomDelegateImpl.h"
@@ -17,6 +18,8 @@
 #import "ChatManager.h"
 #import "ChatGPUImageHandler.h"
 #import "ChatWhiteBoardHandler.h"
+
+@class FUSelectView;
 
 #define TitleHeight 78
 #define redButtonBackgroundColor [UIColor colorWithRed:243.0/255.0 green:57.0/255.0 blue:58.0/255.0 alpha:1.0]
@@ -28,7 +31,7 @@ typedef enum : NSUInteger {
     AVChatModeObserver,
 } AVChatMode;
 
-@interface ChatViewController : UIViewController
+@interface ChatViewController : UIViewController <RCRTCRoomEventDelegate>
 
 @property (nonatomic, weak) IBOutlet UIButton *speakerControlButton;
 @property (nonatomic, weak) IBOutlet UIButton *audioMuteControlButton;
@@ -44,7 +47,7 @@ typedef enum : NSUInteger {
 @property(nonatomic , strong)UIScrollView *scrollView ;
 @property(nonatomic , strong)UIView *zoomView;
 @property (nonatomic, strong) UIImageView *homeImageView;
-@property (nonatomic, strong) RongRTCLocalVideoView *localView;
+@property (nonatomic, strong) RCRTCLocalVideoView *localView;
 @property (nonatomic, strong) UIAlertController *alertController;
 @property (nonatomic, strong) NSMutableArray *alertTypeArray;
 @property (nonatomic, strong) NSMutableDictionary *videoMuteForUids;
@@ -62,11 +65,13 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) ChatWhiteBoardHandler *chatWhiteBoardHandler;
 @property (nonatomic, assign) BOOL isFinishLeave,isLandscapeLeft, isNotLeaveMeAlone;
 @property (nonatomic, assign) UIDeviceOrientation deviceOrientaionBefore;
-@property (nonatomic, weak) RongRTCRoom *room;
-@property (nonatomic)RongRTCCode joinRoomCode;
+@property (nonatomic, weak) RCRTCRoom *room;
+@property (nonatomic)RCRTCCode joinRoomCode;
 @property (nonatomic)AVChatMode chatMode;
 @property (nonatomic, weak) ChatCellVideoViewModel* selectionModel;
 @property (assign, nonatomic) BOOL openComp;
+@property (assign, nonatomic) BOOL enableCameraFocus;
+
 
 - (void)hideAlertLabel:(BOOL)isHidden;
 - (void)selectSpeakerButtons:(BOOL)selected;
@@ -79,8 +84,8 @@ typedef enum : NSUInteger {
 - (void)didClickSwitchCameraButton:(UIButton *)btn;
 - (void)showButtons:(BOOL)flag;
 - (void)joinChannel;
-- (void)subscribeRemoteResource:(NSArray<RongRTCAVInputStream *> *)streams;
-- (void)unsubscribeRemoteResource:(NSArray<RongRTCAVInputStream *> *)streams;
+- (void)subscribeRemoteResource:(NSArray<RCRTCInputStream *> *)streams;
+- (void)unsubscribeRemoteResource:(NSArray<RCRTCInputStream *> *)streams;
 - (void)didConnectToUser:(NSString *)userId;
 - (void)receivePublishMessage;
 - (void)didLeaveRoom;

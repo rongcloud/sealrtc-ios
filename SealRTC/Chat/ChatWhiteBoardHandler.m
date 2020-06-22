@@ -225,8 +225,8 @@
                 NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&error];
                 NSString *jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
                 RongWhiteBoardMessage *message = [[RongWhiteBoardMessage alloc] initWhiteBoardMessage:dic];
-                [self.chatViewController.room setRoomAttributeValue:jsonString forKey:kWhiteBoardMessageKey message:message completion:^(BOOL isSuccess, RongRTCCode desc) {
-                    DLog(@"setRoomAttributeValue: %hhd  RongRTCCode: %zd", isSuccess, desc);
+                [self.chatViewController.room setRoomAttributeValue:jsonString forKey:kWhiteBoardMessageKey message:message completion:^(BOOL isSuccess, RCRTCCode desc) {
+                    DLog(@"setRoomAttributeValue: %hhd  RCRTCCode: %zd", isSuccess, desc);
                 }];
             }
             else {
@@ -378,11 +378,6 @@
 - (void)fireMagixEvent:(WhiteEvent *)event
 {
     DLog(@"fireMagixEvent: %@", [event jsonString]);
-}
-
-- (void)cursorViewsUpdate:(WhiteUpdateCursor *)updateCursor
-{
-    DLog(@"cursorViewsUpdate: %@", [updateCursor jsonString]);
 }
 
 #pragma mark - WhiteRoomCallbackDelegate

@@ -233,11 +233,11 @@ initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completi
 - (void) evalJavascript:(int) delay{
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
         @synchronized(self){
-            if([jsCache length]!=0){
-                [self evaluateJavaScript :jsCache completionHandler:nil];
-                isPending=false;
-                jsCache=@"";
-                lastCallTime=[[NSDate date] timeIntervalSince1970]*1000;
+            if([self->jsCache length]!=0){
+                [self evaluateJavaScript :self->jsCache completionHandler:nil];
+                self->isPending=false;
+                self->jsCache=@"";
+                self->lastCallTime=[[NSDate date] timeIntervalSince1970]*1000;
             }
         }
     });
@@ -285,11 +285,11 @@ initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completi
                         @synchronized(self)
                         {
                             UInt64  t=[[NSDate date] timeIntervalSince1970]*1000;
-                            jsCache=[jsCache stringByAppendingString:js];
-                            if(t-lastCallTime<50){
-                                if(!isPending){
+                            strongSelf->jsCache=[strongSelf->jsCache stringByAppendingString:js];
+                            if(t-strongSelf->lastCallTime<50){
+                                if(!strongSelf->isPending){
                                     [strongSelf evalJavascript:50];
-                                    isPending=true;
+                                    strongSelf->isPending=true;
                                 }
                             }else{
                                 [strongSelf evalJavascript:0];

@@ -20,7 +20,7 @@
     // Do any additional setup after loading the view.
     
     
-    self.title = [NSString stringWithFormat:@"在线成员（%ld）",self.currentRoom.remoteUsers.count + 1];
+    self.title = [NSString stringWithFormat:@"在线成员（%@）",@(self.currentRoom.remoteUsers.count + 1)];
     [self.view addSubview:self.tableView];
  
     [self.tableView registerNib:[UINib nibWithNibName:@"ChatMemberCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"ChatMemberCell"];

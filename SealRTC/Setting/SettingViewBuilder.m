@@ -63,14 +63,23 @@
     self.userIDTextField.delegate = self.settingViewController.settingTextFieldDelegateImpl;
     
     UILongPressGestureRecognizer *userIDTextFieldLongPress =
-        [[UILongPressGestureRecognizer alloc] initWithTarget:self.settingViewController action:@selector(longPressedGestureAction:)];
+    [[UILongPressGestureRecognizer alloc] initWithTarget:self.settingViewController action:@selector(longPressedGestureAction:)];
     [self.userIDTextField addGestureRecognizer:userIDTextFieldLongPress];
     
     //音频
     self.audioScenarioSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth -6-60, 6, 60, 28)];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
     [self.audioScenarioSwitch addTarget:self.settingViewController action:@selector(audioScenarioAction) forControlEvents:UIControlEventValueChanged];
+#pragma clang diagnostic pop
     [self.audioScenarioSwitch setOn:kLoginManager.isAudioScenarioMusic];
-
+    
+    
+    //视频镜像
+    self.videoMirrorSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth -6-60, 6, 60, 28)];
+    [self.videoMirrorSwitch addTarget:self.settingViewController action:@selector(setVideoMirror) forControlEvents:UIControlEventValueChanged];
+    [self.videoMirrorSwitch setOn:kLoginManager.isVideoMirror];
+    
 }
 
 @end

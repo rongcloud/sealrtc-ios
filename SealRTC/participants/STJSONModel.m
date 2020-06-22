@@ -50,7 +50,7 @@
         }
     }
     
-    free(properties);
+    if (properties) free(properties);
     return [dict copy];
 }
 
@@ -75,7 +75,7 @@
         
     }
     
-    free(properties);
+    if (properties) free(properties);
     return [dict copy];
 }
 

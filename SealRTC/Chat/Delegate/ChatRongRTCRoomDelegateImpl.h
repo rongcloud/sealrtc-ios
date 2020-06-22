@@ -14,7 +14,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ChatRongRTCRoomDelegateImpl : NSObject <RongRTCRoomDelegate>
+@interface ChatRongRTCRoomDelegateImpl : NSObject <RCRTCRoomEventDelegate>
 
 @property (nonatomic, weak) NSMutableArray<STParticipantsInfo*>* infos;
 - (instancetype)initWithViewController:(UIViewController *)vc;

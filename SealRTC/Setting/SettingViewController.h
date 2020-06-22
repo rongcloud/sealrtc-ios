@@ -39,5 +39,5 @@
 - (void)autoTestAction;
 - (void)waterMarkAction;
 - (void)longPressedGestureAction:(UILongPressGestureRecognizer *)gesture;
-
+- (void)setVideoMirror;
 @end

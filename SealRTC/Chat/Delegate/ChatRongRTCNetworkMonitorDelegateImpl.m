@@ -39,8 +39,8 @@
     return _timesOfExceedingBaseLine;
 }
 
-#pragma mark - RongRTCActivityMonitorDelegate
-- (void)didReportStatForm:(RongRTCStatisticalForm*)form {
+#pragma mark - RCRTCActivityMonitorDelegate
+- (void)didReportStatForm:(RCRTCStatisticalForm*)form {
     NSMutableArray *bitrateArray = [NSMutableArray new];
      NSMutableArray *localDIArray = [NSMutableArray array];
     [localDIArray addObject:@[NSLocalizedString(@"chat_data_excel_tunnelname", nil),NSLocalizedString(@"chat_data_excel_kbps", nil),NSLocalizedString(@"chat_data_excel_delay", nil)]];
@@ -62,7 +62,7 @@
     NSMutableArray *remoteDIArray = [NSMutableArray array];
     [remoteDIArray addObject:@[NSLocalizedString(@"chat_data_excel_userid", nil),NSLocalizedString(@"chat_data_excel_tunnelname", nil),NSLocalizedString(@"chat_data_excel_Codec", nil),NSLocalizedString(@"chat_data_excel_dpi", nil),NSLocalizedString(@"chat_data_excel_fps", nil),NSLocalizedString(@"chat_data_excel_kbps", nil),NSLocalizedString(@"chat_data_excel_lossrate", nil)]];
 
-    for (RongRTCStreamStat* stat in form.sendStats) {
+    for (RCRTCStreamStat* stat in form.sendStats) {
         ChatDataInfoModel *tmpMemberModel = [[ChatDataInfoModel alloc] init];
         tmpMemberModel.userName = @"本地";
         if ([stat.mediaType isEqualToString:RongRTCMediaTypeVideo]) {
@@ -93,9 +93,9 @@
         [remoteDIArray addObject:tmpMemberModel];
     }
     
-    for (RongRTCStreamStat* stat in form.recvStats) {
+    for (RCRTCStreamStat* stat in form.recvStats) {
         ChatDataInfoModel *tmpMemberModel = [[ChatDataInfoModel alloc] init];
-        NSString *userId = [RongRTCStatisticalForm fetchUserIdFromTrackId:stat.trackId];
+        NSString *userId = [RCRTCStatisticalForm fetchUserIdFromTrackId:stat.trackId];
         ChatCellVideoViewModel *remoteModel = [kChatManager getRemoteUserDataModelFromUserID:userId];
         tmpMemberModel.userName = remoteModel.userName;
         if ([stat.mediaType isEqualToString:RongRTCMediaTypeVideo]) {
@@ -135,25 +135,25 @@
     const NSInteger timesThreshold = 5;     //// 次数阈值
     static NSInteger triggerTimes = 0;
     triggerTimes += 1;
-    BOOL (^checkStatExceedBaselineOrNot)(RongRTCStreamStat*)  = ^BOOL (RongRTCStreamStat* each) {
+    BOOL (^checkStatExceedBaselineOrNot)(RCRTCStreamStat*)  = ^BOOL (RCRTCStreamStat* each) {
         return ([each.mediaType isEqualToString:RongRTCMediaTypeAudio] && each.packetLoss > audioLossBaseline) ||
                ([each.mediaType isEqualToString:RongRTCMediaTypeVideo] && each.packetLoss > videoLossBaseLine);
     };
-    for (RongRTCStreamStat* each in form.sendStats) {
+    for (RCRTCStreamStat* each in form.sendStats) {
         if (checkStatExceedBaselineOrNot(each)) {
             NSInteger lastValue = [self.timesOfExceedingBaseLine[each.trackId] integerValue];
             self.timesOfExceedingBaseLine[each.trackId] = @(lastValue + 1);
         }
     }
     
-    for (RongRTCStreamStat* each in form.recvStats) {
+    for (RCRTCStreamStat* each in form.recvStats) {
         if (checkStatExceedBaselineOrNot(each)) {
             NSInteger lastValue = [self.timesOfExceedingBaseLine[each.trackId] integerValue];
             self.timesOfExceedingBaseLine[each.trackId] = @(lastValue + 1);
         }
     }
     
-    //NSLog(@"���� %@",self.timesOfExceedingBaseLine);
+    //NSLog(@"😀😀😀😀 %@",self.timesOfExceedingBaseLine);
     if (triggerTimes < cycleLength) {
         return;
     }
@@ -163,7 +163,7 @@
     [self.timesOfExceedingBaseLine enumerateKeysAndObjectsUsingBlock:^(NSString* trackId, NSNumber* times, BOOL * _Nonnull stop) {
         NSInteger count = [times integerValue];
         if (count >= timesThreshold) {
-            NSString* userId = [RongRTCStatisticalForm fetchUserIdFromTrackId:trackId];
+            NSString* userId = [RCRTCStatisticalForm fetchUserIdFromTrackId:trackId];
             if (userId.length > 0) {
                 [uIds addObject:userId];
             } else if ([trackId containsString:kLoginManager.userID]){

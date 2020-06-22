@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <RongRTCLib/RongRTCEngine.h>
+#import <RongRTCLib/RCRTCEngine.h>
 
 #define kLoginManager ([LoginManager sharedInstance])
 
@@ -15,11 +15,11 @@
 @interface LoginManager : NSObject
 
 @property (nonatomic, strong) NSURL *tokenURL;
-@property (nonatomic, assign) BOOL isGPUFilter, isSRTPEncrypt, isTinyStream, isWaterMark , isHost, isAudioScenarioMusic;
+@property (nonatomic, assign) BOOL isGPUFilter, isSRTPEncrypt, isTinyStream, isWaterMark , isHost, isAudioScenarioMusic , isVideoMirror;
 @property (nonatomic, assign) NSInteger resolutionRatioIndex, frameRateIndex, maxCodeRateIndex, minCodeRateIndex, codingStyleIndex, mediaServerSelectedRow;
-@property (nonatomic, strong) NSString *roomNumber, *keyToken, *appKey, *phoneNumber, *userID,*username,*countryCode,*regionName , *liveUrl;
+@property (nonatomic, strong) NSString *roomNumber, *keyToken, *appKey, *phoneNumber, *userID,*username,*countryCode,*regionName , *liveUrl, *navi;
 @property (nonatomic, strong) NSString *selectedServer, *mediaServerURL;
-@property (nonatomic, strong, readonly) RongRTCEngine *rongRTCEngine;
+@property (nonatomic, strong, readonly) RCRTCEngine *rongRTCEngine;
 @property (nonatomic, assign) BOOL isLoginTokenSucc, isIMConnectionSucc, isAutoTest, isMaster;
 @property (nonatomic, assign) BOOL isObserver, isBackCamera, isCloseCamera, isSpeaker, isMuteMicrophone, isSwitchCamera, isWhiteBoardOpen;
 @property (nonatomic, strong) NSArray *mediaServerArray;

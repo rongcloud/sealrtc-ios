@@ -14,8 +14,8 @@
 
 @interface BlinkExcelView ()<YHExcelTitleViewDataSource,YHExcelViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
 @property (strong, nonatomic) YHExcelTitleView *titleView;//表头
-@property (strong, nonatomic) NSArray *titleArray;
-@property (strong, nonatomic) NSArray *dataArray;
+@property (copy, nonatomic) NSArray *titleArray;
+@property (copy, nonatomic) NSArray *dataArray;
 @property (strong, nonatomic) NSArray *colWidthArray;
 
 @end
@@ -24,7 +24,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-    if (self == [super initWithFrame:frame]) {
+    if (self = [super initWithFrame:frame]) {
         [self configUI:frame];
     }
     return self;
@@ -34,8 +34,8 @@
 {
     _array = array;
     if (array.count > 1) {
-        self.titleArray = [array[0] copy];
-        self.dataArray = [array[1] copy];
+        self.titleArray = array[0];
+        self.dataArray = array[1];
         [self.excelView.tableView reloadData];
     }
 }

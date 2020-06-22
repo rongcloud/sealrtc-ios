@@ -24,7 +24,7 @@
 @property (nonatomic, assign) NSInteger frameHeightRecv;
 
 @property (nonatomic, assign) NSInteger audioLevel;
-@property (nonatomic, strong) UIWebView *audioLevelView;
+@property (nonatomic, strong) UIImageView *audioLevelView;
 
 @property (nonatomic, assign) NSInteger audioVideoType, videoType;
 @property (nonatomic, assign) BOOL isCloseMicphone, isCloseCamera;
@@ -41,7 +41,8 @@
 @property (nonatomic, assign) BOOL isUnpublish;
 @property (nonatomic, strong) NSString *subscribeLog;
 @property (nonatomic, strong) NSString *connectLog;
-@property (nonatomic, strong) RongRTCAVInputStream *inputStream;
+@property (nonatomic, strong) RCRTCInputStream *inputAudioStream;
+@property (nonatomic, strong) RCRTCInputStream *inputVideoStream;
 
 - (instancetype)initWithView:(UIView *)view;
 - (void)removeKeyPathObservers;

@@ -12,6 +12,7 @@
 #import "GPUImageOutputCamera.h"
 #import "LoginManager.h"
 #import "ChatManager.h"
+#import "RCRTCVideoCaptureParam.h"
 
 @interface ChatGPUImageHandler ()
 
@@ -80,7 +81,7 @@
             self.watermarkImageView.frame = CGRectMake(20, 20, 80, 80);
             self.watermarkImageView.transform = CGAffineTransformRotate(self->_watermarkImageView.transform, -M_PI);
         }
-        self.watermarkImageView.hidden = ([RongRTCVideoCapturer sharedInstance].cameraPosition == AVCaptureDevicePositionFront) ? YES : NO;
+        self.watermarkImageView.hidden = ([RCRTCEngine sharedInstance].defaultVideoStream.cameraPosition == AVCaptureDevicePositionFront) ? YES : NO;
     });
 }
 
@@ -112,7 +113,7 @@
 
 - (void)reloadGPUFilter
 {
-    self.watermarkImageView.hidden = ([RongRTCVideoCapturer sharedInstance].cameraPosition == AVCaptureDevicePositionFront) ? YES : NO;
+    self.watermarkImageView.hidden = ([RCRTCEngine sharedInstance].defaultVideoStream.cameraPosition == AVCaptureDevicePositionFront) ? YES : NO;
     [self uiElement];
     __weak typeof(self) weakSelf = self;
     [self.gupfilter setFrameProcessingCompletionBlock:^(GPUImageOutput *output, CMTime time) {
@@ -203,31 +204,31 @@
 {
     if (!_contentView) {
         switch (kChatManager.videoCaptureParam.videoSizePreset) {
-            case RongRTCVideoSizePreset256x144:
+            case RCRTCVideoSizePreset256x144:
                 self.videoWidth = 256;
                 self.videoHeight = 144;
                 break;
-            case RongRTCVideoSizePreset320x240:
+            case RCRTCVideoSizePreset320x240:
                 self.videoWidth = 320;
                 self.videoHeight = 240;
                 break;
-            case RongRTCVideoSizePreset480x360:
+            case RCRTCVideoSizePreset480x360:
                 self.videoWidth = 480;
                 self.videoHeight = 360;
                 break;
-            case RongRTCVideoSizePreset640x360:
+            case RCRTCVideoSizePreset640x360:
                 self.videoWidth = 640;
                 self.videoHeight = 360;
                 break;
-            case RongRTCVideoSizePreset640x480:
+            case RCRTCVideoSizePreset640x480:
                 self.videoWidth = 640;
                 self.videoHeight = 480;
                 break;
-            case RongRTCVideoSizePreset720x480:
+            case RCRTCVideoSizePreset720x480:
                 self.videoWidth = 720;
                 self.videoHeight = 480;
                 break;
-            case RongRTCVideoSizePreset1280x720:
+            case RCRTCVideoSizePreset1280x720:
                 self.videoWidth = 1280;
                 self.videoHeight = 720;
                 break;

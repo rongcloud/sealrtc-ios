@@ -8,6 +8,8 @@
 
 #import "ChatManager.h"
 
+#import "RCRTCVideoCaptureParam.h"
+
 
 static ChatManager *sharedMeetingManager = nil;
 
@@ -22,7 +24,7 @@ static ChatManager *sharedMeetingManager = nil;
     return sharedMeetingManager;
 }
 
-- (RongRTCEngine *)rongRTCEngine
+- (RCRTCEngine *)rongRTCEngine
 {
     return kLoginManager.rongRTCEngine;
 }
@@ -265,21 +267,22 @@ static ChatManager *sharedMeetingManager = nil;
 }
 
 #pragma mark - getter
-- (RongRTCVideoCaptureParam *)videoCaptureParam
+- (RCRTCVideoCaptureParam *)videoCaptureParam
 {
     if (!_videoCaptureParam) {
-        _videoCaptureParam = [RongRTCVideoCaptureParam defaultParameters];
+        _videoCaptureParam = [RCRTCVideoCaptureParam new];
     }
+    
     return _videoCaptureParam;
 }
 
-- (RongRTCAudioCaptureParam *)audioCaptureParam
-{
-    if (!_audioCaptureParam) {
-        _audioCaptureParam = [RongRTCAudioCaptureParam defaultParameters];
-    }
-    return _audioCaptureParam;
-}
+// - (RCRTCAudioStreamConfig *)audioCaptureParam
+// {
+//     if (!_audioCaptureParam) {
+//         _audioCaptureParam = [RCRTCAudioStreamConfig defaultParameters];
+//     }
+//     return _audioCaptureParam;
+// }
 
 - (NSMutableArray *)observerArray
 {
@@ -296,40 +299,40 @@ static ChatManager *sharedMeetingManager = nil;
     
     switch (kLoginManager.resolutionRatioIndex) {
         case 0:
-            self.videoCaptureParam.videoSizePreset = RongRTCVideoSizePreset176x132;
+            self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset176x132;
             break;
         case 1:
-            self.videoCaptureParam.videoSizePreset = RongRTCVideoSizePreset256x144;
+            self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset256x144;
             break;
         case 2:
-            self.videoCaptureParam.videoSizePreset = RongRTCVideoSizePreset320x180;
+            self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset320x180;
             break;
         case 3:
-            self.videoCaptureParam.videoSizePreset = RongRTCVideoSizePreset240x240;
+            self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset240x240;
             break;
         case 4:
-            self.videoCaptureParam.videoSizePreset = RongRTCVideoSizePreset320x240;
+            self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset320x240;
             break;
         case 5:
-            self.videoCaptureParam.videoSizePreset = RongRTCVideoSizePreset480x360;
+            self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset480x360;
             break;
         case 6:
-            self.videoCaptureParam.videoSizePreset = RongRTCVideoSizePreset640x360;
+            self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset640x360;
             break;
         case 7:
-            self.videoCaptureParam.videoSizePreset = RongRTCVideoSizePreset480x480;
+            self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset480x480;
             break;
         case 8:
-            self.videoCaptureParam.videoSizePreset = RongRTCVideoSizePreset640x480;
+            self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset640x480;
             break;
         case 9:
-            self.videoCaptureParam.videoSizePreset = RongRTCVideoSizePreset720x480;
+            self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset720x480;
             break;
         case 10:
-            self.videoCaptureParam.videoSizePreset = RongRTCVideoSizePreset1280x720;
+            self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset1280x720;
             break;
         default:
-            self.videoCaptureParam.videoSizePreset = RongRTCVideoSizePreset640x480;
+            self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset640x480;
             break;
     }
     
@@ -354,19 +357,19 @@ static ChatManager *sharedMeetingManager = nil;
     //帧率
     switch (kLoginManager.frameRateIndex) {
         case 0:
-            self.videoCaptureParam.videoFrameRate = RongRTCVideoFPS10;
+            self.videoCaptureParam.videoFrameRate = RCRTCVideoFPS10;
             break;
         case 1:
-            self.videoCaptureParam.videoFrameRate = RongRTCVideoFPS15;
+            self.videoCaptureParam.videoFrameRate = RCRTCVideoFPS15;
             break;
         case 2:
-            self.videoCaptureParam.videoFrameRate = RongRTCVideoFPS24;
+            self.videoCaptureParam.videoFrameRate = RCRTCVideoFPS24;
             break;
         case 3:
-            self.videoCaptureParam.videoFrameRate = RongRTCVideoFPS30;
+            self.videoCaptureParam.videoFrameRate = RCRTCVideoFPS30;
             break;
         default:
-            self.videoCaptureParam.videoFrameRate = RongRTCVideoFPS15;
+            self.videoCaptureParam.videoFrameRate = RCRTCVideoFPS15;
             break;
     }
     
@@ -376,7 +379,7 @@ static ChatManager *sharedMeetingManager = nil;
     //编码方式
     switch (kLoginManager.codingStyleIndex) {
         case 0:
-            self.videoCaptureParam.codecType = RongRTCCodecH264;
+            self.videoCaptureParam.codecType = RCRTCCodecH264;
             break;
         default:
             break;
@@ -385,7 +388,7 @@ static ChatManager *sharedMeetingManager = nil;
 
 - (void)configAudioParameter
 {
-    self.audioCaptureParam.audioScenario = kLoginManager.isAudioScenarioMusic ? RongRTCAudioScenarioMusic : RongRTCAudioScenarioDefault;
+    self.rongRTCEngine.defaultAudioStream.audioScenario = kLoginManager.isAudioScenarioMusic ? RCRTCAudioScenarioMusic : RCRTCAudioScenarioDefault;
 }
 
 

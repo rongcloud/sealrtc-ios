@@ -122,11 +122,14 @@
     self.usernameTextField.placeholder = NSLocalizedString(@"login_input_user_name", nil);
     self.usernameTextField.delegate = self.loginViewController.loginTextFieldDelegateImpl;
     self.usernameTextField.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wundeclared-selector"
     [self.usernameTextField addTarget:self.loginViewController action:@selector(userNameTextfieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    #pragma clang diagnostic pop
     [self.inputNumPasswordView addSubview:self.usernameTextField];
     
-    originY = self.usernameTextField.frame.origin.y;
-    CGFloat height = self.usernameTextField.frame.size.height;
+//    originY = self.usernameTextField.frame.origin.y;
+    CGFloat height;
     
 #ifndef IS_PRIVATE_ENVIRONMENT
     //国家和地区
@@ -150,6 +153,8 @@
     
     originY = loginCountryTxtField.frame.origin.y;
     height = self.loginCountryTxtField.frame.size.height;
+#else
+    height = self.usernameTextField.frame.size.height;
 #endif
     //手机号
     self.phoneNumLoginTextField = [[UITextField alloc] initWithFrame:CGRectMake(30, originY + height + 10, ScreenWidth - 60, 44)];
@@ -162,7 +167,10 @@
     self.phoneNumLoginTextField.placeholder = NSLocalizedString(@"login_input_phone_number", nil);
     self.phoneNumLoginTextField.delegate = self.loginViewController.loginTextFieldDelegateImpl;
     self.phoneNumLoginTextField.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
     [self.phoneNumLoginTextField addTarget:self.loginViewController action:@selector(phoneNumLoginTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+#pragma clang diagnostic pop
     
     UILabel* codelabel = [[UILabel alloc] initWithFrame:(CGRect){0,0,44,44}];
     codelabel.text = @"+86";
@@ -227,7 +235,10 @@
     self.audioLiveBtn.backgroundColor = JoinButtonUnableBackgroundColor;
     [self.audioLiveBtn.layer setMasksToBounds:YES];
     [self.audioLiveBtn.layer setCornerRadius:4.0];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
     [self.audioLiveBtn addTarget:self.loginViewController action:@selector(audioLiveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+#pragma clang diagnostic pop
     [self.audioLiveBtn setTitle:@"音频直播" forState:UIControlStateNormal];
     [self.audioLiveBtn setTitle:@"音频直播" forState:UIControlStateHighlighted];
 #ifdef IS_LIVE
@@ -246,7 +257,10 @@
     self.watchLiveButton.backgroundColor = JoinButtonUnableBackgroundColor;
     [self.watchLiveButton.layer setMasksToBounds:YES];
     [self.watchLiveButton.layer setCornerRadius:4.0];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
     [self.watchLiveButton addTarget:self.loginViewController action:@selector(watchLiveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+#pragma clang diagnostic pop
     self.watchLiveButton.enabled = YES;
     self.watchLiveButton.backgroundColor = JoinButtonEnableBackgroundColor;
     [self.watchLiveButton setTitle:@"观看直播" forState:UIControlStateNormal];
@@ -306,7 +320,10 @@
     self.phoneNumTextField.placeholder = NSLocalizedString(@"login_input_phone_number", nil);
     self.phoneNumTextField.delegate = self.loginViewController.loginTextFieldDelegateImpl;
     self.phoneNumTextField.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
     [self.phoneNumTextField addTarget:self.loginViewController action:@selector(phoneNumLoginTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+#pragma clang diagnostic pop
     UILabel* label = [[UILabel alloc] initWithFrame:(CGRect){0,0,44,44}];
     label.text = @"+86";
     label.textAlignment = NSTextAlignmentCenter;

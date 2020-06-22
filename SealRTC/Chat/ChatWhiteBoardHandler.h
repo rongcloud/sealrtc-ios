@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "WhiteSDK.h"
 #import "WhiteUtils.h"
+#import "Whiteboard.h"
 #import "RongWhiteBoardMessage.h"
 
 #define kWhiteBoardMessageKey @"rongRTCWhite"

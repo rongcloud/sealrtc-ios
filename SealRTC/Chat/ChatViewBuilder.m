@@ -10,7 +10,9 @@
 #import "ChatViewController.h"
 #import "CommonUtility.h"
 
-#define MenuButtonCount 7
+// note(jcy): 按测试要求，默认先禁止显示对焦按钮
+// 若要显示对焦按钮，把下面这个宏加一
+#define MenuButtonCount 8
 
 @interface ChatViewBuilder ()
 {
@@ -107,13 +109,14 @@
     }
     else
     {
-        BubbleMenuButtonRect = CGRectMake(self.chatViewController.view.frame.size.width - self.chatViewController.homeImageView.frame.size.width - 16.f, (ScreenHeight - (TitleHeight + self.chatViewController.videoHeight) - 36)/2 + (TitleHeight + self.chatViewController.videoHeight), self.chatViewController.homeImageView.frame.size.width, self.chatViewController.homeImageView.frame.size.height);
+        BubbleMenuButtonRect = CGRectMake(self.chatViewController.view.frame.size.width - self.chatViewController.homeImageView.frame.size.width - 16.f, (ScreenHeight - (TitleHeight + self.chatViewController.videoHeight) - 33)/2 + (TitleHeight + self.chatViewController.videoHeight) , self.chatViewController.homeImageView.frame.size.width, self.chatViewController.homeImageView.frame.size.height);
     }
     
     self.upMenuView = [[DWBubbleMenuButton alloc] initWithFrame:BubbleMenuButtonRect expansionDirection:DirectionUp];
-    CGFloat centerY = MAX(ScreenHeight/2+(MenuButtonCount*36+(MenuButtonCount-1)*10)/2,self.chatViewController.dataTrafficLabel.frame.origin.y+self.chatViewController.dataTrafficLabel.frame.size.height + 130.0 + (MenuButtonCount*36+(MenuButtonCount-1)*10));
+    CGFloat centerY = MAX(ScreenHeight/2+(MenuButtonCount*33+(MenuButtonCount-1)*10)/2,self.chatViewController.dataTrafficLabel.frame.origin.y+self.chatViewController.dataTrafficLabel.frame.size.height + 130.0 + (MenuButtonCount*36+(MenuButtonCount-1)*10));
     
-    self.upMenuView.center = CGPointMake(self.chatViewController.view.frame.size.width - self.chatViewController.homeImageView.frame.size.width/2 - 16.f, centerY);
+    self.upMenuView.center = CGPointMake(self.chatViewController.view.frame.size.width - self.chatViewController.homeImageView.frame.size.width/2 - 16.f, centerY + 50);
+//    self.upMenuView.backgroundColor = [UIColor redColor];
     self.upMenuView.homeButtonView = self.chatViewController.homeImageView;
     self.upMenuView.delegate = chatBubbleMenuViewDelegateImpl;
     [self.upMenuView addButtons:[self createDemoButtonArray]];
@@ -128,7 +131,7 @@
     for (NSInteger i = 0; i < MenuButtonCount; i++)
     {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-        button.frame = CGRectMake(0.f, 0.f, 36.f, 36.f);
+        button.frame = CGRectMake(0.f, 0.f, 33.f, 33.f);
         button.layer.cornerRadius = button.frame.size.height / 2.f;
         button.backgroundColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
         button.tintColor = [UIColor blackColor];
@@ -140,10 +143,10 @@
         
         switch (tag)
         {
-            case -1:{
+            case -1: {
                 [buttonsMutable removeObject:button];
                 button = [UIButton buttonWithType:UIButtonTypeCustom];
-                button.frame = CGRectMake(0.f, 0.f, 36.f, 36.f);
+                button.frame = CGRectMake(0.f, 0.f, 33.f, 33.f);
                 button.layer.cornerRadius = button.frame.size.height / 2.f;
                 button.backgroundColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
                 button.clipsToBounds = YES;
@@ -158,7 +161,7 @@
             case 0:{
                 [buttonsMutable removeObject:button];
                 button = [UIButton buttonWithType:UIButtonTypeCustom];
-                button.frame = CGRectMake(0.f, 0.f, 36.f, 36.f);
+                button.frame = CGRectMake(0.f, 0.f, 33.f, 33.f);
                 button.layer.cornerRadius = button.frame.size.height / 2.f;
                 button.backgroundColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
                 button.clipsToBounds = YES;
@@ -196,7 +199,7 @@
             case 5:{
                 [buttonsMutable removeObject:button];
                 button = [UIButton buttonWithType:UIButtonTypeCustom];
-                button.frame = CGRectMake(0.f, 0.f, 36.f, 36.f);
+                button.frame = CGRectMake(0.f, 0.f, 33.f, 33.f);
                 button.layer.cornerRadius = button.frame.size.height / 2.f;
                 button.backgroundColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
                 button.clipsToBounds = YES;
@@ -210,6 +213,31 @@
                 }
                 self.musicModeButton = button;
             }
+                break;
+            case 6:{
+                [buttonsMutable removeObject:button];
+                button = [UIButton buttonWithType:UIButtonTypeCustom];
+                button.frame = CGRectMake(0.f, 0.f, 33.f, 33.f);
+                button.layer.cornerRadius = button.frame.size.height / 2.f;
+                button.backgroundColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.4f];
+                button.clipsToBounds = YES;
+                button.tag = tag;
+                [button addTarget:self.chatViewController action:@selector(menuItemButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                [buttonsMutable addObject:button];
+                [button setImage:[UIImage imageNamed:@"HD.png"] forState:UIControlStateNormal];
+                [button setImage:[UIImage imageNamed:@"HD.png"] forState:UIControlStateSelected];
+                if (kLoginManager.isCloseCamera || kLoginManager.isObserver) {
+                    button.enabled = NO;
+                } else {
+                    button.enabled = YES;
+                }
+                self.HDButton = button;
+            }
+                break;
+            case 7:
+                button.tintColor = nil;
+                [CommonUtility setButtonImage:button 
+                                    imageName:self.chatViewController.enableCameraFocus ? @"chat_disable_camera_focus" : @"chat_enable_camera_focus"];
                 break;
             default:
                 break;
@@ -238,11 +266,15 @@
 
 - (void)initSwipeGesture
 {
-    _leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognizerAction:)];
+    _leftSwipeGestureRecognizer = 
+        [[UISwipeGestureRecognizer alloc] initWithTarget:self 
+                                                  action:@selector(swipeGestureRecognizerAction:)];
     _leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     [self.chatViewController.view addGestureRecognizer:_leftSwipeGestureRecognizer];
     
-    _rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognizerAction:)];
+    _rightSwipeGestureRecognizer = 
+        [[UISwipeGestureRecognizer alloc] initWithTarget:self 
+                                                  action:@selector(swipeGestureRecognizerAction:)];
     _rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.chatViewController.view addGestureRecognizer:_rightSwipeGestureRecognizer];
 }

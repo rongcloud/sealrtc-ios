@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <RongRTCLib/RongRTCEngine.h>
+#import <RongRTCLib/RCRTCEngine.h>
+
 #import "ChatCellVideoViewModel.h"
 #import "LoginManager.h"
+
+@class RCRTCVideoCaptureParam;
 
 #define kChatManager ([ChatManager sharedInstance])
 #define kItemRect CGRectMake(0, 0, 112, 84)
@@ -17,9 +20,9 @@
 
 @interface ChatManager : NSObject
 
-@property (nonatomic, strong) RongRTCEngine *rongRTCEngine;
-@property (nonatomic, strong) RongRTCVideoCaptureParam *videoCaptureParam;
-@property (nonatomic, strong) RongRTCAudioCaptureParam *audioCaptureParam;
+@property (nonatomic, strong) RCRTCEngine *rongRTCEngine;
+@property (nonatomic, strong) RCRTCVideoCaptureParam *videoCaptureParam;
+//@property (nonatomic, strong) RCRTCAudioStreamConfig *audioCaptureParam;
 @property (nonatomic, strong) NSString *userID;
 @property (nonatomic, strong) NSMutableArray *allRemoteUserDataArray, *recentDataArray;
 @property (nonatomic, strong) NSMutableArray *observerArray;

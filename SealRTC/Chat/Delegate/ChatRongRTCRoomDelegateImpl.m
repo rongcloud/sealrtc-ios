@@ -44,20 +44,20 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
  有用户加入的回调
  @param user 加入的用户信息
  */
-- (void)didJoinUser:(RongRTCRemoteUser*)user
+- (void)didJoinUser:(RCRTCRemoteUser*)user
 {
     FwLogD(RC_Type_APP,@"A-appReceiveUserJoin-T",@"%@appReceiveUserJoin",@"sealRTCApp:");
     NSString *userId = user.userId;
     DLog(@"didJoinUser userID: %@", userId);
-    [self.chatViewController hideAlertLabel:YES];
-    [self.chatViewController startTalkTimer];
+//    [self.chatViewController hideAlertLabel:YES];
+//    [self.chatViewController startTalkTimer];
 }
 
 /**
  有用户离开时的回调
  @param user 离开的用户
  */
-- (void)didLeaveUser:(RongRTCRemoteUser*)user
+- (void)didLeaveUser:(RCRTCRemoteUser*)user
 {
     FwLogD(RC_Type_APP,@"A-appReceiveUserLeave-T",@"%@appReceiveUserLeave",@"sealRTCApp:");
     __weak ChatViewController *weakChatVC = self.chatViewController;
@@ -65,8 +65,8 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
         NSString *userId = user.userId;
         DLog(@"didLeaveUser userID: %@", userId);
         
-        NSArray *streams = user.remoteAVStreams;
-        for (RongRTCAVInputStream *stream in streams) {
+        NSArray *streams = user.remoteStreams;
+        for (RCRTCInputStream *stream in streams) {
             NSString *streamID = stream.streamId;
             if ([kChatManager isContainRemoteUserFromStreamID:streamID])
             {
@@ -108,18 +108,18 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
     [self didLeftMasterUser:user.userId];
 }
 
-- (void)didOfflineUser:(RongRTCRemoteUser*)user {
+- (void)didOfflineUser:(RCRTCRemoteUser*)user {
     [self didLeaveUser:user];
 }
 /**
  数据流第一个关键帧到达
  @param stream 开始接收数据的 stream
  */
-- (void)didReportFirstKeyframe:(RongRTCAVInputStream *)stream
+- (void)didReportFirstKeyframe:(RCRTCInputStream *)stream
 {
 }
 
--(void)didConnectToStream:(RongRTCAVInputStream *)stream{
+-(void)didConnectToStream:(RCRTCInputStream *)stream{
     FwLogD(RC_Type_APP,@"A-appConnectToStream-T",@"%@appConnectTostream",@"sealRTCApp:");
     if (stream.streamId) {
         [self.chatViewController didConnectToUser:stream.streamId];
@@ -128,11 +128,11 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
     }
 }
 
-- (void)didPublishStreams:(NSArray <RongRTCAVInputStream *>*)streams
+- (void)didPublishStreams:(NSArray <RCRTCInputStream *>*)streams
 {
     // 去掉布局
 //    RongRTCMixStreamConfig *streamConfig = [self setOutputConfigWithMode:1 renderMode:2];
-//    [[RongRTCEngine sharedEngine] setMixStreamConfig:streamConfig completion:^(BOOL isSuccess, RongRTCCode code) {
+//    [[RCRTCEngine sharedInstance] setMixStreamConfig:streamConfig completion:^(BOOL isSuccess, RCRTCCode code) {
 //        NSLog(@"%ld",code);
 //    }];
     FwLogD(RC_Type_APP,@"A-appPublishStreaam-T",@"%@appPublishStream",@"sealRTCApp:");
@@ -144,14 +144,14 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
  当有用户取消发布资源的时候，通过此方法回调。
  @param streams 取消发布资源
  */
-- (void)didUnpublishStreams:(NSArray<RongRTCAVInputStream *>*)streams
+- (void)didUnpublishStreams:(NSArray<RCRTCInputStream *>*)streams
 {
     FwLogD(RC_Type_APP,@"A-appReceiveUnpublishStream-T",@"%@app receive unpublishstreams",@"sealRTCApp:");
     
     __weak ChatViewController *weakChatVC = self.chatViewController;
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        for (RongRTCAVInputStream *stream in streams) {
+        for (RCRTCInputStream *stream in streams) {
             NSString *streamID = stream.streamId;
             if ([kChatManager isContainRemoteUserFromStreamID:streamID])
             {
@@ -176,13 +176,13 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
     });
 }
 
-- (void)didKickedOutOfTheRoom:(RongRTCRoom *)room
+- (void)didKickedOutOfTheRoom:(RCRTCRoom *)room
 {
     FwLogD(RC_Type_APP,@"A-appreceiveLeaveRoom-T",@"%@all reveive leave room",@"sealRTCApp:");
     [self.chatViewController didLeaveRoom];
 }
 
-- (void)didKickedByServer:(RongRTCRoom *)room
+- (void)didKickedByServer:(RCRTCRoom *)room
 {
     FwLogD(RC_Type_APP,@"A-appReceiveKickedByServer-T",@"%@all reveive leave room",@"sealRTCApp:");
     [self.chatViewController didLeaveRoom];
@@ -193,7 +193,7 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
  @param stream 流信息
  @param mute 当前流是否可用
  */
-- (void)stream:(RongRTCAVInputStream*)stream didAudioMute:(BOOL)mute
+- (void)stream:(RCRTCInputStream*)stream didAudioMute:(BOOL)mute
 {
 //    UIAlertAction *action = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 //    }];
@@ -208,7 +208,7 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
  @param stream 流信息
  @param enable 当前流是否可用
  */
-- (void)stream:(RongRTCAVInputStream*)stream didVideoEnable:(BOOL)enable {
+- (void)stream:(RCRTCInputStream*)stream didVideoEnable:(BOOL)enable {
     ChatCellVideoViewModel *remoteModel = [kChatManager getRemoteUserDataModelFromStreamID:stream.streamId];
     remoteModel.isShowVideo = enable;
     if (!enable) {
@@ -286,7 +286,9 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
     }
     
     if (isLeftUserMaster) {
-        [self.chatViewController.room getRoomAttributes:nil completion:^(BOOL isSuccess, RongRTCCode desc, NSDictionary * _Nullable attr) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
+        [self.chatViewController.room getRoomAttributes:nil completion:^(BOOL isSuccess, RCRTCCode desc, NSDictionary * _Nullable attr) {
             for (id key in attr) {
                 NSString *obj = attr[key];
                 NSDictionary *dicInfo = [NSJSONSerialization JSONObjectWithData:[obj dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
@@ -319,6 +321,7 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:STParticipantsInfoDidUpdate object:nil];
         }];
+#pragma clang diagnostic pop
     }
     else {
         if (index != NSNotFound) {

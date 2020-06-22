@@ -67,7 +67,7 @@
     NSInteger length = 0;
     NSInteger chineseNum = 0;
     NSInteger zifuNum = 0;
-    DLog(@"length: %d",self.length);
+    DLog(@"length: %@",@(self.length));
     for (NSInteger i = 0; i < [self length]; i++) {
         NSString *s = [self substringWithRange:NSMakeRange(i, 1)];
         if ([self validateChineseChar:s]) {

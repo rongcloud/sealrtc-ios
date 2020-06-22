@@ -50,24 +50,6 @@
         case 0:
             [self.settingViewController.settingViewBuilder.resolutionRatioPickview show];
             break;
-        case 4:{
-            UIWindow* keyWindow = [UIApplication sharedApplication].keyWindow;
-            [RTActiveWheel showHUDAddedTo:keyWindow];
-            [[RCFwLog getInstance] uploadLog:^(int code) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (0 == code) {
-                        [RTActiveWheel dismissViewDelay:1 forView:keyWindow processText:@"上传成功"];
-                    } else {
-                        [RTActiveWheel dismissViewDelay:1 forView:keyWindow warningText:@"上传失败"];
-                    }
-                });
-            }];
-        }
-        break;
-        case 6:
-        {
-        }
-            break;
         default:
             break;
     }
@@ -109,13 +91,15 @@
         case 0:
         {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.textLabel.text = [NSString stringWithFormat:@"%@", self.settingViewController.resolutionRatioArray[kLoginManager.resolutionRatioIndex]];
+            cell.textLabel.text = 
+              [NSString stringWithFormat:@"%@", 
+                        self.settingViewController.resolutionRatioArray[kLoginManager.resolutionRatioIndex]];
         }
             break;
         case 1:
         {
             switch (row) {
-              
+                    
                 case 0:
                 {
                     [cell.contentView addSubview:self.settingViewController.settingViewBuilder.waterMarkSwitch];
@@ -149,8 +133,13 @@
             [cell.contentView addSubview:self.settingViewController.settingViewBuilder.audioScenarioSwitch];
             cell.textLabel.text = NSLocalizedString(@"setting_audio_scenario", nil);
         }
-           break;
+            break;
         case 6: {
+            [cell.contentView addSubview:self.settingViewController.settingViewBuilder.videoMirrorSwitch];
+            cell.textLabel.text = NSLocalizedString(@"Enable remote vedio mirroring", nil);
+        }
+            break;
+        case 7: {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.textLabel.text = @"Media Server URL";
         }
@@ -179,7 +168,9 @@
         case 5:
             return NSLocalizedString(@"setting_audio_scenario", nil);
         case 6:
-            return NSLocalizedString(@"setting_media_server_url", nil);
+            return NSLocalizedString(@"Enable remote vedio mirroring", nil);
+        case 7:
+        return NSLocalizedString(@"setting_media_server_url", nil);
         default:
             break;
     }
@@ -240,7 +231,9 @@
         case 1:
             [self.settingViewController.settingViewBuilder.resolutionRatioPickview show];
             break;
-        case 6:
+
+        case 7:
+
         {
             MediaServerURLViewController *mediaServerURLViewController = [[MediaServerURLViewController alloc] init];
             if (![self.settingViewController.navigationController.topViewController isKindOfClass:[MediaServerURLViewController class]])
@@ -299,7 +292,7 @@
         case 2:
         {
             switch (row) {
-              
+                    
                 case 0:
                 {
                     [cell.contentView addSubview:self.settingViewController.settingViewBuilder.waterMarkSwitch];
@@ -337,6 +330,12 @@
         case 7:
         {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.textLabel.text = @"Enable remote vedio mirroring";
+        }
+            break;
+        case 8:
+        {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.textLabel.text = @"Media Server URL";
         }
             break;
@@ -366,6 +365,8 @@
         case 6:
             return NSLocalizedString(@"setting_audio_scenario", nil);
         case 7:
+            return NSLocalizedString(@"Enable remote vedio mirroring", nil);
+        case 8:
             return NSLocalizedString(@"setting_media_server_url", nil);
         default:
             break;

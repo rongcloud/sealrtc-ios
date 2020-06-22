@@ -12,7 +12,7 @@
 
 @protocol STCountryTableViewControllerDelegate <NSObject>
 
-- (void)fetchCountryPhoneCode:(RCDCountry*)info;
+- (void)fetchCountryPhoneCode:(RCDCountry*_Nonnull)info;
 
 @end
 

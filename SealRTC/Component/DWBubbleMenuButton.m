@@ -58,7 +58,7 @@
     [CATransaction begin];
     [CATransaction setAnimationDuration:_animationDuration];
     [CATransaction setCompletionBlock:^{
-        for (UIButton *button in _buttonContainer) {
+        for (UIButton *button in self->_buttonContainer) {
             button.transform = CGAffineTransformIdentity;
         }
         
@@ -94,28 +94,28 @@
                 originPosition = CGPointMake(self.frame.size.width - self.homeButtonView.frame.size.width, self.frame.size.height/2.f);
                 finalPosition = CGPointMake(self.frame.size.width - self.homeButtonView.frame.size.width - button.frame.size.width/2.f - self.buttonSpacing
                                             - ((button.frame.size.width + self.buttonSpacing) * index),
-                                            self.frame.size.height/2.f);
+                                            self.frame.size.height/2.f + 30);
                 break;
                 
             case DirectionRight:
                 originPosition = CGPointMake(self.homeButtonView.frame.size.width, self.frame.size.height/2.f);
                 finalPosition = CGPointMake(self.homeButtonView.frame.size.width + self.buttonSpacing + button.frame.size.width/2.f
                                             + ((button.frame.size.width + self.buttonSpacing) * index),
-                                            self.frame.size.height/2.f);
+                                            self.frame.size.height/2.f+ 30);
                 break;
                 
             case DirectionUp:
                 originPosition = CGPointMake(self.frame.size.width/2.f, self.frame.size.height - self.homeButtonView.frame.size.height);
                 finalPosition = CGPointMake(self.frame.size.width/2.f,
                                             self.frame.size.height - self.homeButtonView.frame.size.height - self.buttonSpacing - button.frame.size.height/2.f
-                                            - ((button.frame.size.height + self.buttonSpacing) * index));
+                                            - ((button.frame.size.height + self.buttonSpacing) * index) + 30);
                 break;
                 
             case DirectionDown:
                 originPosition = CGPointMake(self.frame.size.width/2.f, self.homeButtonView.frame.size.height);
                 finalPosition = CGPointMake(self.frame.size.width/2.f,
                                             self.homeButtonView.frame.size.height + self.buttonSpacing + button.frame.size.height/2.f
-                                            + ((button.frame.size.height + self.buttonSpacing) * index));
+                                            + ((button.frame.size.height + self.buttonSpacing) * index) + 30);
                 break;
                 
             default:
@@ -168,7 +168,7 @@
     [CATransaction setCompletionBlock:^{
         [self _finishCollapse];
         
-        for (UIButton *button in _buttonContainer) {
+        for (UIButton *button in self->_buttonContainer) {
             button.transform = CGAffineTransformIdentity;
             button.hidden = YES;
         }

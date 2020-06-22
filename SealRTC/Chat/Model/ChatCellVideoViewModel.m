@@ -72,22 +72,39 @@
 {
     [self.cellVideoView removeFromSuperview];
     self.cellVideoView = nil;
-    [self.inputStream setVideoRender:nil];
-    self.inputStream = nil;
+    if (self.inputVideoStream.mediaType == RTCMediaTypeVideo)
+        [(RCRTCVideoInputStream *)self.inputVideoStream setVideoView:nil];
+    self.inputVideoStream = nil;
     [self removeKeyPathObservers];
 }
-
-- (UIWebView *)audioLevelView
+                                                                                                                                        
+- (UIImageView *)audioLevelView
 {
     if (!_audioLevelView) {
-        _audioLevelView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+        _audioLevelView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
         NSString *path = [[NSBundle mainBundle] pathForResource:@"sound" ofType:@"gif"];
-        NSURL *url = [NSURL URLWithString:path];
-        [_audioLevelView loadRequest:[NSURLRequest requestWithURL:url]];
-        _audioLevelView.backgroundColor = [UIColor clearColor];
-        _audioLevelView.opaque = NO;
-        _audioLevelView.scalesPageToFit = YES;
+        NSData *data = [NSData dataWithContentsOfFile:path];
+        CGImageSourceRef imageSource = CGImageSourceCreateWithData(CFBridgingRetain(data), nil);
+        size_t imageCount = CGImageSourceGetCount(imageSource);
+        
+        NSMutableArray *images = [NSMutableArray array];
+        NSTimeInterval totalDuration = 0;
+        for (int i = 0; i < imageCount; i++) {
+            CGImageRef cgImage = CGImageSourceCreateImageAtIndex(imageSource, i, nil);
+            UIImage *image = [UIImage imageWithCGImage:cgImage];
+            [images addObject:image];
+            
+            NSDictionary *properties = (__bridge_transfer  NSDictionary*)CGImageSourceCopyPropertiesAtIndex(imageSource, i, nil);
+            NSDictionary *gifDict = [properties objectForKey:(__bridge NSString *)kCGImagePropertyGIFDictionary];
+            NSNumber *frameDuration =
+            [gifDict objectForKey:(__bridge NSString *)kCGImagePropertyGIFDelayTime];
+            totalDuration += frameDuration.doubleValue;
+        }
+        _audioLevelView.animationImages = images;
+        _audioLevelView.animationDuration = totalDuration;
+        _audioLevelView.animationRepeatCount = 0;
         [self.infoLabel addSubview:_audioLevelView];
+        [_audioLevelView startAnimating];
     }
     return _audioLevelView;
 }
@@ -101,7 +118,7 @@
     }
     
     CGRect frame = CGRectMake(13, self.cellVideoView.frame.size.height-offset, self.cellVideoView.frame.size.width - 26, 16);
-    if ([self.cellVideoView isKindOfClass:[RongRTCRemoteVideoView class]]) {
+    if ([self.cellVideoView isKindOfClass:[RCRTCRemoteVideoView class]]) {
         frame = CGRectMake(0, self.cellVideoView.frame.size.height - offset, self.cellVideoView.frame.size.width, 16);
     }
     self.infoLabel = [[UILabel alloc] initWithFrame:frame];
@@ -119,10 +136,6 @@
     [self.infoLabelGradLayer setStartPoint:CGPointMake(0, 1)];
     [self.infoLabelGradLayer setEndPoint:CGPointMake(0, 0)];
     
- #ifdef DEBUG
-//    if (self.cellVideoView.frame.size.width < ScreenWidth)
-//        [self.cellVideoView addSubview:self.infoLabel];
-#endif
     if (self.registerObserverFlag)
     {
         [self addObserver:self forKeyPath:@"audioLevel" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
@@ -142,9 +155,13 @@
 }
 
 
--(void)setInputStream:(RongRTCAVInputStream *)inputStream{
-    _inputStream = inputStream;
-    if ([_inputStream.tag hasPrefix:@"RongRTCFileVideo"]) {
+- (void)setInputAudioStream:(RCRTCInputStream *)inputAudioStream{
+    _inputAudioStream = inputAudioStream;
+}
+
+- (void)setInputVideoStream:(RCRTCInputStream *)inputVideoStream{
+    _inputVideoStream = inputVideoStream;
+    if ([_inputVideoStream.tag hasPrefix:@"RongRTCFileVideo"]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString *name = kChatManager.videoOwner;
             if (name.length >= 4) {
@@ -156,6 +173,7 @@
     }
 }
 
+
 - (void)setUserName:(NSString *)userName {
     _userName = [userName copy];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -164,7 +182,7 @@
             name = [name substringToIndex:4];
         }
         if (name) {
-            if ([self.inputStream.tag hasPrefix:@"RongRTCFileVideo"] || [self.infoLabel.text containsString:@"-视频文件"]) {
+            if ([self.inputVideoStream.tag hasPrefix:@"RongRTCFileVideo"] || [self.infoLabel.text containsString:@"-视频文件"]) {
                 self.infoLabel.text = [name stringByAppendingString:@"-视频文件"];
             }
             else{

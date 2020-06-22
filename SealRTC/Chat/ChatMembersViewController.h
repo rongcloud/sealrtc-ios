@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ChatMembersViewController : UIViewController
-@property (nonatomic,strong)RongRTCRoom *currentRoom;
+@property (nonatomic,strong)RCRTCRoom *currentRoom;
 @end
 
 NS_ASSUME_NONNULL_END

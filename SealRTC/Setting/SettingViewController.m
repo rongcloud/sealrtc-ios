@@ -16,7 +16,6 @@ static NSUserDefaults *settingUserDefaults = nil;
 
 @interface SettingViewController ()<UITextFieldDelegate>
 {
-    UITapGestureRecognizer *tapGestureRecognizer;
 }
 @end
 
@@ -32,9 +31,12 @@ static NSUserDefaults *settingUserDefaults = nil;
 
     [self loadPlistData];
     
-    self.settingTableViewDelegateSourceImpl = [[SettingTableViewDelegateSourceImpl alloc] initWithViewController:self];
-    self.settingPickViewDelegateImpl = [[SettingPickViewDelegateImpl alloc] initWithViewController:self];
-    self.settingTextFieldDelegateImpl = [[SettingTextFieldDelegateImpl alloc] initWithViewController:self];
+    self.settingTableViewDelegateSourceImpl = 
+        [[SettingTableViewDelegateSourceImpl alloc] initWithViewController:self];
+    self.settingPickViewDelegateImpl = 
+        [[SettingPickViewDelegateImpl alloc] initWithViewController:self];
+    self.settingTextFieldDelegateImpl = 
+        [[SettingTextFieldDelegateImpl alloc] initWithViewController:self];
     self.settingViewBuilder = [[SettingViewBuilder alloc] initWithViewController:self];
 }
 
@@ -42,10 +44,9 @@ static NSUserDefaults *settingUserDefaults = nil;
 {
     [super viewWillAppear:animated];
     [self loadPlistData];
-    self.sectionNumber = 6;
+    self.sectionNumber = 7;
     [self.settingViewBuilder.tableView reloadData];
     self.settingViewBuilder.userIDTextField.text = kLoginManager.userID;
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -53,7 +54,6 @@ static NSUserDefaults *settingUserDefaults = nil;
     [super viewWillDisappear:animated];
     [self.settingViewBuilder.resolutionRatioPickview remove];
     self.navigationItem.rightBarButtonItem = nil;
-    [self.navigationController.navigationBar removeGestureRecognizer:tapGestureRecognizer];
 }
 
 - (BOOL)navigationShouldPopOnBackButton
@@ -98,9 +98,10 @@ static NSUserDefaults *settingUserDefaults = nil;
 - (void)audioScenarioAction {
     [kLoginManager setIsAudioScenarioMusic:self.settingViewBuilder.audioScenarioSwitch.on];
 }
+-(void)setVideoMirror{
+    [kLoginManager setIsVideoMirror:self.settingViewBuilder.videoMirrorSwitch.on];
+}
 
-
-#pragma mark - tap gesture action
 - (void)longPressedGestureAction:(UILongPressGestureRecognizer *)gesture {
     UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)gesture;
     if (press.state == UIGestureRecognizerStateBegan) {
@@ -108,7 +109,9 @@ static NSUserDefaults *settingUserDefaults = nil;
         if (kLoginManager.userID && kLoginManager.userID.length > 0) {
             pasteboard.string = kLoginManager.userID;
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.view makeToast:NSLocalizedString(@"setting_userid_tip", nil) duration:1.5 position:CSToastPositionCenter];
+                [self.view makeToast:NSLocalizedString(@"setting_userid_tip", nil) 
+                            duration:1.5 
+                            position:CSToastPositionCenter];
             });
         }
     }
