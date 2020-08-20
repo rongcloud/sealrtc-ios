@@ -28,9 +28,6 @@
 		17D4597E2356C37900FBCD71 /* RongAudioVolumeControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 17D4597D2356C37900FBCD71 /* RongAudioVolumeControl.m */; };
 		17DD6C2C229CE60700904272 /* RCRTCFileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DD6C2B229CE60700904272 /* RCRTCFileSource.m */; };
 		3907FA151E08E01E007EDC46 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3907FA141E08E01E007EDC46 /* SystemConfiguration.framework */; };
-		3909FDE524A08DCF00F740FB /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3909FDE424A08DCF00F740FB /* GPUImage.framework */; };
-		3909FDE724A08DEB00F740FB /* RongIMLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3909FDE624A08DEA00F740FB /* RongIMLib.framework */; };
-		3909FDE824A08E1800F740FB /* RongRTCLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B258B6221650DC00821CB9 /* RongRTCLib.framework */; };
 		390ED55D1D9E07F20046F519 /* CodeRate.plist in Resources */ = {isa = PBXBuildFile; fileRef = 390ED55C1D9E07F20046F519 /* CodeRate.plist */; };
 		3917C2AD21B8F6F300456EDA /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3917C2AB21B8F6F200456EDA /* LoginManager.m */; };
 		3917C2D221BA10B600456EDA /* ChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3917C2BC21BA10B600456EDA /* ChatManager.m */; };
@@ -94,6 +91,9 @@
 		39A29596217DA70C0091B6BB /* LoginViewBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A2958F217DA70C0091B6BB /* LoginViewBuilder.m */; };
 		39A29597217DA70C0091B6BB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A29590217DA70C0091B6BB /* LoginViewController.m */; };
 		39B258A72215111300821CB9 /* ChatRongRTCRoomDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B258A62215111300821CB9 /* ChatRongRTCRoomDelegateImpl.m */; };
+		39B73B9024EE4BFB00C5B5DA /* RongRTCLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B73B8D24EE4BFA00C5B5DA /* RongRTCLib.framework */; };
+		39B73B9124EE4BFB00C5B5DA /* RongIMLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B73B8E24EE4BFA00C5B5DA /* RongIMLib.framework */; };
+		39B73B9224EE4BFB00C5B5DA /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B73B8F24EE4BFB00C5B5DA /* GPUImage.framework */; };
 		39BDCFE11DCC43AF004820E3 /* CodingStyle.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39BDCFE01DCC43AF004820E3 /* CodingStyle.plist */; };
 		39BE2C242373C571008BD6A9 /* STKickOffInfoMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 39BE2C222373C570008BD6A9 /* STKickOffInfoMessage.m */; };
 		39C6699A23F1487300154DF5 /* SettingTextFieldDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C6699923F1487300154DF5 /* SettingTextFieldDelegateImpl.m */; };
@@ -139,8 +139,13 @@
 		B220964F22533A14005948E1 /* STParticipantsInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B220964E22533A14005948E1 /* STParticipantsInfo.m */; };
 		B221359B22696C330033B545 /* STNavigatioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B221359A22696C330033B545 /* STNavigatioViewController.m */; };
 		B25E424C22EAB04F00790D45 /* voip_network_error_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 171B23F522E8381800B13746 /* voip_network_error_sound.wav */; };
+		D5A0234C2485DD8000710766 /* RongRTCLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1773DD8F224D145D007213AF /* RongRTCLib.framework */; };
 		D5A0E80B248F6BBA00A834EE /* RCConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5A0E80A248F6BBA00A834EE /* RCConfig.plist */; };
 		D5AC99C2248DD31D0002D017 /* RCRTCVideoCaptureParam.m in Sources */ = {isa = PBXBuildFile; fileRef = D5AC99BF248DD31D0002D017 /* RCRTCVideoCaptureParam.m */; };
+		E5AE9F1924D16ECE005AA58D /* ChatRongVideoRTCEncryptorDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AE9F1424D16ECD005AA58D /* ChatRongVideoRTCEncryptorDelegateImpl.m */; };
+		E5AE9F1A24D16ECE005AA58D /* ChatRongAudioRTCDecryptorDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AE9F1524D16ECD005AA58D /* ChatRongAudioRTCDecryptorDelegateImpl.m */; };
+		E5AE9F1B24D16ECE005AA58D /* ChatRongVideoRTCDecryptorDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AE9F1624D16ECD005AA58D /* ChatRongVideoRTCDecryptorDelegateImpl.m */; };
+		E5AE9F1C24D16ECE005AA58D /* ChatRongAudioRTCEncryptorDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AE9F1724D16ECE005AA58D /* ChatRongAudioRTCEncryptorDelegateImpl.m */; };
 		E83701B2244060BB00217068 /* WhiteRoomState.m in Sources */ = {isa = PBXBuildFile; fileRef = E8370150244060BB00217068 /* WhiteRoomState.m */; };
 		E83701B3244060BB00217068 /* WhiteBroadcastState.m in Sources */ = {isa = PBXBuildFile; fileRef = E8370152244060BB00217068 /* WhiteBroadcastState.m */; };
 		E83701B4244060BB00217068 /* WhiteRoomCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = E8370159244060BB00217068 /* WhiteRoomCallbacks.m */; };
@@ -265,8 +270,6 @@
 		17DD6C2B229CE60700904272 /* RCRTCFileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRTCFileSource.m; sourceTree = "<group>"; };
 		3907FA141E08E01E007EDC46 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3907FA191E08E037007EDC46 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		3909FDE424A08DCF00F740FB /* GPUImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GPUImage.framework; path = framework/GPUImage.framework; sourceTree = SOURCE_ROOT; };
-		3909FDE624A08DEA00F740FB /* RongIMLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RongIMLib.framework; path = framework/RongIMLib.framework; sourceTree = SOURCE_ROOT; };
 		390ED55C1D9E07F20046F519 /* CodeRate.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CodeRate.plist; sourceTree = "<group>"; };
 		3917C2AB21B8F6F200456EDA /* LoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginManager.m; sourceTree = "<group>"; };
 		3917C2AC21B8F6F200456EDA /* LoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginManager.h; sourceTree = "<group>"; };
@@ -379,7 +382,9 @@
 		39A29594217DA70C0091B6BB /* LoginViewBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewBuilder.h; sourceTree = "<group>"; };
 		39B258A52215111300821CB9 /* ChatRongRTCRoomDelegateImpl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatRongRTCRoomDelegateImpl.h; sourceTree = "<group>"; };
 		39B258A62215111300821CB9 /* ChatRongRTCRoomDelegateImpl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatRongRTCRoomDelegateImpl.m; sourceTree = "<group>"; };
-		39B258B6221650DC00821CB9 /* RongRTCLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RongRTCLib.framework; path = "../../../../Library/Developer/Xcode/DerivedData/RongRTC-fghgehtpeqmmmzgazupjynsjekgc/Build/Products/Debug-iphoneos/RongRTCLib.framework"; sourceTree = "<group>"; };
+		39B73B8D24EE4BFA00C5B5DA /* RongRTCLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RongRTCLib.framework; path = framework/RongRTCLib.framework; sourceTree = SOURCE_ROOT; };
+		39B73B8E24EE4BFA00C5B5DA /* RongIMLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RongIMLib.framework; path = framework/RongIMLib.framework; sourceTree = SOURCE_ROOT; };
+		39B73B8F24EE4BFB00C5B5DA /* GPUImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GPUImage.framework; path = framework/GPUImage.framework; sourceTree = SOURCE_ROOT; };
 		39BDCFE01DCC43AF004820E3 /* CodingStyle.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CodingStyle.plist; sourceTree = "<group>"; };
 		39BE2C222373C570008BD6A9 /* STKickOffInfoMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKickOffInfoMessage.m; sourceTree = "<group>"; };
 		39BE2C232373C570008BD6A9 /* STKickOffInfoMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKickOffInfoMessage.h; sourceTree = "<group>"; };
@@ -470,6 +475,14 @@
 		D5AC99BF248DD31D0002D017 /* RCRTCVideoCaptureParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRTCVideoCaptureParam.m; sourceTree = "<group>"; };
 		D5AC99C0248DD31D0002D017 /* RCRTCVideoCaptureParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRTCVideoCaptureParam.h; sourceTree = "<group>"; };
 		D5AC99C1248DD31D0002D017 /* RCRTCVideoCaptureParam+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RCRTCVideoCaptureParam+Private.h"; sourceTree = "<group>"; };
+		E5AE9F1124D16ECD005AA58D /* ChatRongAudioRTCDecryptorDelegateImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRongAudioRTCDecryptorDelegateImpl.h; sourceTree = "<group>"; };
+		E5AE9F1224D16ECD005AA58D /* ChatRongVideoRTCEncryptorDelegateImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRongVideoRTCEncryptorDelegateImpl.h; sourceTree = "<group>"; };
+		E5AE9F1324D16ECD005AA58D /* ChatRongVideoRTCDecryptorDelegateImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRongVideoRTCDecryptorDelegateImpl.h; sourceTree = "<group>"; };
+		E5AE9F1424D16ECD005AA58D /* ChatRongVideoRTCEncryptorDelegateImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRongVideoRTCEncryptorDelegateImpl.m; sourceTree = "<group>"; };
+		E5AE9F1524D16ECD005AA58D /* ChatRongAudioRTCDecryptorDelegateImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRongAudioRTCDecryptorDelegateImpl.m; sourceTree = "<group>"; };
+		E5AE9F1624D16ECD005AA58D /* ChatRongVideoRTCDecryptorDelegateImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRongVideoRTCDecryptorDelegateImpl.m; sourceTree = "<group>"; };
+		E5AE9F1724D16ECE005AA58D /* ChatRongAudioRTCEncryptorDelegateImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRongAudioRTCEncryptorDelegateImpl.m; sourceTree = "<group>"; };
+		E5AE9F1824D16ECE005AA58D /* ChatRongAudioRTCEncryptorDelegateImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRongAudioRTCEncryptorDelegateImpl.h; sourceTree = "<group>"; };
 		E8370150244060BB00217068 /* WhiteRoomState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhiteRoomState.m; sourceTree = "<group>"; };
 		E8370151244060BB00217068 /* WhiteRoomCallbacks+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WhiteRoomCallbacks+Private.h"; sourceTree = "<group>"; };
 		E8370152244060BB00217068 /* WhiteBroadcastState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhiteBroadcastState.m; sourceTree = "<group>"; };
@@ -579,6 +592,7 @@
 		E8A50F2E24333A6700AB3264 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		E8D63CFD2420696800C4DF87 /* UIScrollView+Responder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Responder.h"; sourceTree = "<group>"; };
 		E8D63CFE2420696800C4DF87 /* UIScrollView+Responder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Responder.m"; sourceTree = "<group>"; };
+		E8D749BA24C586D2003ACE82 /* Dynamic_resolution.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Dynamic_resolution.plist; sourceTree = "<group>"; };
 		E8FD69CE24372B3E008B13D8 /* UIColor+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Helper.h"; sourceTree = "<group>"; };
 		E8FD69CF24372B3E008B13D8 /* UIColor+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Helper.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -593,16 +607,17 @@
 				E8A50F2B24333A5500AB3264 /* OpenGLES.framework in Frameworks */,
 				1748C0B822FAC8290082463B /* MobileCoreServices.framework in Frameworks */,
 				1788285022A0D3CE00933137 /* libxml2.tbd in Frameworks */,
-				3909FDE524A08DCF00F740FB /* GPUImage.framework in Frameworks */,
-				3909FDE824A08E1800F740FB /* RongRTCLib.framework in Frameworks */,
+				D5A0234C2485DD8000710766 /* RongRTCLib.framework in Frameworks */,
 				398EDF0E228193F6006B189D /* WebKit.framework in Frameworks */,
 				392AEA862281620F00EC3CA3 /* CoreGraphics.framework in Frameworks */,
 				393373451E6FDB6E0084F6C9 /* libz.tbd in Frameworks */,
 				393373441E6FDB3C0084F6C9 /* libbz2.tbd in Frameworks */,
+				39B73B9024EE4BFB00C5B5DA /* RongRTCLib.framework in Frameworks */,
+				39B73B9224EE4BFB00C5B5DA /* GPUImage.framework in Frameworks */,
 				393373421E6FDB320084F6C9 /* libiconv.tbd in Frameworks */,
 				46BCF21B224D2D96009E2617 /* libopencore-amrnb.a in Frameworks */,
 				394DEFB022143D46009E090A /* libsqlite3.0.tbd in Frameworks */,
-				3909FDE724A08DEB00F740FB /* RongIMLib.framework in Frameworks */,
+				39B73B9124EE4BFB00C5B5DA /* RongIMLib.framework in Frameworks */,
 				46BCF21C224D2D96009E2617 /* libopencore-amrwb.a in Frameworks */,
 				3985D140217873790043D6AC /* libc++.tbd in Frameworks */,
 				9D7D5D571D1B8BC6000574B2 /* Foundation.framework in Frameworks */,
@@ -715,6 +730,14 @@
 		3917C2C121BA10B600456EDA /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
+				E5AE9F1824D16ECE005AA58D /* ChatRongAudioRTCEncryptorDelegateImpl.h */,
+				E5AE9F1724D16ECE005AA58D /* ChatRongAudioRTCEncryptorDelegateImpl.m */,
+				E5AE9F1124D16ECD005AA58D /* ChatRongAudioRTCDecryptorDelegateImpl.h */,
+				E5AE9F1524D16ECD005AA58D /* ChatRongAudioRTCDecryptorDelegateImpl.m */,
+				E5AE9F1224D16ECD005AA58D /* ChatRongVideoRTCEncryptorDelegateImpl.h */,
+				E5AE9F1424D16ECD005AA58D /* ChatRongVideoRTCEncryptorDelegateImpl.m */,
+				E5AE9F1324D16ECD005AA58D /* ChatRongVideoRTCDecryptorDelegateImpl.h */,
+				E5AE9F1624D16ECD005AA58D /* ChatRongVideoRTCDecryptorDelegateImpl.m */,
 				3917C2C721BA10B600456EDA /* ChatBubbleMenuViewDelegateImpl.h */,
 				3917C2C421BA10B600456EDA /* ChatBubbleMenuViewDelegateImpl.m */,
 				3917C2C621BA10B600456EDA /* ChatCollectionViewDataSourceDelegateImpl.h */,
@@ -861,6 +884,7 @@
 				397320481D9D35A00016DFC6 /* FrameRate.plist */,
 				390ED55C1D9E07F20046F519 /* CodeRate.plist */,
 				39BDCFE01DCC43AF004820E3 /* CodingStyle.plist */,
+				E8D749BA24C586D2003ACE82 /* Dynamic_resolution.plist */,
 			);
 			path = plist;
 			sourceTree = "<group>";
@@ -1087,12 +1111,12 @@
 		9D7D5D451D1B8165000574B2 /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3909FDE624A08DEA00F740FB /* RongIMLib.framework */,
-				3909FDE424A08DCF00F740FB /* GPUImage.framework */,
+				39B73B8F24EE4BFB00C5B5DA /* GPUImage.framework */,
+				39B73B8E24EE4BFA00C5B5DA /* RongIMLib.framework */,
+				39B73B8D24EE4BFA00C5B5DA /* RongRTCLib.framework */,
 				46BCF218224D2D95009E2617 /* libopencore-amrnb.a */,
 				46BCF219224D2D96009E2617 /* libopencore-amrwb.a */,
 				46BCF21A224D2D96009E2617 /* libvo-amrwbenc.a */,
-				39B258B6221650DC00821CB9 /* RongRTCLib.framework */,
 				9D7D5D561D1B8BC6000574B2 /* Foundation.framework */,
 				9D7D5D541D1B8BBC000574B2 /* AudioToolbox.framework */,
 				9D7D5D521D1B8BB3000574B2 /* UIKit.framework */,
@@ -1444,10 +1468,12 @@
 				98775188202BE55200A3AA0C /* UIColor+ColorChange.m in Sources */,
 				17A4296B22714B5500293F78 /* MBProgressHUD.m in Sources */,
 				E83701BA244060BB00217068 /* WhiteConverter.m in Sources */,
+				E5AE9F1C24D16ECE005AA58D /* ChatRongAudioRTCEncryptorDelegateImpl.m in Sources */,
 				39CD92E6228C216100F3454B /* ColorSelectionCollectionViewController.m in Sources */,
 				39D4A1B620DA533800F26ACA /* Reachability.m in Sources */,
 				984A4AE92023223500FC2B08 /* SXAlertView.m in Sources */,
 				981C3E1A202ADDEB00494697 /* YHExcelView.m in Sources */,
+				E5AE9F1A24D16ECE005AA58D /* ChatRongAudioRTCDecryptorDelegateImpl.m in Sources */,
 				3917C2D821BA10B600456EDA /* ChatViewController.m in Sources */,
 				E83701C2244060BC00217068 /* WhitePlayerEvent.m in Sources */,
 				981C3E1D202ADDEB00494697 /* YHExcelViewColumn.m in Sources */,
@@ -1492,6 +1518,7 @@
 				E83701BF244060BC00217068 /* WhiteDisplayer.m in Sources */,
 				B21B1D5B22533E9A001C4489 /* STJSONModel.m in Sources */,
 				E83701CA244060BC00217068 /* WhiteConsts.m in Sources */,
+				E5AE9F1924D16ECE005AA58D /* ChatRongVideoRTCEncryptorDelegateImpl.m in Sources */,
 				39C6699A23F1487300154DF5 /* SettingTextFieldDelegateImpl.m in Sources */,
 				E83701BC244060BB00217068 /* WhiteCommonCallbacks.m in Sources */,
 				17A5F021237AAD700032E992 /* PrivateCloudSettingViewController.m in Sources */,
@@ -1571,6 +1598,7 @@
 				3917C2EA21BA118A00456EDA /* ChatAvatarView.m in Sources */,
 				981C3E1E202ADDEB00494697 /* UIView+YHCategory.m in Sources */,
 				B2209649225319EC005948E1 /* STPresentationViewController.m in Sources */,
+				E5AE9F1B24D16ECE005AA58D /* ChatRongVideoRTCDecryptorDelegateImpl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1733,7 +1761,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.0.0.1;
+				CURRENT_PROJECT_VERSION = 4.0.2.1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				ENABLE_BITCODE = NO;
@@ -1761,10 +1789,8 @@
 					"$(PROJECT_DIR)/SealRTC/framework",
 					"$(PROJECT_DIR)/SealRTC/3rd",
 					"$(PROJECT_DIR)/SealRTC/webserver",
-					"$(PROJECT_DIR)/SealRTC/FU/framework",
-					"$(PROJECT_DIR)/SealRTC/FU/FaceUnity-SDK-iOS",
 				);
-				MARKETING_VERSION = 4.0.0;
+				MARKETING_VERSION = 4.0.2;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1782,7 +1808,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.0.0.1;
+				CURRENT_PROJECT_VERSION = 4.0.2.1;
 				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1806,10 +1832,8 @@
 					"$(PROJECT_DIR)/SealRTC/framework",
 					"$(PROJECT_DIR)/SealRTC/3rd",
 					"$(PROJECT_DIR)/SealRTC/webserver",
-					"$(PROJECT_DIR)/SealRTC/FU/framework",
-					"$(PROJECT_DIR)/SealRTC/FU/FaceUnity-SDK-iOS",
 				);
-				MARKETING_VERSION = 4.0.0;
+				MARKETING_VERSION = 4.0.2;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
 				PRODUCT_NAME = "$(TARGET_NAME)";

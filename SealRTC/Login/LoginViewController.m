@@ -145,6 +145,8 @@ static NSDictionary *selectedServer;
         kLoginManager.isKickOff = NO;
         [self showAlertMessage:NSLocalizedString(@"login_input_kickoff_msg", nil)];
     }
+    // 如果刚进入这个界面，就代表不是正在加入房间，否则和这个变量定义的意义不符
+    self.isJoiningRoom = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -313,8 +315,7 @@ static NSDictionary *selectedServer;
      joinRoom:kLoginManager.roomNumber
      completion:^(RCRTCRoom * _Nullable room, RCRTCCode code) {
         [RTActiveWheel dismissForView:self.view];
-        if (code == RCRTCCodeSuccess ||
-            code == RCRTCCodeJoinToSameRoom) {
+        if (code == RCRTCCodeSuccess) {
             self.room = room;
             [self navToChatViewController:YES];
         } else if (room.remoteUsers.count >= MAX_NORMAL_PERSONS &&

@@ -595,6 +595,81 @@ deviceToken 是系统提供的，从苹果服务器获取的，用于 APNs 远�
                         success:(void (^)(long messageId))successBlock
                           error:(void (^)(RCErrorCode errorCode, long messageId))errorBlock
                          cancel:(void (^)(long messageId))cancelBlock;
+/*!
+ 发送消息
+ 
+ @param message             将要发送的消息实体（需要保证 message 中的 conversationType，targetId，messageContent 是有效值)
+ @param pushContent         接收方离线时需要显示的远程推送内容
+ @param pushData            接收方离线时需要在远程推送中携带的非显示数据
+ @param successBlock        消息发送成功的回调 [successMessage: 消息实体]
+ @param errorBlock          消息发送失败的回调 [nErrorCode: 发送失败的错误码, errorMessage:消息实体]
+ @return                    发送的消息实体
+ 
+ @discussion 当接收方离线并允许远程推送时，会收到远程推送。
+ 远程推送中包含两部分内容，一是 pushContent ，用于显示；二是 pushData ，用于携带不显示的数据。
+ 
+ SDK 内置的消息类型，如果您将 pushContent 和 pushData 置为 nil ，会使用默认的推送格式进行远程推送。
+ 自定义类型的消息，需要您自己设置 pushContent 和 pushData 来定义推送内容，否则将不会进行远程推送。
+ 
+ 如果您使用此方法发送图片消息，需要您自己实现图片的上传，构建一个 RCImageMessage 对象，
+ 并将 RCImageMessage 中的 imageUrl 字段设置为上传成功的 URL 地址，然后使用此方法发送。
+ 
+ 如果您使用此方法发送文件消息，需要您自己实现文件的上传，构建一个 RCFileMessage 对象，
+ 并将 RCFileMessage 中的 fileUrl 字段设置为上传成功的 URL 地址，然后使用此方法发送。
+ 
+ @warning 如果您使用 IMLib，可以使用此方法发送消息；
+ 如果您使用 IMKit，请使用 RCIM 中的同名方法发送消息，否则不会自动更新 UI。
+ 
+ @remarks 消息操作
+ */
+- (RCMessage *)sendMessage:(RCMessage *)message
+               pushContent:(NSString *)pushContent
+                  pushData:(NSString *)pushData
+              successBlock:(void (^)(RCMessage *successMessage))successBlock
+                errorBlock:(void (^)(RCErrorCode nErrorCode, RCMessage *errorMessage))errorBlock;
+
+/*!
+ 发送媒体消息（图片消息或文件消息）
+ 
+ @param message             将要发送的消息实体（需要保证 message 中的 conversationType，targetId，messageContent 是有效值)
+ @param pushContent         接收方离线时需要显示的远程推送内容
+ @param pushData            接收方离线时需要在远程推送中携带的非显示数据
+ @param progressBlock       消息发送进度更新的回调 [progress:当前的发送进度, 0 <= progress <= 100, progressMessage:消息实体]
+ @param successBlock        消息发送成功的回调 [successMessage:消息实体]
+ @param errorBlock          消息发送失败的回调 [nErrorCode:发送失败的错误码, errorMessage:消息实体]
+ @param cancelBlock         用户取消了消息发送的回调 [cancelMessage:消息实体]
+ @return                    发送的消息实体
+ 
+ @discussion 当接收方离线并允许远程推送时，会收到远程推送。
+ 远程推送中包含两部分内容，一是 pushContent，用于显示；二是 pushData，用于携带不显示的数据。
+ 
+ SDK 内置的消息类型，如果您将 pushContent 和 pushData 置为 nil，会使用默认的推送格式进行远程推送。
+ 自定义类型的消息，需要您自己设置 pushContent 和 pushData 来定义推送内容，否则将不会进行远程推送。
+ 
+ 如果您需要上传图片到自己的服务器，需要构建一个 RCImageMessage 对象，
+ 并将 RCImageMessage 中的 imageUrl 字段设置为上传成功的 URL 地址，然后使用 RCIMClient 的
+ sendMessage:targetId:content:pushContent:pushData:success:error:方法
+ 或 sendMessage:targetId:content:pushContent:success:error:方法进行发送，不要使用此方法。
+ 
+ 如果您需要上传文件到自己的服务器，构建一个 RCFileMessage 对象，
+ 并将 RCFileMessage 中的 fileUrl 字段设置为上传成功的 URL 地址，然后使用 RCIMClient 的
+ sendMessage:targetId:content:pushContent:pushData:success:error:方法
+ 或 sendMessage:targetId:content:pushContent:success:error:方法进行发送，不要使用此方法。
+ 
+ @warning 如果您使用 IMLib，可以使用此方法发送媒体消息；
+ 如果您使用 IMKit，请使用 RCIM 中的同名方法发送媒体消息，否则不会自动更新 UI。
+ 
+ @remarks 消息操作
+ */
+- (RCMessage *)sendMediaMessage:(RCMessage *)message
+                    pushContent:(NSString *)pushContent
+                       pushData:(NSString *)pushData
+                       progress:(void (^)(int progress, RCMessage *progressMessage))progressBlock
+                   successBlock:(void (^)(RCMessage *successMessage))successBlock
+                     errorBlock:(void (^)(RCErrorCode nErrorCode, RCMessage *errorMessage))errorBlock
+                         cancel:(void (^)(RCMessage *cancelMessage))cancelBlock;
+
+
 
 /*!
  取消发送中的媒体信息
@@ -2600,6 +2675,17 @@ deviceToken 是系统提供的，从苹果服务器获取的，用于 APNs 远�
 - (NSInteger)getGIFLimitSize;
 
 #pragma mark - 聊天室状态存储 (使用前必须先联系商务开通)
+/*!
+设置聊天室 KV 状态变化监听器
+
+@param delegate 聊天室 KV 状态变化的监听器
+
+@discussion 可以设置并实现此 delegate 来进行聊天室状态变化的监听 。SDK 会在回调中通知您聊天室状态的改变。
+
+@remarks 功能设置
+*/
+- (void)setRCChatRoomKVStatusChangeDelegate:(id<RCChatRoomKVStatusChangeDelegate>)delegate;
+
 /**
  设置聊天室自定义属性
 

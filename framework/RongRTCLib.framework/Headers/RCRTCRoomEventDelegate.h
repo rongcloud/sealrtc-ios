@@ -38,22 +38,22 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)didJoinUser:(RCRTCRemoteUser*)user;
 
 /*!
- 有用户离开时的回调, 当有用户离开的时候, SDK 会取消订阅这个 user ,  APP 无需再次调用取消订阅的接口
+ 有用户离开时的回调, 当有用户离开的时候, SDK 会取消订阅这个 user,  APP 无需再次调用取消订阅的接口
  
  @param user 离开的用户
  @discussion
- 有用户离开时的回调, 当有用户离开的时候, SDK 会取消订阅这个 user ,  APP 无需再次调用取消订阅的接口
+ 有用户离开时的回调, 当有用户离开的时候, SDK 会取消订阅这个 user,  APP 无需再次调用取消订阅的接口
  
  @remarks 代理
  */
 - (void)didLeaveUser:(RCRTCRemoteUser*)user;
 
 /*!
- 有用户掉线时的回调, 当有用户掉线的时候, SDK 会取消订阅这个 user ,  APP 无需再次调用取消订阅的接口
+ 有用户掉线时的回调, 当有用户掉线的时候, SDK 会取消订阅这个 user,  APP 无需再次调用取消订阅的接口
  
  @param user 掉线的用户
  @discussion
- 有用户掉线时的回调, 当有用户掉线的时候, SDK 会取消订阅这个 user ,  APP 无需再次调用取消订阅的接口
+ 有用户掉线时的回调, 当有用户掉线的时候, SDK 会取消订阅这个 user,  APP 无需再次调用取消订阅的接口
  
  @remarks 代理
  */
@@ -170,15 +170,17 @@ NS_ASSUME_NONNULL_BEGIN
  @param inNumberFrames 帧个数
  @param ioData 音频 pcm 数据
  @param inTimeStamp 音频时间戳
+ @param asbd 音频格式描述
  
  @discussion
- 发送到音频输入输出的回调
+ 发送到音频输入输出的回调，ioData 这里 io 的意思是 inout， 开发者可修改 ioData 中的数据，达到处理音频的目的
  
  @remarks 音频流处理
  */
 - (void)didReceiveAudioBuffer:(UInt32)inNumberFrames
                        buffer:(AudioBufferList * _Nonnull)ioData
-                    timestamp:(const AudioTimeStamp * _Nonnull)inTimeStamp;
+                    timestamp:(const AudioTimeStamp * _Nonnull)inTimeStamp
+                       format:(const AudioStreamBasicDescription)asbd;
 
 
 @end

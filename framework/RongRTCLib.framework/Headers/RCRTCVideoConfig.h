@@ -16,15 +16,15 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  大视频流配置
  */
-@property (nonatomic , strong) RCRTCVideoLayout *videoLayout;
+@property (nonatomic, strong) RCRTCVideoLayout *videoLayout;
 /*!
  小视频流配置
  */
-@property (nonatomic , strong) RCRTCVideoLayout *tinyVideoLayout;
+@property (nonatomic, strong) RCRTCVideoLayout *tinyVideoLayout;
 /*!
  视频扩展
  */
-@property (nonatomic , strong) RCRTCVideoExtend *videoExtend;
+@property (nonatomic, strong) RCRTCVideoExtend *videoExtend;
 
 @end
 

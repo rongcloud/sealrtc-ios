@@ -45,9 +45,10 @@ typedef NS_ENUM(NSInteger, RCConnectErrorCode) {
      AppKey 与 Token 不匹配
 
      @discussion
-     请检查您使用的 AppKey 与 Token 是否正确，是否匹配。一般有以下两种原因。
+     请检查您使用的 AppKey 与 Token 是否正确，是否匹配。一般有以下三种原因。
      一是 token 错误，请您检查客户端初始化使用的 AppKey 和您服务器获取 token 使用的 AppKey 是否一致；
      二是 token 过期，是因为您在开发者后台设置了 token 过期时间，您需要请求您的服务器重新获取 token 并再次用新的 token
+     三是 App 校验未通过，是因为您在开发者后台设置了 App 校验
      建立连接。
      */
     RC_CONN_NOT_AUTHRORIZED = 31005,
@@ -120,8 +121,7 @@ typedef NS_ENUM(NSInteger, RCConnectErrorCode) {
     /*!
      连接超时。
 
-    @discussion 当调用 connectWithToken:timeout:dbOpened:success:error: 接口，isTimeout 为 NO 时，SDK 在 30s
-    内还没连接成功返回此错误。
+    @discussion 当调用 connectWithToken:timeLimit:dbOpened:success:error:  接口，timeLimit 为有效值时，SDK 在 timeLimit 时间内还没连接成功返回此错误。
     */
     RC_CONNECT_TIMEOUT = 34006,
 
@@ -240,6 +240,11 @@ typedef NS_ENUM(NSInteger, RCErrorCode) {
      聊天室状态值不存在
     */
     RC_KEY_NOT_EXIST = 23427,
+    
+    /*!
+     操作跟服务端同步时出现问题，有可能是操作过于频繁所致。如果出现该错误，请延时 0.5s 再试
+    */
+    RC_SETTING_SYNC_FAILED = 26002,
 
     /*!
      聊天室状态未同步完成

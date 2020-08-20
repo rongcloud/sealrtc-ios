@@ -114,7 +114,7 @@ typedef NS_ENUM(NSUInteger, RCRTCVideoSizePreset) {
     /*!
      分辨率 176X132
      */
-    RCRTCVideoSizePreset176x132,
+    RCRTCVideoSizePreset176x144,
     /*!
      分辨率 256X144
      */
@@ -285,6 +285,36 @@ typedef NS_ENUM(NSUInteger, RCRTCLiveType) {
      */
     RCRTCLiveTypeAudio = 1
 };
+/*!
+ 观众订阅直播类型直播类型
+ */
+typedef NS_ENUM(NSUInteger, RCRTCAVStreamType) {
+    /*!
+     仅订阅音频
+     */
+    RCRTCAVStreamTypeAudio = 0,
+    
+    /*!
+     仅订阅视频(大流)
+     */
+    RCRTCAVStreamTypeVideo = 1,
+    
+    /*!
+    订阅音频+视频（大流）
+    */
+    RCRTCAVStreamTypeAudioVideo = 2,
+    
+    /*!
+    仅订阅视频（小流）
+    */
+    RCRTCAVStreamTypeVideo_tiny = 3,
+    
+    /*!
+    订阅音频+视频（小流）
+    */
+    RCRTCAVStreamTypeAudioVideo_tiny = 4,
+    
+};
 
 /*!
  设置音频通话模式, 默认为普通通话模式 RCRTCAudioScenarioDefault
@@ -340,7 +370,7 @@ typedef CMSampleBufferRef _Nullable (^RCRTCVideoCMSampleBufferCallback)(BOOL val
  
  @remarks 音频流处理
  */
-typedef void(^RCRTCAudioPCMBufferCallback)(BOOL isOutput,const short * _Nullable audioSamples,const int length,const int channels,const int sampleRate);
+typedef void (^RCRTCAudioPCMBufferCallback)(BOOL isOutput, const short *_Nullable audioSamples, const int length, const int channels, const int sampleRate);
 
 /*!
  发送到音频输入输出的回调
@@ -348,12 +378,12 @@ typedef void(^RCRTCAudioPCMBufferCallback)(BOOL isOutput,const short * _Nullable
  @param inNumberFrames 帧个数
  @param ioData 音频 pcm 数据
  @param inTimeStamp 音频时间戳
- 
+ @param asbd 音频数据格式
  @discussion
  发送到音频输入输出的回调
  
  @remarks 音频流处理
  */
-typedef void(^RCRTCAudioDataCallback)(UInt32 inNumberFrames, AudioBufferList * _Nonnull ioData, const AudioTimeStamp * _Nonnull inTimeStamp);
+typedef void (^RCRTCAudioDataCallback)(UInt32 inNumberFrames, AudioBufferList *_Nonnull ioData, const AudioTimeStamp *_Nonnull inTimeStamp, const AudioStreamBasicDescription asbd);
 
 #endif /* RCRTCLibDefine_h */

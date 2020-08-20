@@ -80,6 +80,16 @@
     [self.videoMirrorSwitch addTarget:self.settingViewController action:@selector(setVideoMirror) forControlEvents:UIControlEventValueChanged];
     [self.videoMirrorSwitch setOn:kLoginManager.isVideoMirror];
     
+    //音频加解密
+    self.audioCryptoSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth -6-60, 6, 60, 28)];
+    [self.audioCryptoSwitch addTarget:self.settingViewController action:@selector(setAudioCryptoSwitch) forControlEvents:UIControlEventValueChanged];
+    [self.audioCryptoSwitch setOn:kLoginManager.isOpenAudioCrypto];
+    
+    //视频加解密
+    self.videoCryptoSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth -6-60, 6, 60, 28)];
+    [self.videoCryptoSwitch addTarget:self.settingViewController action:@selector(setVideoCryptoSwitch) forControlEvents:UIControlEventValueChanged];
+    [self.videoCryptoSwitch setOn:kLoginManager.isOpenVideoCrypto];
+    
 }
 
 @end

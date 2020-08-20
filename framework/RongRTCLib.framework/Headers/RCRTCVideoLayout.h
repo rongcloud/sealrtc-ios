@@ -15,22 +15,22 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  自己输出视频流的宽
  */
-@property (nonatomic,assign) int width;
+@property (nonatomic, assign) int width;
 
 /*!
  自己输出视频流的高
  */
-@property (nonatomic,assign) int height;
+@property (nonatomic, assign) int height;
 
 /*!
  自己输出视频流的帧率
  */
-@property (nonatomic,assign) int fps;
+@property (nonatomic, assign) int fps;
 
 /*!
  自己输出视频流的码率
  */
-@property (nonatomic,assign) int bitrate;
+@property (nonatomic, assign) int bitrate;
 
 @end
 

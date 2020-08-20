@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreAudio/CoreAudioTypes.h>
 #import "RCRTCGlobals.h"
+#import "RCRTCEffectProtocol.h"
 
 /*!
  无限期循环
@@ -18,7 +19,7 @@ RONGRTCLIB_EXTERN const UInt32 RCRTCLoopsIndefinitely;
 /*!
  混音引擎状态
  */
-typedef NS_ENUM(NSUInteger, RTCMixEngineStatus) {
+typedef NS_ENUM (NSUInteger, RTCMixEngineStatus) {
     /*!
      正常
      */
@@ -44,7 +45,7 @@ typedef NS_ENUM(NSUInteger, RTCMixEngineStatus) {
 /*!
  混音模式
  */
-typedef NS_ENUM(NSInteger, RCRTCMixerMode) {
+typedef NS_ENUM (NSInteger, RCRTCMixerMode) {
     /*!
      对端只能听见麦克风采集的声音
      */
@@ -59,9 +60,7 @@ typedef NS_ENUM(NSInteger, RCRTCMixerMode) {
     RCRTCMixerModeReplace
 };
 
-
 NS_ASSUME_NONNULL_BEGIN
-
 
 /*!
  AudioMixer 的播放代理
@@ -70,28 +69,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  当前播放进度
- 
+
  @param progress 播放进度 range [0,1]
  @discussion
  当前播放进度
- 
+
  @remarks 代理
  */
 - (void)didReportPlayingProgress:(float)progress;
 
-
 /*!
  播放结束，如果循环播放多次，多次循环后调用
- 
+
  @discussion
  播放结束，如果循环播放多次，多次循环后调用
- 
+
  @remarks 代理
  */
 - (void)didPlayToEnd;
 
 @end
-
 
 /*!
  混音引擎
@@ -103,11 +100,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (RCRTCAudioMixer *)sharedInstance;
 
-
 /*!
  AudioMixer 的代理
  */
-@property(nonatomic, weak) id<RCRTCAudioMixerAudioPlayDelegate> delegate;
+@property (nonatomic, weak) id<RCRTCAudioMixerAudioPlayDelegate> delegate;
 
 /*!
  音频文件混音时的输入音量, 取值范围 [0,100], 默认值 100
@@ -131,22 +127,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  获取指定音频文件的时长
- 
+
  @param url  音频文件的 File URL, 仅支持本地文件
  @discussion
  获取指定音频文件的时长
- 
+
  @remarks 音频配置
  @return 音频文件的时长
  */
-+ (Float64)durationOfAudioFile:(NSURL*)url;
++ (Float64)durationOfAudioFile:(NSURL *)url;
 
 /*!
  设置播放进度
  @param progress 设置播放进度 取值范围 [0,1]
  @discussion
  设置播放进度
- 
+
  @remarks 音频配置
  */
 - (void)setPlayProgress:(float)progress;
@@ -157,14 +153,14 @@ NS_ASSUME_NONNULL_BEGIN
  @param isPlay   是否播放
  @param mode 混音行为模式
  @param count 循环混音或者播放次数
- 
+
  @discussion
  混音功能
- 
+
  @remarks 音频配置
  @return 开始是否成功
  */
-- (BOOL)startMixingWithURL:(NSURL*)fileURL
+- (BOOL)startMixingWithURL:(NSURL *)fileURL
                   playback:(BOOL)isPlay
                  mixerMode:(RCRTCMixerMode)mode
                  loopCount:(NSUInteger)count;
@@ -175,20 +171,20 @@ NS_ASSUME_NONNULL_BEGIN
  @param frames 音频帧个数
  @param sampleTime 音频帧时间戳
  @param isPlay 是否在本地播放
- 
+
  @discussion
  写入自定义音频数据
- 
+
  @remarks 音频流处理
  */
-- (void)writeAudioBufferList:(const AudioBufferList*)abl
+- (void)writeAudioBufferList:(const AudioBufferList *)abl
                       frames:(UInt32)frames
                   sampleTime:(SInt64)sampleTime
                     playback:(BOOL)isPlay;
 
 /*!
  暂停
- 
+
  @remarks 音频配置
  @return 暂停是否成功
  */
@@ -196,7 +192,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  恢复
- 
+
  @remarks 音频配置
  @return 恢复是否成功
  */
@@ -204,7 +200,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  结束
- 
+
  @remarks 音频配置
  @return 结束是否成功
  */

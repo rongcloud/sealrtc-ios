@@ -299,7 +299,7 @@ static ChatManager *sharedMeetingManager = nil;
     
     switch (kLoginManager.resolutionRatioIndex) {
         case 0:
-            self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset176x132;
+            self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset176x144;
             break;
         case 1:
             self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset256x144;
@@ -391,5 +391,32 @@ static ChatManager *sharedMeetingManager = nil;
     self.rongRTCEngine.defaultAudioStream.audioScenario = kLoginManager.isAudioScenarioMusic ? RCRTCAudioScenarioMusic : RCRTCAudioScenarioDefault;
 }
 
+- (ChatRongAudioRTCEncryptorDelegateImpl *)chatRongAudioRTCEncryptorDelegateImpl {
+    if (!_chatRongAudioRTCEncryptorDelegateImpl) {
+        _chatRongAudioRTCEncryptorDelegateImpl = [[ChatRongAudioRTCEncryptorDelegateImpl alloc] init];
+    }
+    return _chatRongAudioRTCEncryptorDelegateImpl;
+}
+
+- (ChatRongAudioRTCDecryptorDelegateImpl *)chatRongAudioRTCDecryptorDelegateImpl {
+    if (!_chatRongAudioRTCDecryptorDelegateImpl) {
+        _chatRongAudioRTCDecryptorDelegateImpl = [[ChatRongAudioRTCDecryptorDelegateImpl alloc] init];
+    }
+    return _chatRongAudioRTCDecryptorDelegateImpl;
+}
+
+- (ChatRongVideoRTCEncryptorDelegateImpl *)chatRongVideoRTCEncryptorDelegateImpl {
+    if (!_chatRongVideoRTCEncryptorDelegateImpl) {
+        _chatRongVideoRTCEncryptorDelegateImpl = [[ChatRongVideoRTCEncryptorDelegateImpl alloc] init];
+    }
+    return _chatRongVideoRTCEncryptorDelegateImpl;
+}
+
+- (ChatRongVideoRTCDecryptorDelegateImpl *)chatRongVideoRTCDecryptorDelegateImpl {
+    if (!_chatRongVideoRTCDecryptorDelegateImpl) {
+        _chatRongVideoRTCDecryptorDelegateImpl = [[ChatRongVideoRTCDecryptorDelegateImpl alloc] init];
+    }
+    return _chatRongVideoRTCDecryptorDelegateImpl;
+}
 
 @end

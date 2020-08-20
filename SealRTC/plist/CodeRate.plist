@@ -96,9 +96,9 @@
 		<key>min</key>
 		<integer>160</integer>
 		<key>max</key>
-		<integer>1500</integer>
+		<integer>2000</integer>
 		<key>default</key>
-		<real>1000</real>
+		<integer>1500</integer>
 		<key>step</key>
 		<integer>20</integer>
 	</dict>

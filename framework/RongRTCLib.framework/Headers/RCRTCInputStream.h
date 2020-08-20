@@ -16,7 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class RCRTCRemoteVideoView;
 @class RCRTCInputStream;
-@class RTCMediaStream;
 
 /*!
  接收到的音视频流

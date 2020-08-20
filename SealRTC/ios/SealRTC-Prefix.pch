@@ -44,6 +44,7 @@
 
 #define File_SettingUserDefaults_Plist @"settingUserDefaults.plist"
 #define Key_ResolutionRatio @"ResolutionRatio"
+#define Dynamic_resolution @"Dynamic_resolution"
 #define Key_FrameRate @"FrameRate"
 #define Key_CodeRate @"CodeRate"
 #define Key_MaxCodeRate @"MaxCodeRate"
@@ -70,6 +71,9 @@
 #define Key_KickOffRoomNumber @"kickOffRoomNumber"
 #define Key_IsKickOff @"isKickOff"
 
+#define Key_IsOpenAudioCrypto @"isOpenAudioCrypto"
+#define Key_IsOpenVideoCrypto @"isOpenVideoCrypto"
+
 #define Value_Default_ResolutionRatio 8
 #define Value_Default_FrameRate 1
 #define Value_Default_MaxCodeRate 45
@@ -87,6 +91,7 @@
 #define Key_Force_Close_Log NO
 #define IS_NOT_PRIVATE_ENVIRONMENT
 #define IS_NOT_LIVE
+#define IS_NOT_CRYPTO
 
 #ifndef DLog
     #define DLog(fmt, ...) NSLog((@"%s [Line %d] LLH...... " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);

@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  摄像头输出的视频分辨率, 默认: RCRTCVideoSizePreset640x480
  */
-@property (nonatomic,assign) RCRTCVideoSizePreset videoSizePreset;
+@property (nonatomic, assign) RCRTCVideoSizePreset videoSizePreset;
 
 /*!
  视频发送帧率. 默认: 15 FPS

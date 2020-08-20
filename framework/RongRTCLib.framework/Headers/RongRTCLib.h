@@ -51,4 +51,6 @@ FOUNDATION_EXPORT const unsigned char RongRTCLibVersionString[];
 #import <RongRTCLib/RCRTCVideoSourceInterface.h>
 #import <RongRTCLib/RCRTCVideoStreamConfig.h>
 #import <RongRTCLib/RCRTCVideoOutputStream.h>
-
+#import <RongRTCLib/RCRTCEffectProtocol.h>
+#import <RongRTCLib/RCRTCCryptoDelegate.h>
+#import <RongRTCLib/RCRTCEffectManager.h>

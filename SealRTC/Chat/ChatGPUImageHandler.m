@@ -47,7 +47,8 @@
 
 - (void)initGPUFilter
 {
-    self.gupfilter = kLoginManager.isGPUFilter ? self.beautyFilter : self.defaultFilter;
+//    self.gupfilter = kLoginManager.isGPUFilter ? self.beautyFilter : self.defaultFilter;
+    self.gupfilter = self.defaultFilter;
     [self.outputCamera addTarget:self.gupfilter];
     
     if (kLoginManager.isWaterMark) {
@@ -132,11 +133,10 @@
         return nil;
     
     [self.filter useNextFrameForImageCapture];
-    CFRetain(sampleBuffer);
+    //CFRetain(sampleBuffer);
     [self.outputCamera processVideoSampleBuffer:sampleBuffer];
-    
     CMTime currentTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
-    CFRelease(sampleBuffer);
+    //CFRelease(sampleBuffer);
     
     GPUImageFramebuffer *framebuff = [self.filter framebufferForOutput];
     CVPixelBufferRef pixelBuff = [framebuff pixelBuffer];
@@ -146,12 +146,11 @@
     CMVideoFormatDescriptionCreateForImageBuffer(NULL, pixelBuff, &videoInfo);
     
     CMSampleTimingInfo timing = {currentTime, currentTime, kCMTimeInvalid};
+    if (videoInfo == NULL)
+        return nil;
     
     CMSampleBufferRef processedSampleBuffer = NULL;
     CMSampleBufferCreateForImageBuffer(kCFAllocatorDefault, pixelBuff, YES, NULL, NULL, videoInfo, &timing, &processedSampleBuffer);
-    
-    if (videoInfo == NULL)
-        return nil;
     
     CFRelease(videoInfo);
     CVPixelBufferUnlockBaseAddress(pixelBuff, 0);

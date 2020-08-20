@@ -19,7 +19,7 @@
 #import "ChatGPUImageHandler.h"
 #import "ChatWhiteBoardHandler.h"
 
-@class FUSelectView;
+//@class FUSelectView; //LLH_FU
 
 #define TitleHeight 78
 #define redButtonBackgroundColor [UIColor colorWithRed:243.0/255.0 green:57.0/255.0 blue:58.0/255.0 alpha:1.0]

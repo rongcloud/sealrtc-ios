@@ -44,7 +44,21 @@ static NSUserDefaults *settingUserDefaults = nil;
 {
     [super viewWillAppear:animated];
     [self loadPlistData];
-    self.sectionNumber = 7;
+    self.settingTableViewCellArray = [[NSMutableArray alloc] init];
+#ifdef IS_PRIVATE_ENVIRONMENT
+    [self.settingTableViewCellArray addObject:@"setting_private_environment"];
+#endif
+    [self.settingTableViewCellArray addObject:@"setting_resolution"];
+    [self.settingTableViewCellArray addObject:@"setting_water_mark"];
+    [self.settingTableViewCellArray addObject:@"setting_tiny_stream"];
+    [self.settingTableViewCellArray addObject:@"setting_auto_test"];
+    [self.settingTableViewCellArray addObject:@"setting_userid"];
+    [self.settingTableViewCellArray addObject:@"setting_audio_scenario"];
+    [self.settingTableViewCellArray addObject:@"setting_back_camera_mirror"];
+#ifdef IS_CRYPTO
+    [self.settingTableViewCellArray addObject:@"setting_crypto"];
+#endif
+    self.sectionNumber = [self.settingTableViewCellArray count];
     [self.settingViewBuilder.tableView reloadData];
     self.settingViewBuilder.userIDTextField.text = kLoginManager.userID;
 }
@@ -100,6 +114,14 @@ static NSUserDefaults *settingUserDefaults = nil;
 }
 -(void)setVideoMirror{
     [kLoginManager setIsVideoMirror:self.settingViewBuilder.videoMirrorSwitch.on];
+}
+
+-(void)setAudioCryptoSwitch{
+    [kLoginManager setIsOpenAudioCrypto:self.settingViewBuilder.audioCryptoSwitch.on];
+}
+
+-(void)setVideoCryptoSwitch{
+    [kLoginManager setIsOpenVideoCrypto:self.settingViewBuilder.videoCryptoSwitch.on];
 }
 
 - (void)longPressedGestureAction:(UILongPressGestureRecognizer *)gesture {

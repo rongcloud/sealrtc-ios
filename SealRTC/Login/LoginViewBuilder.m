@@ -102,7 +102,7 @@
     self.roomNumberTextField.font = [UIFont systemFontOfSize:18];
     self.roomNumberTextField.textColor = [UIColor colorWithRed:34.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0];
     self.roomNumberTextField.textAlignment = NSTextAlignmentLeft;
-    self.roomNumberTextField.keyboardType = UIKeyboardTypeAlphabet;
+    self.roomNumberTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     self.roomNumberTextField.returnKeyType = UIReturnKeyDone;
     self.roomNumberTextField.borderStyle = UITextBorderStyleRoundedRect;
     self.roomNumberTextField.placeholder = NSLocalizedString(@"login_input_meeting_room_NO", nil);
@@ -127,8 +127,7 @@
     [self.usernameTextField addTarget:self.loginViewController action:@selector(userNameTextfieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     #pragma clang diagnostic pop
     [self.inputNumPasswordView addSubview:self.usernameTextField];
-    
-//    originY = self.usernameTextField.frame.origin.y;
+
     CGFloat height;
     
 #ifndef IS_PRIVATE_ENVIRONMENT
@@ -154,6 +153,7 @@
     originY = loginCountryTxtField.frame.origin.y;
     height = self.loginCountryTxtField.frame.size.height;
 #else
+    originY = self.usernameTextField.frame.origin.y;
     height = self.usernameTextField.frame.size.height;
 #endif
     //手机号

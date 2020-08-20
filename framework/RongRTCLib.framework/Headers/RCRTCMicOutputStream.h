@@ -15,7 +15,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /*!
- 音视频采集管理实例
+ 麦克风输出流，以麦克风为音频源的音频输出流
  */
 @interface RCRTCMicOutputStream : RCRTCAudioOutputStream
 
@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSUInteger recordingVolume;
 
 /*!
-音频码率
+ 音频码率
 */
 @property (nonatomic, assign, readonly) NSInteger bitrateValue;
 

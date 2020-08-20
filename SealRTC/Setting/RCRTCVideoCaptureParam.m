@@ -140,7 +140,7 @@
     
     NSInteger maxBandWidth = 1000;
     switch (videoSizePreset) {
-        case RCRTCVideoSizePreset176x132:
+        case RCRTCVideoSizePreset176x144:
             maxBandWidth = 150;
             break;
         case RCRTCVideoSizePreset256x144:
@@ -203,7 +203,7 @@
     
     NSInteger minBandWidth = 350;
     switch (videoSizePreset) {
-        case RCRTCVideoSizePreset176x132:
+        case RCRTCVideoSizePreset176x144:
             minBandWidth = 80;
             break;
         case RCRTCVideoSizePreset256x144:
@@ -271,8 +271,8 @@
  
     CGSize size = (CGSize){640,480};
     switch (videoSizePreset) {
-        case RCRTCVideoSizePreset176x132:
-            size = (CGSize){176, 132};
+        case RCRTCVideoSizePreset176x144:
+            size = (CGSize){176, 144};
             break;
         case RCRTCVideoSizePreset256x144:
             size = (CGSize){256,144};

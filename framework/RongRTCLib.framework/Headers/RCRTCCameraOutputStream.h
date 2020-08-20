@@ -42,14 +42,14 @@ NS_ASSUME_NONNULL_BEGIN
  
  注：如果用户传正常数据,则内部会自行 CFRelease CMSampleBufferRef 对象,上层不需要再考虑释放问题
  */
-@property (nonatomic, copy, nullable) RCRTCVideoCMSampleBufferCallback videoSendBufferCallback;
+@property (atomic, copy, nullable) RCRTCVideoCMSampleBufferCallback videoSendBufferCallback;
 
 /*!
  本地摄像头采集的视频在即将预览前会往上层抛一个视频帧回调,用户可以处理视频帧数据之后然后回传给 RTC,RTC 使用用户处理的视频帧进行预览
  
  注：如果用户传正常数据,则内部会自行 CFRelease CMSampleBufferRef 对象,上层不需要再考虑释放问题
  */
-@property (nonatomic, copy, nullable) RCRTCVideoCMSampleBufferCallback videoDisplayBufferCallback;
+@property (atomic, copy, nullable) RCRTCVideoCMSampleBufferCallback videoDisplayBufferCallback;
 
 /*!
  初始化

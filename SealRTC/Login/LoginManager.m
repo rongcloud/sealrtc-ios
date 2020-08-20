@@ -105,6 +105,9 @@ static LoginManager *sharedLoginManager = nil;
         _kickOffTime = [settingUserDefaults integerForKey:Key_KickOffTime];
         _kickOffRoomNumber = [settingUserDefaults valueForKey:Key_KickOffRoomNumber];
         _isKickOff = [settingUserDefaults boolForKey:Key_IsKickOff];
+        
+        _isOpenAudioCrypto =  [settingUserDefaults boolForKey:Key_IsOpenAudioCrypto];
+        _isOpenVideoCrypto =  [settingUserDefaults boolForKey:Key_IsOpenVideoCrypto];
     }
     else
     {
@@ -125,6 +128,8 @@ static LoginManager *sharedLoginManager = nil;
         self.kickOffTime = 0;
         self.kickOffRoomNumber = @"";
         self.isKickOff = NO;
+        self.isOpenAudioCrypto = NO;
+        self.isOpenVideoCrypto = NO;
     }
 }
 
@@ -375,6 +380,20 @@ static LoginManager *sharedLoginManager = nil;
 {
     _isKickOff = isKickOff;
     [settingUserDefaults setBool:isKickOff forKey:Key_IsKickOff];
+    [settingUserDefaults synchronize];
+}
+
+- (void)setIsOpenAudioCrypto:(BOOL)isOpenAudioCrypto
+{
+    _isOpenAudioCrypto = isOpenAudioCrypto;
+    [settingUserDefaults setBool:isOpenAudioCrypto forKey:Key_IsOpenAudioCrypto];
+    [settingUserDefaults synchronize];
+}
+
+- (void)setIsOpenVideoCrypto:(BOOL)isOpenVideoCrypto
+{
+    _isOpenVideoCrypto = isOpenVideoCrypto;
+    [settingUserDefaults setBool:isOpenVideoCrypto forKey:Key_IsOpenVideoCrypto];
     [settingUserDefaults synchronize];
 }
 

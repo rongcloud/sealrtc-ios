@@ -27,6 +27,7 @@
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @property (nonatomic, assign) NSUInteger sectionNumber;
 @property (nonatomic, strong) NSArray *resolutionRatioArray, *frameRateArray, *codeRateArray, *codingStyleArray;
+@property (nonatomic, strong) NSMutableArray<NSString *> *settingTableViewCellArray;
 @property (nonatomic, strong) SettingTableViewDelegateSourceImpl *settingTableViewDelegateSourceImpl;
 @property (nonatomic, strong) SettingPickViewDelegateImpl *settingPickViewDelegateImpl;
 @property (nonatomic, strong) SettingTextFieldDelegateImpl *settingTextFieldDelegateImpl;
@@ -40,4 +41,6 @@
 - (void)waterMarkAction;
 - (void)longPressedGestureAction:(UILongPressGestureRecognizer *)gesture;
 - (void)setVideoMirror;
+- (void)setAudioCryptoSwitch;
+- (void)setVideoCryptoSwitch;
 @end

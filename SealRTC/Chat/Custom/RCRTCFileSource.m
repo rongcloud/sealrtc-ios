@@ -34,7 +34,7 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
     Float64 _currentMediaTime;
     Float64 _currentVideoTime;
     NSThread* _audioDecodeThread;
-    dispatch_queue_t _completionQueue;
+    //dispatch_queue_t _completionQueue;
 }
 
 @synthesize observer = _observer;
@@ -44,7 +44,18 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
 
     if (self) {
         _currentPath = filePath;
-        _completionQueue = dispatch_queue_create("com.rongcloud.file.completion.queue", NULL);
+        //_completionQueue = dispatch_queue_create("com.rongcloud.file.completion.queue", NULL);
+        if (@available(iOS 10, macOS 10.12, tvOS 10, watchOS 3, *)) {
+            _frameQueue = 
+                dispatch_queue_create_with_target("org.webrtc.filecapturer.video", 
+                                                  DISPATCH_QUEUE_SERIAL, 
+                                                  dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0));
+        } else {
+            _frameQueue = 
+                dispatch_queue_create("org.webrtc.filecapturer.video", DISPATCH_QUEUE_SERIAL);
+            dispatch_set_target_queue(_frameQueue, 
+                                      dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0));
+        }
     }
 
     return self;
@@ -82,6 +93,7 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
 
 - (BOOL)stop {
     _status = RCRTCFileVideoCapturerStatusStopped;
+    [_audioDecodeThread cancel];
     return YES;
 }
 
@@ -90,11 +102,12 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
 - (void)setupAudioTrakOutput:(AVURLAsset*)asset {
     AVAssetTrack* audioTrack = [asset tracksWithMediaType:AVMediaTypeAudio].firstObject;
     AudioStreamBasicDescription asbd = RCRTCAudioMixer.writeAsbd;
-     NSDictionary* settings = @{AVFormatIDKey:               @(kAudioFormatLinearPCM),
-                                AVSampleRateKey:             @(asbd.mSampleRate),
-                                AVNumberOfChannelsKey:       @(asbd.mChannelsPerFrame),
-                                AVLinearPCMIsNonInterleaved: @(NO)};
-    _outAudioTrack = [[AVAssetReaderTrackOutput alloc] initWithTrack:audioTrack outputSettings:settings];
+    NSDictionary* settings = @{AVFormatIDKey:               @(kAudioFormatLinearPCM),
+                               AVSampleRateKey:             @(asbd.mSampleRate),
+                               AVNumberOfChannelsKey:       @(asbd.mChannelsPerFrame),
+                               AVLinearPCMIsNonInterleaved: @(NO)};
+    _outAudioTrack = 
+        [[AVAssetReaderTrackOutput alloc] initWithTrack:audioTrack outputSettings:settings];
     if ([_reader canAddOutput:_outAudioTrack]) {
         [_reader addOutput:_outAudioTrack];
     }
@@ -102,7 +115,7 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
 
 - (void)audioDecode {
     SInt64 sampleTime = 0;
-    while (true) {
+    while (![NSThread currentThread].isCancelled) {
         CMSampleBufferRef sample = [_outAudioTrack copyNextSampleBuffer];
         if (!sample) {
             break;
@@ -118,17 +131,17 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
                                                                 0,
                                                                 &blockBuffer);
         CMItemCount count =  CMSampleBufferGetNumSamples(sample);
-        [[RCRTCAudioMixer sharedInstance] writeAudioBufferList:&abl frames:(UInt32)count sampleTime:sampleTime playback:YES];
+        [[RCRTCAudioMixer sharedInstance] writeAudioBufferList:&abl 
+                                                        frames:(UInt32)count 
+                                                    sampleTime:sampleTime 
+                                                      playback:YES];
         sampleTime += count;
         CFRelease(blockBuffer);
         CFRelease(sample);
-        if(_status == RCRTCFileVideoCapturerStatusStopped || !_audioDecodeThread) {
-            break;
-        }
     }
 
-    [_audioDecodeThread cancel];
     _audioDecodeThread = nil;
+    [NSThread exit];
 }
 
 - (void)setupReader {
@@ -137,7 +150,7 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
     NSError *error = nil;
     // 可以矫正由于时间偏差导致输出不准确的问题，也可以解决循环播放导致的中间播放延迟，中间会丢弃一部分视频帧
     _currentMediaTime = CACurrentMediaTime();
-    _currentVideoTime = CACurrentMediaTime();
+    _currentVideoTime = _currentMediaTime;
     
     _lastPresentationTime = CMTimeMakeWithSeconds(0.0, 1);
     _reader = [[AVAssetReader alloc] initWithAsset:asset error:&error];
@@ -149,19 +162,24 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
                               (NSString *)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)
                               };
     _outVideoTrack =
-    [[AVAssetReaderTrackOutput alloc] initWithTrack:allTracks.firstObject outputSettings:options];
+        [[AVAssetReaderTrackOutput alloc] initWithTrack:allTracks.firstObject 
+                                         outputSettings:options];
+    _outVideoTrack.alwaysCopiesSampleData = NO;
     [_reader addOutput:_outVideoTrack];
     [self setupAudioTrakOutput:asset];
     [_reader startReading];
     if (!_audioDecodeThread) {
-        _audioDecodeThread = [[NSThread alloc] initWithTarget:self selector:@selector(audioDecode) object:nil];
+        _audioDecodeThread = 
+            [[NSThread alloc] initWithTarget:self selector:@selector(audioDecode) object:nil];
     }
     [_audioDecodeThread start];
     [self readNextBuffer];
 }
+
 - (void)readBuffer{
     
 }
+
 - (nullable NSString *)pathForFileName:(NSString *)fileName {
     NSArray *nameComponents = [fileName componentsSeparatedByString:@"."];
     if (nameComponents.count != 2) {
@@ -173,21 +191,14 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
     return path;
 }
 
-- (dispatch_queue_t)frameQueue {
-    if (!_frameQueue) {
-        _frameQueue = dispatch_queue_create("org.webrtc.filecapturer.video", DISPATCH_QUEUE_SERIAL);
-    }
-    return _frameQueue;
-}
-
 - (void)readNextBuffer {
     if (_status == RCRTCFileVideoCapturerStatusStopped) {
         [_reader cancelReading];
         _reader = nil;
         [_audioDecodeThread cancel];
-        _audioDecodeThread = nil;
+        _outAudioTrack = nil;
         [self.delegate didReadCompleted];
-        _frameQueue = nil;
+
         return;
     }
     
@@ -195,17 +206,17 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
         [_reader cancelReading];
         _reader = nil;
         [_audioDecodeThread cancel];
-        _audioDecodeThread = nil;
+        _outAudioTrack = nil;
         [self.delegate didReadCompleted];
-        _frameQueue = nil;
         [self setupReader];
+
         return;
     }
     
     CMSampleBufferRef sampleBuffer = [_outVideoTrack copyNextSampleBuffer];
     if (!sampleBuffer) {
         __weak typeof(self) weakSelf = self;
-        dispatch_async([self frameQueue], ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [weakSelf readNextBuffer];
         });
         
@@ -229,7 +240,7 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
     __weak typeof(self) weakSelf = self;
     if (isnan(presentationDifference)) {
         CFRelease(sampleBuffer);
-        dispatch_async([self frameQueue], ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [weakSelf readNextBuffer];
         });
         return;
@@ -238,9 +249,12 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
     _currentMediaTime = CACurrentMediaTime();
     
     Float64 delta = fabs(_currentMediaTime - _currentVideoTime);
-    if (delta > 0.2) {
+    if (presentationDifference != 0 && delta > 0.2) {
+        if (delta > 2) {
+            _currentVideoTime = _currentMediaTime;
+        }
         CFRelease(sampleBuffer);
-        dispatch_async([self frameQueue], ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [weakSelf readNextBuffer];
         });
         return;
@@ -258,33 +272,35 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
         timer = nil;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!strongSelf) return;
-        dispatch_async([strongSelf frameQueue], ^{
+
+        CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+        if (!pixelBuffer) {
+            CFRelease(sampleBuffer);
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [weakSelf readNextBuffer];
+            });
+            return;
+        }
+
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [weakSelf readNextBuffer];
         });
 
+        [self.observer write:sampleBuffer error:nil];
+        CFRelease(sampleBuffer);
     });
     if (@available(iOS 10.0, *)) {
         dispatch_activate(timer);
     } else {
         // Fallback on earlier versions
     }
-    dispatch_async(_completionQueue, ^{
-        CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-        if (!pixelBuffer) {
-            CFRelease(sampleBuffer);
-            dispatch_async([self frameQueue], ^{
-                [weakSelf readNextBuffer];
-            });
-            return;
-        }
-        [self.observer write:sampleBuffer error:nil];
-        CFRelease(sampleBuffer);
-    });
+    // dispatch_async(_completionQueue, ^{
+    // });
 }
 
 - (dispatch_source_t)createStrictTimer {
     dispatch_source_t timer =
-        dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, DISPATCH_TIMER_STRICT, [self frameQueue]);
+        dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, DISPATCH_TIMER_STRICT, _frameQueue);
 
     return timer;
 }

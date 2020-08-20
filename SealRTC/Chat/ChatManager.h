@@ -11,6 +11,10 @@
 
 #import "ChatCellVideoViewModel.h"
 #import "LoginManager.h"
+#import "ChatRongAudioRTCEncryptorDelegateImpl.h"
+#import "ChatRongAudioRTCDecryptorDelegateImpl.h"
+#import "ChatRongVideoRTCEncryptorDelegateImpl.h"
+#import "ChatRongVideoRTCDecryptorDelegateImpl.h"
 
 @class RCRTCVideoCaptureParam;
 
@@ -30,6 +34,10 @@
 @property (nonatomic, strong) ChatCellVideoViewModel *localFileVideoModel;
 @property (nonatomic, strong) NSString *videoOwner;
 
+@property (nonatomic, strong) ChatRongAudioRTCEncryptorDelegateImpl *chatRongAudioRTCEncryptorDelegateImpl;
+@property (nonatomic, strong) ChatRongAudioRTCDecryptorDelegateImpl *chatRongAudioRTCDecryptorDelegateImpl;
+@property (nonatomic, strong) ChatRongVideoRTCEncryptorDelegateImpl *chatRongVideoRTCEncryptorDelegateImpl;
+@property (nonatomic, strong) ChatRongVideoRTCDecryptorDelegateImpl *chatRongVideoRTCDecryptorDelegateImpl;
 
 + (ChatManager *)sharedInstance;
 
@@ -63,4 +71,8 @@
 - (void)configAudioParameter;
 - (void)configVideoParameter;
 
+- (ChatRongAudioRTCEncryptorDelegateImpl *)chatRongAudioRTCEncryptorDelegateImpl;
+- (ChatRongAudioRTCDecryptorDelegateImpl *)chatRongAudioRTCDecryptorDelegateImpl;
+- (ChatRongVideoRTCEncryptorDelegateImpl *)chatRongVideoRTCEncryptorDelegateImpl;
+- (ChatRongVideoRTCDecryptorDelegateImpl *)chatRongVideoRTCDecryptorDelegateImpl;
 @end

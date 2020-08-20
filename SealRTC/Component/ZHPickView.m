@@ -307,6 +307,7 @@
             }
         }
     }
+    rowTitle = NSLocalizedString(rowTitle, nil);
     return rowTitle;
 }
 

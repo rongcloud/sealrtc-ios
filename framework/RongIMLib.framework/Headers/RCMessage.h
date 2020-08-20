@@ -16,6 +16,7 @@
 #import "RCReadReceiptInfo.h"
 #import "RCStatusDefine.h"
 #import <Foundation/Foundation.h>
+#import "RCMessageConfig.h"
 
 /*!
  消息实体类
@@ -97,6 +98,11 @@
  阅读回执状态
  */
 @property (nonatomic, strong) RCReadReceiptInfo *readReceiptInfo;
+
+/*!
+ 消息配置
+ */
+@property (nonatomic, strong) RCMessageConfig *messageConfig;
 
 /*!
  是否是离线消息，只在接收消息的回调方法中有效，如果消息为离线消息，则为 YES ，其他情况均为 NO

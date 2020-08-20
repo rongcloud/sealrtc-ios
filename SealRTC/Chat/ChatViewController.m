@@ -36,7 +36,7 @@
 
 #import "RCRTCVideoCaptureParam.h"
 #import "ZHPickView.h"
-@interface ChatViewController () <UINavigationControllerDelegate,UIAlertViewDelegate,RCRTCFileCapturerDelegate, RCConnectionStatusChangeDelegate,RongAudioVolumeControlDelegate,UIScrollViewDelegate,ZHPickViewDelegate, UIGestureRecognizerDelegate>
+@interface ChatViewController () <UINavigationControllerDelegate, UIAlertViewDelegate, RCRTCFileCapturerDelegate, RCConnectionStatusChangeDelegate, RongAudioVolumeControlDelegate, UIScrollViewDelegate, ZHPickViewDelegate, UIGestureRecognizerDelegate>
 
 
 {
@@ -83,8 +83,10 @@
 /**
  分辨率映射
  */
-@property(nonatomic , strong)NSDictionary *resolutionDic;
-
+/**
+ beauBtn
+ */
+@property(nonatomic , strong)UIButton *beauBtn;
 @end
 
 @implementation ChatViewController
@@ -92,20 +94,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // 改分辨率的plist ， 要记得改这里
-    self.resolutionDic = @{
-        @"132x176":@(RCRTCVideoSizePreset176x132),
-        @"144x256":@(RCRTCVideoSizePreset256x144),
-        @"180x320":@(RCRTCVideoSizePreset320x180),
-        @"240x240":@(RCRTCVideoSizePreset240x240),
-        @"240x320":@(RCRTCVideoSizePreset320x240),
-        @"360x480":@(RCRTCVideoSizePreset480x360),
-        @"360x640":@(RCRTCVideoSizePreset640x360),
-        @"480x480":@(RCRTCVideoSizePreset480x480),
-        @"480x640":@(RCRTCVideoSizePreset640x480),
-        @"480x720":@(RCRTCVideoSizePreset720x480),
-        @"720x1280":@(RCRTCVideoSizePreset1280x720)
-    };
     self.videoMuteForUids = [NSMutableDictionary dictionary];
     self.alertTypeArray = [NSMutableArray array];
     self.videoHeight = ScreenWidth * 640.0 / 480.0;
@@ -143,6 +131,24 @@
         [[ChatRongRTCRoomDelegateImpl alloc] initWithViewController:self];
     self.chatRongRTCNetworkMonitorDelegateImpl = 
         [[ChatRongRTCNetworkMonitorDelegateImpl alloc] initWithViewController:self];
+    
+    if (kLoginManager.isOpenAudioCrypto) {
+        [[RCRTCEngine sharedInstance] setAudioCustomizedEncryptorDelegate:kChatManager.chatRongAudioRTCEncryptorDelegateImpl];
+        [[RCRTCEngine sharedInstance] setAudioCustomizedDecryptorDelegate:kChatManager.chatRongAudioRTCDecryptorDelegateImpl];
+    } else {
+        [[RCRTCEngine sharedInstance] setAudioCustomizedEncryptorDelegate:nil];
+        [[RCRTCEngine sharedInstance] setAudioCustomizedDecryptorDelegate:nil];
+    }
+    
+    
+    if (kLoginManager.isOpenVideoCrypto) {
+        [[RCRTCEngine sharedInstance] setVideoCustomizedEncryptorDelegate:kChatManager.chatRongVideoRTCEncryptorDelegateImpl];
+        [[RCRTCEngine sharedInstance] setVideoCustomizedDecryptorDelegate:kChatManager.chatRongVideoRTCDecryptorDelegateImpl];
+    } else {
+        [[RCRTCEngine sharedInstance] setVideoCustomizedEncryptorDelegate:nil];
+        [[RCRTCEngine sharedInstance] setVideoCustomizedDecryptorDelegate:nil];
+    }
+    
     
 #ifdef IS_PRIVATE_ENVIRONMENT
     if (kLoginManager.isPrivateEnvironment) {
@@ -188,6 +194,8 @@
     [kChatManager configAudioParameter];
     [kChatManager configVideoParameter];
     
+    [[RCRTCEngine sharedInstance].defaultAudioStream setMicrophoneDisable:kLoginManager.isMuteMicrophone];
+    
     if (kLoginManager.isObserver) {
         self.chatMode = AVChatModeObserver;
     }
@@ -214,17 +222,18 @@
         
         self.chatGPUImageHandler = [[ChatGPUImageHandler alloc] init];
         __weak typeof(self) weakSelf = self;
-        
-        if (kLoginManager.isGPUFilter || kLoginManager.isWaterMark) {
-            [RCRTCEngine sharedInstance].defaultVideoStream.videoSendBufferCallback = ^CMSampleBufferRef _Nullable(BOOL valid, CMSampleBufferRef  _Nullable sampleBuffer) {
-                CMSampleBufferRef processedSampleBuffer = [weakSelf.chatGPUImageHandler onGPUFilterSource:sampleBuffer];
-                return processedSampleBuffer;
-            };
-        }
-        else {
-            [RCRTCEngine sharedInstance].defaultVideoStream.videoDisplayBufferCallback = nil;
-            [RCRTCEngine sharedInstance].defaultVideoStream.videoSendBufferCallback = nil;
-        }
+        [RCRTCEngine sharedInstance].defaultVideoStream.videoSendBufferCallback =
+            ^CMSampleBufferRef _Nullable(BOOL valid, CMSampleBufferRef  _Nullable sampleBuffer) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (!strongSelf) {
+                return sampleBuffer;
+            }
+            CMSampleBufferRef processedSampleBuffer = [strongSelf.chatGPUImageHandler onGPUFilterSource:sampleBuffer];
+            if (!processedSampleBuffer) {
+                return sampleBuffer;
+            }
+            return processedSampleBuffer;
+        };
     }
     
     kChatManager.localUserDataModel = nil;
@@ -1257,7 +1266,7 @@
 
 - (void)didSelectHD:(UIButton *)btn{
     self.resolutionPickView = 
-        [[ZHPickView alloc] initPickviewWithPlistName:Key_ResolutionRatio isHaveNavControler:NO];
+        [[ZHPickView alloc] initPickviewWithPlistName:Dynamic_resolution isHaveNavControler:NO];
     self.resolutionPickView.delegate = self;
     [self.resolutionPickView setSelectedPickerItem:0];
     [self.view addSubview:self.resolutionPickView];
@@ -1294,6 +1303,8 @@
 {
     UIButton *button = (UIButton *)sender;
     NSInteger tag = button.tag;
+    self.beauBtn.selected = NO;
+    [self hideSelectFUView];
     [self hideHDView];
     switch (tag)
     {
@@ -1462,6 +1473,12 @@
 - (void)didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer {
 }
 
+-(void)showSelectFUView{
+}
+
+- (void)hideSelectFUView {
+}
+
 #pragma mark - focus camera
 - (void)focusCameraAction:(UITapGestureRecognizer *)gesture {
     [self showOrHideViews];
@@ -1500,6 +1517,18 @@
 #pragma mark - UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer != self.tapGesture) return YES;
+
+    CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view];
+    
+
+    if (self.collectionView && CGRectContainsPoint(self.collectionView.frame, point)) {
+        for (UICollectionViewCell* cell in self.collectionView.visibleCells) {
+            CGPoint cellPoint = 
+                [cell.contentView convertPoint:point fromView:gestureRecognizer.view];
+            if (CGRectContainsPoint(cell.contentView.frame, cellPoint))
+                return NO;
+        }
+    }
 
     return YES;
 }
@@ -1688,7 +1717,6 @@
     }
     
     [[RCRTCAudioMixer sharedInstance] stop];
-    [RCRTCEngine sharedInstance].defaultVideoStream.videoSendBufferCallback = nil;
     if (fileCapturer) {
         [fileCapturer stop];
         fileCapturer.delegate = nil;
@@ -1751,7 +1779,7 @@
             }];
         } else {
 #ifdef IS_LIVE
-            [[RCRTCEngine sharedInstance] unsubscribeLiveStream:nil 
+            [[RCRTCEngine sharedInstance] unsubscribeLiveStream:kLoginManager.liveUrl
                                                      completion:^(BOOL isSuccess, RCRTCCode code) {
                 __strong typeof(weakSelf) strongSelf2 = weakSelf;
                 if (!strongSelf2) return;
@@ -1989,27 +2017,27 @@
                  resultString:(NSString *)resultString 
                   selectedRow:(NSInteger)selectedRow{
     NSLog(@"%@",resultString);
-    NSMutableDictionary *resolutionDic = self.resolutionDic.mutableCopy;
-    if ([resolutionDic.allKeys containsObject:resultString]) {
-        NSNumber *resu = self.resolutionDic[resultString];
-        RCRTCVideoSizePreset preset = resu.unsignedIntegerValue;
-        RCRTCVideoStreamConfig *config = [[RCRTCVideoStreamConfig alloc] init];
-        config.videoSizePreset = preset;
-        [[RCRTCEngine sharedInstance].defaultVideoStream setVideoConfig:config];
-    } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [RTActiveWheel showPromptHUDAddedTo:self.view text:@"没有此分辨率"];
-        });
+    RCRTCVideoSizePreset preset = RCRTCVideoSizePreset480x360;
+    if ([resultString isEqualToString: @"高清"]) {
+        preset = RCRTCVideoSizePreset640x480;
+    } else if ([resultString isEqualToString:@"超高清"]){
+        preset = RCRTCVideoSizePreset1280x720;
     }
+    RCRTCVideoStreamConfig *config = [[RCRTCVideoStreamConfig alloc] init];
+    config.videoSizePreset = preset;
+    [[RCRTCEngine sharedInstance].defaultVideoStream setVideoConfig:config];
+    
 }
 
 #pragma mark - Private
 - (void)showOrHideViews {
     showButtonSconds = 0;
+    self.beauBtn.selected = NO;
     [self showButtons:isShowButton];
     if (isShowButton) {
         displayLink.paused = NO;
     }
+    [self hideSelectFUView];
 }
 
 @end

@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  本地 view 是否做镜像翻转，只做视图翻转，默认为 yes
  */
-@property(nonatomic , assign)BOOL isPreviewMirror;
+@property (nonatomic, assign) BOOL isPreviewMirror;
 
 
 /*!

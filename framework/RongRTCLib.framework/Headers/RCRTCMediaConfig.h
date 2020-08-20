@@ -16,12 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  视频配置
  */
-@property (nonatomic , strong) RCRTCVideoConfig *videoConfig;
+@property (nonatomic, strong) RCRTCVideoConfig *videoConfig;
 
 /*!
  音频配置
  */
-@property (nonatomic , strong) RCRTCAudioConfig *audioConfig;
+@property (nonatomic, strong) RCRTCAudioConfig *audioConfig;
 
 
 @end
