@@ -153,6 +153,7 @@
 "setting_crypto" = "自定义加解密";
 "setting_crypto_audio" = "开启音频加解密";
 "setting_crypto_video" = "开启视频加解密";
+"setting_srtp" = "SRTP";
 "setting_userid_title" = "用户ID (长按可复制到剪切板)";
 "setting_userid_tip" = "用户ID已复制到剪切板";
 "breakdown_analysis"="问题分析";
@@ -351,6 +352,8 @@
 "only_play"="本地播放， 不混音";
 "play_and_mix_and_disbale_mic"="本地播放，混音，禁止麦克";
 "mix_mode"="模式选择";
+"inEar"="耳返";
+"effect"="音效";
 
 "标清"="标清";
 "高清"="高清";

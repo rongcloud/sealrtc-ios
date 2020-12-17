@@ -17,14 +17,15 @@ FOUNDATION_EXPORT const unsigned char RongRTCLibVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <RongRTCLib/PublicHeader.h>
 
 #import <RongRTCLib/RCRTCGlobals.h>
-#import <RongRTCLib/RCRTCActivityMonitorDelegate.h>
 #import <RongRTCLib/RCRTCInputStream.h>
 #import <RongRTCLib/RCRTCAudioInputStream.h>
 #import <RongRTCLib/RCRTCAudioConfig.h>
 #import <RongRTCLib/RCRTCAudioMixer.h>
 #import <RongRTCLib/RCRTCAudioOutputStream.h>
+#import <RongRTCLib/RCRTCBaseRoom.h>
 #import <RongRTCLib/RCRTCCameraOutputStream.h>
 #import <RongRTCLib/RCRTCCodeDefine.h>
+#import <RongRTCLib/RCRTCConfig.h>
 #import <RongRTCLib/RCRTCCustomLayout.h>
 #import <RongRTCLib/RCRTCEngine.h>
 #import <RongRTCLib/RCRTCLibDefine.h>
@@ -34,13 +35,16 @@ FOUNDATION_EXPORT const unsigned char RongRTCLibVersionString[];
 #import <RongRTCLib/RCRTCMediaConfig.h>
 #import <RongRTCLib/RCRTCMicOutputStream.h>
 #import <RongRTCLib/RCRTCMixConfig.h>
+#import <RongRTCLib/RCRTCOtherRoom.h>
+#import <RongRTCLib/RCRTCOtherRoomEventDelegate.h>
 #import <RongRTCLib/RCRTCOutputStream.h>
 #import <RongRTCLib/RCRTCRemoteUser.h>
 #import <RongRTCLib/RCRTCRemoteVideoView.h>
 #import <RongRTCLib/RCRTCRoom.h>
 #import <RongRTCLib/RCRTCRoomConfig.h>
 #import <RongRTCLib/RCRTCRoomEventDelegate.h>
-#import <RongRTCLib/RCRTCStatisticalForm.h>
+#import <RongRTCLib/RCRTCStatusForm.h>
+#import <RongRTCLib/RCRTCStatusReportDelegate.h>
 #import <RongRTCLib/RCRTCStream.h>
 #import <RongRTCLib/RCRTCUser.h>
 #import <RongRTCLib/RCRTCVideoConfig.h>
@@ -53,4 +57,6 @@ FOUNDATION_EXPORT const unsigned char RongRTCLibVersionString[];
 #import <RongRTCLib/RCRTCVideoOutputStream.h>
 #import <RongRTCLib/RCRTCEffectProtocol.h>
 #import <RongRTCLib/RCRTCCryptoDelegate.h>
-#import <RongRTCLib/RCRTCEffectManager.h>
+#import <RongRTCLib/RCRTCAudioEffectManager.h>
+#import <RongRTCLib/RCRTCVideoTextureView.h>
+#import <RongRTCLib/RCRTCLogUtility.h>

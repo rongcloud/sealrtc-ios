@@ -12,15 +12,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol RCRTCRemoteUserDelegate;
-
 /*!
  音视频远端用户
  */
 @interface RCRTCRemoteUser : RCRTCUser
 
 /*!
- 用户发布的音视频流
+ 获取该远端用户发布的所有音视频流
  */
 @property (nonatomic, copy, readonly) NSArray<RCRTCInputStream *> *remoteStreams;
 

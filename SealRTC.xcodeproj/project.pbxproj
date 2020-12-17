@@ -11,9 +11,6 @@
 		173A2C3122718EF900291E0A /* video_demo1_low.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 173A2C3022718EC100291E0A /* video_demo1_low.mp4 */; };
 		173A2C3322718F6800291E0A /* video_demo2_low.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 173A2C3222718F6800291E0A /* video_demo2_low.mp4 */; };
 		1748C0B822FAC8290082463B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1748C0B722FAC8290082463B /* MobileCoreServices.framework */; };
-		1782D887226EACB900AA9A74 /* ChatMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1782D886226EACB900AA9A74 /* ChatMembersViewController.m */; };
-		1782D88C226EB3C300AA9A74 /* ChatMemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1782D88A226EB3C300AA9A74 /* ChatMemberCell.m */; };
-		1782D88D226EB3C300AA9A74 /* ChatMemberCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1782D88B226EB3C300AA9A74 /* ChatMemberCell.xib */; };
 		1788283922A0D01700933137 /* RCRTCWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1788283822A0D01700933137 /* RCRTCWebServer.m */; };
 		1788283B22A0D08F00933137 /* libGCDWebServer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1788283A22A0D08F00933137 /* libGCDWebServer.a */; };
 		1788284E22A0D37C00933137 /* GCDWebDAVServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1788284D22A0D37C00933137 /* GCDWebDAVServer.m */; };
@@ -191,6 +188,19 @@
 		E83701E52440612E00217068 /* STAudioModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E83701E02440612E00217068 /* STAudioModeViewController.m */; };
 		E83701E62440612E00217068 /* STAudioMixingPannelController.m in Sources */ = {isa = PBXBuildFile; fileRef = E83701E12440612E00217068 /* STAudioMixingPannelController.m */; };
 		E83701E72440612E00217068 /* UIViews+Localized.m in Sources */ = {isa = PBXBuildFile; fileRef = E83701E22440612E00217068 /* UIViews+Localized.m */; };
+		E83AD05E24EF7586004BBFFE /* RCEffectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E83AD05024EF7585004BBFFE /* RCEffectViewController.m */; };
+		E83AD05F24EF7586004BBFFE /* RCRTCEffectBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = E83AD05224EF7585004BBFFE /* RCRTCEffectBottomView.m */; };
+		E83AD06024EF7586004BBFFE /* RCEffectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E83AD05324EF7585004BBFFE /* RCEffectCell.m */; };
+		E83AD06124EF7586004BBFFE /* RCRTCDemoEffectBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = E83AD05624EF7585004BBFFE /* RCRTCDemoEffectBottomView.m */; };
+		E83AD06224EF7586004BBFFE /* RCDemoEffectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E83AD05824EF7585004BBFFE /* RCDemoEffectCell.m */; };
+		E83AD06324EF7586004BBFFE /* RCEffectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E83AD05924EF7586004BBFFE /* RCEffectModel.m */; };
+		E83AD06424EF7586004BBFFE /* RCEffectState.m in Sources */ = {isa = PBXBuildFile; fileRef = E83AD05A24EF7586004BBFFE /* RCEffectState.m */; };
+		E83AD06524EF7586004BBFFE /* RCDemoEffectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E83AD05B24EF7586004BBFFE /* RCDemoEffectViewController.m */; };
+		E83AD06A24EF76D1004BBFFE /* 怪物.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E83AD06624EF76D1004BBFFE /* 怪物.mp3 */; };
+		E83AD06B24EF76D1004BBFFE /* 狗吠.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E83AD06724EF76D1004BBFFE /* 狗吠.mp3 */; };
+		E83AD06C24EF76D1004BBFFE /* 庆祝.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E83AD06824EF76D1004BBFFE /* 庆祝.mp3 */; };
+		E83AD06D24EF76D1004BBFFE /* 鼓掌.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E83AD06924EF76D1004BBFFE /* 鼓掌.mp3 */; };
+		E83AD07124EFBBA4004BBFFE /* 笑声.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E83AD06F24EFBBA4004BBFFE /* 笑声.mp3 */; };
 		E83B6AD42318F46C00A3373A /* RCSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = E83B6AD32318F46C00A3373A /* RCSelectView.m */; };
 		E83B6AD72318F52E00A3373A /* RCBackView.m in Sources */ = {isa = PBXBuildFile; fileRef = E83B6AD62318F52E00A3373A /* RCBackView.m */; };
 		E83B6ADA2318F7F700A3373A /* RCSelectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E83B6AD92318F7F700A3373A /* RCSelectModel.m */; };
@@ -198,6 +208,7 @@
 		E8A50F2D24333A6000AB3264 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8A50F2C24333A5F00AB3264 /* Accelerate.framework */; };
 		E8A50F2F24333A6700AB3264 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8A50F2E24333A6700AB3264 /* CoreMedia.framework */; };
 		E8D63CFF2420696800C4DF87 /* UIScrollView+Responder.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D63CFE2420696800C4DF87 /* UIScrollView+Responder.m */; };
+		E8D749BB24C586D2003ACE82 /* Dynamic_resolution.plist in Resources */ = {isa = PBXBuildFile; fileRef = E8D749BA24C586D2003ACE82 /* Dynamic_resolution.plist */; };
 		E8FD69D024372B3E008B13D8 /* UIColor+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FD69CF24372B3E008B13D8 /* UIColor+Helper.m */; };
 /* End PBXBuildFile section */
 
@@ -222,11 +233,6 @@
 		173A2C3222718F6800291E0A /* video_demo2_low.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_demo2_low.mp4; sourceTree = "<group>"; };
 		1748C0B722FAC8290082463B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		1773DD8F224D145D007213AF /* RongRTCLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RongRTCLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1782D885226EACB900AA9A74 /* ChatMembersViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatMembersViewController.h; sourceTree = "<group>"; };
-		1782D886226EACB900AA9A74 /* ChatMembersViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatMembersViewController.m; sourceTree = "<group>"; };
-		1782D889226EB3C300AA9A74 /* ChatMemberCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatMemberCell.h; sourceTree = "<group>"; };
-		1782D88A226EB3C300AA9A74 /* ChatMemberCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatMemberCell.m; sourceTree = "<group>"; };
-		1782D88B226EB3C300AA9A74 /* ChatMemberCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatMemberCell.xib; sourceTree = "<group>"; };
 		1788283722A0D01700933137 /* RCRTCWebServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCRTCWebServer.h; sourceTree = "<group>"; };
 		1788283822A0D01700933137 /* RCRTCWebServer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCRTCWebServer.m; sourceTree = "<group>"; };
 		1788283A22A0D08F00933137 /* libGCDWebServer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGCDWebServer.a; sourceTree = "<group>"; };
@@ -581,6 +587,28 @@
 		E83701E12440612E00217068 /* STAudioMixingPannelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STAudioMixingPannelController.m; sourceTree = "<group>"; };
 		E83701E22440612E00217068 /* UIViews+Localized.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViews+Localized.m"; sourceTree = "<group>"; };
 		E83701E32440612E00217068 /* STAudioMixerConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STAudioMixerConfiguration.h; sourceTree = "<group>"; };
+		E83AD04C24EF7585004BBFFE /* RCEffectProtol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCEffectProtol.h; sourceTree = "<group>"; };
+		E83AD04D24EF7585004BBFFE /* RCEffectState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCEffectState.h; sourceTree = "<group>"; };
+		E83AD04F24EF7585004BBFFE /* RCRTCEffectBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRTCEffectBottomView.h; sourceTree = "<group>"; };
+		E83AD05024EF7585004BBFFE /* RCEffectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCEffectViewController.m; sourceTree = "<group>"; };
+		E83AD05124EF7585004BBFFE /* RCEffectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCEffectCell.h; sourceTree = "<group>"; };
+		E83AD05224EF7585004BBFFE /* RCRTCEffectBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRTCEffectBottomView.m; sourceTree = "<group>"; };
+		E83AD05324EF7585004BBFFE /* RCEffectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCEffectCell.m; sourceTree = "<group>"; };
+		E83AD05424EF7585004BBFFE /* RCEffectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCEffectViewController.h; sourceTree = "<group>"; };
+		E83AD05524EF7585004BBFFE /* RCEffectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCEffectModel.h; sourceTree = "<group>"; };
+		E83AD05624EF7585004BBFFE /* RCRTCDemoEffectBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRTCDemoEffectBottomView.m; sourceTree = "<group>"; };
+		E83AD05724EF7585004BBFFE /* RCDemoEffectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCDemoEffectCell.h; sourceTree = "<group>"; };
+		E83AD05824EF7585004BBFFE /* RCDemoEffectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCDemoEffectCell.m; sourceTree = "<group>"; };
+		E83AD05924EF7586004BBFFE /* RCEffectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCEffectModel.m; sourceTree = "<group>"; };
+		E83AD05A24EF7586004BBFFE /* RCEffectState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCEffectState.m; sourceTree = "<group>"; };
+		E83AD05B24EF7586004BBFFE /* RCDemoEffectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCDemoEffectViewController.m; sourceTree = "<group>"; };
+		E83AD05C24EF7586004BBFFE /* RCDemoEffectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCDemoEffectViewController.h; sourceTree = "<group>"; };
+		E83AD05D24EF7586004BBFFE /* RCRTCDemoEffectBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRTCDemoEffectBottomView.h; sourceTree = "<group>"; };
+		E83AD06624EF76D1004BBFFE /* 怪物.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "怪物.mp3"; sourceTree = "<group>"; };
+		E83AD06724EF76D1004BBFFE /* 狗吠.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "狗吠.mp3"; sourceTree = "<group>"; };
+		E83AD06824EF76D1004BBFFE /* 庆祝.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "庆祝.mp3"; sourceTree = "<group>"; };
+		E83AD06924EF76D1004BBFFE /* 鼓掌.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "鼓掌.mp3"; sourceTree = "<group>"; };
+		E83AD06F24EFBBA4004BBFFE /* 笑声.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "笑声.mp3"; sourceTree = "<group>"; };
 		E83B6AD22318F46C00A3373A /* RCSelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCSelectView.h; sourceTree = "<group>"; };
 		E83B6AD32318F46C00A3373A /* RCSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCSelectView.m; sourceTree = "<group>"; };
 		E83B6AD52318F52E00A3373A /* RCBackView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCBackView.h; sourceTree = "<group>"; };
@@ -656,19 +684,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		1782D888226EB39800AA9A74 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				1782D889226EB3C300AA9A74 /* ChatMemberCell.h */,
-				1782D88A226EB3C300AA9A74 /* ChatMemberCell.m */,
-				1782D88B226EB3C300AA9A74 /* ChatMemberCell.xib */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
 		1782D88E226EC16000AA9A74 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				E83AD06F24EFBBA4004BBFFE /* 笑声.mp3 */,
+				E83AD06724EF76D1004BBFFE /* 狗吠.mp3 */,
+				E83AD06924EF76D1004BBFFE /* 鼓掌.mp3 */,
+				E83AD06624EF76D1004BBFFE /* 怪物.mp3 */,
+				E83AD06824EF76D1004BBFFE /* 庆祝.mp3 */,
 				17A4296722714B5400293F78 /* MBProgressHUD.h */,
 				17A4296922714B5500293F78 /* MBProgressHUD.m */,
 				17A4296622714B5400293F78 /* RTActiveWheel.h */,
@@ -1030,7 +1053,6 @@
 			children = (
 				E83701DB2440612E00217068 /* AudioMixer */,
 				1782D88E226EC16000AA9A74 /* Custom */,
-				1782D888226EB39800AA9A74 /* Cell */,
 				3917C2C921BA10B600456EDA /* Model */,
 				3917C2C121BA10B600456EDA /* Delegate */,
 				3917C2BE21BA10B600456EDA /* ChatViewBuilder.h */,
@@ -1043,8 +1065,6 @@
 				39923083221EB79100752AC5 /* ChatGPUImageHandler.m */,
 				392AEA7B2280224000EC3CA3 /* ChatWhiteBoardHandler.h */,
 				392AEA7C2280224000EC3CA3 /* ChatWhiteBoardHandler.m */,
-				1782D885226EACB900AA9A74 /* ChatMembersViewController.h */,
-				1782D886226EACB900AA9A74 /* ChatMembersViewController.m */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1352,18 +1372,43 @@
 		E83701DB2440612E00217068 /* AudioMixer */ = {
 			isa = PBXGroup;
 			children = (
+				E83AD04E24EF7585004BBFFE /* autotest */,
+				E83AD05724EF7585004BBFFE /* RCDemoEffectCell.h */,
+				E83AD05824EF7585004BBFFE /* RCDemoEffectCell.m */,
+				E83AD05C24EF7586004BBFFE /* RCDemoEffectViewController.h */,
+				E83AD05B24EF7586004BBFFE /* RCDemoEffectViewController.m */,
+				E83AD05524EF7585004BBFFE /* RCEffectModel.h */,
+				E83AD05924EF7586004BBFFE /* RCEffectModel.m */,
+				E83AD04C24EF7585004BBFFE /* RCEffectProtol.h */,
+				E83AD04D24EF7585004BBFFE /* RCEffectState.h */,
+				E83AD05A24EF7586004BBFFE /* RCEffectState.m */,
+				E83AD05D24EF7586004BBFFE /* RCRTCDemoEffectBottomView.h */,
+				E83AD05624EF7585004BBFFE /* RCRTCDemoEffectBottomView.m */,
 				E83701DC2440612E00217068 /* UIViews+Localized.h */,
 				E83701DD2440612E00217068 /* STAudioMixingPannelController.h */,
+				E83701E12440612E00217068 /* STAudioMixingPannelController.m */,
 				E83701DE2440612E00217068 /* STAudioModeViewController.h */,
 				E83701DF2440612E00217068 /* STAudioMixerConfiguration.m */,
-				E83701E02440612E00217068 /* STAudioModeViewController.m */,
-				E83701E12440612E00217068 /* STAudioMixingPannelController.m */,
-				E83701E22440612E00217068 /* UIViews+Localized.m */,
 				E83701E32440612E00217068 /* STAudioMixerConfiguration.h */,
+				E83701E02440612E00217068 /* STAudioModeViewController.m */,
+				E83701E22440612E00217068 /* UIViews+Localized.m */,
 			);
 			name = AudioMixer;
 			path = SealRTC/AudioMixer;
 			sourceTree = SOURCE_ROOT;
+		};
+		E83AD04E24EF7585004BBFFE /* autotest */ = {
+			isa = PBXGroup;
+			children = (
+				E83AD04F24EF7585004BBFFE /* RCRTCEffectBottomView.h */,
+				E83AD05024EF7585004BBFFE /* RCEffectViewController.m */,
+				E83AD05124EF7585004BBFFE /* RCEffectCell.h */,
+				E83AD05224EF7585004BBFFE /* RCRTCEffectBottomView.m */,
+				E83AD05324EF7585004BBFFE /* RCEffectCell.m */,
+				E83AD05424EF7585004BBFFE /* RCEffectViewController.h */,
+			);
+			path = autotest;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -1428,7 +1473,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E83701DA244060BC00217068 /* Whiteboard.bundle in Resources */,
+				E83AD06D24EF76D1004BBFFE /* 鼓掌.mp3 in Resources */,
+				E8D749BB24C586D2003ACE82 /* Dynamic_resolution.plist in Resources */,
 				39BDCFE11DCC43AF004820E3 /* CodingStyle.plist in Resources */,
+				E83AD06B24EF76D1004BBFFE /* 狗吠.mp3 in Resources */,
 				173A2C3122718EF900291E0A /* video_demo1_low.mp4 in Resources */,
 				173A2C3322718F6800291E0A /* video_demo2_low.mp4 in Resources */,
 				17D4597B2356C25000FBCD71 /* my_homeland.aac in Resources */,
@@ -1436,15 +1484,17 @@
 				390ED55D1D9E07F20046F519 /* CodeRate.plist in Resources */,
 				9D3DD0641D58BDBD00DC1443 /* Main.storyboard in Resources */,
 				B25E424C22EAB04F00790D45 /* voip_network_error_sound.wav in Resources */,
+				E83AD06A24EF76D1004BBFFE /* 怪物.mp3 in Resources */,
+				E83AD07124EFBBA4004BBFFE /* 笑声.mp3 in Resources */,
 				D5A0E80B248F6BBA00A834EE /* RCConfig.plist in Resources */,
 				397320451D9CED2F0016DFC6 /* ResolutionRatio.plist in Resources */,
 				9D3DD09F1D5B1ECF00DC1443 /* Localizable.strings in Resources */,
 				981A507A20047E3A00C6E5AA /* InfoPlist.strings in Resources */,
 				397320491D9D35A00016DFC6 /* FrameRate.plist in Resources */,
+				E83AD06C24EF76D1004BBFFE /* 庆祝.mp3 in Resources */,
 				98406B182073701E00EF3004 /* sound.gif in Resources */,
 				17A5F025237AAD700032E992 /* PrivateSettingCell.xib in Resources */,
 				39F0543D1DBDEE440072E918 /* Launch Screen.storyboard in Resources */,
-				1782D88D226EB3C300AA9A74 /* ChatMemberCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1495,7 +1545,6 @@
 				394D15961DF00A9D001CE166 /* SettingViewBuilder.m in Sources */,
 				B220964222530A61005948E1 /* RCCCpinyin.m in Sources */,
 				E83701D8244060BC00217068 /* WhiteCombinePlayer.m in Sources */,
-				1782D887226EACB900AA9A74 /* ChatMembersViewController.m in Sources */,
 				E83B6AD72318F52E00A3373A /* RCBackView.m in Sources */,
 				E83701B3244060BB00217068 /* WhiteBroadcastState.m in Sources */,
 				B220963F22530A35005948E1 /* RCDCountry.m in Sources */,
@@ -1507,6 +1556,7 @@
 				3917C2D221BA10B600456EDA /* ChatManager.m in Sources */,
 				E83701E62440612E00217068 /* STAudioMixingPannelController.m in Sources */,
 				3917C2E521BA10D200456EDA /* GPUImageBeautyFilter.m in Sources */,
+				E83AD06024EF7586004BBFFE /* RCEffectCell.m in Sources */,
 				392A63DE22375F35000A6ED5 /* ChatRongRTCNetworkMonitorDelegateImpl.m in Sources */,
 				3991BD0E1DD5AA5B00152317 /* MessageStatusBar.m in Sources */,
 				E8FD69D024372B3E008B13D8 /* UIColor+Helper.m in Sources */,
@@ -1525,9 +1575,9 @@
 				392D0B732282AAB100B0E21C /* MASConstraint.m in Sources */,
 				E83701B4244060BB00217068 /* WhiteRoomCallbacks.m in Sources */,
 				E83701D2244060BC00217068 /* WhiteMemberInformation.m in Sources */,
-				1782D88C226EB3C300AA9A74 /* ChatMemberCell.m in Sources */,
 				392D0B6C2282AAB100B0E21C /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				3917C2D621BA10B600456EDA /* ChatBubbleMenuViewDelegateImpl.m in Sources */,
+				E83AD06124EF7586004BBFFE /* RCRTCDemoEffectBottomView.m in Sources */,
 				E83B6ADA2318F7F700A3373A /* RCSelectModel.m in Sources */,
 				E83701B8244060BB00217068 /* WhiteRoomConfig.m in Sources */,
 				E83701D6244060BC00217068 /* WhiteSDK.m in Sources */,
@@ -1542,10 +1592,14 @@
 				392AEA3E227FE39200EC3CA3 /* SettingTableViewDelegateSourceImpl.m in Sources */,
 				E83701CB244060BC00217068 /* WhiteObject.m in Sources */,
 				398EDF1522819804006B189D /* NSObject+YYModel.m in Sources */,
+				E83AD06324EF7586004BBFFE /* RCEffectModel.m in Sources */,
 				E83701D7244060BC00217068 /* WhiteVideoView.m in Sources */,
 				392AEA792280152200EC3CA3 /* JSBUtil.m in Sources */,
 				3979F1A41D9622DF006CF067 /* DWBubbleMenuButton.m in Sources */,
+				E83AD06524EF7586004BBFFE /* RCDemoEffectViewController.m in Sources */,
 				E83701C5244060BC00217068 /* WhitePlayerTimeInfo.m in Sources */,
+				E83AD05E24EF7586004BBFFE /* RCEffectViewController.m in Sources */,
+				E83AD06224EF7586004BBFFE /* RCDemoEffectCell.m in Sources */,
 				E83701CC244060BC00217068 /* WhitePptPage.m in Sources */,
 				3917C2EB21BA118A00456EDA /* ChatCell.m in Sources */,
 				392AEA3D227FE39200EC3CA3 /* SettingPickViewDelegateImpl.m in Sources */,
@@ -1553,6 +1607,7 @@
 				E83701BE244060BB00217068 /* WhiteWebViewInjection.m in Sources */,
 				17A5F027237AAD700032E992 /* UIView+Toast.m in Sources */,
 				398EDF1622819804006B189D /* YYClassInfo.m in Sources */,
+				E83AD06424EF7586004BBFFE /* RCEffectState.m in Sources */,
 				E83701D0244060BC00217068 /* WhiteRectangleConfig.m in Sources */,
 				17D4597E2356C37900FBCD71 /* RongAudioVolumeControl.m in Sources */,
 				392D0B6D2282AAB100B0E21C /* ViewController+MASAdditions.m in Sources */,
@@ -1593,6 +1648,7 @@
 				E83701D3244060BC00217068 /* WhiteCameraConfig.m in Sources */,
 				E83701D5244060BC00217068 /* WhiteSdkConfiguration.m in Sources */,
 				3917C2D921BA10B600456EDA /* ChatCellVideoViewModel.m in Sources */,
+				E83AD05F24EF7586004BBFFE /* RCRTCEffectBottomView.m in Sources */,
 				E83701B9244060BB00217068 /* WhiteConversionInfo.m in Sources */,
 				E83701B5244060BB00217068 /* WhiteImageInformation.m in Sources */,
 				3917C2EA21BA118A00456EDA /* ChatAvatarView.m in Sources */,
@@ -1761,7 +1817,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.0.2.1;
+				CURRENT_PROJECT_VERSION = 4.1.0.1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				ENABLE_BITCODE = NO;
@@ -1790,7 +1846,7 @@
 					"$(PROJECT_DIR)/SealRTC/3rd",
 					"$(PROJECT_DIR)/SealRTC/webserver",
 				);
-				MARKETING_VERSION = 4.0.2;
+				MARKETING_VERSION = 4.1.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1808,7 +1864,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.0.2.1;
+				CURRENT_PROJECT_VERSION = 4.1.0.1;
 				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1833,7 +1889,7 @@
 					"$(PROJECT_DIR)/SealRTC/3rd",
 					"$(PROJECT_DIR)/SealRTC/webserver",
 				);
-				MARKETING_VERSION = 4.0.2;
+				MARKETING_VERSION = 4.1.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rongcloud.sealrtc;
 				PRODUCT_NAME = "$(TARGET_NAME)";

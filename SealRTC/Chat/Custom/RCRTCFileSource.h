@@ -13,6 +13,7 @@
 
 @protocol RCRTCFileCapturerDelegate <NSObject>
 
+- (void)didWillStartRead;
 - (void)didReadCompleted;
 
 @end

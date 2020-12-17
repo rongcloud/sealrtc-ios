@@ -69,14 +69,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         self.isBackCamera = isBack;
         if (isBack) {
-            if (self.isTransform) {
-                self.watermarkImageView.frame = CGRectMake(self.videoHeight - 100, self.videoWidth - 100, 80, 80);
-            }
-            else {
-                self.watermarkImageView.frame = CGRectMake(self.videoWidth - 100, self.videoHeight - 100, 80, 80);
-            }
-            
-            self.watermarkImageView.transform = CGAffineTransformRotate(self->_watermarkImageView.transform, M_PI);
+            self.watermarkImageView.frame = CGRectMake(self.videoWidth - 100, 20, 80, 80);
         }
         else {
             self.watermarkImageView.frame = CGRectMake(20, 20, 80, 80);
@@ -92,19 +85,19 @@
     [_gupfilter setFrameProcessingCompletionBlock:nil];
     [self.uiElement removeTarget:self.blendFilter];
     self.uiElement = nil;
+    
     if (isTrans) {
         //横屏
         if (self.isBackCamera) {
-            self.watermarkImageView.frame = CGRectMake(self.videoHeight - 100, self.videoWidth - 100, 80, 80);
+            self.watermarkImageView.frame = CGRectMake(self.videoHeight - 100, 20, 80, 80);
         }
         self.contentView.frame = CGRectMake(self.contentView.frame.origin.x, self.contentView.frame.origin.y, self.videoHeight, self.videoWidth);
     }
     else {
         //竖屏
         if (self.isBackCamera) {
-            self.watermarkImageView.frame = CGRectMake(self.videoWidth - 100, self.videoHeight - 100, 80, 80);
+            self.watermarkImageView.frame = CGRectMake(self.videoWidth - 100, 20, 80, 80);
         }
-        
         self.contentView.frame = CGRectMake(self.contentView.frame.origin.x, self.contentView.frame.origin.y, self.videoWidth, self.videoHeight);
     }
     
@@ -204,36 +197,40 @@
     if (!_contentView) {
         switch (kChatManager.videoCaptureParam.videoSizePreset) {
             case RCRTCVideoSizePreset256x144:
-                self.videoWidth = 256;
-                self.videoHeight = 144;
+                self.videoHeight = 256;
+                self.videoWidth = 144;
                 break;
             case RCRTCVideoSizePreset320x240:
-                self.videoWidth = 320;
-                self.videoHeight = 240;
+                self.videoHeight = 320;
+                self.videoWidth = 240;
                 break;
             case RCRTCVideoSizePreset480x360:
-                self.videoWidth = 480;
-                self.videoHeight = 360;
+                self.videoHeight = 480;
+                self.videoWidth = 360;
                 break;
             case RCRTCVideoSizePreset640x360:
-                self.videoWidth = 640;
-                self.videoHeight = 360;
+                self.videoHeight = 640;
+                self.videoWidth = 360;
                 break;
             case RCRTCVideoSizePreset640x480:
-                self.videoWidth = 640;
-                self.videoHeight = 480;
+                self.videoHeight = 640;
+                self.videoWidth = 480;
                 break;
             case RCRTCVideoSizePreset720x480:
-                self.videoWidth = 720;
-                self.videoHeight = 480;
+                self.videoHeight = 720;
+                self.videoWidth = 480;
                 break;
             case RCRTCVideoSizePreset1280x720:
-                self.videoWidth = 1280;
-                self.videoHeight = 720;
+                self.videoHeight = 1280;
+                self.videoWidth = 720;
+                break;
+            case RCRTCVideoSizePreset1920x1080:
+                self.videoHeight = 1920;
+                self.videoWidth = 1080;
                 break;
             default:
-                self.videoWidth = 640;
-                self.videoHeight = 480;
+                self.videoHeight = 640;
+                self.videoWidth = 480;
                 break;
         }
         _contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.videoWidth, self.videoHeight)];
@@ -247,9 +244,6 @@
     if (!_watermarkImageView) {
         _watermarkImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, 80, 80)];
         _watermarkImageView.image = [UIImage imageNamed:@"chat_water_mark"];
-//        _watermarkImageView.layer.cornerRadius = 8.0;
-//        _watermarkImageView.layer.masksToBounds = YES;
-        _watermarkImageView.transform = CGAffineTransformRotate(_watermarkImageView.transform, -M_PI_2);
     }
     return _watermarkImageView;
 }

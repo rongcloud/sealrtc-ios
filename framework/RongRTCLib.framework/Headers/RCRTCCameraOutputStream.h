@@ -22,17 +22,18 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RCRTCCameraOutputStream : RCRTCVideoOutputStream
 
 /*!
- 摄像头的位置，前置/后置
+ 当前开启摄像头位置
  */
-@property (nonatomic, assign, readwrite) RCRTCDeviceCamera cameraPosition;
+@property (nonatomic, assign) RCRTCDeviceCamera cameraPosition;
 
 /*!
- 设置摄像头采集方向，默认以 AVCaptureVideoOrientationPortrait 角度进行采集
+ 摄像头采集角度
+ 默认以 AVCaptureVideoOrientationPortrait 角度进行采集
  */
-@property (nonatomic, assign, readwrite) AVCaptureVideoOrientation videoOrientation;
+@property (nonatomic, assign) AVCaptureVideoOrientation videoOrientation;
 
 /**
- 摄像头是否做镜像翻转
+ 本地镜像预览状态
  */
 @property (nonatomic, assign) BOOL isPreviewMirror;
 
@@ -106,7 +107,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setVideoSource:(id<RCRTCVideoSourceInterface>)videoSource NS_UNAVAILABLE;
 
 /*!
- 设置视频数的渲染视图
+ 设置视频流的渲染视图
  
  @param render 渲染视图
  @discussion
@@ -117,7 +118,18 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setVideoView:(nullable RCRTCLocalVideoView *)render;
 
 /*!
- 开启摄像头采集数据
+ 设置视频数的渲染纹理视图
+ 
+ @param view 渲染纹理视图
+ @discussion
+ 设置本地摄像头采集的视频流渲染纹理视图
+ 
+ @remarks 视频配置
+ */
+- (void)setVideoTextureView:(nullable RCRTCVideoTextureView *)view;
+
+/*!
+ 开启摄像头数据采集
  
  @discussion
  开启摄像头采集数据
@@ -127,7 +139,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startCapture;
 
 /*!
- 关闭摄像头采集数据
+ 停止摄像头数据采集
  
  @discussion
  关闭摄像头采集数据
@@ -147,7 +159,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)switchCamera;
 
 /*!
- 摄像头是否支持手动对焦功能
+ 摄像头是否支持区域对焦
  
  @discussion
  摄像头是否支持手动对焦功能
@@ -157,7 +169,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isCameraFocusSupported;
 
 /*!
- 摄像头是否支持手动曝光功能
+ 摄像头是否支持区域测光
  
  @discussion
  摄像头是否支持手动曝光功能
@@ -167,7 +179,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isCameraExposurePositionSupported;
 
 /*!
- 手动设置对焦位置，并触发对焦
+ 在指定点区域对焦
  
  @param point 对焦点，视图上的坐标点
  @discussion
@@ -178,7 +190,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)setCameraFocusPositionInPreview:(CGPoint)point;
 
 /*!
- 设置摄像头手动曝光位置
+ 在指定点区域测光
  
  @param point 曝光点，视图上的坐标点
  @discussion

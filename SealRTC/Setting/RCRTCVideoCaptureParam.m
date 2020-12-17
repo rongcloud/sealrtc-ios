@@ -173,9 +173,9 @@
         case RCRTCVideoSizePreset1280x720:
             maxBandWidth = 2200;
             break;
-//        case RCRTCVideoSizePreset1920x1080:
-//            maxBandWidth = 4000;
-//            break;
+        case RCRTCVideoSizePreset1920x1080:
+            maxBandWidth = 4000;
+            break;
         default:
             break;
     }
@@ -236,9 +236,9 @@
         case RCRTCVideoSizePreset1280x720:
             minBandWidth = 250;
             break;
-//        case RCRTCVideoSizePreset1920x1080:
-//            minBandWidth = 250;
-//            break;
+        case RCRTCVideoSizePreset1920x1080:
+            minBandWidth = 400;
+            break;
         default:
             break;
     }
@@ -304,9 +304,9 @@
         case RCRTCVideoSizePreset1280x720:
             size = (CGSize){1280,720};
             break;
-//        case RCRTCVideoSizePreset1920x1080:
-//            size = @"1920x1080";
-//            break;
+        case RCRTCVideoSizePreset1920x1080:
+            size = (CGSize){1920,1080};
+            break;
         default:
             break;
     }

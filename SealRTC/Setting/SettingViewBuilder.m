@@ -90,6 +90,11 @@
     [self.videoCryptoSwitch addTarget:self.settingViewController action:@selector(setVideoCryptoSwitch) forControlEvents:UIControlEventValueChanged];
     [self.videoCryptoSwitch setOn:kLoginManager.isOpenVideoCrypto];
     
+    //视频加解密
+    self.srtpSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(ScreenWidth -6-60, 6, 60, 28)];
+    [self.srtpSwitch addTarget:self.settingViewController action:@selector(setSRTPSwitch) forControlEvents:UIControlEventValueChanged];
+    [self.srtpSwitch setOn:kLoginManager.isOpenSRTP];
+    
 }
 
 @end

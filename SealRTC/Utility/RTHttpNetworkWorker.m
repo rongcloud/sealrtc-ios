@@ -115,7 +115,7 @@ static RTHttpNetworkWorker* defaultWorker = nil;
                                                         timeoutInterval:30.0];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    NSDictionary *dic = @{@"roomId":roomId, @"roomName":roomId,@"mcuUrl":liveUrl?liveUrl:@"",@"pubUserId":[RCIMClient sharedRCIMClient].currentUserInfo.userId};
+    NSDictionary *dic = @{@"roomId":roomId?roomId:@"", @"roomName":roomName?roomName:@"",@"mcuUrl":liveUrl?liveUrl:@"",@"pubUserId":[RCIMClient sharedRCIMClient].currentUserInfo.userId};
     NSData* data = [NSJSONSerialization dataWithJSONObject:dic options:kNilOptions error:nil];
     request.HTTPBody = data;
     NSURLSession* session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];

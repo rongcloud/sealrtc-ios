@@ -10,6 +10,7 @@
 #import "RCRTCVideoSourceInterface.h"
 
 @class RCRTCLocalVideoView;
+@class RCRTCVideoTextureView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param sample 媒体数据
  @param error 失败时返回的相关描述
- @discussion 写入媒体流, 该方法会直接将视频数据进行视频编码并发送只远端
+ @discussion 写入媒体流, 该方法会直接将视频数据进行视频编码并发送至远端
  
  @remarks 资源管理
  */
@@ -37,22 +38,24 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RCRTCVideoOutputStream : RCRTCOutputStream <RCRTCVideoObserverInterface>
 
 /**
- 是否启用视频小流。摄像头视频流，默认开启。自定义视频流，默认关闭
+ 是否启用视频小流
+
+ 摄像头视频流，默认开启。自定义视频流，默认关闭
  */
 @property (nonatomic, assign, readwrite) BOOL enableTinyStream;
 
 /**
- 可动态调整的视频配置
+ 本地视频配置
  */
 @property (nonatomic, copy) RCRTCVideoStreamConfig *videoConfig;
 
 /**
- 视频流数据源
+ 输出视频源
  */
 @property (nonatomic, weak) id<RCRTCVideoSourceInterface> videoSource;
 
 /*!
- 初始化流数据的参数
+ 初始化视频流数据并设置标签
  
  @param tag 用户自定标签，注：用户不能传特殊字符，只支持 ASCII
  @discussion
@@ -64,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initVideoOutputStreamWithTag:(NSString *)tag;
 
 /*!
- 设置视频媒体数据的渲染界面
+ 设置视频流的渲染视图
  
  @param render 渲染界面，传空则将原视图删除
  @discussion
@@ -73,6 +76,17 @@ NS_ASSUME_NONNULL_BEGIN
  @remarks 资源管理
  */
 - (void)setVideoView:(nullable RCRTCLocalVideoView *)render;
+
+/*!
+ 设置视频媒体数据的渲染纹理界面
+ 
+ @param view 渲染纹理界面，传空则将原视图删除
+ @discussion
+ 设置视频媒体数据的渲染纹理界面
+ 
+ @remarks 资源管理
+ */
+- (void)setVideoTextureView:(nullable RCRTCVideoTextureView *)view;
 
 /*!
  设置视频源

@@ -252,6 +252,35 @@
 
 @end
 
+#pragma mark - 消息扩展监听
+/**
+ 消息扩展内容变化回调
+ @discussion 设置代理请参考 RCIMClient 的 messageExpansionDelegate 方法
+ @discussion 代理回调在非主线程
+ */
+@protocol RCMessageExpansionDelegate <NSObject>
+/**
+ 消息扩展信息更改的回调
+
+ @param expansionDic 消息扩展信息中更新的键值对
+ @param message 消息
+
+ @discussion expansionDic 只包含更新的键值对，不是全部的数据。如果想获取全部的键值对，请使用 message 的 expansionDic 属性。
+*/
+- (void)messageExpansionDidUpdate:(NSDictionary<NSString *, NSString *> *)expansionDic
+                              message:(RCMessage *)message;
+
+/**
+ 消息扩展信息删除的回调
+
+ @param keyArray 消息扩展信息中删除的键值对 key 列表
+ @param message 消息
+
+*/
+- (void)messageExpansionDidRemove:(NSArray<NSString *> *)keyArray
+                            message:(RCMessage *)message;
+
+@end
 #pragma mark - 聊天室 KV 状态变化
 
 /**

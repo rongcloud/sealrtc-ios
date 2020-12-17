@@ -58,6 +58,7 @@ static NSUserDefaults *settingUserDefaults = nil;
 #ifdef IS_CRYPTO
     [self.settingTableViewCellArray addObject:@"setting_crypto"];
 #endif
+    [self.settingTableViewCellArray addObject:@"setting_srtp"];
     self.sectionNumber = [self.settingTableViewCellArray count];
     [self.settingViewBuilder.tableView reloadData];
     self.settingViewBuilder.userIDTextField.text = kLoginManager.userID;
@@ -122,6 +123,10 @@ static NSUserDefaults *settingUserDefaults = nil;
 
 -(void)setVideoCryptoSwitch{
     [kLoginManager setIsOpenVideoCrypto:self.settingViewBuilder.videoCryptoSwitch.on];
+}
+
+-(void)setSRTPSwitch{
+    [kLoginManager setIsOpenSRTP:self.settingViewBuilder.srtpSwitch.on];
 }
 
 - (void)longPressedGestureAction:(UILongPressGestureRecognizer *)gesture {

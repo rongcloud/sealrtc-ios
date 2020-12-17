@@ -31,10 +31,23 @@ NS_ASSUME_NONNULL_BEGIN
  @remarks 资源管理
  */
 - (void)setMixStreamConfig:(RCRTCMixConfig *)config
+                completion:(void (^) (BOOL isSuccess, RCRTCCode code))completion DEPRECATED_MSG_ATTRIBUTE("use setMixConfig:completion: API instead");
+
+/*!
+ 设置混流布局配置
+ 
+ @param config 混流布局配置
+ @param completion 动作的回调
+ @discussion
+ 设置混流布局配置
+ 
+ @remarks 资源管理
+ */
+- (void)setMixConfig:(RCRTCMixConfig *)config
                 completion:(void (^) (BOOL isSuccess, RCRTCCode code))completion;
 
-/*
- 添加一个推流地址
+/*!
+ 添加一个 CDN 直播推流地址
  
  @param url 推流地址
  @param completion 回调
@@ -42,10 +55,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addPublishStreamUrl:(NSString *)url
                  completion:(void (^)(BOOL isSuccess, RCRTCCode code, NSArray *))completion;
 
-/*
- 移除一个推流地址
+/*!
+ 删除一个 CDN 直播推流地址
  
- @param url 要移除的推流地址
+ @param url 要删除的推流地址
  @param completion 回调
  */
 - (void)removePublishStreamUrl:(NSString *)url

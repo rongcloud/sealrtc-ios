@@ -130,12 +130,7 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
 
 - (void)didPublishStreams:(NSArray <RCRTCInputStream *>*)streams
 {
-    // 去掉布局
-//    RongRTCMixStreamConfig *streamConfig = [self setOutputConfigWithMode:1 renderMode:2];
-//    [[RCRTCEngine sharedInstance] setMixStreamConfig:streamConfig completion:^(BOOL isSuccess, RCRTCCode code) {
-//        NSLog(@"%ld",code);
-//    }];
-    FwLogD(RC_Type_APP,@"A-appPublishStreaam-T",@"%@appPublishStream",@"sealRTCApp:");
+    FwLogD(RC_Type_APP,@"A-appReceivePublishStream-T",@"%@app receive publish streams",@"sealRTCApp:");
     [self.chatViewController receivePublishMessage];
     [self.chatViewController subscribeRemoteResource:streams];
 }
@@ -146,7 +141,7 @@ NSNotificationName const STParticipantsInfoDidUpdate = @"STParticipantsInfoDidUp
  */
 - (void)didUnpublishStreams:(NSArray<RCRTCInputStream *>*)streams
 {
-    FwLogD(RC_Type_APP,@"A-appReceiveUnpublishStream-T",@"%@app receive unpublishstreams",@"sealRTCApp:");
+    FwLogD(RC_Type_APP,@"A-appReceiveUnpublishStream-T",@"%@app receive unpublish streams",@"sealRTCApp:");
     
     __weak ChatViewController *weakChatVC = self.chatViewController;
     dispatch_async(dispatch_get_main_queue(), ^{

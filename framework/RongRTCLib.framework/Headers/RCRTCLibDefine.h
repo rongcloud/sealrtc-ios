@@ -25,13 +25,13 @@
  某些操作的回调
  
  @param isSuccess 操作是否成功
- @param desc 成功或者失败描述的错误码
+ @param code 成功或者失败描述的错误码
  @discussion
  某些操作的回调
  
  @remarks 资源管理
  */
-typedef void(^RCRTCOperationCallback)(BOOL isSuccess, RCRTCCode desc);
+typedef void(^RCRTCOperationCallback)(BOOL isSuccess, RCRTCCode code);
 
 /*!
  直播操作的回调
@@ -154,7 +154,11 @@ typedef NS_ENUM(NSUInteger, RCRTCVideoSizePreset) {
     /*!
      分辨率 1280X720
      */
-    RCRTCVideoSizePreset1280x720
+    RCRTCVideoSizePreset1280x720,
+    /*!
+     分辨率 1920X1080
+     */
+    RCRTCVideoSizePreset1920x1080
 };
 
 /*!
@@ -358,29 +362,14 @@ typedef NS_ENUM(NSUInteger, RCRTCAudioScenarioMusicPlayMode) {
 typedef CMSampleBufferRef _Nullable (^RCRTCVideoCMSampleBufferCallback)(BOOL valid,CMSampleBufferRef _Nullable sampleBuffer);
 
 /*!
- 接收到音频输入输出的回调
- 
- @param isOutput 1 证明是从本端发到远端的数据, 0 是接收到的音频数据
- @param audioSamples 音频 PCM 数据
- @param length PCM 数据长度
- @param channels 通道数
- @param sampleRate 采样率
- @discussion
- 接收到音频输入输出的回调
- 
- @remarks 音频流处理
- */
-typedef void (^RCRTCAudioPCMBufferCallback)(BOOL isOutput, const short *_Nullable audioSamples, const int length, const int channels, const int sampleRate);
-
-/*!
- 发送到音频输入输出的回调
+ 音频输入输出的回调
  
  @param inNumberFrames 帧个数
  @param ioData 音频 pcm 数据
  @param inTimeStamp 音频时间戳
  @param asbd 音频数据格式
  @discussion
- 发送到音频输入输出的回调
+ 音频输入输出的回调
  
  @remarks 音频流处理
  */

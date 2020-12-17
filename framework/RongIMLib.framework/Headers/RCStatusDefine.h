@@ -87,6 +87,11 @@ typedef NS_ENUM(NSInteger, RCConnectErrorCode) {
       @discussion 重连过程中当前用户在其它设备上登录
      */
     RC_CONN_OTHER_DEVICE_LOGIN = 31023,
+    
+    /*!
+     连接超过并发限定值
+     */
+    CONCURRENT_LIMIT_ERROR = 31024,
 
     /*!
      SDK 没有初始化
@@ -293,11 +298,67 @@ typedef NS_ENUM(NSInteger, RCErrorCode) {
      历史消息云存储业务未开通。可以在融云开发者后台中开启该服务。
      */
     MSG_ROAMING_SERVICE_UNAVAILABLE = 33007,
+    
+    /*!
+     公众号非法类型，针对会话类型：ConversationType_APPSERVICE
+     */
+    RC_APP_PUBLICSERVICE_ERROR_TYPE = 29201,
 
     /*!
-     无效的公众号。(由会话类型和 Id 所标识的公众号会话是无效的)
+     公众号默认已关注，针对会话类型：ConversationType_APPSERVICE
+     */
+    RC_APP_PUBLICSERVICE_DEFFOLLOWED = 29102,
+    
+    /*!
+     公众号已关注，针对会话类型：ConversationType_APPSERVICE
+     */
+    RC_APP_PUBLICSERVICE_FOLLOWED = 29103,
+    
+    /*!
+     公众号默认已取消关注，针对会话类型：ConversationType_APPSERVICE
+     */
+    RC_APP_PUBLICSERVICE_DEFUNFOLLOWED = 29104,
+    
+    /*!
+     公众号已经取消关注，针对会话类型：ConversationType_APPSERVICE
+     */
+    RC_APP_PUBLICSERVICE_UNFOLLOWED = 29105,
+    
+    /*!
+     公众号未关注，针对会话类型：ConversationType_APPSERVICE
+     */
+    RC_APP_PUBLICSERVICE_UNFOLLOW = 29106,
+
+    /*!
+     公众号非法类型，针对会话类型：ConversationType_PUBLICSERVICE
      */
     INVALID_PUBLIC_NUMBER = 29201,
+
+    /*!
+     公众号默认已关注，针对会话类型：ConversationType_PUBLICSERVICE
+     */
+    RC_PUBLICSERVICE_DEFFOLLOWED = 29202,
+    
+    /*!
+     公众号已关注，针对会话类型：ConversationType_PUBLICSERVICE
+     */
+    RC_PUBLICSERVICE_FOLLOWED = 29203,
+    
+    /*!
+     公众号默认已取消关注，针对会话类型：ConversationType_PUBLICSERVICE
+     */
+    RC_PUBLICSERVICE_DEFUNFOLLOWED = 29204,
+    
+    /*!
+     公众号已经取消关注，针对会话类型：ConversationType_PUBLICSERVICE
+     */
+    RC_PUBLICSERVICE_UNFOLLOWED = 29205,
+    
+    /*!
+     公众号未关注，针对会话类型：ConversationType_PUBLICSERVICE
+     */
+    RC_PUBLICSERVICE_UNFOLLOW = 29206,
+    
     /*!
       消息大小超限，消息体（序列化成 json 格式之后的内容）最大 128k bytes。
      */
@@ -348,7 +409,28 @@ typedef NS_ENUM(NSInteger, RCErrorCode) {
      * <p>请确认查询的公共服务的类型和公共服务 id 是否匹配。</p>
      */
     RC_PUBLIC_SERVICE_PROFILE_NOT_EXIST = 34007,
+    
+    /**
+    * 消息不能被扩展。
+    * <p>消息在发送时，RCMessage 对象的属性 canIncludeExpansion 置为 YES 才能进行扩展。</p>
+    */
+    RC_MESSAGE_CANT_EXPAND = 34008,
 
+    /**
+    * 消息扩展失败。
+    * <p>一般是网络原因导致的，请确保网络状态良好，并且融云 SDK 连接正常</p>
+    */
+    RC_MESSAGE_EXPAND_FAIL = 34009,
+    
+    /*!
+     消息扩展大小超出限制， 默认消息扩展字典 key 长度不超过 32 ，value 长度不超过 64 ，单次设置扩展数量最大为 20，消息的扩展总数不能超过 300
+     */
+    RC_MSG_EXPANSION_SIZE_LIMIT_EXCEED = 34010,
+    
+    /*!
+     媒体消息媒体文件 http  上传失败
+     */
+    RC_FILE_UPLOAD_FAILED = 34011,
 };
 
 typedef NS_ENUM(NSInteger, RCDBErrorCode) {
@@ -1045,7 +1127,11 @@ typedef NS_ENUM(NSUInteger, RCPushLauguage) {
     /*!
      中文
      */
-    RCPushLauguage_ZH_CN
+    RCPushLauguage_ZH_CN = 2,
+    /*!
+     阿拉伯文
+     */
+    RCPushLauguage_AR_SA
 };
 
 #endif

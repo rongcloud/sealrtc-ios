@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RCRTCAudioConfig : NSObject
 
 /*!
- 音频的码率
+ 本地音频码率
  */
 @property (nonatomic, assign) NSUInteger bitrate;
 

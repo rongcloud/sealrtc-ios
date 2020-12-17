@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  加入房间场景
  */
-@property (nonatomic) RCRTCRoomType roomType;
+@property (nonatomic, assign) RCRTCRoomType roomType;
 
 /*!
  直播类型，仅在 RCRTCRoomType 为 RCRTCRoomTypeLive 时可用，选择当前为音频直播还是音视频直播

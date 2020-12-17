@@ -112,5 +112,15 @@
 		<key>step</key>
 		<integer>50</integer>
 	</dict>
+	<dict>
+		<key>min</key>
+		<integer>400</integer>
+		<key>max</key>
+		<integer>6000</integer>
+		<key>default</key>
+		<real>4000</real>
+		<key>step</key>
+		<integer>50</integer>
+	</dict>
 </array>
 </plist>

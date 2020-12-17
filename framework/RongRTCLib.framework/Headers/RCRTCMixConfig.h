@@ -12,19 +12,19 @@
 #import "RCRTCStream.h"
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSInteger , RCRTCMixLayoutMode) {
+typedef NS_ENUM (NSInteger, RCRTCMixLayoutMode) {
     /*!
      自定义布局
      */
-    RCRTCMixLayoutModeCustom = 1 ,
+    RCRTCMixLayoutModeCustom     = 1,
     /*!
      悬浮布局
     */
-    RCRTCMixLayoutModeSuspension = 2 ,
+    RCRTCMixLayoutModeSuspension = 2,
     /*!
      自适应布局
     */
-    RCRTCMixLayoutModeAdaptive = 3,
+    RCRTCMixLayoutModeAdaptive   = 3
 };
 
 
@@ -33,11 +33,12 @@ typedef NS_ENUM(NSInteger , RCRTCMixLayoutMode) {
 /*!
  合流服务版本，不支持修改。
  */
-@property (nonatomic, assign,readonly) int version;
+@property (nonatomic, assign, readonly) NSInteger version;
 
 /*!
- 合流模式，1： 自定义布局    2：悬浮布局  3：自适应布局
- 
+ 合流布局模式
+
+ 1：自定义布局  2：悬浮布局  3：自适应布局
  模式 2 和 3 时不需要设置 用户的 customLayoutList
  */
 @property (nonatomic, assign) RCRTCMixLayoutMode layoutMode;

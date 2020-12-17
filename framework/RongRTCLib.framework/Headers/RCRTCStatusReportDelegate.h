@@ -1,5 +1,5 @@
 //
-//  RCRTCActivityMonitorDelegate.h
+//  RCRTCStatusReportDelegate.h
 //  RongRTCLib
 //
 //  Created by RongCloud on 2019/6/12.
@@ -9,22 +9,23 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-@class RCRTCStatisticalForm;
 
-@protocol RCRTCActivityMonitorDelegate <NSObject>
+@class RCRTCStatusForm;
+
+@protocol RCRTCStatusReportDelegate <NSObject>
 
 @optional
 
 /*!
- 汇报 sdk 统计数据
+ 汇报 SDK 状态数据
 
- @param form 统计表单对象
+ @param form 状态表单对象
  @discussion
- 汇报 sdk 统计数据
+ 汇报 SDK 状态数据
  
  @remarks 代理
  */
-- (void)didReportStatForm:(RCRTCStatisticalForm*)form;
+- (void)didReportStatusForm:(RCRTCStatusForm*)form;
 
 @end
 

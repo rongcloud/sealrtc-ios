@@ -20,22 +20,26 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RCRTCVideoStreamConfig : NSObject
 
 /*!
- 摄像头输出的视频分辨率, 默认: RCRTCVideoSizePreset640x480
+ 视频发送的分辨率
+ 默认: RCRTCVideoSizePreset640x480
  */
 @property (nonatomic, assign) RCRTCVideoSizePreset videoSizePreset;
 
 /*!
- 视频发送帧率. 默认: 15 FPS
+ 视频发送的帧率
+ 默认: 15 FPS
  */
 @property (nonatomic, assign) RCRTCVideoFPS videoFps;
 
 /*!
- 最大码率, 默认 640x480 分辨率时, 默认: 1000 kbps，如果外部修改过该值，使用修改的值
+ 视频发送的最大码率
+ 默认 640x480 分辨率时, 默认: 1000 kbps，如果外部修改过该值，使用修改的值
  */
 @property (nonatomic, assign) NSUInteger maxBitrate;
 
 /*!
- 最小码率, 默认 640x480 分辨率时, 默认: 350 kbps，如果外部修改过该值，使用修改的值
+ 视频发送的最小码率
+ 默认 640x480 分辨率时, 默认: 350 kbps，如果外部修改过该值，使用修改的值
  */
 @property (nonatomic, assign) NSUInteger minBitrate;
 

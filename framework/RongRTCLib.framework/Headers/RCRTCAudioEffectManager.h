@@ -2,15 +2,29 @@
 //  RCRTCEffectManager.h
 //  RongRTCLib
 //
-//  Created by 孙承秀 on 2020/8/18.
+//  Created by RongCloud on 2020/8/18.
 //  Copyright © 2020 RongCloud. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-
 #import "RCRTCCodeDefine.h"
+@protocol RCRTCSoundEffectProtocol;
 NS_ASSUME_NONNULL_BEGIN
-@interface RCRTCEffectManager : NSObject
+
+@interface RCRTCAudioEffectManager : NSObject
+
+/**
+ delegate
+ */
+@property (nonatomic , weak) id<RCRTCSoundEffectProtocol> delegate;
+
+/// 开启或关闭耳返
+/// @param enabled YES 开启，NO 关闭，默认为 NO
+- (void)enableInEarMonitoring:(BOOL)enabled;
+
+/// 设置耳返音量
+/// @param volume [0,100]
+- (void)setInEarMonitoringVolume:(NSUInteger)volume ;
 
 /// 播放指定音效文件，filePath 必须可用，需要指定唯一的 ID，如果调用`preloadEffect`接口设置过 ID，此 ID 要与其相同
 /// 如果前后传入相同的 ID，但是 filePath 不同，会覆盖，播放最新的 filePath 音效
@@ -65,7 +79,32 @@ NS_ASSUME_NONNULL_BEGIN
 /// 获取全局音效的音量
 - (NSUInteger)getEffectsVolume;
 
+@end
+/*!
+ 音效代理方法
+ */
+@protocol RCRTCSoundEffectProtocol <NSObject>
+
+/*!
+ 当前音效播放进度
+ 
+ @param progress 播放进度 range [0,1]
+ @discussion
+ 当前播放进度
+ 
+ @remarks 代理
+ */
+- (void)didReportEffectPlayingProgress:(float)progress effectId:(NSUInteger)effectId;
+
+/*!
+ 音效播放结束，如果循环播放多次，多次循环后调用
+ 
+ @discussion
+ 播放结束，如果循环播放多次，多次循环后调用
+ 
+ @remarks 代理
+ */
+- (void)didEffectFinished:(NSUInteger)effectId;
 
 @end
-
 NS_ASSUME_NONNULL_END

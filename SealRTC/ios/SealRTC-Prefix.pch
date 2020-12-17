@@ -73,6 +73,8 @@
 
 #define Key_IsOpenAudioCrypto @"isOpenAudioCrypto"
 #define Key_IsOpenVideoCrypto @"isOpenVideoCrypto"
+#define Key_IsOpenSRTP @"isOpenSRTP"
+#define Key_IsInEar @"isInEar"
 
 #define Value_Default_ResolutionRatio 8
 #define Value_Default_FrameRate 1
@@ -80,13 +82,14 @@
 #define Value_Default_Coding_Style 0
 #define Value_Default_MinCodeRate 6
 #define Value_Default_GPUFilter NO
-#define Value_Default_SRTPEncrypt NO
+#define Value_Default_OpenSRTP NO
 #define Value_Default_AudioScenarioMusic NO
 #define Value_Default_QuicMode NO
 #define Value_Default_TinyStream YES
 #define Value_Default_WaterMark NO
 #define Value_Default_AutoTest NO
 #define Value_Default_MediaServerRow 0
+
 #define IS_DEFAULT_CHATWIEW YES
 #define Key_Force_Close_Log NO
 #define IS_NOT_PRIVATE_ENVIRONMENT

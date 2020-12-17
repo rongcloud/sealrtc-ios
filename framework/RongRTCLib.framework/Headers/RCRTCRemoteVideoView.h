@@ -20,11 +20,11 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param isHidden 是否隐藏, YES 隐藏  NO 不隐藏
  @discussion
- 隐藏视图后, 显示为纯黑底色
+ 隐藏视图
  
  @remarks 视频配置
  */
-- (void)hiddenVideoView:(BOOL)isHidden;
+- (void)setHidden:(BOOL)isHidden;
 
 @end
 

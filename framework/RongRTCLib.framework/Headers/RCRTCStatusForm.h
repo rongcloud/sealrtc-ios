@@ -1,5 +1,5 @@
 //
-//  RCRTCStatisticalForm.h
+//  RCRTCStatusForm.h
 //  RongRTCLib
 //
 //  Created by RongCloud on 2019/5/30.
@@ -108,7 +108,7 @@ typedef NS_ENUM(NSInteger, RongRTCStreamState) {
 /*!
  sdk 状态统计表
  */
-@interface RCRTCStatisticalForm : NSObject
+@interface RCRTCStatusForm : NSObject
 
 /*!
  cpu 使用率
@@ -178,7 +178,7 @@ typedef NS_ENUM(NSInteger, RongRTCStreamState) {
 @end
 
 
-@interface RCRTCStatisticalForm (stat)
+@interface RCRTCStatusForm (stat)
 
 - (NSString*)rc_R5FormString;
 

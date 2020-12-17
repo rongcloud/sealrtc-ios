@@ -47,7 +47,7 @@
     self.allCountryDic = [[NSDictionary alloc] init];
     self.allSearchCountryDic = [[NSDictionary alloc] init];
     __weak typeof(self) weakSelf = self;
-    NSURL* urlPost = [NSURL URLWithString:@"http://api.sealtalk.im/user/regionlist"];
+    NSURL* urlPost = [NSURL URLWithString:@"http://api-sealtalk.rongcloud.cn/user/regionlist"];
     NSMutableURLRequest *request  = [NSMutableURLRequest requestWithURL:urlPost];
     request.HTTPMethod = @"GET";
 

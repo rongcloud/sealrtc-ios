@@ -15,6 +15,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class RCRTCRemoteVideoView;
+@class RCRTCVideoTextureView;
 @class RCRTCInputStream;
 
 /*!

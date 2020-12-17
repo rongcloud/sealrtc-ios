@@ -30,22 +30,25 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) NSInteger bitrateValue;
 
 /*!
- 音频编解码方式, 默认: OPUS
+ 音频编解码方式
+ 默认: OPUS
  */
 @property (nonatomic, assign, readwrite) RCRTCAudioCodecType audioCodecType;
 
 /*!
- 音频使用模式，默认: 普通通话模式，RongRTC 支持音乐场景下的使用
+ 音质模式
+ 默认: 普通通话模式，RongRTC 支持音乐场景下的使用
  */
 @property (nonatomic, assign, readwrite) RCRTCAudioScenario audioScenario;
 
 /*!
+ 演奏模式
  当 RTC 音频为音乐模式时，可以设置音乐演奏模式，默认常规演奏模式
  */
 @property (nonatomic, assign, readwrite) RCRTCAudioScenarioMusicPlayMode musicPlayMode;
 
 /*!
- 将要发送的音频 pcm 数据的回调
+ 本地发送的音频数据（合流）回调
  */
 @property (nonatomic, copy, nullable) RCRTCAudioDataCallback willSendAudioBufferCallback;
 

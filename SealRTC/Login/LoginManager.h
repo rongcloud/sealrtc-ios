@@ -15,7 +15,7 @@
 @interface LoginManager : NSObject
 
 @property (nonatomic, strong) NSURL *tokenURL;
-@property (nonatomic, assign) BOOL isGPUFilter, isSRTPEncrypt, isTinyStream, isWaterMark , isHost, isAudioScenarioMusic , isVideoMirror, isOpenAudioCrypto, isOpenVideoCrypto;
+@property (nonatomic, assign) BOOL isGPUFilter, isTinyStream, isWaterMark , isHost, isAudioScenarioMusic , isVideoMirror, isOpenAudioCrypto, isOpenVideoCrypto, isOpenSRTP;
 @property (nonatomic, assign) NSInteger resolutionRatioIndex, frameRateIndex, maxCodeRateIndex, minCodeRateIndex, codingStyleIndex, mediaServerSelectedRow;
 @property (nonatomic, strong) NSString *roomNumber, *keyToken, *appKey, *phoneNumber, *userID,*username,*countryCode,*regionName , *liveUrl, *navi;
 @property (nonatomic, strong) NSString *selectedServer, *mediaServerURL;

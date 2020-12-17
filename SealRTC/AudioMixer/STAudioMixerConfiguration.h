@@ -23,7 +23,9 @@ typedef NS_OPTIONS(NSUInteger, STAudioMixingOption) {
 @property (nonatomic, assign) NSInteger micVolume;
 @property (nonatomic, assign) NSInteger remoteVolume;
 @property (nonatomic, assign) NSInteger mixerModeIndex;
-@property (nonatomic, assign)   STAudioMixingOption mixingOption;
+@property (nonatomic, assign) STAudioMixingOption mixingOption;
+@property (nonatomic, assign) BOOL isInEar;
+@property (nonatomic, assign) NSInteger inEarMonitoringVolume;
 @end
 
 NS_ASSUME_NONNULL_END

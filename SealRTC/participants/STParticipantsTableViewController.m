@@ -52,7 +52,7 @@ extern NSNotificationName const STParticipantsInfoDidUpdate;
                 [mutableSet addIndex:i];
             }
         }
-        [self.dataSource removeObjectsAtIndexes:[mutableSet copy]];
+        [self.dataSource removeObjectsAtIndexes:mutableSet];
         
         for (STParticipantsInfo* info in source) {
             if (info.userId.length > 0) {
@@ -126,7 +126,11 @@ extern NSNotificationName const STParticipantsInfoDidUpdate;
     }];
 #pragma clang diagnostic pop
     [self updateParticipantsCount];
-    self.preferredContentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height / 2);
+    
+    //iOS14 此时无法获取到 view 的大小
+    //self.preferredContentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height / 2);
+    self.preferredContentSize = CGSizeMake(ScreenWidth, ScreenHeight / 2);
+    
     //[self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:@"ParticipantsCell"];
     self.tableView.tableHeaderView = self.tableHeader;
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -174,10 +178,6 @@ extern NSNotificationName const STParticipantsInfoDidUpdate;
         return UITableViewCellEditingStyleNone;
     }
     return UITableViewCellEditingStyleDelete;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {

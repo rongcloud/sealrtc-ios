@@ -28,13 +28,12 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
     AVAssetReaderTrackOutput *_outAudioTrack;
     RCRTCFileVideoCapturerStatus _status;
     CMTime _lastPresentationTime;
-    dispatch_queue_t _frameQueue;
     NSURL *_fileURL;
     
     Float64 _currentMediaTime;
     Float64 _currentVideoTime;
     NSThread* _audioDecodeThread;
-    //dispatch_queue_t _completionQueue;
+    NSThread* _videoThread;
 }
 
 @synthesize observer = _observer;
@@ -44,18 +43,6 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
 
     if (self) {
         _currentPath = filePath;
-        //_completionQueue = dispatch_queue_create("com.rongcloud.file.completion.queue", NULL);
-        if (@available(iOS 10, macOS 10.12, tvOS 10, watchOS 3, *)) {
-            _frameQueue = 
-                dispatch_queue_create_with_target("org.webrtc.filecapturer.video", 
-                                                  DISPATCH_QUEUE_SERIAL, 
-                                                  dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0));
-        } else {
-            _frameQueue = 
-                dispatch_queue_create("org.webrtc.filecapturer.video", DISPATCH_QUEUE_SERIAL);
-            dispatch_set_target_queue(_frameQueue, 
-                                      dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0));
-        }
     }
 
     return self;
@@ -82,18 +69,19 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
         return NO;
     } else {
         _status = RCRTCFileVideoCapturerStatusStarted;
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            self->_lastPresentationTime = CMTimeMake(0, 0);
-            self->_fileURL = [NSURL fileURLWithPath:self->_currentPath];
-            [self setupReader];
-        });
+        self->_lastPresentationTime = CMTimeMake(0, 0);
+        self->_fileURL = [NSURL fileURLWithPath:self->_currentPath];
+        [self.delegate didWillStartRead];
+        [self setupReader];
     }
+
     return YES;
 }
 
 - (BOOL)stop {
     _status = RCRTCFileVideoCapturerStatusStopped;
     [_audioDecodeThread cancel];
+    [_videoThread cancel];
     return YES;
 }
 
@@ -117,9 +105,7 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
     SInt64 sampleTime = 0;
     while (![NSThread currentThread].isCancelled) {
         CMSampleBufferRef sample = [_outAudioTrack copyNextSampleBuffer];
-        if (!sample) {
-            break;
-        }
+        if (!sample) break;
         AudioBufferList abl = {0};
         CMBlockBufferRef blockBuffer;
         CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sample,
@@ -150,9 +136,6 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
     NSError *error = nil;
     // 可以矫正由于时间偏差导致输出不准确的问题，也可以解决循环播放导致的中间播放延迟，中间会丢弃一部分视频帧
     _currentMediaTime = CACurrentMediaTime();
-    _currentVideoTime = _currentMediaTime;
-    
-    _lastPresentationTime = CMTimeMakeWithSeconds(0.0, 1);
     _reader = [[AVAssetReader alloc] initWithAsset:asset error:&error];
     if (error) {
         return;
@@ -164,20 +147,22 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
     _outVideoTrack =
         [[AVAssetReaderTrackOutput alloc] initWithTrack:allTracks.firstObject 
                                          outputSettings:options];
-    _outVideoTrack.alwaysCopiesSampleData = NO;
+    //_outVideoTrack.alwaysCopiesSampleData = NO;
     [_reader addOutput:_outVideoTrack];
     [self setupAudioTrakOutput:asset];
     [_reader startReading];
     if (!_audioDecodeThread) {
         _audioDecodeThread = 
             [[NSThread alloc] initWithTarget:self selector:@selector(audioDecode) object:nil];
+        _audioDecodeThread.name = @"com.rongcloud.filecapturer.audio";
     }
     [_audioDecodeThread start];
-    [self readNextBuffer];
-}
-
-- (void)readBuffer{
-    
+    if (!_videoThread) {
+        _videoThread = 
+            [[NSThread alloc] initWithTarget:self selector:@selector(videoProcess) object:nil];
+        _videoThread.name = @"com.rongcloud.filecapturer.video";
+    }
+    [_videoThread start];
 }
 
 - (nullable NSString *)pathForFileName:(NSString *)fileName {
@@ -191,14 +176,14 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
     return path;
 }
 
-- (void)readNextBuffer {
+- (void)checkStatus {
     if (_status == RCRTCFileVideoCapturerStatusStopped) {
         [_reader cancelReading];
         _reader = nil;
         [_audioDecodeThread cancel];
         _outAudioTrack = nil;
-        [self.delegate didReadCompleted];
-
+        [_videoThread cancel];
+        _outVideoTrack = nil;
         return;
     }
     
@@ -207,102 +192,66 @@ typedef NS_ENUM(NSInteger, RCRTCFileVideoCapturerStatus) {
         _reader = nil;
         [_audioDecodeThread cancel];
         _outAudioTrack = nil;
+        [_videoThread cancel];
+        _outVideoTrack = nil;
         [self.delegate didReadCompleted];
         [self setupReader];
-
         return;
     }
-    
-    CMSampleBufferRef sampleBuffer = [_outVideoTrack copyNextSampleBuffer];
-    if (!sampleBuffer) {
-        __weak typeof(self) weakSelf = self;
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [weakSelf readNextBuffer];
-        });
-        
-        return;
-    }
-    if (CMSampleBufferGetNumSamples(sampleBuffer) != 1 || !CMSampleBufferIsValid(sampleBuffer) ||
-        !CMSampleBufferDataIsReady(sampleBuffer)) {
-        CFRelease(sampleBuffer);
-        [self readNextBuffer];
-        return;
-    }
-    
-    [self publishSampleBuffer:sampleBuffer];
 }
 
-- (void)publishSampleBuffer:(CMSampleBufferRef)sampleBuffer {
-    CMTime presentationTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
-    Float64 presentationDifference =
-    CMTimeGetSeconds(CMTimeSubtract(presentationTime, _lastPresentationTime));
-    _lastPresentationTime = presentationTime;
-    __weak typeof(self) weakSelf = self;
-    if (isnan(presentationDifference)) {
-        CFRelease(sampleBuffer);
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [weakSelf readNextBuffer];
-        });
-        return;
-    }
-    _currentVideoTime += presentationDifference;
-    _currentMediaTime = CACurrentMediaTime();
-    
-    Float64 delta = fabs(_currentMediaTime - _currentVideoTime);
-    if (presentationDifference != 0 && delta > 0.2) {
-        if (delta > 2) {
-            _currentVideoTime = _currentMediaTime;
-        }
-        CFRelease(sampleBuffer);
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [weakSelf readNextBuffer];
-        });
-        return;
-    }
-    int64_t presentationDifferenceRound = lroundf(presentationDifference * NSEC_PER_SEC);
-    
-    __block dispatch_source_t timer = [self createStrictTimer];
-    // Strict timer that will fire |presentationDifferenceRound| ns from now and never again.
-    dispatch_source_set_timer(timer,
-                              dispatch_time(DISPATCH_TIME_NOW, presentationDifferenceRound),
-                              DISPATCH_TIME_FOREVER,
-                              0);
-    dispatch_source_set_event_handler(timer, ^{
-        dispatch_source_cancel(timer);
-        timer = nil;
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (!strongSelf) return;
-
-        CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-        if (!pixelBuffer) {
+- (void)videoProcess {
+    _lastPresentationTime = CMTimeMakeWithSeconds(0.0, 1);
+    _currentVideoTime = CACurrentMediaTime();
+    while (![NSThread currentThread].isCancelled) {
+        CMSampleBufferRef sampleBuffer = [_outVideoTrack copyNextSampleBuffer];
+        if (!sampleBuffer) break;
+        if (CMSampleBufferGetNumSamples(sampleBuffer) != 1 || 
+            !CMSampleBufferIsValid(sampleBuffer) ||
+            !CMSampleBufferDataIsReady(sampleBuffer)) {
+            FwLogD(RC_Type_DEB, @"L-customVideoProcess-S", @"sample buffer is error");
             CFRelease(sampleBuffer);
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [weakSelf readNextBuffer];
-            });
-            return;
+            continue;
+        }
+    
+        CMTime presentationTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+        Float64 presentationDifference =
+            CMTimeGetSeconds(CMTimeSubtract(presentationTime, _lastPresentationTime));
+        // FwLogD(RC_Type_DEB, @"L-customVideoProcess-S", 
+        //        @"presentationTime is %@, _lastPresentationTime is %@", 
+        //        CMTimeCopyDescription(NULL, presentationTime), 
+        //        CMTimeCopyDescription(NULL, _lastPresentationTime));
+        if (isnan(presentationDifference)) {
+            CFRelease(sampleBuffer);
+            continue;
+        }
+        _currentMediaTime = CACurrentMediaTime();
+    
+        Float64 delta = fabs(_currentMediaTime - _currentVideoTime - presentationDifference);
+        // FwLogD(RC_Type_DEB, @"L-customVideoProcess-S", 
+        //        @"presentationDifference is %lf, _currentVideoTime is %lf, _currentMediaTime is %lf", 
+        //        presentationDifference, _currentVideoTime, _currentMediaTime);
+        if (delta > 0.025 && presentationDifference != 0) {
+            if (_currentMediaTime < _currentVideoTime + presentationDifference) {
+//                FwLogD(RC_Type_DEB, @"L-customVideoProcess-S", @"%lf microseconds", delta * 1000000);
+                usleep(delta * 1000000);
+            } else {
+                FwLogD(RC_Type_DEB, @"L-customVideoProcess-S", @"video buffer time is expired");
+                CFRelease(sampleBuffer);
+                continue;
+            }
         }
 
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [weakSelf readNextBuffer];
-        });
-
+//        FwLogD(RC_Type_DEB, @"L-customVideoProcess-S", @"prepare writing sample buffer!");
         [self.observer write:sampleBuffer error:nil];
         CFRelease(sampleBuffer);
-    });
-    if (@available(iOS 10.0, *)) {
-        dispatch_activate(timer);
-    } else {
-        // Fallback on earlier versions
     }
-    // dispatch_async(_completionQueue, ^{
-    // });
-}
 
-- (dispatch_source_t)createStrictTimer {
-    dispatch_source_t timer =
-        dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, DISPATCH_TIMER_STRICT, _frameQueue);
-
-    return timer;
+    _videoThread = nil;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self checkStatus];
+    });
+    [NSThread exit];
 }
 
 - (void)dealloc {

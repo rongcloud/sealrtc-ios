@@ -331,6 +331,9 @@ static ChatManager *sharedMeetingManager = nil;
         case 10:
             self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset1280x720;
             break;
+        case 11:
+            self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset1920x1080;
+            break;
         default:
             self.videoCaptureParam.videoSizePreset = RCRTCVideoSizePreset640x480;
             break;

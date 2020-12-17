@@ -34,7 +34,7 @@
 
 
 - (NSDictionary*)toDictionary {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    NSMutableDictionary *dict = [NSMutableDictionary new];
     
     unsigned count;
     objc_property_t *properties = class_copyPropertyList([self class], &count);
@@ -51,11 +51,11 @@
     }
     
     if (properties) free(properties);
-    return [dict copy];
+    return dict;
 }
 
 - (NSDictionary*)toFullDictionary {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    NSMutableDictionary *dict = [NSMutableDictionary new];
     
     unsigned count;
     objc_property_t *properties = class_copyPropertyList([self class], &count);
@@ -76,7 +76,7 @@
     }
     
     if (properties) free(properties);
-    return [dict copy];
+    return dict;
 }
 
 

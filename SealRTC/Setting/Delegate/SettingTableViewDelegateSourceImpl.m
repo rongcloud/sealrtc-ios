@@ -126,6 +126,9 @@
                 default:
                     break;
             }
+        } else if ([cellName isEqualToString:@"setting_srtp"]) {
+            [cell.contentView addSubview:self.settingViewController.settingViewBuilder.srtpSwitch];
+            cell.textLabel.text = NSLocalizedString(@"setting_srtp", nil);
         }
     }
     return cell;
@@ -153,6 +156,8 @@
             return NSLocalizedString(@"Enable remote vedio mirroring", nil);
         } else if ([cellName isEqualToString:@"setting_crypto"]) {
             return NSLocalizedString(@"setting_crypto", nil);
+        } else if ([cellName isEqualToString:@"setting_srtp"]) {
+            return NSLocalizedString(@"setting_srtp", nil);
         }
     }
     return @"";

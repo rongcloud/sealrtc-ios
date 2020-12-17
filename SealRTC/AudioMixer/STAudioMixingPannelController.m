@@ -11,10 +11,15 @@
 #import "STAudioModeViewController.h"
 #import "STAudioMixerConfiguration.h"
 #import "RTActiveWheel.h"
+#import "RCEffectViewController.h"
+#import "RCDemoEffectViewController.h"
+#import "LoginManager.h"
+
 
 @interface STAudioMixingPannelController () <STAudioModeViewControllerDelegate,
                                              UIDocumentPickerDelegate,
                                              RCRTCAudioMixerAudioPlayDelegate>
+
 @property (weak, nonatomic) IBOutlet UILabel *fileNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *mixerModelLabel;
 @property (weak, nonatomic) IBOutlet UILabel *localVolumeLabel;
@@ -29,6 +34,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *endTimeLabel;
 @property (nonatomic, assign) Float64 audioFileDuration;
 @property (nonatomic, assign) BOOL updatePlayingTimeDisable;
+@property (weak, nonatomic) IBOutlet UISwitch *inEarSwitch;
+@property (weak, nonatomic) IBOutlet UISlider *inEarMonitoringVolumeSlider;
+@property (weak, nonatomic) IBOutlet UILabel *inEarMonitoringVolumeLabel;
+
 @end
 
 /**
@@ -38,7 +47,8 @@
  "play_and_mix_and_disbale_mic"="Playing and mixing, disable mic";
  */
 
-NSString* desc(NSInteger mode) {
+NSString * desc(NSInteger mode)
+{
     switch (mode) {
         case 0:
             return NSLocalizedString(@"play_and_mix", nil);
@@ -97,6 +107,9 @@ NSString* desc(NSInteger mode) {
     if ([RCRTCAudioMixer sharedInstance].status == RTCMixEngineStatusPlaying) {
         self.playBtn.selected = YES;
     }
+    self.inEarSwitch.on = self.config.isInEar;
+    self.inEarMonitoringVolumeLabel.text = [NSString stringWithFormat:@"%@",@((NSInteger)self.config.inEarMonitoringVolume)];
+    self.inEarMonitoringVolumeSlider.value = self.config.inEarMonitoringVolume;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -104,6 +117,11 @@ NSString* desc(NSInteger mode) {
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.title = NSLocalizedString(@"mixer_control", nil);
+    if ((self.config.mixingOption & STAudioMixingOptionReplaceMic) ) {
+        self.inEarSwitch.on = NO;
+        self.config.isInEar = NO;
+        [[RCRTCEngine sharedInstance].audioEffectManager enableInEarMonitoring:NO];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -133,10 +151,28 @@ NSString* desc(NSInteger mode) {
     self.config.micVolume = (NSInteger)sender.value;
     [[RCRTCEngine sharedInstance].defaultAudioStream setRecordingVolume:sender.value];
 }
+- (IBAction)inEarChange:(UISwitch *)sender {
+    NSLog(@"%@",@(sender.on));
+    if ((self.config.mixingOption & STAudioMixingOptionReplaceMic) ) {
+        self.inEarSwitch.on = NO;
+        self.config.isInEar = NO;
+        [[RCRTCEngine sharedInstance].audioEffectManager enableInEarMonitoring:NO];
+    } else {
+        self.config.isInEar = sender.on;
+        [[RCRTCEngine sharedInstance].audioEffectManager enableInEarMonitoring:sender.on];
+    }
+    
+}
 - (IBAction)remoteVolumeChanged:(UISlider *)sender {
     self.remoteVolumeLabel.text = [NSString stringWithFormat:@"%@",@((NSInteger)sender.value)];
     self.config.remoteVolume = (NSInteger)sender.value;
     [[RCRTCAudioMixer sharedInstance] setMixingVolume:sender.value];
+}
+- (IBAction)earReturnAction:(UISlider *)sender {
+    NSLog(@"%@",@(sender.value));
+    self.inEarMonitoringVolumeLabel.text = [NSString stringWithFormat:@"%@",@((NSInteger)sender.value)];
+    self.config.inEarMonitoringVolume = (NSInteger)sender.value;
+    [[RCRTCEngine sharedInstance].audioEffectManager setInEarMonitoringVolume:sender.value];
 }
 
 - (IBAction)progressDidChanged:(UISlider *)sender {
@@ -211,6 +247,10 @@ NSString* desc(NSInteger mode) {
             dpvc.shouldShowFileExtensions = YES;
         }
         [self presentViewController:dpvc animated:YES completion:nil];
+    }
+    if (indexPath.row == 4) {
+        RCDemoEffectViewController *effect = [[RCDemoEffectViewController alloc] init];
+        [self.navigationController pushViewController:effect animated:YES];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

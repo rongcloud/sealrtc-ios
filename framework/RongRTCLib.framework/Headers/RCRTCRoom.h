@@ -8,27 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-#import "RCRTCRoomEventDelegate.h"
+#import "RCRTCBaseRoom.h"
 #import "RCRTCLocalUser.h"
 #import "RCRTCRemoteUser.h"
-#import "RCRTCActivityMonitorDelegate.h"
+#import "RCRTCRoomEventDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /*!
  音视频通话的房间
  */
-@interface RCRTCRoom : NSObject
+@interface RCRTCRoom : RCRTCBaseRoom
 
 /*!
- 房间 Delegate
+ 房间事件代理
  */
 @property (nonatomic, weak) id <RCRTCRoomEventDelegate> delegate;
-
-/*!
- 房间ID
- */
-@property (nonatomic, copy, readonly) NSString *roomId;
 
 /*!
  当前用户
@@ -36,24 +31,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) RCRTCLocalUser *localUser;
 
 /*!
- 参与用户
+ 主房间中主播已经加入的副房间Id列表
  */
-@property (nonatomic, strong, readonly) NSArray<RCRTCRemoteUser *> *remoteUsers;
+@property (nonatomic, strong, readonly) NSArray *otherRoomIdArray;
 
 /*!
- 会话 id, 用于 server API，会话唯一标识
+ 远端音频数据（合流）回调
  */
-@property (nonatomic, copy, readonly) NSString *sessionId;
-
+@property (nonatomic, copy, nullable) RCRTCAudioDataCallback receivedAudioBufferCallback;
 /*!
- 根据 userId 获取房间内用户，不存在则返回 nil
- 
- @param userId user ID
- */
-- (RCRTCRemoteUser *)getRemoteUser:(NSString *)userId;
-
-/*!
- 将所有远端用户静音
+ 设置所有远端用户是否静音
  
  @param mute 是否静音所有远端用户, YES 禁止  NO 允许
  @discussion
@@ -62,70 +49,6 @@ NS_ASSUME_NONNULL_BEGIN
  @remarks 音频流处理
  */
 - (void)muteAllRemoteAudio:(BOOL)mute;
-
-/*!
- 发送消息
- 
- @param content             消息的内容
- @param successBlock        消息发送成功的回调 [messageId:消息的ID]
- @param errorBlock          消息发送失败的回调 [nErrorCode:发送失败的错误码,messageId:消息的ID]
- @discussion
- 该接口只能发送 persistentFlag 为 MessagePersistent_STATUS 的状态消息, 远端用户如果不在线则消息丢失, 自定义消息时下面标识一定要给出, 否则会导致消息发送失败
- + (RCMessagePersistent)persistentFlag {
-    return MessagePersistent_STATUS;
- }
- 
- @remarks 房间管理
- @return 发送的消息实体
- */
-- (RCMessage *)sendMessage:(RCMessageContent *)content
-                   success:(void (^)(long messageId))successBlock
-                     error:(void (^)(RCErrorCode nErrorCode, long messageId))errorBlock;
-
-/*!
- 设置房间属性
- 
- @param attributeValue 属性值
- @param key 属性名称
- @param message 是否在设置属性的时候携带消息内容, 传空则不往房间中发送消息
- @param completion 设置完成回调
- @discussion
- 设置房间属性
- 
- @remarks 房间管理
- */
-- (void)setRoomAttributeValue:(NSString *)attributeValue
-                       forKey:(NSString *)key
-                      message:(RCMessageContent *)message
-                   completion:(RCRTCOperationCallback)completion;
-
-/*!
- 删除房间属性
- 
- @param attributeKeys 属性名称数组
- @param message 是否在设置属性的时候携带消息内容, 传空则不往房间中发送消息
- @param completion 删除完成回调
- @discussion
- 删除房间属性
- 
- @remarks 房间管理
- */
-- (void)deleteRoomAttributes:(NSArray <NSString *> *)attributeKeys
-                     message:(RCMessageContent *)message
-                  completion:(RCRTCOperationCallback)completion;
-
-/*!
- 获取房间属性
- 
- @param attributeKeys 属性名称
- @param completion 获取结果回调
- @discussion
- 获取房间属性
- 
- @remarks 房间管理
- */
-- (void)getRoomAttributes:(NSArray <NSString *> *)attributeKeys
-               completion:(RCRTCAttributeOperationCallback)completion;
 
 @end
 

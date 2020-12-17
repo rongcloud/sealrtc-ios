@@ -11,13 +11,14 @@
 
 @protocol CollectionViewTouchesDelegate <NSObject>
 
-- (void)didTouchedBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event withBlock:(void  (^)(void))block;
+- (void)didTouchedBegan:(NSSet<UITouch *> *)touches
+              withEvent:(UIEvent *)event
+              withBlock:(void (^)(void))block;
 
 @end
 
-
 @interface UICollectionView (RongRTCBgView)
 
-@property (nonatomic, strong) ChatViewController  *chatVC;
+@property (nonatomic, strong) ChatViewController *chatVC;
 
 @end

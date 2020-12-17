@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) ZHPickView *resolutionRatioPickview;
-@property (nonatomic, strong) UISwitch *gpuSwitch, *tinyStreamSwitch, *autoTestSwitch, *waterMarkSwitch, *audioScenarioSwitch , *videoMirrorSwitch, *audioCryptoSwitch, *videoCryptoSwitch;
+@property (nonatomic, strong) UISwitch *gpuSwitch, *tinyStreamSwitch, *autoTestSwitch, *waterMarkSwitch, *audioScenarioSwitch , *videoMirrorSwitch, *audioCryptoSwitch, *videoCryptoSwitch, *srtpSwitch;
 @property (nonatomic, strong) UITextField *userIDTextField;
 
 - (instancetype)initWithViewController:(UIViewController *)vc;

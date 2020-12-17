@@ -73,7 +73,6 @@ static LoginManager *sharedLoginManager = nil;
     if (isPlistExist)
     {
         _isGPUFilter = [settingUserDefaults boolForKey:Key_GPUFilter];
-        _isSRTPEncrypt = [settingUserDefaults boolForKey:Key_SRTPEncrypt];
         _isAudioScenarioMusic = [settingUserDefaults boolForKey:Key_AudioScenarioMusic];
         _isTinyStream = [settingUserDefaults boolForKey:Key_TinyStreamMode];
         _resolutionRatioIndex = [settingUserDefaults integerForKey:Key_ResolutionRatio];
@@ -108,11 +107,12 @@ static LoginManager *sharedLoginManager = nil;
         
         _isOpenAudioCrypto =  [settingUserDefaults boolForKey:Key_IsOpenAudioCrypto];
         _isOpenVideoCrypto =  [settingUserDefaults boolForKey:Key_IsOpenVideoCrypto];
+        _isOpenSRTP = [settingUserDefaults boolForKey:Key_IsOpenSRTP];
     }
     else
     {
         self.isGPUFilter = Value_Default_GPUFilter;
-        self.isSRTPEncrypt = Value_Default_SRTPEncrypt;
+        self.isOpenSRTP = Value_Default_OpenSRTP;
         self.isAudioScenarioMusic = Value_Default_AudioScenarioMusic;
         self.isTinyStream = Value_Default_TinyStream;
         self.resolutionRatioIndex = Value_Default_ResolutionRatio;
@@ -149,13 +149,6 @@ static LoginManager *sharedLoginManager = nil;
 {
     _isWaterMark = isWaterMark;
     [settingUserDefaults setBool:isWaterMark forKey:Key_WaterMark];
-    [settingUserDefaults synchronize];
-}
-
-- (void)setIsSRTPEncrypt:(BOOL)isSRTPEncrypt
-{
-    _isSRTPEncrypt = isSRTPEncrypt;
-    [settingUserDefaults setBool:isSRTPEncrypt forKey:Key_SRTPEncrypt];
     [settingUserDefaults synchronize];
 }
 
@@ -394,6 +387,13 @@ static LoginManager *sharedLoginManager = nil;
 {
     _isOpenVideoCrypto = isOpenVideoCrypto;
     [settingUserDefaults setBool:isOpenVideoCrypto forKey:Key_IsOpenVideoCrypto];
+    [settingUserDefaults synchronize];
+}
+
+- (void)setIsOpenSRTP:(BOOL)isOpenSRTP
+{
+    _isOpenSRTP = isOpenSRTP;
+    [settingUserDefaults setBool:isOpenSRTP forKey:Key_IsOpenSRTP];
     [settingUserDefaults synchronize];
 }
 

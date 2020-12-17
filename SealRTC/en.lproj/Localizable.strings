@@ -154,6 +154,7 @@
 "setting_crypto" = "Open Crypto";
 "setting_crypto_audio" = "Open Audio Crypto";
 "setting_crypto_video" = "Open Video Crypt";
+"setting_srtp" = "SRTP";
 "setting_userid_title" = "User ID (long press to copy to clipboard)";
 "setting_userid_tip" = "User ID copied to clipboard";
 "breakdown_analysis"="Breakdown analysis";
@@ -582,7 +583,8 @@
 "only_play"="Only Playing";
 "play_and_mix_and_disbale_mic"="Playing and mixing, disable mic";
 "mix_mode"="Audio mixing mode";
-
+"inEar"="耳返";
+"effect"="音效";
 
 "标清"="360p";
 "高清"="480p";

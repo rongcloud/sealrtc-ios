@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)new NS_UNAVAILABLE;
 
 /*!
- 列席会议的用户ID
+ 用户 ID
  */
 @property (nonatomic, copy, readonly) NSString *userId;
 

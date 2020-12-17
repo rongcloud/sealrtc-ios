@@ -112,13 +112,15 @@ static NSDictionary *selectedServer;
     }
     [self updateJoinRoomButtonEnable:NO textFieldInput:self.isRoomNumberInput];
     
-    [[RCIMClient sharedRCIMClient] initWithAppKey:RCIMAPPKey];
+    if (!kLoginManager.isPrivateEnvironment) {
+        [[RCIMClient sharedRCIMClient] initWithAppKey:RCIMAPPKey];
+    }
     
     [[RCIMClient sharedRCIMClient] setRCConnectionStatusChangeDelegate:self];
     [[RCIMClient sharedRCIMClient] setLogLevel:RC_Log_Level_Verbose];
-#ifndef IS_PRIVATE_ENVIRONMENT
-    [self checkAppVersion];
-#endif
+    if (!kLoginManager.isPrivateEnvironment) {
+        [self checkAppVersion];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -126,18 +128,19 @@ static NSDictionary *selectedServer;
     [super viewWillAppear:animated];
     [UIApplication sharedApplication].idleTimerDisabled = NO;
     self.navigationController.navigationBarHidden = YES;
-    [[RCIMClient sharedRCIMClient] setRCConnectionStatusChangeDelegate:self];
     
-#ifdef IS_PRIVATE_ENVIRONMENT
     if (kLoginManager.isPrivateEnvironment) {
-        [[RCIMClient sharedRCIMClient] initWithAppKey:kLoginManager.privateAppKey];
+        kLoginManager.keyToken = @"";
+        kLoginManager.isIMConnectionSucc = NO;
+        [[RCIMClient sharedRCIMClient] disconnect];
         NSString *naviHost = kLoginManager.privateNavi;
         if (![naviHost hasPrefix:@"http"]) {
             naviHost = [@"https://" stringByAppendingString:naviHost];
         }
         [[RCIMClient sharedRCIMClient] setServerInfo:naviHost fileServer:nil];
+        [[RCIMClient sharedRCIMClient] initWithAppKey:kLoginManager.privateAppKey];
     }
-#endif
+    
     DLog(@"Cache keyToken: %@", kLoginManager.keyToken);
     [self updateJoinRoomButtonEnable:YES textFieldInput:self.isRoomNumberInput];
     
@@ -311,23 +314,23 @@ static NSDictionary *selectedServer;
 #else
     [RTActiveWheel showHUDAddedTo:self.view];
     
-    [[RCRTCEngine sharedInstance]
-     joinRoom:kLoginManager.roomNumber
-     completion:^(RCRTCRoom * _Nullable room, RCRTCCode code) {
-        [RTActiveWheel dismissForView:self.view];
-        if (code == RCRTCCodeSuccess) {
-            self.room = room;
-            [self navToChatViewController:YES];
-        } else if (room.remoteUsers.count >= MAX_NORMAL_PERSONS &&
-                   room.remoteUsers.count < MAX_AUDIO_PERSONS) {
-            [self showJoinPromptOfAudioMode];
-        } else if (room.remoteUsers.count >= MAX_AUDIO_PERSONS) {
-            [self showJoinPromtOfObserverMode];
-        } else {
-            [self showInfomationWithErrorCode:code];
-        }
-        self.isJoiningRoom = NO;
-    }];
+    [RCRTCEngine sharedInstance].config.enableSRTP = kLoginManager.isOpenSRTP;
+        [[RCRTCEngine sharedInstance] joinRoom:kLoginManager.roomNumber
+                                    completion:^(RCRTCRoom * _Nullable room, RCRTCCode code) {
+            [RTActiveWheel dismissForView:self.view];
+            if (code == RCRTCCodeSuccess) {
+                self.room = room;
+                [self navToChatViewController:YES];
+            } else if (room.remoteUsers.count >= MAX_NORMAL_PERSONS &&
+                       room.remoteUsers.count < MAX_AUDIO_PERSONS) {
+                [self showJoinPromptOfAudioMode];
+            } else if (room.remoteUsers.count >= MAX_AUDIO_PERSONS) {
+                [self showJoinPromtOfObserverMode];
+            } else {
+                [self showInfomationWithErrorCode:code];
+            }
+            self.isJoiningRoom = NO;
+        }];
 #endif
     
 }
@@ -403,26 +406,23 @@ static NSDictionary *selectedServer;
 }
 
 - (void)navToChatViewController:(BOOL)isHost {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.loginViewBuilder.roomNumberTextField resignFirstResponder];
-            if (![self.navigationController.topViewController isKindOfClass:[ChatViewController class]]) {
-                DLog(@"performSegueWithIdentifier to ChatViewController");
-                #ifdef IS_LIVE
-                    [kLoginManager setIsHost:isHost];
-                #else
+    [self.loginViewBuilder.roomNumberTextField resignFirstResponder];
+        if (![self.navigationController.topViewController isKindOfClass:[ChatViewController class]]) {
+            DLog(@"performSegueWithIdentifier to ChatViewController");
+#ifdef IS_LIVE
+            [kLoginManager setIsHost:isHost];
+#else
                     
-                #endif
+#endif
 
-                UIStoryboard* sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                ChatViewController* cvc = 
-                    [sb instantiateViewControllerWithIdentifier:@"sb_chat_view_controller"];
-                cvc.joinRoomCode = RCRTCCodeSuccess;
-                cvc.room = self.room;
-                self.room.delegate = cvc;
-                [self.navigationController pushViewController:cvc animated:YES];
-            }
-    });
-        
+            UIStoryboard* sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            ChatViewController* cvc = 
+                [sb instantiateViewControllerWithIdentifier:@"sb_chat_view_controller"];
+            cvc.joinRoomCode = RCRTCCodeSuccess;
+            cvc.room = self.room;
+            self.room.delegate = cvc;
+            [self.navigationController pushViewController:cvc animated:YES];
+        }
 }
 
 #pragma mark - click join Button
@@ -562,6 +562,7 @@ static NSDictionary *selectedServer;
         }
                                                 success:^(NSString *userId) {
             DLog(@"MClient connectWithToken Success userId: %@", userId);
+            kLoginManager.isIMConnectionSucc = YES;
             kLoginManager.userID = userId;
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"audio"];
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -625,7 +626,9 @@ static NSDictionary *selectedServer;
                     } success:^(NSString *userId) {
                         DLog(@"MClient connectWithToken Success userId: %@", userId);
                         kLoginManager.userID = userId;
-                        [self navToChatViewController:NO];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self navToChatViewController:NO];
+                          });
                     } error:^(RCConnectErrorCode status) {
                         DLog(@"MClient connectWithToken Error: %zd", status);
                         if (status == RC_CONN_TOKEN_INCORRECT) {
@@ -715,15 +718,6 @@ static NSDictionary *selectedServer;
                 self.loginViewBuilder.phoneNumLoginTextField.text = kLoginManager.phoneNumber;
                 
                 kLoginManager.keyToken = respDict[@"result"][@"token"];
-                // 根据返回值设置 IM navi
-                kLoginManager.navi = respDict[@"result"][@"navi"];
-                NSString *fileHost = RCIMFileURL;
-                if (![fileHost hasPrefix:@"http"]) {
-                    fileHost = [@"https://" stringByAppendingString:RCIMFileURL];
-                }
-                NSString *navi = kLoginManager.navi;
-                
-                [[RCIMClient sharedRCIMClient] setServerInfo:navi.length > 0 ? navi : RCIMNavURL fileServer:fileHost];
                 kLoginManager.isLoginTokenSucc = YES;
                 self->joinRoomState = JoinRoom_Connecting;
                 [self updateJoinRoomButtonEnable:YES textFieldInput:self.isRoomNumberInput];
@@ -733,7 +727,9 @@ static NSDictionary *selectedServer;
             }
         });
     } error:^(NSError * _Nonnull error) {
-        self.loginViewBuilder.alertLabel.text = NSLocalizedString(@"login_input_verify_error", nil);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.loginViewBuilder.alertLabel.text = NSLocalizedString(@"login_input_verify_error", nil);
+        });
     }];
 }
 

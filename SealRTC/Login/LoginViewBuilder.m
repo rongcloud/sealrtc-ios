@@ -130,32 +130,33 @@
 
     CGFloat height;
     
-#ifndef IS_PRIVATE_ENVIRONMENT
-    //国家和地区
-    UITextField* loginCountryTxtField = [[UITextField alloc] initWithFrame:(CGRect){30,self.usernameTextField.frame.origin.y + self.usernameTextField.frame.size.height + 10,ScreenWidth - 60,44}];
-    //loginCountryTxtField.textColor = [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:153.0f/255.0f alpha:1];
-    loginCountryTxtField.font = [UIFont systemFontOfSize:18];
-    //countryTxtField.textColor = [UIColor colorWithRed:34.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0];
-    loginCountryTxtField.textAlignment = NSTextAlignmentLeft;
-    loginCountryTxtField.borderStyle = UITextBorderStyleRoundedRect;
-    loginCountryTxtField.text = [NSString stringWithFormat:NSLocalizedString(@"select_country_fmt", nil), kLoginManager.regionName];
-    loginCountryTxtField.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
-    UILabel* loginArrowLabel = [[UILabel alloc] initWithFrame:(CGRect){0,0,44,44}];
-    loginArrowLabel.textAlignment = NSTextAlignmentCenter;
-    loginArrowLabel.text = @"＞";
-    loginArrowLabel.textColor = [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:153.0f/255.0f alpha:1];
-    loginCountryTxtField.rightView = loginArrowLabel;
-    loginCountryTxtField.rightViewMode = UITextFieldViewModeAlways;
-    loginCountryTxtField.delegate = self.loginViewController;
-    [self.inputNumPasswordView addSubview:loginCountryTxtField];
-    self.loginCountryTxtField = loginCountryTxtField;
+    if (kLoginManager.isPrivateEnvironment) {
+        originY = self.usernameTextField.frame.origin.y;
+        height = self.usernameTextField.frame.size.height;
+    } else {
+        //国家和地区
+        UITextField* loginCountryTxtField = [[UITextField alloc] initWithFrame:(CGRect){30,self.usernameTextField.frame.origin.y + self.usernameTextField.frame.size.height + 10,ScreenWidth - 60,44}];
+        //loginCountryTxtField.textColor = [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:153.0f/255.0f alpha:1];
+        loginCountryTxtField.font = [UIFont systemFontOfSize:18];
+        //countryTxtField.textColor = [UIColor colorWithRed:34.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0];
+        loginCountryTxtField.textAlignment = NSTextAlignmentLeft;
+        loginCountryTxtField.borderStyle = UITextBorderStyleRoundedRect;
+        loginCountryTxtField.text = [NSString stringWithFormat:NSLocalizedString(@"select_country_fmt", nil), kLoginManager.regionName];
+        loginCountryTxtField.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
+        UILabel* loginArrowLabel = [[UILabel alloc] initWithFrame:(CGRect){0,0,44,44}];
+        loginArrowLabel.textAlignment = NSTextAlignmentCenter;
+        loginArrowLabel.text = @"＞";
+        loginArrowLabel.textColor = [UIColor colorWithRed:142.0f/255.0f green:142.0f/255.0f blue:153.0f/255.0f alpha:1];
+        loginCountryTxtField.rightView = loginArrowLabel;
+        loginCountryTxtField.rightViewMode = UITextFieldViewModeAlways;
+        loginCountryTxtField.delegate = self.loginViewController;
+        [self.inputNumPasswordView addSubview:loginCountryTxtField];
+        self.loginCountryTxtField = loginCountryTxtField;
+        
+        originY = loginCountryTxtField.frame.origin.y;
+        height = self.loginCountryTxtField.frame.size.height;
+    }
     
-    originY = loginCountryTxtField.frame.origin.y;
-    height = self.loginCountryTxtField.frame.size.height;
-#else
-    originY = self.usernameTextField.frame.origin.y;
-    height = self.usernameTextField.frame.size.height;
-#endif
     //手机号
     self.phoneNumLoginTextField = [[UITextField alloc] initWithFrame:CGRectMake(30, originY + height + 10, ScreenWidth - 60, 44)];
     self.phoneNumLoginTextField.font = [UIFont systemFontOfSize:18];

@@ -42,7 +42,7 @@
     hud.detailsLabel.text = text;
     hud.detailsLabel.textColor = [UIColor whiteColor];
 
-    [hud hideAnimated:YES afterDelay:2.0f];
+    [hud hideAnimated:YES afterDelay:0.5f];
 }
 
 + (void)dismissForView:(UIView *)view {

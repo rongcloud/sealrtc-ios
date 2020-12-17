@@ -39,10 +39,10 @@
     return _timesOfExceedingBaseLine;
 }
 
-#pragma mark - RCRTCActivityMonitorDelegate
-- (void)didReportStatForm:(RCRTCStatisticalForm*)form {
+#pragma mark - RCRTCStatusReportDelegate
+- (void)didReportStatusForm:(RCRTCStatusForm*)form {
     NSMutableArray *bitrateArray = [NSMutableArray new];
-     NSMutableArray *localDIArray = [NSMutableArray array];
+    NSMutableArray *localDIArray = [NSMutableArray array];
     [localDIArray addObject:@[NSLocalizedString(@"chat_data_excel_tunnelname", nil),NSLocalizedString(@"chat_data_excel_kbps", nil),NSLocalizedString(@"chat_data_excel_delay", nil)]];
     
     ChatLocalDataInfoModel *sendModel = [[ChatLocalDataInfoModel alloc] init];
@@ -95,7 +95,7 @@
     
     for (RCRTCStreamStat* stat in form.recvStats) {
         ChatDataInfoModel *tmpMemberModel = [[ChatDataInfoModel alloc] init];
-        NSString *userId = [RCRTCStatisticalForm fetchUserIdFromTrackId:stat.trackId];
+        NSString *userId = [RCRTCStatusForm fetchUserIdFromTrackId:stat.trackId];
         ChatCellVideoViewModel *remoteModel = [kChatManager getRemoteUserDataModelFromUserID:userId];
         tmpMemberModel.userName = remoteModel.userName;
         if ([stat.mediaType isEqualToString:RongRTCMediaTypeVideo]) {
@@ -124,13 +124,13 @@
     
     [bitrateArray addObject:remoteDIArray];
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.chatViewController.chatViewBuilder.excelView.array = [bitrateArray copy];
+        self.chatViewController.chatViewBuilder.excelView.array = bitrateArray;
     });
     
     
     ///  弱网提示逻辑参照   https://pha.rongcloud.net/T4688
-    const CGFloat audioLossBaseline = 0.15; /// 音频丢包基准新
-    const CGFloat videoLossBaseLine = 0.3;  /// 视频丢包基准线
+    const CGFloat audioLossBaseline = 0.3; /// 音频丢包基准新
+    const CGFloat videoLossBaseLine = 0.15;  /// 视频丢包基准线
     const NSInteger cycleLength = 10;       /// 统计周期长度
     const NSInteger timesThreshold = 5;     //// 次数阈值
     static NSInteger triggerTimes = 0;
@@ -163,7 +163,7 @@
     [self.timesOfExceedingBaseLine enumerateKeysAndObjectsUsingBlock:^(NSString* trackId, NSNumber* times, BOOL * _Nonnull stop) {
         NSInteger count = [times integerValue];
         if (count >= timesThreshold) {
-            NSString* userId = [RCRTCStatisticalForm fetchUserIdFromTrackId:trackId];
+            NSString* userId = [RCRTCStatusForm fetchUserIdFromTrackId:trackId];
             if (userId.length > 0) {
                 [uIds addObject:userId];
             } else if ([trackId containsString:kLoginManager.userID]){
@@ -190,13 +190,14 @@
             [userNames appendString:@","];
         }
     }
-        
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSString* format =  NSLocalizedString(@"voip_network_bad_fmt",nil);
-        NSString* aText = [NSString stringWithFormat:format,userNames];
-        [RTActiveWheel showPromptHUDAddedTo:self.chatViewController.view.window text:aText];
-    });
-
+    //如果开启自动化测试，不弹弱网提示
+    if (!Key_Force_Close_Log) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString* format =  NSLocalizedString(@"voip_network_bad_fmt",nil);
+            NSString* aText = [NSString stringWithFormat:format,userNames];
+            [RTActiveWheel showPromptHUDAddedTo:self.chatViewController.view.window text:aText];
+        });
+    }
 }
 
 #pragma mark - Private

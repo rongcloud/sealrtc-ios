@@ -2,7 +2,7 @@
 //  RCRTCEffectProtocol.h
 //  RongRTCLib
 //
-//  Created by 孙承秀 on 2020/8/16.
+//  Created by RongCloud on 2020/8/16.
 //  Copyright © 2020 RongCloud. All rights reserved.
 //
 
@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (RCRTCCode)pauseAllEffects;
 - (RCRTCCode)resumeEffect:(NSInteger)soundId;
 - (RCRTCCode)resumeAllEffects;
+- (BOOL)isEndEffect:(NSUInteger)effectId;
 @end
 
 NS_ASSUME_NONNULL_END

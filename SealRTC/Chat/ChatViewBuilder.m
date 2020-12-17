@@ -244,7 +244,7 @@
         }
     }
     
-    return [buttonsMutable copy];
+    return buttonsMutable;
 }
 
 #pragma mark - bitrate display label
